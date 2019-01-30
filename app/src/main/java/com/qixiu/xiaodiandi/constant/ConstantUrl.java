@@ -79,6 +79,11 @@ public class ConstantUrl {
     public static String cartsPayUrl = BuildConfig.BASE_URL + "/api/home/settlement";
 
 
+
+    //我的订单
+    public static String myOrderListUrl = BuildConfig.BASE_URL +  "/api/home/order";
+
+
     //快速支付
     public static String fastPayUrl = BuildConfig.BASE_URL + "";
     //购物车支付
@@ -112,5 +117,5 @@ public class ConstantUrl {
     public static String payOrderUrl = BuildConfig.BASE_URL + "/api/home/orderpay";
 
     //订单详情
-    public static String orderDetailUrl = BuildConfig.BASE_URL + "";
+    public static String orderDetailUrl = BuildConfig.BASE_URL + "/api/home/orderinfo";
 }

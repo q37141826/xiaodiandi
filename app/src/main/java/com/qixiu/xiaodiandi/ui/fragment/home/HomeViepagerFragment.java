@@ -18,7 +18,7 @@ import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.model.home.HomeBean;
-import com.qixiu.xiaodiandi.ui.activity.home.GoodsDetailsActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.SearchActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
 
 import java.util.ArrayList;
@@ -105,9 +105,9 @@ public class HomeViepagerFragment extends RequestFragment implements OnRecyclerI
 
     @Override
     public void onItemClick(View v, RecyclerView.Adapter adapter, Object data) {
-        if(data instanceof HomeBean.OBean.CategoryBean){
-            HomeBean.OBean.CategoryBean bean= (HomeBean.OBean.CategoryBean) data;
-            GoodsDetailsActivity.start(getContext(),GoodsDetailsActivity.class,bean.getId()+"");
+        if (data instanceof HomeBean.OBean.CategoryBean) {
+            HomeBean.OBean.CategoryBean bean = (HomeBean.OBean.CategoryBean) data;
+            SearchActivity.start(getContext(), SearchActivity.class, bean.getCate_name() + "");
         }
     }
 

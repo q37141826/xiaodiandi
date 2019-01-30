@@ -11,7 +11,7 @@ import com.qixiu.xiaodiandi.R;
  * Created by HuiHeZe on 2017/5/3.
  */
 
-public class OrderDetailsAdapter extends RecyclerBaseAdapter<OrderDetailsBean.OBean.ItemsBean,OrderDetailsHolder> {
+public class OrderDetailsAdapter extends RecyclerBaseAdapter<OrderDetailsBean.OBean.CartInfoBean,OrderDetailsHolder> {
 
 
 

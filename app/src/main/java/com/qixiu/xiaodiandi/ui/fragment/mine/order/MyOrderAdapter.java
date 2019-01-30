@@ -11,7 +11,7 @@ import com.qixiu.xiaodiandi.R;
  * Created by HuiHeZe on 2017/5/3.
  */
 
-public class MyOrderAdapter extends RecyclerBaseAdapter<OrderBean.OBean.ListBean, MyOrderHolder> {
+public class MyOrderAdapter extends RecyclerBaseAdapter<OrderBean.OBean, MyOrderHolder> {
 
     private MyOrderRefreshListener myOrderRefreshListener;
 
@@ -32,7 +32,7 @@ public class MyOrderAdapter extends RecyclerBaseAdapter<OrderBean.OBean.ListBean
     }
 
     public interface MyOrderRefreshListener {
-        void onOrderRefresh(OrderBean.OBean.ListBean mdata, String action);
+        void onOrderRefresh(OrderBean.OBean mdata, String action);
     }
 
 }

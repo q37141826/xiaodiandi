@@ -14,7 +14,7 @@ import com.qixiu.xiaodiandi.R;
  * Created by HuiHeZe on 2017/5/3.
  */
 
-public class OrderDetailsHolder extends RecyclerBaseHolder<OrderDetailsBean.OBean.ItemsBean> {
+public class OrderDetailsHolder extends RecyclerBaseHolder<OrderDetailsBean.OBean.CartInfoBean> {
     ImageView imageView_orderdetails_icon;
     TextView textView_goodsContent_orderdetails, textView_price_orderdetails, textView_count_orderdetails;
 
@@ -29,10 +29,10 @@ public class OrderDetailsHolder extends RecyclerBaseHolder<OrderDetailsBean.OBea
 
     @Override
     public void bindHolder(int position) {
-        Glide.with(mContext).load(mData.getPic()).into(imageView_orderdetails_icon);
-        textView_goodsContent_orderdetails.setText(mData.getName());
-        textView_price_orderdetails.setText("¥ "+mData.getPrice());
-        textView_count_orderdetails.setText("x "+mData.getNum());
+        Glide.with(mContext).load(mData.getProductInfo().getImage()).into(imageView_orderdetails_icon);
+        textView_goodsContent_orderdetails.setText(mData.getProductInfo().getStore_name());
+        textView_price_orderdetails.setText("¥ "+mData.getTruePrice());
+        textView_count_orderdetails.setText("x "+mData.getCart_num());
 
 
     }

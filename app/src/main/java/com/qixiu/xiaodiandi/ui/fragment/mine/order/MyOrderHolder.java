@@ -28,7 +28,6 @@ import com.qixiu.wigit.show_dialog.ArshowDialog;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
-import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.CheckWhereActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.OrderDetailsActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.SelectPayMethoedActivity;
@@ -49,7 +48,7 @@ import okhttp3.Call;
  * Created by HuiHeZe on 2017/5/3.
  */
 
-public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean.ListBean> implements View.OnClickListener, IPay, OKHttpUIUpdataListener<BaseBean> {
+public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implements View.OnClickListener, IPay, OKHttpUIUpdataListener<BaseBean> {
     AlertDialog dialog;
     Intent intent;
     RelativeLayout framelayout_myorder;
@@ -102,20 +101,17 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean.ListBean> 
     @Override
     public void bindHolder(int position) {
         okHttpRequestModel = new OKHttpRequestModel(this);
-        textView_order_goods_num.setText("共计" + mData.getTotalnum() + "件商品");
-        textView_totolPrice.setText("¥" + mData.getTotalprice());
-        textView_orderCode.setText("订单编号:" + mData.getOid());
+        textView_order_goods_num.setText("共计" + mData.getTotal_num() + "件商品");
+        textView_totolPrice.setText("¥" + mData.getTotal_price());
+        textView_orderCode.setText("订单编号:" + mData.getOrder_id());
         this.position = position;
         adapterl = new OrderListDetailsAdapter();
         //
-        adapterl.refreshData(mData.getItems());
-        adapterl.setOnItemClickListener(new OnRecyclerItemListener<OrderBean.OBean.ListBean.ItemsBean>() {
+        adapterl.refreshData(mData.getCartInfo());
+        adapterl.setOnItemClickListener(new OnRecyclerItemListener<OrderBean.OBean.CartInfoBean>() {
                                             @Override
-                                            public void onItemClick(View v, RecyclerView.Adapter adapter, OrderBean.OBean.ListBean.ItemsBean data) {
-                                                Intent intent = new Intent(mContext, OrderDetailsActivity.class);
-                                                intent.putExtra(IntentDataKeyConstant.ORDER_ID, mData.getId());
-                                                intent.putExtra("order_status", mData.getStatus());
-                                                mContext.startActivity(intent);
+                                            public void onItemClick(View v, RecyclerView.Adapter adapter, OrderBean.OBean.CartInfoBean data) {
+                                                OrderDetailsActivity.start(mContext,OrderDetailsActivity.class,mData.getId()+"");
                                             }
                                         }
         );
@@ -129,7 +125,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean.ListBean> 
         btn_getConform_list.setOnClickListener(this);
         btn_cancleOrder.setOnClickListener(this);
         btn_change.setOnClickListener(this);
-        order_id = mData.getId();
+        order_id = mData.getId() + "";
         setButtonVisible();
     }
 
@@ -138,27 +134,27 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean.ListBean> 
             btn.setVisibility(View.GONE);
         }
         String textState = "";
-        if (("1").equals(mData.getStatus())) {
+        if ((1 == mData.getStatus())) {
             btn_cancleOrder.setVisibility(View.VISIBLE);
             btn_payThisOrder.setVisibility(View.VISIBLE);
             btn_change.setVisibility(View.VISIBLE);
             textState = "待付款";
-        } else if ("3".equals(mData.getStatus())) {
+        } else if (3 == mData.getStatus()) {
             btn_checkwhere_list.setVisibility(View.VISIBLE);
             btn_getConform_list.setVisibility(View.VISIBLE);
             textState = "待收货";
-        } else if ("2".equals(mData.getStatus())) {
+        } else if (2 == mData.getStatus()) {
             btn_change.setVisibility(View.VISIBLE);
             textState = "已付款";
-        } else if ("8".equals(mData.getStatus())) {
+        } else if (8 == (mData.getStatus())) {
             btn_deleteOrder.setVisibility(View.VISIBLE);
             textState = "待评价";
-        } else if ("5".equals(mData.getStatus())) {
+        } else if (5 == (mData.getStatus())) {
 //            btn_giveComments.setVisibility(View.VISIBLE);
             btn_deleteOrder.setVisibility(View.VISIBLE);
             btn_change.setVisibility(View.VISIBLE);
             textState = "已完成";
-        } else if ("0".equals(mData.getStatus())) {
+        } else if (0 == mData.getStatus()) {
 //            btn_giveComments.setVisibility(View.VISIBLE);
             btn_deleteOrder.setVisibility(View.VISIBLE);
             btn_change.setVisibility(View.VISIBLE);
@@ -181,7 +177,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean.ListBean> 
                 startPay();
                 break;
             case R.id.btn_notice_send:
-                if (mData.getStatus().equals("2")) {
+                if (mData.getStatus() == 2) {
                     ToastUtil.showToast(mContext, "您已经提醒发货，请勿重复提醒");
                     return;
                 }
@@ -204,7 +200,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean.ListBean> 
 
     private void startCancleOrder() {
         Map<String, String> map = new HashMap<>();
-        map.put("orderid", mData.getId());
+        map.put("orderid", mData.getId() + "");
         map.put("vipid", Preference.get(ConstantString.USERID, ""));
         okHttpRequestModel.okhHttpPost(ConstantUrl.cancleOrder, map, new BaseBean());
     }
@@ -213,7 +209,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean.ListBean> 
         intent = new Intent(mContext, SelectPayMethoedActivity.class);
         //// TODO: 2017/9/18 放入订单id
         intent.putExtra("orderid", mData.getId());
-        intent.putExtra("money", mData.getTotalprice());
+        intent.putExtra("money", mData.getPay_price());
         mContext.startActivity(intent);
     }
 
@@ -224,7 +220,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean.ListBean> 
     private void startDeleteOrder() {
         Map<String, String> map = new HashMap<>();
         map.put("vipid", Preference.get(ConstantString.USERID, ""));
-        map.put("orderid", mData.getId());
+        map.put("orderid", mData.getId() + "");
         okHttpRequestModel.okhHttpPost(ConstantUrl.orderDeleteUrl, map, new BaseBean());
     }
 
@@ -257,7 +253,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean.ListBean> 
     private void startGetGoods() {
         Map<String, String> map = new HashMap<>();
         map.put("vipid", Preference.get(ConstantString.USERID, ""));
-        map.put("orderid", mData.getId());
+        map.put("orderid", mData.getId() + "");
         okHttpRequestModel.okhHttpPost(ConstantUrl.getGoodsUrl, map, new BaseBean());
     }
 

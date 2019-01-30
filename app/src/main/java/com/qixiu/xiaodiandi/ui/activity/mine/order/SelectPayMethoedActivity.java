@@ -179,7 +179,7 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
 
 
     private void startAlipay(AliBean bean) {
-        new Alipay(this, this).startPay(bean.getO().toString());
+        new Alipay(this, this).startPay(bean.getO().getKey());
     }
 
 

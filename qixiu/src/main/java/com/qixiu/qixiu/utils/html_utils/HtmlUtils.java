@@ -42,14 +42,15 @@ public class HtmlUtils {
             conn.setDoInput(true);
             conn.connect();
             InputStream is = conn.getInputStream();
-
             drawable = Drawable.createFromStream(is, null);
             is.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        DrawbleCacheUtils.getInstance().saveCache(imageUrl, drawable);
         return drawable;
     }
+
 
 //    Drawable getImageFromNetWork01(String imageUrl){
 //        Bitmap bitmap = PictureCut.returnNetBitmap(imageUrl);
@@ -59,7 +60,6 @@ public class HtmlUtils {
 //    }
 
     Handler handler;
-
     public void setHtml(TextView text, String html) {
         if (handler == null) {
             handler = new Handler() {
@@ -73,13 +73,15 @@ public class HtmlUtils {
         }
         new Thread(new Runnable() {
             Message msg = Message.obtain();
-
             @Override
             public void run() {
                 Html.ImageGetter imageGetter = new Html.ImageGetter() {
                     @Override
                     public Drawable getDrawable(String source) {
-                        Drawable drawable = getImageFromNetwork(source);
+                        Drawable drawable = DrawbleCacheUtils.getInstance().getCache(source);
+                        if (drawable == null) {
+                            drawable = getImageFromNetwork(source);
+                        }
 //                        Drawable drawable = getImageFromNetWork01(source);
                         setDrwableSize(drawable, windowWith);
                         return drawable;
@@ -93,7 +95,7 @@ public class HtmlUtils {
         }).start();
     }
 
-    private static void setDrwableSize(Drawable drawable, int windowWith) {
+    private void setDrwableSize(Drawable drawable, int windowWith) {
         float w = windowWith - 30;
         float h = w / ((float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight());
         drawable.setBounds(0, 0, (int) w, (int) h);

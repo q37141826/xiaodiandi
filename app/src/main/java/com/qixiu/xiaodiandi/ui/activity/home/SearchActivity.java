@@ -83,11 +83,11 @@ public class SearchActivity extends RequestActivity implements XRecyclerView.Loa
 
     @Override
     public void onSuccess(BaseBean data) {
-        if(data instanceof HomeSearchBean){
-            HomeSearchBean bean= (HomeSearchBean) data;
-            if(pageNo==1){
+        if (data instanceof HomeSearchBean) {
+            HomeSearchBean bean = (HomeSearchBean) data;
+            if (pageNo == 1) {
                 adapter.refreshData(bean.getO());
-            }else {
+            } else {
                 adapter.addDatas(bean.getO());
             }
         }

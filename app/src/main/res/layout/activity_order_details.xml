@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/theme_color"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/vg_title"
@@ -36,11 +35,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin10dp"
-                    android:layout_marginRight="@dimen/margin10dp"
                     android:layout_marginTop="@dimen/margin10dp"
+                    android:layout_marginRight="@dimen/margin10dp"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/margin10dp"
-                    android:paddingTop="@dimen/margin10dp">
+                    android:paddingTop="@dimen/margin10dp"
+                    android:paddingBottom="@dimen/margin10dp">
 
                     <!--<ImageView-->
                     <!--android:id="@+id/tomyright11"-->
@@ -51,114 +50,122 @@
                     <!--android:visibility="gone" />-->
                     <TextView
                         style="@style/text_normal"
-                        android:text="订单信息"/>
+                        android:text="订单信息" />
 
                     <TextView
                         android:id="@+id/textView_order_state"
                         style="@style/text_normal"
                         android:layout_alignParentRight="true"
-                        android:textColor="@color/red"/>
+                        android:textColor="@color/red" />
 
                     <View
-                        android:background="@color/line_color"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/margin0.5dp"
                         android:layout_below="@+id/textView_order_state"
-                        android:layout_marginTop="@dimen/margin5dp"></View>
+                        android:layout_marginTop="@dimen/margin5dp"
+                        android:background="@color/line_color"></View>
+
                     <LinearLayout
-                        android:layout_below="@+id/textView_order_state"
-                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textView_order_state"
+                        android:orientation="vertical">
+
                         <LinearLayout
-                            android:layout_marginTop="@dimen/margin10dp"
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin10dp"
+                            android:orientation="horizontal">
+
                             <TextView
                                 style="@style/text_normal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="姓        名:"
-                                android:textColor="@color/font_grey02"/>
+                                android:textColor="@color/font_grey02" />
+
                             <TextView
-                                style="@style/text_normal"
                                 android:id="@+id/textView_getgoodspeople_address_detail"
+                                style="@style/text_normal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="11111"
-                                android:textColor="@color/font_grey02"/>
+                                android:textColor="@color/font_grey02" />
                         </LinearLayout>
+
                         <LinearLayout
-                            android:layout_marginTop="@dimen/margin2dp"
-                            android:layout_below="@+id/textView_order_state"
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textView_order_state"
+                            android:layout_marginTop="@dimen/margin2dp"
+                            android:orientation="horizontal">
+
                             <TextView
                                 style="@style/text_normal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="联系方式:"
-                                android:textColor="@color/font_grey02"/>
+                                android:textColor="@color/font_grey02" />
+
                             <TextView
-                                style="@style/text_normal"
                                 android:id="@+id/textView_getgoodsphone_address_detail"
+                                style="@style/text_normal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="1111"
-                                android:textColor="@color/font_grey02"/>
+                                android:textColor="@color/font_grey02" />
                         </LinearLayout>
+
                         <LinearLayout
-                            android:layout_marginTop="@dimen/margin2dp"
-                            android:layout_below="@+id/textView_order_state"
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textView_order_state"
+                            android:layout_marginTop="@dimen/margin2dp"
+                            android:orientation="horizontal">
+
                             <TextView
                                 style="@style/text_normal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="收货地址:"
-                                android:textColor="@color/font_grey02"/>
+                                android:textColor="@color/font_grey02" />
+
                             <TextView
-                                style="@style/text_normal"
                                 android:id="@+id/textView_getgoodsaddress_address_detail"
+                                style="@style/text_normal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:singleLine="false"
                                 android:text="1111111"
-                                android:textColor="@color/font_grey02"/>
+                                android:textColor="@color/font_grey02" />
 
 
                         </LinearLayout>
+
                         <LinearLayout
-                            android:layout_marginTop="@dimen/margin2dp"
-                            android:layout_below="@+id/textView_order_state"
-                            android:orientation="horizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/textView_order_state"
+                            android:layout_marginTop="@dimen/margin2dp"
+                            android:orientation="horizontal">
+
                             <TextView
                                 style="@style/text_normal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="留        言:"
-                                android:textColor="@color/font_grey02"/>
+                                android:textColor="@color/font_grey02" />
 
                             <TextView
-                                style="@style/text_normal"
                                 android:id="@+id/textView_getgoodsaddress_leavemessage_detail"
+                                style="@style/text_normal"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="111111111"
-                                android:textColor="@color/font_grey02"/>
+                                android:textColor="@color/font_grey02" />
 
                         </LinearLayout>
                     </LinearLayout>
-
-
-
-
 
 
                     <LinearLayout
@@ -170,11 +177,6 @@
                         android:orientation="vertical">
 
 
-
-
-
-
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -183,11 +185,6 @@
                         android:layout_marginTop="@dimen/margin20dp"
                         android:layout_toRightOf="@+id/linearLayout_tomyright"
                         android:orientation="vertical">
-
-
-
-
-
 
 
                     </LinearLayout>
@@ -206,7 +203,7 @@
 
                     <TextView
                         style="@style/text_normal"
-                        android:text="商品明细"/>
+                        android:text="商品明细" />
 
                     <TextView
                         android:id="@+id/textView_payIsOver"
@@ -214,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:text="申请退货"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/recycleView_goods_in_order"
@@ -233,14 +230,14 @@
                         <TextView
                             android:id="@+id/textView_goodsNum"
                             style="@style/text_normal"
-                            android:text="共计多少件商品"/>
+                            android:text="共计多少件商品" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_toLeftOf="@+id/textView_goodstotolprice_detail"
                             android:text="应付："
-                            android:textColor="@color/font_grey"/>
+                            android:textColor="@color/font_grey" />
 
                         <TextView
                             android:id="@+id/textView_goodstotolprice_detail"
@@ -248,7 +245,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:text=""
-                            android:textColor="@color/red"/>
+                            android:textColor="@color/red" />
 
                     </RelativeLayout>
 
@@ -264,7 +261,7 @@
                             android:layout_height="wrap_content"
                             android:layout_toLeftOf="@+id/textView_tranceportPrice_detail"
                             android:text="快递费:  "
-                            android:textColor="@color/font_grey"/>
+                            android:textColor="@color/font_grey" />
 
                         <TextView
                             android:id="@+id/textView_tranceportPrice_detail"
@@ -272,7 +269,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:text=""
-                            android:textColor="@color/red"/>
+                            android:textColor="@color/red" />
 
                     </RelativeLayout>
 
@@ -288,7 +285,7 @@
                             android:layout_height="wrap_content"
                             android:layout_toLeftOf="@+id/textView_ordertotolPrice_detail"
                             android:text="实付:  "
-                            android:textColor="@color/font_grey"/>
+                            android:textColor="@color/font_grey" />
 
                         <TextView
                             android:id="@+id/textView_ordertotolPrice_detail"
@@ -296,7 +293,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
                             android:text=""
-                            android:textColor="@color/red"/>
+                            android:textColor="@color/red" />
 
                     </RelativeLayout>
 
@@ -307,7 +304,7 @@
                         android:layout_height="@dimen/margin0.5dp"
                         android:layout_below="@+id/layout_belowme3"
                         android:layout_marginTop="10dp"
-                        android:background="@color/lineColor"/>
+                        android:background="@color/lineColor" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -320,7 +317,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="订单编号:"
-                            android:textColor="@color/text_normal"/>
+                            android:textColor="@color/text_normal" />
 
                         <TextView
                             android:id="@+id/textView_orderid_detail"
@@ -328,7 +325,7 @@
                             android:layout_height="wrap_content"
                             android:layout_toRightOf="@+id/text_tomyright"
                             android:text=""
-                            android:textColor="@color/text_normal"/>
+                            android:textColor="@color/text_normal" />
 
                     </LinearLayout>
 
@@ -343,14 +340,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="创建时间:"
-                            android:textColor="@color/text_normal"/>
+                            android:textColor="@color/text_normal" />
 
                         <TextView
                             android:id="@+id/textView_createTime_orderdetail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:textColor="@color/text_normal"/>
+                            android:textColor="@color/text_normal" />
 
                     </LinearLayout>
 
@@ -367,14 +364,14 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="交易时间:"
-                            android:textColor="@color/font_grey02"/>
+                            android:textColor="@color/font_grey02" />
 
                         <TextView
                             android:id="@+id/textView_paytime_orderdetail"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=""
-                            android:textColor="@color/text_normal"/>
+                            android:textColor="@color/text_normal" />
 
                     </LinearLayout>
 
@@ -407,8 +404,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/margin20dp"
             android:layout_marginTop="@dimen/margin10dp"
+            android:layout_marginBottom="@dimen/margin20dp"
             android:gravity="right"
             android:orientation="horizontal">
 
@@ -419,7 +416,7 @@
                 android:layout_marginRight="@dimen/margin5dp"
                 android:background="@drawable/btn_theme_stroke"
                 android:text="删除订单"
-                android:textColor="@color/theme_color"/>
+                android:textColor="@color/theme_color" />
 
             <Button
                 android:id="@+id/btn_cacleOrder_detail"
@@ -428,7 +425,7 @@
                 android:layout_marginRight="@dimen/margin5dp"
                 android:background="@drawable/btn_theme_stroke"
                 android:text="取消订单"
-                android:textColor="@color/theme_color"/>
+                android:textColor="@color/theme_color" />
 
             <Button
                 android:id="@+id/btn_payOrder_detail"
@@ -437,7 +434,7 @@
                 android:layout_marginRight="@dimen/margin5dp"
                 android:background="@drawable/btn_theme_solid"
                 android:text="立即支付"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btn_notice_send_detail"
@@ -446,7 +443,7 @@
                 android:layout_marginRight="@dimen/margin5dp"
                 android:text="提醒发货"
                 android:textColor="@color/white"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btn_checkwhere_detail"
@@ -455,7 +452,7 @@
                 android:layout_marginRight="@dimen/margin5dp"
                 android:background="@drawable/btn_theme_stroke"
                 android:text="查看物流"
-                android:textColor="@color/theme_color"/>
+                android:textColor="@color/theme_color" />
 
             <Button
                 android:id="@+id/btn_getConform_detail"
@@ -464,7 +461,7 @@
                 android:layout_marginRight="@dimen/margin5dp"
                 android:background="@drawable/btn_theme_solid"
                 android:text="确认收货"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btn_judge_detail"
@@ -473,7 +470,7 @@
                 android:layout_marginRight="@dimen/margin5dp"
                 android:background="@drawable/btn_theme_solid"
                 android:text="立即评价"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
         </LinearLayout>
     </RelativeLayout>
 

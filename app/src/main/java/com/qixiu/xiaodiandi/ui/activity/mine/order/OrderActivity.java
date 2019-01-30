@@ -31,7 +31,7 @@ public class OrderActivity extends RequestActivity {
     @BindView(R.id.activity_order)
     RelativeLayout activityOrder;
     private String titles[] = {"全部订单", "待付款", "待发货", "待收货", "已完成"};
-    private int index = 0;
+    private int index = 0;//跳转到哪一页
     List<FragmentInterface> fragmentInterfaces = null;
 
 
@@ -68,7 +68,24 @@ public class OrderActivity extends RequestActivity {
 
         for (int i = 0; i < titles.length; i++) {
             OrderFragment orderFragment = new OrderFragment();
-            orderFragment.setPosition(i);
+            //订单类型://全部订单all //待付款0 //待发货1 //待收货2 //已完成3
+            switch (i) {
+                case 0:
+                    orderFragment.setType("all");
+                    break;
+                case 1:
+                    orderFragment.setType("0");
+                    break;
+                case 2:
+                    orderFragment.setType("1");
+                    break;
+                case 3:
+                    orderFragment.setType("2");
+                    break;
+                case 4:
+                    orderFragment.setType("3");
+                    break;
+            }
             fragmentInterfaces.add(orderFragment);
         }
         OrderFragmentAdapter orderFragmentAdapter = new OrderFragmentAdapter(getSupportFragmentManager(), fragmentInterfaces);

@@ -15,27 +15,27 @@ import com.qixiu.xiaodiandi.R;
  * Created by HuiHeZe on 2017/5/3.
  */
 
-public class MyOrderListDetailsHolder extends RecyclerBaseHolder<OrderBean.OBean.ListBean.ItemsBean> {
+public class MyOrderListDetailsHolder extends RecyclerBaseHolder<OrderBean.OBean.CartInfoBean> {
     ImageView imageView_orderIcon;
-    TextView textView_goodsContent,textView_goodsPrice,textView_goodsCount,textView_goodsName;
+    TextView textView_goodsContent, textView_goodsPrice, textView_goodsCount, textView_goodsName;
 
 
     public MyOrderListDetailsHolder(View itemView, Context context, RecyclerView.Adapter adapter) {
         super(itemView, context, adapter);
-        imageView_orderIcon= (ImageView) itemView.findViewById(R.id.imageView_orderIcon);
-        textView_goodsContent= (TextView) itemView.findViewById(R.id.textView_goodsContent);
-        textView_goodsPrice= (TextView) itemView.findViewById(R.id.textView_goodsPrice);
-        textView_goodsCount= (TextView) itemView.findViewById(R.id.textView_goodsCount);
-        textView_goodsName= (TextView) itemView.findViewById(R.id.textView_goodsName);
+        imageView_orderIcon = (ImageView) itemView.findViewById(R.id.imageView_orderIcon);
+        textView_goodsContent = (TextView) itemView.findViewById(R.id.textView_goodsContent);
+        textView_goodsPrice = (TextView) itemView.findViewById(R.id.textView_goodsPrice);
+        textView_goodsCount = (TextView) itemView.findViewById(R.id.textView_goodsCount);
+        textView_goodsName = (TextView) itemView.findViewById(R.id.textView_goodsName);
 
     }
 
     @Override
     public void bindHolder(int position) {
-        Glide.with(mContext).load(mData.getPic()).error(R.mipmap.no_message2x).into(imageView_orderIcon);
-        textView_goodsContent.setText(mData.getName());
-        textView_goodsPrice.setText("¥  "+mData.getPrice()+"");
-        textView_goodsCount.setText("x  "+mData.getNum());
+        Glide.with(mContext).load(mData.getProductInfo().getImage()).error(R.mipmap.no_message2x).into(imageView_orderIcon);
+        textView_goodsContent.setText(mData.getProductInfo().getStore_name());
+        textView_goodsPrice.setText("¥  " + mData.getTruePrice());
+        textView_goodsCount.setText("x  " + mData.getCart_num() + "");
         textView_goodsName.setVisibility(View.GONE);
     }
 }

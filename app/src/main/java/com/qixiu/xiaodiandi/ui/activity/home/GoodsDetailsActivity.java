@@ -19,9 +19,9 @@ import com.jude.rollviewpager.RollPagerView;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
-import com.qixiu.qixiu.utils.CommonUtils;
 import com.qixiu.qixiu.utils.StatusBarUtils;
 import com.qixiu.qixiu.utils.ToastUtil;
+import com.qixiu.qixiu.utils.html_utils.HtmlUtils;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantRequest;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
@@ -103,9 +103,11 @@ public class GoodsDetailsActivity extends RequestActivity {
     public void onSuccess(BaseBean data) {
         if (data instanceof GoodsDetailsBean) {
             detailsBean = (GoodsDetailsBean) data;
-            CommonUtils.setWebview(webview, detailsBean.getO().getProduct().getDescription(), true);
-//            HtmlUtils.getInstance().setWindowWith(windowWith);
-//            HtmlUtils.getInstance().setHtml(textViewPText, detailsBean.getO().getProduct().getDescription());
+//            CommonUtils.setWebview(webview, detailsBean.getO().getProduct().getDescription(), true);
+
+            HtmlUtils.getInstance().setWindowWith(windowWith);
+            HtmlUtils.getInstance().setHtml(textViewPText, detailsBean.getO().getProduct().getDescription());
+
             textViewCartsNum.setText(detailsBean.getO().getProduct().getCartnum() + "");
             if (detailsBean.getO().getProduct().getCollect() == 1) {
                 textViewCollect.setText("已收藏");
