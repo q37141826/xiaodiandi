@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@mipmap/vip_bg"
+    tools:context="com.qixiu.xiaodiandi.ui.activity.mine.vip.VipActivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+     ></RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin241dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin45dp"
+                android:layout_marginTop="@dimen/margin11dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circularhead"
+                    android:layout_width="@dimen/margin45dp"
+                    android:layout_height="@dimen/margin45dp"
+                    android:layout_marginLeft="@dimen/margin15dp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin7dp"
+                    android:layout_toRightOf="@+id/circularhead"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/text_normal"
+                            android:text="13545454151"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            style="@style/text_normal"
+                            android:text="普通会员" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="1556216154" />
+                </LinearLayout>
+
+                <TextView
+                    android:onClick="gotoSugestion"
+                    android:layout_width="@dimen/margin96dp"
+                    android:layout_height="@dimen/margin34dp"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/shape_mine_vip"
+                    android:drawableLeft="@mipmap/mine_vip"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/margin10dp"
+                    android:text="我要推荐"
+                    android:textColor="@color/white"></TextView>
+            </RelativeLayout>
+
+            <com.qixiu.wigit.GotoView
+                android:layout_marginTop="@dimen/margin5dp"
+                android:onClick="myPoints"
+                style="@style/mine_gotoview"
+                android:layout_height="@dimen/margin28dp"
+                android:background="@color/transparent"
+                android:paddingLeft="@dimen/margin25dp"
+                android:paddingRight="@dimen/margin26dp"
+                app:first_size="6sp"
+                app:first_text="我的点滴"></com.qixiu.wigit.GotoView>
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:text="0点滴"
+                android:textColor="@color/red"
+                android:textSize="17sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_normal"
+                    android:text="可提现"
+                    android:textSize="14sp" />
+
+                <TextView
+                    style="@style/text_normal"
+                    android:text="0"
+                    android:textColor="@color/red" />
+
+                <TextView
+                    style="@style/text_normal"
+                    android:text="元"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_marginTop="@dimen/margin15dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/margin25dp"
+                android:paddingRight="@dimen/margin25dp"
+                android:paddingTop="@dimen/margin5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="今日收益"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="0积分" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="本月收益"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="0积分" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="累计收益"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="0积分" />
+                </LinearLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+        <com.qixiu.wigit.GotoView
+            android:onClick="gotoFriends"
+            style="@style/mine_gotoview"
+            android:layout_height="@dimen/margin39dp"
+            app:first_size="6sp"
+            app:first_text="我的好友"></com.qixiu.wigit.GotoView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin1dp"
+            android:layout_marginLeft="@dimen/margin15dp"
+            android:layout_marginRight="@dimen/margin15dp"
+            android:background="@color/line_color"></View>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin60dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+
+            android:paddingTop="@dimen/margin5dp">
+
+            <LinearLayout
+                android:paddingRight="@dimen/margin38dp"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_normal"
+                    android:text="我的好友"
+                    android:textSize="14sp" />
+
+                <TextView
+                    style="@style/text_normal"
+                    android:text="0人" />
+            </LinearLayout>
+            <View
+                android:background="@color/line_color"
+                android:layout_width="@dimen/margin1dp"
+                android:layout_height="@dimen/margin29dp"></View>
+            <LinearLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_normal"
+                    android:text="社群好友"
+                    android:textSize="14sp" />
+
+                <TextView
+                    style="@style/text_normal"
+                    android:text="0人" />
+            </LinearLayout>
+            <View
+                android:background="@color/line_color"
+                android:layout_width="@dimen/margin1dp"
+                android:layout_height="@dimen/margin29dp"></View>
+            <LinearLayout
+                android:paddingLeft="@dimen/margin38dp"
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_normal"
+                    android:text="邀请好友"
+                    android:textSize="14sp" />
+
+                <TextView
+                    style="@style/text_normal"
+                    android:text="获得更多奖励" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

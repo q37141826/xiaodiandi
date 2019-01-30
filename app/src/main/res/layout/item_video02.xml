@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/margin15dp"
+    android:paddingRight="@dimen/margin15dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/margin162dp"
+        android:layout_height="@dimen/margin93dp"
+        android:layout_marginTop="@dimen/margin19dp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewTiltile"
+        style="@style/text_normal"
+        android:layout_marginLeft="@dimen/margin15dp"
+        android:layout_marginTop="@dimen/margin30dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="测试视频标题"
+        android:textColor="@color/font_grey02"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        style="@style/text_normal"
+        android:layout_marginLeft="@dimen/margin15dp"
+        android:layout_marginTop="@dimen/margin26dp"
+        android:text="播放次数"
+        android:textColor="@color/text_grey"
+        app:layout_constraintLeft_toRightOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTiltile" />
+</android.support.constraint.ConstraintLayout>

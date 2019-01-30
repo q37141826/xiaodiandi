@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin10dp"
+    android:padding="@dimen/margin15dp">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/margin38dp"
+        android:layout_height="@dimen/margin38dp" />
+
+    <TextView
+        android:id="@+id/textViewPhone"
+        style="@style/text_normal"
+        android:layout_marginLeft="@dimen/margin70dp"
+        android:text="名字" />
+
+    <TextView
+        android:id="@+id/textViewTime"
+        style="@style/text_normal"
+        android:layout_below="@+id/textViewPhone"
+        android:layout_marginLeft="@dimen/margin70dp"
+        android:textColor="@color/text_grey" />
+
+    <TextView
+        android:id="@+id/textViewBack"
+        style="@style/text_normal"
+        android:layout_alignParentRight="true"
+        android:text="[回复]"
+        android:textColor="@color/theme_color" />
+
+    <TextView
+        android:id="@+id/textViewContent"
+        style="@style/text_normal"
+        android:layout_below="@+id/textViewTime"
+        android:layout_marginLeft="@dimen/margin70dp"
+        android:text="内容" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_marginLeft="@dimen/margin70dp"
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewContent"
+        android:layout_marginTop="@dimen/margin18dp"></android.support.v7.widget.RecyclerView>
+
+</RelativeLayout>

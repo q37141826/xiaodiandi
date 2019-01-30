@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/back_grey"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin60dp"
+        android:background="@color/white">
+
+        <TextView
+            style="@style/text_normal"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin15dp"
+            android:drawableTop="@mipmap/home_scan"
+            android:text="扫一扫"
+            android:textColor="@color/font_grey02" />
+
+        <EditText
+            android:id="@+id/edittext_search"
+            android:layout_width="@dimen/margin216dp"
+            android:layout_height="@dimen/margin33dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin92dp"
+            android:background="@drawable/home_search"
+            android:hint="搜索喜欢的宝贝"
+            android:paddingLeft="@dimen/margin70dp" />
+
+        <ImageView
+            android:layout_width="@dimen/margin22dp"
+            android:layout_height="@dimen/margin22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin20dp"
+            android:src="@mipmap/home_message" />
+
+        <ImageView
+            android:id="@+id/imageViewSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin136dp"
+            android:src="@mipmap/home_search" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin0.5dp"></android.support.v7.widget.RecyclerView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clipChildren="false"
+        android:paddingTop="@dimen/margin7dp">
+
+        <com.jude.rollviewpager.RollPagerView
+            android:id="@+id/rollpager"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin170dp"
+            android:layout_centerInParent="true"
+            android:clipChildren="false"></com.jude.rollviewpager.RollPagerView>
+    </FrameLayout>
+
+    <com.qixiu.wigit.hviewpager.HackyViewPager
+        android:id="@+id/viewpagerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin190dp"></com.qixiu.wigit.hviewpager.HackyViewPager>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablelayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin20dp"
+        android:background="@color/white"></android.support.design.widget.TabLayout>
+
+    <RadioGroup
+        android:id="@+id/radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin20dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"></RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin202dp"
+        android:layout_marginTop="@dimen/margin10dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_normal"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin17dp"
+            android:gravity="center"
+            android:text="会员商品"
+            android:textSize="17sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin135dp"
+            android:layout_marginTop="@dimen/margin11dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin15dp"
+            android:paddingRight="@dimen/margin15dp">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerViewVipList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="361dp"
+        android:layout_marginTop="@dimen/margin8dp"
+        android:background="#FFBAE5FC"
+        android:clipChildren="false">
+
+        <TextView
+            style="@style/text_normal"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin25dp"
+            android:gravity="center"
+            android:text="--- 口碑尖货 ---"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin51dp"
+            android:gravity="center"
+            android:text="从938533件商品中为您挑选"
+            android:textColor="@color/text_grey" />
+
+        <com.jude.rollviewpager.RollPagerView
+            android:id="@+id/rollpagerProduct"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="@dimen/margin79dp"
+            android:clipChildren="false"></com.jude.rollviewpager.RollPagerView>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin86dp"
+        android:layout_marginTop="@dimen/margin10dp"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="@dimen/margin27dp"
+                android:layout_height="@dimen/margin1dp"
+                android:background="@color/font_grey02"></View>
+
+            <TextView
+                style="@style/text_normal"
+                android:text="  为你推荐  "
+                android:textSize="17sp" />
+
+            <View
+                android:layout_width="@dimen/margin27dp"
+                android:layout_height="@dimen/margin1dp"
+                android:background="@color/font_grey02"></View>
+        </LinearLayout>
+
+        <TextView
+            style="@style/text_normal"
+            android:text="品质格调 好生活不贵"
+            android:textColor="@color/text_grey" />
+
+    </LinearLayout>
+</LinearLayout>

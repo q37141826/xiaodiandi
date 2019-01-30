@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <Button
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/btn_confirm_addaddress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/margin3dp"
+        android:layout_marginBottom="@dimen/margin3dp"
+        android:background="@color/theme_color"
+        android:text="新增地址"
+        android:textColor="@color/white"
+        android:textSize="15sp" />

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin97dp"
+    android:paddingLeft="@dimen/margin15dp"
+    android:paddingRight="@dimen/margin15dp"
+    android:paddingTop="@dimen/margin10dp">
+
+    <RelativeLayout
+        android:background="@color/theme_color"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textViewMoney"
+            style="@style/text_normal"
+            android:layout_marginLeft="@dimen/margin30dp"
+            android:layout_marginTop="@dimen/margin17dp"
+            android:text="¥"
+            android:textColor="@color/white"
+            android:textSize="32sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin171dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewHighFloor"
+                style="@style/text_normal"
+                android:layout_marginTop="@dimen/margin15dp"
+                android:text="满多少减多少"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/textViewLimit"
+                style="@style/text_normal"
+                android:layout_marginTop="@dimen/margin5dp"
+                android:text="使用期限"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/textViewUserRule"
+                style="@style/text_normal"
+                android:layout_marginTop="@dimen/margin5dp"
+                android:text="使用条件"
+                android:textColor="@color/white"
+                android:textSize="10sp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

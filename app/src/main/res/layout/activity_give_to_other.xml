@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.qixiu.xiaodiandi.ui.activity.mine.mypoints.GiveToOtherActivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/back_grey"
+        android:divider="@drawable/diver_margin"
+        android:dividerPadding="@dimen/margin15dp"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin15dp">
+
+            <ImageView
+                android:layout_width="@dimen/margin20dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/mine_phone" />
+
+            <com.qixiu.wigit.myedittext.MyEditTextView
+                android:id="@+id/myedittextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin36dp"
+                android:paddingLeft="@dimen/margin5dp"
+                app:my_edittext_hint="输入对方手机号"></com.qixiu.wigit.myedittext.MyEditTextView>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin15dp">
+
+            <ImageView
+                android:layout_width="@dimen/margin20dp"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/mine_points" />
+
+            <com.qixiu.wigit.myedittext.MyEditTextView
+                android:id="@+id/myedittextPoints"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin36dp"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/margin5dp"
+                app:my_edittext_hint="输入转让积分"></com.qixiu.wigit.myedittext.MyEditTextView>
+        </LinearLayout>
+
+        <Button
+            style="@style/btn_normal"
+            android:layout_height="@dimen/margin32dp"
+            android:layout_marginTop="@dimen/margin74dp"
+            android:onClick="comfirmGivePointsToOther"
+            android:text="确认转让" />
+    </LinearLayout>
+</LinearLayout>

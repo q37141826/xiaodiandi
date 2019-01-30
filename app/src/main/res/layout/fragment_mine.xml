@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back_grey"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/vg_title"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin151dp"
+            android:background="@mipmap/mine_bg"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin28dp">
+
+                <TextView
+                    android:id="@+id/textViewGotoVip"
+                    style="@style/text_normal"
+                    android:layout_width="@dimen/margin101dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/shape_mine_vip"
+                    android:drawableLeft="@mipmap/mine_vip_head"
+                    android:drawablePadding="@dimen/margin5dp"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/margin5dp"
+                    android:paddingLeft="@dimen/margin10dp"
+                    android:paddingRight="@dimen/margin10dp"
+                    android:paddingTop="@dimen/margin5dp"
+                    android:text="VIP会员"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin90dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circularHead"
+                    android:layout_width="@dimen/margin65dp"
+                    android:layout_height="@dimen/margin65dp"
+                    android:layout_marginLeft="@dimen/margin15dp"
+                    android:background="@drawable/shape_white_circle"
+                    android:src="@mipmap/mine_head" />
+
+                <LinearLayout
+                    android:layout_width="@dimen/margin180dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin15dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textViewPhone"
+                            style="@style/text_normal"
+                            android:text="13541578457"
+                            android:textColor="@color/white"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/textViewVipname"
+                            style="@style/text_normal"
+                            android:layout_marginLeft="@dimen/margin10dp"
+                            android:text="普通会员"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin10dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:paddingRight="@dimen/margin5dp"
+                                android:paddingLeft="@dimen/margin5dp"
+                                android:id="@+id/textViewSign"
+                                android:background="@drawable/btn_grey_alpa"
+                                style="@style/text_normal"
+                                android:text="每日签到"
+                                android:textColor="@color/white" />
+
+                            <TextView
+                                android:paddingRight="@dimen/margin5dp"
+                                android:paddingLeft="@dimen/margin5dp"
+                                android:id="@+id/textViewVipId"
+                                android:background="@drawable/btn_grey_alpa"
+                                style="@style/text_normal"
+                                android:layout_marginLeft="@dimen/margin10dp"
+                                android:text="ID"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin50dp"
+                    android:gravity="right|bottom">
+
+                    <ImageView
+                        android:id="@+id/imageViewSetting"
+                        android:layout_width="@dimen/margin29dp"
+                        android:layout_height="@dimen/margin29dp"
+                        android:layout_marginRight="@dimen/margin15dp"
+                        android:src="@mipmap/mine_setting" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <com.qixiu.wigit.GotoView
+            android:id="@+id/gotoAllOrder"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin35dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin15dp"
+            app:first_text="我的订单"
+            app:first_text_color="@color/black"
+            app:second_drawable="@mipmap/rightgo"
+            app:second_size="5sp"
+            app:second_text="全部订单"
+            app:second_text_color="@color/text_grey"></com.qixiu.wigit.GotoView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin60dp"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/margin5dp">
+
+            <RelativeLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textViewWaitPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableTop="@mipmap/mine_wait_pay"
+                    android:gravity="center"
+                    android:text="待付款" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin20dp"
+                    android:layout_marginTop="@dimen/margin5dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textViewWaitSend"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableTop="@mipmap/mine_wait_send"
+                    android:gravity="center"
+                    android:text="待发货" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin20dp"
+                    android:layout_marginTop="@dimen/margin5dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textViewWaitReceive"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableTop="@mipmap/mine_wait_receive"
+                    android:gravity="center"
+                    android:text="待收货" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin20dp"
+                    android:layout_marginTop="@dimen/margin5dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0px"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/textViewWaitBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawableTop="@mipmap/mine_sendback"
+                    android:gravity="center"
+                    android:text="换货" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin20dp"
+                    android:layout_marginTop="@dimen/margin5dp" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <com.qixiu.wigit.GotoView
+            android:id="@+id/gotoMyPoints"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin35dp"
+            android:layout_marginTop="@dimen/margin8dp"
+            android:background="@color/white"
+            android:paddingLeft="@dimen/margin15dp"
+            app:first_drawable="@mipmap/mine_diandi"
+            app:first_size="5sp"
+            app:first_text="我的点滴"
+            app:first_text_color="@color/black"
+            app:second_drawable="@mipmap/rightgo"></com.qixiu.wigit.GotoView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin8dp"
+            android:divider="@drawable/diver_margin"
+            android:dividerPadding="10dp"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <com.qixiu.wigit.GotoView
+                android:id="@+id/gotoTicket"
+                style="@style/mine_gotoview"
+                app:first_drawable="@mipmap/mine_ticket"
+                app:first_text="我的优惠券"></com.qixiu.wigit.GotoView>
+
+            <com.qixiu.wigit.GotoView
+                android:id="@+id/gotoAddress"
+                style="@style/mine_gotoview"
+                app:first_drawable="@mipmap/mine_address"
+                app:first_text="我的地址"></com.qixiu.wigit.GotoView>
+
+            <com.qixiu.wigit.GotoView
+                android:id="@+id/gotoMyCollection"
+                style="@style/mine_gotoview"
+                app:first_drawable="@mipmap/mine_collect"
+                app:first_text="我的收藏"></com.qixiu.wigit.GotoView>
+
+            <com.qixiu.wigit.GotoView
+                style="@style/mine_gotoview"
+                app:first_drawable="@mipmap/mine_vip"
+                app:first_text="我要成为会员"></com.qixiu.wigit.GotoView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin11dp"
+            android:divider="@drawable/diver_margin"
+            android:dividerPadding="10dp"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <com.qixiu.wigit.GotoView
+                style="@style/mine_gotoview"
+                app:first_drawable="@mipmap/mine_service"
+                app:first_text="在线客服"></com.qixiu.wigit.GotoView>
+
+            <com.qixiu.wigit.GotoView
+                style="@style/mine_gotoview"
+                app:first_drawable="@mipmap/mine_help"
+                app:first_text="帮助中心"></com.qixiu.wigit.GotoView>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

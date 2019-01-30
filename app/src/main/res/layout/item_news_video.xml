@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin128dp"
+    android:paddingLeft="@dimen/margin15dp"
+    android:paddingRight="@dimen/margin15dp"
+    android:paddingTop="@dimen/margin15dp">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/margin3dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/margin162dp"
+            android:layout_height="@dimen/margin93dp" />
+
+    </android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/textViewDescribe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin15dp"
+        android:layout_marginTop="@dimen/margin16dp"
+        android:layout_toRightOf="@+id/cardview"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/font_grey02" />
+
+    <TextView
+        style="@style/text_normal"
+        android:layout_below="@+id/textViewDescribe"
+        android:layout_marginLeft="@dimen/margin15dp"
+        android:layout_marginTop="@dimen/margin26dp"
+        android:layout_toRightOf="@+id/cardview"
+        android:text="播放量"
+        android:textColor="@color/text_grey" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/back_grey"></View>
+</RelativeLayout>

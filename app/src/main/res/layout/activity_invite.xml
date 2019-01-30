@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.qixiu.xiaodiandi.ui.activity.mine.vip.InviteActivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/invite_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_normal"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/margin27dp"
+            android:gravity="center"
+            android:text="邀请好友"
+            android:textSize="19sp" />
+
+        <TextView
+            style="@style/text_normal"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:text="成为VIP会员"
+            android:textSize="29sp" />
+
+        <LinearLayout
+            android:layout_marginTop="@dimen/margin20dp"
+            android:layout_width="@dimen/margin227dp"
+            android:layout_height="@dimen/margin250dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circularHead"
+                    android:layout_width="@dimen/margin45dp"
+                    android:layout_height="@dimen/margin45dp"
+                    android:layout_marginLeft="@dimen/margin34dp"
+                    android:layout_marginTop="@dimen/margin18dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin7dp"
+                    android:layout_marginTop="@dimen/margin27dp"
+                    android:layout_toRightOf="@+id/circularHead"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="电话号码" />
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="ID"
+                        android:textColor="@color/text_grey" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imageErweima"
+                android:layout_width="@dimen/margin158dp"
+                android:layout_height="@dimen/margin158dp"
+                android:layout_marginTop="@dimen/margin10dp" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/text_normal"
+            android:layout_marginTop="@dimen/margin28dp"
+            android:gravity="center"
+            android:text="邀请好友扫二维码，TA可获得专属礼包，你可获得\n相应的点滴作为奖励" />
+
+        <Button
+            style="@style/btn_normal"
+            android:layout_marginTop="@dimen/margin63dp"
+            android:text="邀请好友" />
+    </LinearLayout>
+</LinearLayout>

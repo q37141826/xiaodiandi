@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_myprofile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/vg_title"
+        android:background="@color/back_grey"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:divider="@drawable/diver_margin"
+            android:dividerPadding="@dimen/margin10dp"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout_changehead"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin40dp"
+                android:paddingBottom="@dimen/margin10dp"
+                android:paddingLeft="@dimen/margin20dp"
+                android:paddingRight="@dimen/margin20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="头像:"
+                    android:textColor="@color/font_grey"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/tomyleft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="@dimen/margin5dp"
+                    android:src="@mipmap/rightgo" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/circular_head_edit"
+                    android:layout_width="@dimen/margin25dp"
+                    android:layout_height="@dimen/margin25dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="@dimen/margin20dp"
+                    android:layout_toLeftOf="@+id/tomyleft"
+                    android:src="@mipmap/ic_launcher" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout_changenickname"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin40dp"
+                android:paddingBottom="@dimen/margin10dp"
+                android:paddingLeft="@dimen/margin20dp"
+                android:paddingRight="@dimen/margin20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:text="ID:"
+                    android:textColor="@color/font_grey"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:id="@+id/tomyleft01"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="@dimen/margin5dp" />
+
+                <TextView
+                    android:id="@+id/textView_nickname_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="@dimen/margin20dp"
+                    android:layout_toLeftOf="@+id/tomyleft01" />
+
+            </RelativeLayout>
+
+            <com.qixiu.wigit.GotoView
+                android:id="@+id/gotoviewLevel"
+                style="@style/myprofile_gotoview"
+                android:layout_height="@dimen/margin41dp"
+                app:first_text="用户等级"
+                app:first_text_color="@color/font_grey"
+                app:show_goto="false"></com.qixiu.wigit.GotoView>
+
+
+            <com.qixiu.wigit.GotoView
+                android:id="@+id/gotoviewPhone"
+                style="@style/myprofile_gotoview"
+                android:layout_height="@dimen/margin41dp"
+                app:first_text="手机号"
+                app:first_text_color="@color/font_grey"
+                app:show_goto="false"></com.qixiu.wigit.GotoView>
+
+            <com.qixiu.wigit.GotoView
+                android:onClick="bindWeichat"
+                style="@style/myprofile_gotoview"
+                android:layout_height="@dimen/margin41dp"
+                app:first_text="微信"
+                app:first_text_color="@color/font_grey"></com.qixiu.wigit.GotoView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
+

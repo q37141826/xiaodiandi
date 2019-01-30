@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/margin113dp"
+        android:layout_height="@dimen/margin128dp" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        style="@style/text_normal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin24dp"
+        android:ellipsize="end"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:paddingBottom="@dimen/margin3dp"
+        android:paddingLeft="@dimen/margin15dp"
+        android:paddingRight="@dimen/margin5dp"
+        android:paddingTop="@dimen/margin3dp"
+        android:text="商品名称1111111111111111111" />
+
+    <TextView
+        android:id="@+id/textViewPrice"
+        style="@style/text_normal"
+        android:layout_width="match_parent"
+        android:paddingLeft="@dimen/margin15dp"
+        android:text="价格"
+        android:textColor="@color/red" />
+</LinearLayout>

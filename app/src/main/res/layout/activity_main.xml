@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.qixiu.xiaodiandi.ui.activity.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/framlayoutForFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/margin50dp"></FrameLayout>
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <View
+                android:background="@color/line_color"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin1dp"></View>
+            <LinearLayout
+                android:paddingTop="@dimen/margin5dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin55dp"
+               >
+
+                <TextView
+                    android:textColor="@color/text_normal"
+                    android:text="首页"
+                    android:id="@+id/textViewHome"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:textColor="@color/text_normal"
+                    android:text="分类"
+                    android:id="@+id/textViewTypes"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:textColor="@color/text_normal"
+                    android:text="社区"
+                    android:id="@+id/textViewCommunity"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:textColor="@color/text_normal"
+                    android:text="购物车"
+                    android:id="@+id/textViewMarket"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent" />
+
+
+                <TextView
+                    android:textColor="@color/text_normal"
+                    android:text="我的"
+                    android:id="@+id/textViewMine"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

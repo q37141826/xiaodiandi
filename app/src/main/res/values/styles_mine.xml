@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="mine_gotoview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/margin35dp</item>
+        <item name="android:paddingLeft">@dimen/margin15dp</item>
+        <item name="first_text_color">@color/black</item>
+        <item name="android:background">@color/white</item>
+        <item name="second_drawable">@mipmap/rightgo</item>
+        <item name="first_size">5sp</item>
+    </style>
+    <style name="myprofile_gotoview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/margin35dp</item>
+        <item name="android:paddingLeft">@dimen/margin15dp</item>
+        <item name="first_text_color">@color/font_grey</item>
+        <item name="second_text_color">@color/font_grey</item>
+        <item name="android:background">@color/white</item>
+        <item name="second_drawable">@mipmap/rightgo</item>
+        <item name="first_size">5sp</item>
+        <item name="second_size">5sp</item>
+    </style>
+
+</resources>

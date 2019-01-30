@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.qixiu.xiaodiandi.ui.activity.mine.mycollection.FindSameActivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiprefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/back_grey"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin100dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin15dp"
+                android:paddingRight="@dimen/margin15dp">
+
+                <ImageView
+                    android:id="@+id/imageViewIcon"
+                    android:layout_width="@dimen/margin78dp"
+                    android:layout_height="@dimen/margin76dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textViewName"
+                        style="@style/text_normal"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:text="产品的名称"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/textViewInfo"
+                        style="@style/text_normal"
+                        android:text="电饭锅"
+                        android:textColor="@color/text_grey"
+                        android:textSize="12sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin18dp">
+
+                        <TextView
+                            android:id="@+id/textViewPrice"
+                            style="@style/text_normal"
+                            android:text="价格"
+                            android:textColor="@color/red"
+                            android:textSize="17sp" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin10dp"
+                android:background="@color/white">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="@dimen/margin15dp"
+                    android:text="相似商品"
+                    android:textColor="@color/font_grey02"
+                    android:textSize="14sp" />
+                <com.jcodecraeer.xrecyclerview.XRecyclerView
+                    android:id="@+id/xrecyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

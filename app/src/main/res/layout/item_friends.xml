@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin55dp"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="@dimen/margin45dp"
+        android:layout_height="@dimen/margin45dp"
+        android:layout_marginLeft="@dimen/margin15dp"
+      />
+
+    <LinearLayout
+        android:layout_marginLeft="@dimen/margin5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_normal"
+            android:text="电话号码"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textSize="10sp"
+                android:paddingLeft="@dimen/margin4dp"
+                android:paddingRight="@dimen/margin4dp"
+                android:padding="@dimen/margin2dp"
+                style="@style/text_normal"
+                android:background="@drawable/firends_vip_bg"
+                android:text="环球合伙人" />
+                <TextView
+                    android:layout_marginLeft="@dimen/margin4dp"
+                    android:text="ID:48125185"
+                    android:textColor="@color/text_grey"
+                    style="@style/text_normal" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.qixiu.xiaodiandi.ui.activity.PhoneLoginActivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/margin62dp"
+            android:layout_height="@dimen/margin82dp"
+            android:layout_marginTop="@dimen/margin12dp"
+            android:src="@mipmap/logo" />
+
+        <com.qixiu.wigit.myedittext.MyEditTextView
+            android:id="@+id/myedittextPhone"
+            style="@style/login_input_edittext"
+            android:layout_marginTop="@dimen/margin50dp"
+            app:input_type="number"
+            app:my_edittext_hint="请输入手机号"
+            app:my_edittext_max_lenth="11"></com.qixiu.wigit.myedittext.MyEditTextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin1dp"
+            android:layout_marginLeft="@dimen/margin10dp"
+            android:layout_marginRight="@dimen/margin10dp"
+            android:background="@color/back_grey"></View>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.qixiu.wigit.myedittext.MyEditTextView
+                android:layout_marginLeft="@dimen/margin15dp"
+                android:id="@+id/myedittextCode"
+                style="@style/login_input_edittext"
+                android:layout_height="@dimen/margin40dp"
+                android:layout_marginRight="@dimen/margin170dp"
+                app:input_type="number"
+                app:my_edittext_hint="请输入短信验证码"
+                app:my_edittext_max_lenth="6"></com.qixiu.wigit.myedittext.MyEditTextView>
+
+            <Button
+                android:id="@+id/btn_sendCode"
+                android:layout_width="@dimen/margin103dp"
+                android:layout_height="@dimen/margin23dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/margin15dp"
+                android:background="@drawable/btn_code_bg"
+                android:onClick="sendCode"
+                android:text="点击获取验证码"
+                android:textColor="@color/font_grey02"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin1dp"
+            android:layout_marginLeft="@dimen/margin10dp"
+            android:layout_marginRight="@dimen/margin10dp"
+            android:background="@color/back_grey"></View>
+
+        <Button
+            style="@style/btn_normal"
+            android:layout_marginTop="@dimen/margin33dp"
+            android:onClick="login"
+            android:text="登录" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,40 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.qixiu.qixiu"
+
+    >
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"></uses-permission>
+    <application>
+        <!--todo 注意这个地方authorities修改成唯一的-->
+        <provider
+            android:name="com.qixiu.qixiu.utils.MyFileProvider"
+            android:authorities="com.qixiu.xiaodiandi.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider" />
+        </provider>
+
+        <activity
+            android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <service
+            android:name=".utils.audio.PlayMusicService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity
+            android:name=".google.zxing.client.android.CaptureActivity"
+            android:screenOrientation="portrait"></activity>
+
+    </application>
+
+
+</manifest>

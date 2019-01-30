@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.qixiu.xiaodiandi.ui.activity.Loginactivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/margin135dp">
+
+        <ImageView
+            android:src="@mipmap/logo"
+            android:layout_width="@dimen/margin90dp"
+            android:layout_height="@dimen/margin120dp" />
+
+        <TextView
+            style="@style/text_normal"
+            android:layout_marginTop="@dimen/margin16dp"
+            android:text="点滴收获 点滴快乐 尽在小点滴！"
+            android:textSize="14sp" />
+
+        <Button
+            style="@style/btn_normal"
+            android:layout_marginTop="@dimen/margin100dp"
+            android:text="微信快捷登录" />
+
+        <Button
+            android:onClick="gotoPhoneLogin"
+            style="@style/btn_normal"
+            android:layout_marginTop="@dimen/margin10dp"
+            android:background="@drawable/btn_login"
+            android:text="手机号码登录"
+            android:textColor="@color/font_grey02" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

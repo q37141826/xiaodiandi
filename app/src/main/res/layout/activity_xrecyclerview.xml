@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:id="@+id/relativeLayout_xrecyclerview_father"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+    <LinearLayout
+        android:layout_below="@+id/vg_title"
+        android:paddingBottom="@dimen/margin150dp"
+        android:orientation="vertical"
+        android:background="@color/back_grey"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/vg_title"
+            android:paddingTop="@dimen/margin5dp">
+
+            <android.support.v4.widget.SwipeRefreshLayout
+                android:id="@+id/swiprefresh_xrecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.jcodecraeer.xrecyclerview.XRecyclerView
+                    android:id="@+id/recyclerview_xrecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+
+            </android.support.v4.widget.SwipeRefreshLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/relativeLayout_no_message"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/vg_title">
+        <ImageView
+            android:layout_centerInParent="true"
+            android:src="@mipmap/shizi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </RelativeLayout>
+    <LinearLayout
+        android:paddingBottom="@dimen/margin40dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            style="@style/btn_normal"
+            android:id="@+id/btn_confirm_addaddress"
+            android:text="新增地址"
+           />
+        <Button
+            android:layout_marginTop="@dimen/margin10dp"
+            style="@style/btn_normal"
+            android:id="@+id/btn_delete_addaddress"
+            android:text="删除地址"
+            />
+
+    </LinearLayout>
+</RelativeLayout>

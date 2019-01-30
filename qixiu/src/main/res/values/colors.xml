@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="white">#ffffff</color>
+    <color name="txt_4D4D4D">#4D4D4D</color>
+    <color name="txt_FF333333">#FF333333</color>
+    <color name="txt_8D8D8D">#8D8D8D</color>
+    <color name="theme_unselect_font">#f7c276</color>
+    <color name="theme_color">#FF00DAAF</color>
+    <color name="mark_start">#fe6602</color>
+    <color name="txt_fe9e46">#fe9e46</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="txt_737373">#737373</color>
+    <color name="txt_01C956">#01C956</color>
+    <color name="txt_E5E5E5">#E5E5E5</color>
+    <color name="txt_DBDBDB">#DBDBDB</color>
+    <color name="blue">#03A9F4</color>
+    <color name="black">#000000</color>
+    <color name="transparent">#00000000</color>
+    <color name="txt_FD5865">#FD5865</color>
+    <color name="lineColor">#16000000</color>
+    <color name="login_bg">#FF146968</color>
+    <color name="text_normal">#4a4a4a</color>
+    <color name="back_grey">#FFF0F0F2</color>
+    <color name="txt_fafafa">#fafafa</color>
+    <color name="text_515151">#515151</color>
+    <color name="mark_end">#ffb570</color>
+    <color name="orange50">#ffe1cd</color>
+    <color name="mark_start_alpa">#f4a057</color>
+    <color name="font_grey">@color/txt_4D4D4D</color>
+    <color name="font_grey02">@color/txt_FF333333</color>
+    <color name="hint_color_normol">#a9a9a9</color>
+    <color name="txt_EBECF8">#ebecf8</color>
+    <color name="image_back">#FFF5F5F5</color>
+
+    <color name="alpha_black_80">#80000000</color>
+    <color name="alpha_black_50">#50000000</color>
+    <color name="alpha_black_70">#BB000000</color>
+    <color name="alpha_black_80per">#c8000000</color>
+    <color name="text_grey">#FF999999</color>
+
+    <color name="red">#FF0000</color>
+
+
+    <!--zxing用到的颜色-->
+    <color name="txt_6AB63B">#6AB63B</color>
+    <color name="line_color">#f6f6f6</color>
+    <color name="line_color_text">#f0f0f0</color>
+    <color name="txt_62b330">#62b330</color>
+    <color name="bg_ffa54d">#ffa54d</color>
+    <color name="bg_ffa54c">#ffa54c</color>
+    <color name="bg_88d559">#88d559</color>
+    <color name="bg_b5b5b5">#b5b5b5</color>
+    <color name="txt_999999">#999999</color>
+    <color name="txt_666666">#666666</color>
+    <color name="bg_f3f3f3">#f3f3f3</color>
+    <color name="contents_text">#ff000000</color>
+    <color name="encode_view">#ffffffff</color>
+    <color name="possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
+    <color name="result_minor_text">#ffc0c0c0</color>
+    <color name="result_points">#c099cc00</color> <!-- Android standard ICS color -->
+    <color name="result_text">#ffffffff</color>
+    <color name="result_view">#b0000000</color>
+    <color name="status_text">#ffffffff</color>
+    <color name="viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="lightgreen">#99CC33</color>
+    <color name="txt_6bc8f2">#6bc8f2</color>
+    <color name="orange_btn">#FFC9A26C</color>
+    <color name="type_green">#FF64BBB3</color>
+    <color name="btn_green_high">#FF00BD98</color>
+    <color name="btn_green_low">@color/theme_color</color>
+
+    <color name="edittext_bg_grey">#FFE6E6E6</color>
+</resources>

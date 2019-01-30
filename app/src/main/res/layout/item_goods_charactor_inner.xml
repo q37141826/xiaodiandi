@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/margin10dp">
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/text_normal"
+        android:layout_width="@dimen/margin53dp"
+        android:layout_marginLeft="@dimen/margin5dp"
+        android:layout_marginRight="@dimen/margin5dp"
+        android:gravity="center"
+        android:paddingLeft="@dimen/margin13dp"
+        android:paddingTop="@dimen/margin7dp"
+        android:paddingRight="@dimen/margin13dp"
+        android:paddingBottom="@dimen/margin7dp"
+        android:textSize="14sp" />
+</android.support.constraint.ConstraintLayout>

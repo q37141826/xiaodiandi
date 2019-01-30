@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin118dp"
+    android:background="@color/white"
+    android:paddingTop="@dimen/margin15dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/circularHead"
+        android:layout_width="@dimen/margin38dp"
+        android:layout_height="@dimen/margin38dp"
+        android:layout_marginLeft="@dimen/margin15dp"
+        android:layout_marginRight="@dimen/margin15dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/margin15dp"
+        android:layout_toRightOf="@+id/circularHead"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/margin15dp">
+
+        <TextView
+            style="@style/text_normal"
+            android:text="名字" />
+
+        <TextView
+            style="@style/text_normal"
+            android:layout_marginTop="@dimen/margin5dp"
+            android:text="时间"
+            android:textColor="@color/text_grey" />
+
+        <TextView
+            style="@style/text_normal"
+            android:layout_marginTop="@dimen/margin10dp"
+            android:text="content89237823784723478287347823748278347823478237482837482374827348" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/line_dash_grey"></View>
+</RelativeLayout>

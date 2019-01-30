@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin111dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin100dp"
+        android:layout_marginTop="@dimen/margin11dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin15dp"
+        android:paddingRight="@dimen/margin15dp">
+
+        <ImageView
+            android:id="@+id/imageViewIcon"
+            android:layout_width="@dimen/margin78dp"
+            android:layout_height="@dimen/margin76dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textViewName"
+                style="@style/text_normal"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="产品的名称"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/textViewInfo"
+                style="@style/text_normal"
+                android:text="电饭锅"
+                android:textColor="@color/text_grey"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin18dp">
+
+                <TextView
+                    android:id="@+id/textViewPrice"
+                    style="@style/text_normal"
+                    android:text="价格"
+                    android:textColor="@color/red"
+                    android:textSize="17sp" />
+
+                <Button
+                    android:id="@+id/btnFindSame"
+                    android:textColor="@color/text_grey"
+                    android:layout_height="@dimen/margin21dp"
+                    android:layout_width="@dimen/margin63dp"
+                    style="@style/text_normal"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/btn_grey_stroke"
+                    android:text="找相似" />
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

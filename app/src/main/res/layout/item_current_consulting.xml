@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="@dimen/margin111dp"
+    android:paddingLeft="@dimen/margin15dp"
+    android:paddingRight="@dimen/margin15dp"
+    android:paddingTop="@dimen/margin15dp">
+
+
+
+    <TextView
+        android:id="@+id/textViewDescribe"
+        android:layout_width="@dimen/margin195dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin15dp"
+        android:layout_marginTop="@dimen/margin11dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/font_grey02" />
+
+    <TextView
+        style="@style/text_normal"
+        android:layout_below="@+id/textViewDescribe"
+        android:layout_marginLeft="@dimen/margin15dp"
+        android:layout_marginTop="@dimen/margin15dp"
+        android:text="发布时间"
+        android:textColor="@color/text_grey" />
+    <android.support.v7.widget.CardView
+        android:layout_toRightOf="@+id/textViewDescribe"
+        android:layout_marginLeft="@dimen/margin10dp"
+        android:id="@+id/cardview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/margin3dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/margin125dp"
+            android:layout_height="@dimen/margin75dp" />
+
+    </android.support.v7.widget.CardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/back_grey"></View>
+</RelativeLayout>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.qixiu.xiaodiandi.ui.activity.mine.SettingActivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/back_grey"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:divider="@drawable/diver_margin"
+            android:dividerPadding="@dimen/margin10dp"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <com.qixiu.wigit.GotoView
+                android:onClick="gotoChangePhone"
+                style="@style/mine_gotoview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin36dp"
+                android:paddingLeft="@dimen/margin15dp"
+                android:paddingRight="@dimen/margin15dp"
+                app:first_text="修改手机号码"></com.qixiu.wigit.GotoView>
+
+            <com.qixiu.wigit.GotoView
+                android:onClick="clean"
+                android:id="@+id/gotoview_clean"
+                style="@style/mine_gotoview"
+                android:paddingLeft="@dimen/margin15dp"
+                android:paddingRight="@dimen/margin15dp"
+                app:first_text="清空缓存"
+                app:show_goto="false"></com.qixiu.wigit.GotoView>
+        </LinearLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin32dp"
+            android:layout_marginLeft="@dimen/margin15dp"
+            android:layout_marginRight="@dimen/margin15dp"
+            android:layout_marginTop="@dimen/margin24dp"
+            android:background="@color/white"
+            android:onClick="outLogin"
+            android:text="退出登录" />
+    </LinearLayout>
+
+</LinearLayout>
