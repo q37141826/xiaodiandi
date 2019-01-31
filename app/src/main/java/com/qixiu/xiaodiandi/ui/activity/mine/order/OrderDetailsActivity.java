@@ -196,8 +196,8 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
 
     private void startDeleteOrder() {
         Map<String, String> map = new HashMap<>();
-        map.put("vipid", Preference.get(ConstantString.USERID, ""));
-        map.put("orderid", orderDetailsBean.getO().getId() + "");
+        map.put("uid",LoginStatus.getId());
+        map.put("oid", orderDetailsBean.getO().getId() + "");
         okHttpRequestModel.okhHttpPost(ConstantUrl.orderDeleteUrl, map, new BaseBean());
     }
 

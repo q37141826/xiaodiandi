@@ -21,9 +21,12 @@ import com.qixiu.qixiu.request.parameter.StringConstants;
 import com.qixiu.qixiu.utils.Preference;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.constant.ConstantRequest;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
+import com.qixiu.xiaodiandi.model.order.CreateOrderBean;
+import com.qixiu.xiaodiandi.model.order.FastPayNewBean;
 import com.qixiu.xiaodiandi.model.order.OrderPayData;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.ConfirmOrderActivity;
@@ -46,8 +49,10 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
     private RelativeLayout relativeLayout_yinlianpay;
     private ImageView imageView_yinlian_selected;
     private OrderPayData payData;
+    private FastPayNewBean fastPayNewBean;
 
     @Override
+
     protected void onInitViewNew() {
         imageView_alipay = (ImageView) findViewById(R.id.imageView_alipay);
         imageView_weixinpay = (ImageView) findViewById(R.id.imageView_weixinpay);
@@ -77,14 +82,14 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
                 imageView_alipay.setImageResource(R.mipmap.shopcar_goods_select);
                 imageView_yinlian_selected.setImageResource(R.mipmap.shopcar_goods_notselect);
                 imageView_weixinpay.setImageResource(R.mipmap.shopcar_goods_notselect);
-                startGetPaData();
+                getOrderData();
                 break;
             case R.id.imageView_weixinpay:
             case R.id.relativeLayout_weixinpay:
                 type = 2;
                 imageView_weixinpay.setImageResource(R.mipmap.shopcar_goods_notselect);
                 imageView_alipay.setImageResource(R.mipmap.shopcar_goods_notselect);
-                startGetPaData();
+                getOrderData();
                 break;
 
             case R.id.relativeLayout_yinlianpay:
@@ -92,8 +97,18 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
                 type = 2;
                 imageView_yinlian_selected.setImageResource(R.mipmap.shopcar_goods_select);
                 imageView_alipay.setImageResource(R.mipmap.shopcar_goods_notselect);
-                startGetPaData();
+                getOrderData();
                 break;
+        }
+    }
+
+    private void getOrderData() {
+        if (payData == null) {
+            //如果还没加入购物车 ，那么先加入购物车
+            ConstantRequest.addTopShopCart(okHttpRequestModel, fastPayNewBean.getGotoAddCartsData().getProdeuctId(),
+                    fastPayNewBean.getGotoAddCartsData().getBuyNum(), fastPayNewBean.getGotoAddCartsData().getUnique());
+        } else {
+            startGetPaData();
         }
     }
 
@@ -110,6 +125,8 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
             bean = new WeixinPayModel();
         }
         post(ConstantUrl.payOrderUrl, map, bean);
+
+
     }
 
     private void setEnable(boolean f) {
@@ -129,8 +146,14 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
             }
         });
         try {
+            //这个地方有太多界面进来
             payData = getIntent().getParcelableExtra(IntentDataKeyConstant.DATA);
             textView_howmuch.setText(("¥" + payData.getMoney()).replace("¥¥", "¥"));
+        } catch (Exception e) {
+        }
+        try {
+            fastPayNewBean = getIntent().getParcelableExtra(IntentDataKeyConstant.DATA);
+            textView_howmuch.setText(("¥" + fastPayNewBean.getGotoAddCartsData().getMoney()).replace("¥¥", "¥"));
         } catch (Exception e) {
         }
         IntentFilter intentFilter = new IntentFilter();
@@ -165,6 +188,21 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
                 startAlipay(aliBean);
             }
         }
+        if (data.getUrl().equals(ConstantUrl.addShopCarURl)) {
+            Map<String, String> map = new HashMap<>();
+            map.put("id", data.getO().toString());
+            post(ConstantUrl.cartsPayUrl, map, new CreateOrderBean());
+        }
+        if (data instanceof CreateOrderBean) {
+            //加入购物车之后,确认订单
+            CreateOrderBean createOrderBean = (CreateOrderBean) data;
+            payData = fastPayNewBean.getOrderPayData();
+            payData.setKey(createOrderBean.getO().getOrderKey());
+            payData.setMoney(createOrderBean.getO().getPriceGroup().getCostPrice());
+//                orderPayData.setCoupon();  //todo 这两个地方后续要补上
+//                orderPayData.setIntegral();
+            startGetPaData();
+        }
     }
 
     @Override
@@ -179,7 +217,7 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
 
 
     private void startAlipay(AliBean bean) {
-        new Alipay(this, this).startPay(bean.getO().getKey());
+        new Alipay(this, this).startPay(bean.getO());
     }
 
 

@@ -135,6 +135,6 @@ public class OrderFragment extends RequestFragment implements XRecyclerView.Load
 
     @Override
     public void onItemClick(View v, RecyclerView.Adapter adapter, OrderBean.OBean data) {
-        OrderDetailsActivity.start(getContext(), OrderDetailsActivity.class, data.getId()+"");
+        OrderDetailsActivity.start(getContext(), OrderDetailsActivity.class, data.getId() + "");
     }
 }

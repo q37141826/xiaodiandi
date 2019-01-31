@@ -1,7 +1,7 @@
 package com.qixiu.qixiu.utils.html_utils;
 
+import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
 import android.widget.TextView;
@@ -59,18 +59,18 @@ public class HtmlUtils {
 //        return  Drawable.createFromPath(path);
 //    }
 
-    Handler handler;
-    public void setHtml(TextView text, String html) {
-        if (handler == null) {
-            handler = new Handler() {
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-                    CharSequence charSequence = (CharSequence) msg.obj;
-                    text.setText(charSequence);
-                }
-            };
-        }
+//    Handler handler;
+    public void setHtml(TextView text, String html, Activity activity) {
+//        if (handler == null) {
+//            handler = new Handler() {
+//                @Override
+//                public void handleMessage(Message msg) {
+//                    super.handleMessage(msg);
+//                    CharSequence charSequence = (CharSequence) msg.obj;
+//                    text.setText(charSequence);
+//                }
+//            };
+//        }
         new Thread(new Runnable() {
             Message msg = Message.obtain();
             @Override
@@ -88,9 +88,15 @@ public class HtmlUtils {
                     }
                 };
                 CharSequence charSequence = Html.fromHtml(html, imageGetter, null);
-                msg.what = 0x101;
-                msg.obj = charSequence;
-                handler.sendMessage(msg);
+//                msg.what = 0x101;
+//                msg.obj = charSequence;
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        text.setText(charSequence);
+                    }
+                });
+//                handler.sendMessage(msg);
             }
         }).start();
     }

@@ -29,9 +29,11 @@ import com.qixiu.xiaodiandi.constant.EventAction;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.model.home.goodsdetails.CharctorInnerBean;
 import com.qixiu.xiaodiandi.model.home.goodsdetails.GoodsDetailsBean;
+import com.qixiu.xiaodiandi.model.order.GotoAddCartsData;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
 import com.qixiu.xiaodiandi.ui.adapter.home.GoodsDetailsCharactorAdapter;
 import com.qixiu.xiaodiandi.ui.fragment.home.ImageUrlAdapter;
+import com.qixiu.xiaodiandi.utils.NumUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -78,6 +80,7 @@ public class GoodsDetailsActivity extends RequestActivity {
     private GoodsDetailsBean.OBean.ResultBean.ListBean selectedProduct;
     private int selectNum = 1;//选择了多少数量
     private TextView tv_goodsdetail_ppw_price_txt;
+    private String id;
 
     @Override
     protected void onInitData() {
@@ -88,7 +91,7 @@ public class GoodsDetailsActivity extends RequestActivity {
     }
 
     private void loadDetails() {
-        String id = getIntent().getStringExtra(IntentDataKeyConstant.DATA);
+        id = getIntent().getStringExtra(IntentDataKeyConstant.DATA);
         Map<String, String> map = new HashMap<>();
         map.put("id", id);
         post(ConstantUrl.shopinfoUrl, map, new GoodsDetailsBean());
@@ -106,7 +109,7 @@ public class GoodsDetailsActivity extends RequestActivity {
 //            CommonUtils.setWebview(webview, detailsBean.getO().getProduct().getDescription(), true);
 
             HtmlUtils.getInstance().setWindowWith(windowWith);
-            HtmlUtils.getInstance().setHtml(textViewPText, detailsBean.getO().getProduct().getDescription());
+            HtmlUtils.getInstance().setHtml(textViewPText, detailsBean.getO().getProduct().getDescription(), this);
 
             textViewCartsNum.setText(detailsBean.getO().getProduct().getCartnum() + "");
             if (detailsBean.getO().getProduct().getCollect() == 1) {
@@ -228,7 +231,19 @@ public class GoodsDetailsActivity extends RequestActivity {
         bt_buy_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ConfirmOrderActivity.start(getContext(), ConfirmOrderActivity.class);
+                if (selectedProduct == null) {
+                    ToastUtil.toast("请选择产品规格");
+                    return;
+                }
+                //立即支付需要加入购物车和订单一起请求，所以把加入购物车的信息一起送到支付界面
+                GotoAddCartsData gotoAddCartsData = new GotoAddCartsData();
+                gotoAddCartsData.setBuyNum(selectNum + "");
+                gotoAddCartsData.setProdeuctId(detailsBean.getO().getProduct().getId() + "");
+                gotoAddCartsData.setUnique(selectedProduct == null ? "" : selectedProduct.getUnique());
+                gotoAddCartsData.setMoney(NumUtils.getDouble(selectedProduct.getPrice()) * selectNum + "");
+                gotoAddCartsData.setListBean(selectedProduct);
+                ConfirmOrderActivity.start(getContext(), ConfirmOrderActivity.class, gotoAddCartsData);
+
             }
         });
 

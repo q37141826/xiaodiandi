@@ -28,6 +28,8 @@ import com.qixiu.wigit.show_dialog.ArshowDialog;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.model.login.LoginStatus;
+import com.qixiu.xiaodiandi.model.order.OrderPayData;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.CheckWhereActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.OrderDetailsActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.SelectPayMethoedActivity;
@@ -111,7 +113,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
         adapterl.setOnItemClickListener(new OnRecyclerItemListener<OrderBean.OBean.CartInfoBean>() {
                                             @Override
                                             public void onItemClick(View v, RecyclerView.Adapter adapter, OrderBean.OBean.CartInfoBean data) {
-                                                OrderDetailsActivity.start(mContext,OrderDetailsActivity.class,mData.getId()+"");
+                                                OrderDetailsActivity.start(mContext, OrderDetailsActivity.class, mData.getId() + "");
                                             }
                                         }
         );
@@ -134,30 +136,27 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
             btn.setVisibility(View.GONE);
         }
         String textState = "";
-        if ((1 == mData.getStatus())) {
+        if ((0 == mData.getStatus())) {
             btn_cancleOrder.setVisibility(View.VISIBLE);
             btn_payThisOrder.setVisibility(View.VISIBLE);
-            btn_change.setVisibility(View.VISIBLE);
             textState = "待付款";
-        } else if (3 == mData.getStatus()) {
+        } else if (2 == mData.getStatus()) {
             btn_checkwhere_list.setVisibility(View.VISIBLE);
             btn_getConform_list.setVisibility(View.VISIBLE);
-            textState = "待收货";
-        } else if (2 == mData.getStatus()) {
             btn_change.setVisibility(View.VISIBLE);
-            textState = "已付款";
+            textState = "待收货";
+        } else if (1 == mData.getStatus()) {
+            textState = "待发货";
         } else if (8 == (mData.getStatus())) {
             btn_deleteOrder.setVisibility(View.VISIBLE);
             textState = "待评价";
         } else if (5 == (mData.getStatus())) {
+            btn_change.setVisibility(View.VISIBLE);
+            btn_change.setText("换货中");
+            textState = "换货中";
+        } else if (8 == mData.getStatus()) {
 //            btn_giveComments.setVisibility(View.VISIBLE);
             btn_deleteOrder.setVisibility(View.VISIBLE);
-            btn_change.setVisibility(View.VISIBLE);
-            textState = "已完成";
-        } else if (0 == mData.getStatus()) {
-//            btn_giveComments.setVisibility(View.VISIBLE);
-            btn_deleteOrder.setVisibility(View.VISIBLE);
-            btn_change.setVisibility(View.VISIBLE);
             textState = "已取消";
         }
         textView_order_finish.setText(textState);
@@ -177,10 +176,10 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
                 startPay();
                 break;
             case R.id.btn_notice_send:
-                if (mData.getStatus() == 2) {
-                    ToastUtil.showToast(mContext, "您已经提醒发货，请勿重复提醒");
-                    return;
-                }
+//                if (mData.getStatus() == 2) {
+//                    ToastUtil.showToast(mContext, "您已经提醒发货，请勿重复提醒");
+//                    return;
+//                }
                 startNotice();
                 break;
             case R.id.btn_checkwhere_list:
@@ -200,27 +199,29 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
 
     private void startCancleOrder() {
         Map<String, String> map = new HashMap<>();
-        map.put("orderid", mData.getId() + "");
-        map.put("vipid", Preference.get(ConstantString.USERID, ""));
+        map.put("uid", LoginStatus.getId());
+        map.put("oid", mData.getId() + "");
         okHttpRequestModel.okhHttpPost(ConstantUrl.cancleOrder, map, new BaseBean());
     }
 
     private void startPay() {
-        intent = new Intent(mContext, SelectPayMethoedActivity.class);
-        //// TODO: 2017/9/18 放入订单id
-        intent.putExtra("orderid", mData.getId());
-        intent.putExtra("money", mData.getPay_price());
+        OrderPayData orderPayData = new OrderPayData();
+        orderPayData.setMoney(mData.getPay_price());
+        SelectPayMethoedActivity.start(mContext, SelectPayMethoedActivity.class, orderPayData);
         mContext.startActivity(intent);
     }
 
     private void startNotice() {
-
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", LoginStatus.getId());
+        map.put("oid", mData.getId() + "");
+        okHttpRequestModel.okhHttpPost(ConstantUrl.remindUrl, map, new BaseBean());
     }
 
     private void startDeleteOrder() {
         Map<String, String> map = new HashMap<>();
-        map.put("vipid", Preference.get(ConstantString.USERID, ""));
-        map.put("orderid", mData.getId() + "");
+        map.put("uid", LoginStatus.getId());
+        map.put("oid", mData.getId() + "");
         okHttpRequestModel.okhHttpPost(ConstantUrl.orderDeleteUrl, map, new BaseBean());
     }
 
@@ -252,8 +253,8 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
 
     private void startGetGoods() {
         Map<String, String> map = new HashMap<>();
-        map.put("vipid", Preference.get(ConstantString.USERID, ""));
-        map.put("orderid", mData.getId() + "");
+        map.put("uid", LoginStatus.getId());
+        map.put("oid", mData.getId() + "");
         okHttpRequestModel.okhHttpPost(ConstantUrl.getGoodsUrl, map, new BaseBean());
     }
 
@@ -297,8 +298,6 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
         if (ConstantUrl.cancleOrder.equals(data.getUrl()) || ConstantUrl.getGoodsUrl.equals(data.getUrl()) || ConstantUrl.orderDeleteUrl.equals(data.getUrl())) {
             myOrderRefreshListener.onOrderRefresh(mData, ConstantString.ACTION_REFRSH);
         }
-
-
         ToastUtil.toast(data.getM());
     }
 

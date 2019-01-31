@@ -42,7 +42,7 @@ public class ConstantUrl {
 
 
     //我的收藏
-    public static String collectionlist = BuildConfig.BASE_URL +  "/api/home/collectionlist";
+    public static String collectionlist = BuildConfig.BASE_URL + "/api/home/collectionlist";
 
     //分类类表
     public static String classifyUrl = BuildConfig.BASE_URL + "/api/home/classify";
@@ -53,10 +53,9 @@ public class ConstantUrl {
     public static String shopinfoUrl = BuildConfig.BASE_URL + "/api/home/shopinfo";
 
     //加入收藏
-    public static String addToCollectUrl = BuildConfig.BASE_URL +   "/api/home/collection";
-        //寻找相似
-        public static String findSimilarUrl = BuildConfig.BASE_URL +     "/api/home/similar";
-
+    public static String addToCollectUrl = BuildConfig.BASE_URL + "/api/home/collection";
+    //寻找相似
+    public static String findSimilarUrl = BuildConfig.BASE_URL + "/api/home/similar";
 
 
     //添加购物车
@@ -69,7 +68,6 @@ public class ConstantUrl {
     public static String ClearShopCarURl = BuildConfig.BASE_URL + "/api/home/cartdel";//todo 以后要更改正确的URL
 
 
-
     //更改数量
     public static String STORE_SHOPCAR_EDIT_COUNT = BuildConfig.BASE_URL + "";
     //删除
@@ -79,9 +77,8 @@ public class ConstantUrl {
     public static String cartsPayUrl = BuildConfig.BASE_URL + "/api/home/settlement";
 
 
-
     //我的订单
-    public static String myOrderListUrl = BuildConfig.BASE_URL +  "/api/home/order";
+    public static String myOrderListUrl = BuildConfig.BASE_URL + "/api/home/order";
 
 
     //快速支付
@@ -103,12 +100,13 @@ public class ConstantUrl {
 
 
     //取消订单
-    public static String cancleOrder = BuildConfig.BASE_URL + "";
-    //订单详情
-    public static String orderDeleteUrl = BuildConfig.BASE_URL + "";
+    public static String cancleOrder = BuildConfig.BASE_URL + "/api/home/orderdel";
+    //订单删除
+    public static String orderDeleteUrl = BuildConfig.BASE_URL + "/api/home/orderdel";
     //确认收货
-    public static String getGoodsUrl = BuildConfig.BASE_URL + "";
-
+    public static String getGoodsUrl = BuildConfig.BASE_URL + "/api/home/receiving";
+    //提醒发货
+    public static String remindUrl = BuildConfig.BASE_URL + "/api/home/remind";
 
     //看物流
     public static String CheckWhereUrl = BuildConfig.BASE_URL + "";

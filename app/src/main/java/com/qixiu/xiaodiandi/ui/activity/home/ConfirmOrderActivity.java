@@ -22,6 +22,8 @@ import com.qixiu.xiaodiandi.constant.ConstantRequest;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.model.order.CreateOrderBean;
+import com.qixiu.xiaodiandi.model.order.FastPayNewBean;
+import com.qixiu.xiaodiandi.model.order.GotoAddCartsData;
 import com.qixiu.xiaodiandi.model.order.OrderPayData;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.address.AddressListActivity;
@@ -63,6 +65,7 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
     private CreateOrderBean.OBean orderBean;
     private GotoView gotoViewAddress;
     private AddressBean.OBean selectedAddress;
+    private GotoAddCartsData gotoAddCartsData;
 
     @Override
     protected void onInitData() {
@@ -88,6 +91,11 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
         } catch (Exception e) {
 
         }
+        if (orderBean == null) {
+            gotoAddCartsData = getIntent().getParcelableExtra(IntentDataKeyConstant.DATA);
+            textView_totalprice.setText("¥" + gotoAddCartsData.getMoney() + "");
+            textView_totalNum.setText(gotoAddCartsData.getBuyNum() + "");
+        }
         getData();
     }
 
@@ -110,13 +118,24 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
 
             case R.id.textView_gotoPay:
                 getMessage();
-                OrderPayData orderPayData = new OrderPayData();
-                orderPayData.setAddress(selectedAddress.getId());
-                orderPayData.setKey(orderBean.getOrderKey());
-                orderPayData.setMoney(textView_totalprice.getText().toString());
+                //快速支付确认 ---- 购物车确认
+                if (orderBean == null && gotoAddCartsData != null) {
+                    OrderPayData orderPayData = new OrderPayData();
+                    FastPayNewBean fastPayNewBean = new FastPayNewBean();
+                    fastPayNewBean.setGotoAddCartsData(gotoAddCartsData);
+                    fastPayNewBean.setOrderPayData(orderPayData);
+                    orderPayData.setMoney(textView_totalprice.getText().toString());
+                    orderPayData.setAddress(selectedAddress.getId());
+                    SelectPayMethoedActivity.start(getContext(), SelectPayMethoedActivity.class, fastPayNewBean);
+                } else {
+                    OrderPayData orderPayData = new OrderPayData();
+                    orderPayData.setAddress(selectedAddress.getId());
+                    orderPayData.setKey(orderBean.getOrderKey());
+                    orderPayData.setMoney(textView_totalprice.getText().toString());
 //                orderPayData.setCoupon();  //todo 这两个地方后续要补上
 //                orderPayData.setIntegral();
-                SelectPayMethoedActivity.start(getContext(), SelectPayMethoedActivity.class, orderPayData);
+                    SelectPayMethoedActivity.start(getContext(), SelectPayMethoedActivity.class, orderPayData);
+                }
                 break;
         }
     }

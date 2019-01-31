@@ -1,5 +1,8 @@
 package com.qixiu.xiaodiandi.model.home.goodsdetails;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.qixiu.qixiu.request.bean.BaseBean;
 
 import java.util.List;
@@ -215,7 +218,10 @@ public class GoodsDetailsBean    extends BaseBean<GoodsDetailsBean.OBean> {
                 }
             }
 
-            public static class ListBean {
+            public static class ListBean implements Parcelable {
+
+
+
                 /**
                  * product_id : 691
                  * suk : 大,红
@@ -299,6 +305,49 @@ public class GoodsDetailsBean    extends BaseBean<GoodsDetailsBean.OBean> {
                 public void setCost(String cost) {
                     this.cost = cost;
                 }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeInt(this.product_id);
+                    dest.writeString(this.suk);
+                    dest.writeInt(this.stock);
+                    dest.writeInt(this.sales);
+                    dest.writeString(this.price);
+                    dest.writeString(this.image);
+                    dest.writeString(this.unique);
+                    dest.writeString(this.cost);
+                }
+
+                public ListBean() {
+                }
+
+                protected ListBean(Parcel in) {
+                    this.product_id = in.readInt();
+                    this.suk = in.readString();
+                    this.stock = in.readInt();
+                    this.sales = in.readInt();
+                    this.price = in.readString();
+                    this.image = in.readString();
+                    this.unique = in.readString();
+                    this.cost = in.readString();
+                }
+
+                public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>() {
+                    @Override
+                    public ListBean createFromParcel(Parcel source) {
+                        return new ListBean(source);
+                    }
+
+                    @Override
+                    public ListBean[] newArray(int size) {
+                        return new ListBean[size];
+                    }
+                };
             }
         }
     }
