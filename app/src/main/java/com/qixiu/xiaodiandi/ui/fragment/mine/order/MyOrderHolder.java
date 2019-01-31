@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.alipay.AliPayBean;
 import com.alipay.PayResult;
+import com.alipay.interf.AliBean;
 import com.alipay.interf.IPay;
 import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
@@ -29,10 +30,8 @@ import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
-import com.qixiu.xiaodiandi.model.order.OrderPayData;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.CheckWhereActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.OrderDetailsActivity;
-import com.qixiu.xiaodiandi.ui.activity.mine.order.SelectPayMethoedActivity;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -205,10 +204,21 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
     }
 
     private void startPay() {
-        OrderPayData orderPayData = new OrderPayData();
-        orderPayData.setMoney(mData.getPay_price());
-        SelectPayMethoedActivity.start(mContext, SelectPayMethoedActivity.class, orderPayData);
-        mContext.startActivity(intent);
+//        OrderPayData orderPayData = new OrderPayData();
+//        orderPayData.setMoney(mData.getPay_price());//重新发起支付的时候
+//        SelectPayMethoedActivity.start(mContext, SelectPayMethoedActivity.class, orderPayData);
+//        mContext.startActivity(intent);
+        Map<String, String> map = new HashMap<>();
+        map.put("order_id",mData.getId()+"");
+        map.put("uid",LoginStatus.getId());
+        map.put("paytype",mData.getPay_type());
+        BaseBean baseBean;
+        if(mData.getPay_type().equals("1")){
+            baseBean=new AliBean();
+        }else {
+            baseBean=new WeixinPayModel();
+        }
+        okHttpRequestModel.okhHttpPost(ConstantUrl.payOrderUrl,map,baseBean);
     }
 
     private void startNotice() {
@@ -260,7 +270,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
 
     @Override
     public void onSuccess(String msg) {
-
+        myOrderRefreshListener.onOrderRefresh(mData,"支付成功");
     }
 
     @Override

@@ -30,7 +30,7 @@ import butterknife.Unbinder;
  * Created by my on 2019/1/11.
  */
 
-public class OrderFragment extends RequestFragment implements XRecyclerView.LoadingListener, OnRecyclerItemListener<OrderBean.OBean> {
+public class OrderFragment extends RequestFragment implements XRecyclerView.LoadingListener, OnRecyclerItemListener<OrderBean.OBean>, MyOrderAdapter.MyOrderRefreshListener {
     private String type;
     @BindView(R.id.recycleView_myorederall)
     XRecyclerView recycleViewMyorederall;
@@ -86,6 +86,7 @@ public class OrderFragment extends RequestFragment implements XRecyclerView.Load
         });
         getData();
         adapter.setOnItemClickListener(this);
+        adapter.setMyOrderRefreshListener(this);
     }
 
     private void getData() {
@@ -136,5 +137,10 @@ public class OrderFragment extends RequestFragment implements XRecyclerView.Load
     @Override
     public void onItemClick(View v, RecyclerView.Adapter adapter, OrderBean.OBean data) {
         OrderDetailsActivity.start(getContext(), OrderDetailsActivity.class, data.getId() + "");
+    }
+
+    @Override
+    public void onOrderRefresh(OrderBean.OBean mdata, String action) {
+        getData();
     }
 }
