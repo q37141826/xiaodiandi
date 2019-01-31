@@ -1,5 +1,6 @@
 package com.qixiu.xiaodiandi.ui.fragment.mine.order;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.View;
 
@@ -12,8 +13,12 @@ import com.qixiu.xiaodiandi.R;
  */
 
 public class MyOrderAdapter extends RecyclerBaseAdapter<OrderBean.OBean, MyOrderHolder> {
-
+    private Activity activity;
     private MyOrderRefreshListener myOrderRefreshListener;
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
 
     @Override
     public int getLayoutId() {
@@ -24,6 +29,7 @@ public class MyOrderAdapter extends RecyclerBaseAdapter<OrderBean.OBean, MyOrder
     public MyOrderHolder createViewHolder(View itemView, Context context, int viewType) {
         MyOrderHolder myOrderHolder = new MyOrderHolder(itemView, context, this);
         myOrderHolder.setMyOrderRefreshListener(myOrderRefreshListener);
+        myOrderHolder.setActivity(activity);
         return myOrderHolder;
     }
 

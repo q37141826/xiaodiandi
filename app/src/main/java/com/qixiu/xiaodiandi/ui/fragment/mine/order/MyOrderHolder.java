@@ -1,5 +1,6 @@
 package com.qixiu.xiaodiandi.ui.fragment.mine.order;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alipay.AliPayBean;
+import com.alipay.Alipay;
 import com.alipay.PayResult;
 import com.alipay.interf.AliBean;
 import com.alipay.interf.IPay;
@@ -51,6 +53,12 @@ import okhttp3.Call;
 
 public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implements View.OnClickListener, IPay, OKHttpUIUpdataListener<BaseBean> {
     AlertDialog dialog;
+    Activity activity;
+
+    public void setActivity(Activity activity) {
+        this.activity = activity;
+    }
+
     Intent intent;
     RelativeLayout framelayout_myorder;
     OrderListDetailsAdapter adapterl;
@@ -209,16 +217,16 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
 //        SelectPayMethoedActivity.start(mContext, SelectPayMethoedActivity.class, orderPayData);
 //        mContext.startActivity(intent);
         Map<String, String> map = new HashMap<>();
-        map.put("order_id",mData.getId()+"");
-        map.put("uid",LoginStatus.getId());
-        map.put("paytype",mData.getPay_type());
+        map.put("key", mData.getOrder_id() + "");
+        map.put("uid", LoginStatus.getId());
+        map.put("paytype", mData.getPay_type());
         BaseBean baseBean;
-        if(mData.getPay_type().equals("1")){
-            baseBean=new AliBean();
-        }else {
-            baseBean=new WeixinPayModel();
+        if (mData.getPay_type().equals("1")) {
+            baseBean = new AliBean();
+        } else {
+            baseBean = new WeixinPayModel();
         }
-        okHttpRequestModel.okhHttpPost(ConstantUrl.payOrderUrl,map,baseBean);
+        okHttpRequestModel.okhHttpPost(ConstantUrl.payOrderUrl, map, baseBean);
     }
 
     private void startNotice() {
@@ -270,7 +278,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
 
     @Override
     public void onSuccess(String msg) {
-        myOrderRefreshListener.onOrderRefresh(mData,"支付成功");
+        myOrderRefreshListener.onOrderRefresh(mData, "支付成功");
     }
 
     @Override
@@ -307,8 +315,13 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
     public void onSuccess(BaseBean data, int i) {
         if (ConstantUrl.cancleOrder.equals(data.getUrl()) || ConstantUrl.getGoodsUrl.equals(data.getUrl()) || ConstantUrl.orderDeleteUrl.equals(data.getUrl())) {
             myOrderRefreshListener.onOrderRefresh(mData, ConstantString.ACTION_REFRSH);
+            ToastUtil.toast(data.getM());
         }
-        ToastUtil.toast(data.getM());
+        if (data instanceof AliBean) {
+            AliBean aliBean = (AliBean) data;
+            new Alipay(activity,this).startPay(aliBean.getO());
+        }
+
     }
 
     @Override

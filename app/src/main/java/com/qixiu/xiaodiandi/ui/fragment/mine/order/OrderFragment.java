@@ -75,6 +75,7 @@ public class OrderFragment extends RequestFragment implements XRecyclerView.Load
     @Override
     protected void onInitData() {
         adapter = new MyOrderAdapter();
+        adapter.setActivity(getActivity());
         XrecyclerViewUtil.setXrecyclerView(recycleViewMyorederall, this, getContext(), false, 2, null);
         recycleViewMyorederall.setAdapter(adapter);
         swiprefreshOrder.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
