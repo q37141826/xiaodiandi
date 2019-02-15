@@ -40,7 +40,7 @@ public class ConstantUrl {
     public static String waterlistUrl = BuildConfig.BASE_URL + "/api/home/waterlist";
 
     //浏览获得积分
-    public static String scanPointsUrl = BuildConfig.BASE_URL +  "/api/home/browse";
+    public static String scanPointsUrl = BuildConfig.BASE_URL + "/api/home/browse";
 
 
     //我的优惠券
@@ -140,9 +140,9 @@ public class ConstantUrl {
     public static String transToOtherUrl = BuildConfig.BASE_URL + "/api/home/transfer";
 
     //积分明细
-    public static String pointsListUrl = BuildConfig.BASE_URL +   "/api/home/waterinfo";
+    public static String pointsListUrl = BuildConfig.BASE_URL + "/api/home/waterinfo";
 
     //点滴提现明细
-    public static String getCashRecordUrl = BuildConfig.BASE_URL +   "/api/home/withdrawinfo";
+    public static String getCashRecordUrl = BuildConfig.BASE_URL + "/api/home/withdrawinfo";
 
 }

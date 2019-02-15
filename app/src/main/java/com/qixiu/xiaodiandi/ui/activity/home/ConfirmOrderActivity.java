@@ -356,7 +356,7 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
         if (selectedPoints != null && isUsePoints) {
             finalMoney = finalMoney - NumUtils.getDouble(selectedPoints.getO().getRmd());
             if (finalMoney <= 0) {//如果扣除积分之后变成了负的，那么只能使用到让金额变成0的地步
-                interger = (0.01 - finalMoney) * 10;
+                interger = totoalFinalMoney * 10;
                 finalMoney = 0.01;
             } else {
                 interger = selectedPoints.getO().getIntegral();

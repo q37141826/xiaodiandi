@@ -120,6 +120,7 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
         map.put("key", payData.getKey() + "");
         map.put("address", payData.getAddress() + "");
         CommonUtils.putDataIntoMap(map, "coupon", payData.getCoupon());
+
         CommonUtils.putDataIntoMap(map, "integral", payData.getIntegral());
         BaseBean bean;
         if (type == 1) {
