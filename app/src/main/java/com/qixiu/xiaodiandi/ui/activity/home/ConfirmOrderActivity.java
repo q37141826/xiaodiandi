@@ -19,8 +19,12 @@ import com.qixiu.wigit.GotoView;
 import com.qixiu.wigit.show_dialog.ArshowDialog;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantRequest;
+import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
+import com.qixiu.xiaodiandi.model.login.LoginStatus;
+import com.qixiu.xiaodiandi.model.mine.points.PointsBean;
+import com.qixiu.xiaodiandi.model.mine.ticket.TicketListBean;
 import com.qixiu.xiaodiandi.model.order.CreateOrderBean;
 import com.qixiu.xiaodiandi.model.order.FastPayNewBean;
 import com.qixiu.xiaodiandi.model.order.GotoAddCartsData;
@@ -33,11 +37,14 @@ import com.qixiu.xiaodiandi.ui.activity.home.confirm_order.ConfirmOrderAdapter;
 import com.qixiu.xiaodiandi.ui.activity.home.confirm_order.FastPayBean;
 import com.qixiu.xiaodiandi.ui.activity.mine.TicketActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.SelectPayMethoedActivity;
+import com.qixiu.xiaodiandi.utils.NumUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ConfirmOrderActivity extends RequestActivity implements View.OnClickListener {
@@ -47,8 +54,9 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
             textView_editaddress_coformorder, textView_shoildpayprice, textView_totalprice, textView_postage, textView_gotoPay, textView_totalNum;
     private OKHttpRequestModel okHttpRequestModel;
     private RecyclerView recyclerview_cofirm_order;
-    //界面数据的网络接口
-    private String url;
+
+    GotoView gotoViewPoints;//是否使用积分的点击view
+
     //第一次进入该界面，还是不是第一次，根据这个判断，只刷新地址界面
     private boolean IS_FIRST_IN = true;
     //是从购物车过来，还是从立即支付过来
@@ -61,11 +69,17 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
     //留言
     private EditText edittext_confirmOrder;
     //总价钱，传给下一个界面用
-    private String totoal_money;
     private CreateOrderBean.OBean orderBean;
-    private GotoView gotoViewAddress;
+    private GotoView gotoViewAddress, gotoViewTikets;
     private AddressBean.OBean selectedAddress;
     private GotoAddCartsData gotoAddCartsData;
+    private TicketListBean.OBean selectedTicket;
+    //总价钱
+    double totoalFinalMoney = 0;
+    //是否使用积分
+    boolean isUsePoints = false;
+    private PointsBean selectedPoints;//个人积分信息
+    private double interger;//使用的积分数量
 
     @Override
     protected void onInitData() {
@@ -88,6 +102,7 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
             }
             textView_totalprice.setText("¥" + orderBean.getPriceGroup().getTotalPrice() + "");
             textView_totalNum.setText(num + "");
+            totoalFinalMoney = NumUtils.getDouble(orderBean.getPriceGroup().getTotalPrice());
         } catch (Exception e) {
 
         }
@@ -95,8 +110,14 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
             gotoAddCartsData = getIntent().getParcelableExtra(IntentDataKeyConstant.DATA);
             textView_totalprice.setText("¥" + gotoAddCartsData.getMoney() + "");
             textView_totalNum.setText(gotoAddCartsData.getBuyNum() + "");
+            List datas = new ArrayList();
+            datas.add(gotoAddCartsData.getListBean());
+            adapter.refreshData(datas);
+            totoalFinalMoney = NumUtils.getDouble(gotoAddCartsData.getMoney());
+
         }
         getData();
+        getPointsData();
     }
 
     @Override
@@ -119,21 +140,23 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
             case R.id.textView_gotoPay:
                 getMessage();
                 //快速支付确认 ---- 购物车确认
-                if (orderBean == null && gotoAddCartsData != null) {
-                    OrderPayData orderPayData = new OrderPayData();
+                OrderPayData orderPayData = new OrderPayData();
+                if (selectedTicket != null) {
+                    orderPayData.setCoupon(selectedTicket.getId() + "" + "");  //todo 这两个地方后续要补上
+                }
+                if (selectedPoints != null && isUsePoints) {
+                    orderPayData.setIntegral(interger + "");
+                }
+                orderPayData.setMoney(textView_totalprice.getText().toString());
+                if (orderBean == null && gotoAddCartsData != null) {//快速支付和购物车支付的判断
                     FastPayNewBean fastPayNewBean = new FastPayNewBean();
                     fastPayNewBean.setGotoAddCartsData(gotoAddCartsData);
                     fastPayNewBean.setOrderPayData(orderPayData);
-                    orderPayData.setMoney(textView_totalprice.getText().toString());
                     orderPayData.setAddress(selectedAddress.getId());
                     SelectPayMethoedActivity.start(getContext(), SelectPayMethoedActivity.class, fastPayNewBean);
                 } else {
-                    OrderPayData orderPayData = new OrderPayData();
                     orderPayData.setAddress(selectedAddress.getId());
                     orderPayData.setKey(orderBean.getOrderKey());
-                    orderPayData.setMoney(textView_totalprice.getText().toString());
-//                orderPayData.setCoupon();  //todo 这两个地方后续要补上
-//                orderPayData.setIntegral();
                     SelectPayMethoedActivity.start(getContext(), SelectPayMethoedActivity.class, orderPayData);
                 }
                 break;
@@ -196,6 +219,8 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
         //这两个显示器中一个
         relativelayout_goto_address_list = (RelativeLayout) findViewById(R.id.relativelayout_goto_address_list);
         gotoViewAddress = findViewById(R.id.gotoViewAddress);
+        gotoViewTikets = findViewById(R.id.gotoViewTikets);
+        gotoViewPoints = findViewById(R.id.gotoViewPoints);
 
         recyclerview_cofirm_order = (RecyclerView) findViewById(R.id.recyclerview_cofirm_order);
         textView_shoildpayprice = (TextView) findViewById(R.id.textView_shoildpayprice);
@@ -261,14 +286,9 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
                 textView_phone_comforOrder.setText(bean.getO().getAddress().get(0).getMobile());
             }
         }
-        if (ConstantUrl.fastPayOrderMakeUrl.equals(data.getUrl()) || (ConstantUrl.cartsPayOrderMakeUrl.equals(data.getUrl())) && (!(data instanceof CartsPayBean))) {
-            Intent intent;
-//            intent = new Intent(this, SelectPayMethoedActivity.class);// TODO: 2019/1/9
-//            intent.putExtra("orderid", data.getO().toString());
-//            intent.putExtra("money", textView_totalprice.getText().toString());
-//            Intent intent1 = new Intent(IntentDataKeyConstant.BROADCAST_PAY_SHOPCARREFRESH_ACTION);
-//            sendBroadcast(intent1);
-//            startActivity(intent);
+        if (data instanceof PointsBean) {
+            selectedPoints = (PointsBean) data;
+            gotoViewPoints.setFirstText("使用点滴积分" + "    (可用" + selectedPoints.getO().getIntegral() + "积分)");
         }
     }
 
@@ -310,17 +330,63 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
     }
 
 
-    //获取优惠券
+    //获取地址
     @Subscribe
-    public void getTicketEvent(AddressBean.OBean data) {
+    public void getAddressEvent(AddressBean.OBean data) {
 //        setAddress(data);
 //        refreshAddressState();//GoodsDetailsActivity刷新地址选择的状态
         AppManager.getAppManager().finishActivity(AddressListActivity.class);
     }
 
+    //获取优惠券
+    @Subscribe
+    public void getTicket(TicketListBean.OBean ticket) {
+        selectedTicket = ticket;
+        gotoViewTikets.setSecondText("满" + ticket.getUse_min_price() + "减" + selectedTicket.getCoupon_price());
+        getFinnalMoney();
+        AppManager.getAppManager().finishActivity(TicketActivity.class);
+    }
+
+    //选择了积分或者优惠券之后计算最终价钱
+    private void getFinnalMoney() {
+        double finalMoney = totoalFinalMoney;
+        if (selectedTicket != null) {
+            finalMoney = (totoalFinalMoney - selectedTicket.getCoupon_price());
+        }
+        if (selectedPoints != null && isUsePoints) {
+            finalMoney = finalMoney - NumUtils.getDouble(selectedPoints.getO().getRmd());
+            if (finalMoney <= 0) {//如果扣除积分之后变成了负的，那么只能使用到让金额变成0的地步
+                interger = (0.01 - finalMoney) * 10;
+                finalMoney = 0.01;
+            } else {
+                interger = selectedPoints.getO().getIntegral();
+            }
+        }
+        textView_totalprice.setText(ConstantString.RMB_SYMBOL + finalMoney);
+    }
+
+    //积分情况
+    private void getPointsData() {
+        Map<String, String> map = new HashMap<>();
+        map.put("uid", LoginStatus.getId());
+        post(ConstantUrl.waterlistUrl, map, new PointsBean());
+    }
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    //使用积分的切换
+    public void usePoints(View view) {
+        isUsePoints = !isUsePoints;
+        getFinnalMoney();
+        if (isUsePoints) {
+            gotoViewPoints.setSecondDrawable(getContext(), R.mipmap.order_switch_on);
+        } else {
+            gotoViewPoints.setSecondDrawable(getContext(), R.mipmap.order_switch);
+        }
     }
 }

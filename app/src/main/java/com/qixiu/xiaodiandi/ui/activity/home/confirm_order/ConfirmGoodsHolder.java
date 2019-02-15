@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.model.home.goodsdetails.GoodsDetailsBean;
 import com.qixiu.xiaodiandi.model.order.CreateOrderBean;
 
 /**
@@ -46,6 +47,14 @@ public class ConfirmGoodsHolder extends RecyclerBaseHolder {
             textView_goodsPrice.setTextColor(mContext.getResources().getColor(R.color.red));
             textView_goodsCount.setText("X  " + +bean.getCart_num());
             textView_goodsContent.setText(bean.getProductInfo().getStore_name());
+        }
+        if(mData instanceof GoodsDetailsBean.OBean.ResultBean.ListBean){
+            GoodsDetailsBean.OBean.ResultBean.ListBean bean= (GoodsDetailsBean.OBean.ResultBean.ListBean) mData;
+            Glide.with(mContext).load(bean.getImage()).into(imageView_orderIcon);
+            textView_goodsPrice.setText("¥  " + bean.getPrice());
+            textView_goodsPrice.setTextColor(mContext.getResources().getColor(R.color.red));
+            textView_goodsCount.setText("X  " + +bean.getNum());
+            textView_goodsContent.setText(bean.getInfo());
         }
     }
 

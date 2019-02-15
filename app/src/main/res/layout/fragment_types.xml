@@ -58,20 +58,13 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/imageViewHead"
-                android:layout_width="@dimen/margin248dp"
-                android:layout_height="@dimen/margin111dp"
-                android:layout_centerHorizontal="true" />
+           >
 
             <com.jcodecraeer.xrecyclerview.XRecyclerView
                 android:id="@+id/xrecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/imageViewHead"></com.jcodecraeer.xrecyclerview.XRecyclerView>
+               ></com.jcodecraeer.xrecyclerview.XRecyclerView>
         </RelativeLayout>
     </LinearLayout>
 

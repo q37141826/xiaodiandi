@@ -130,9 +130,9 @@ public class TicketActivity extends RequestActivity implements OnRecyclerItemLis
                 if (mData instanceof TicketListBean.OBean) {
                     TicketListBean.OBean bean = (TicketListBean.OBean) mData;
                     textViewHighFloor.setText(bean.getCoupon_title());
-                    textViewMoney.setText(bean.getCoupon_price());
+                    textViewMoney.setText(bean.getCoupon_price() + "");
                     textViewLimit.setText("领取后" + bean.getUse_time() / 3600 / 24 + "天内有效");
-                    textViewUserRule.setText(bean.getUse_min_price());
+                    textViewUserRule.setText(bean.getUse_min_price() + "");
                 }
             }
         }

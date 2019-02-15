@@ -23,7 +23,7 @@ public class CheckWhereActivity extends RequestActivity {
     private ImageView imageView_checkwhere;
     private TextView textView_tranceportState, textView_tranceportName, textView_tranceportId;
     private CheckWhereAdapter adapter;
-    RelativeLayout relativelayout_back_checkwhere,relativelaout_all,relativelayout_nothing;
+    RelativeLayout relativelayout_back_checkwhere, relativelaout_all, relativelayout_nothing;
     private ImageView imageView_check_nothing;
 
 
@@ -36,9 +36,9 @@ public class CheckWhereActivity extends RequestActivity {
             }
         });
         mTitleView.setTitle("物流详情");
-        relativelayout_nothing= (RelativeLayout) findViewById(R.id.relativelayout_nothing);
-        relativelaout_all= (RelativeLayout) findViewById(R.id.relativelaout_all);
-        imageView_check_nothing= (ImageView) findViewById(R.id.imageView_check_nothing);
+        relativelayout_nothing = (RelativeLayout) findViewById(R.id.relativelayout_nothing);
+        relativelaout_all = (RelativeLayout) findViewById(R.id.relativelaout_all);
+        imageView_check_nothing = (ImageView) findViewById(R.id.imageView_check_nothing);
 
         recycleView_checktrance = (RecyclerView) findViewById(R.id.recycleView_checktrance);
         imageView_checkwhere = (ImageView) findViewById(R.id.imageView_checkwhere);
@@ -50,9 +50,9 @@ public class CheckWhereActivity extends RequestActivity {
 
     @Override
     protected void onInitData() {
-        Map<String,String > map=new HashMap<>();
-        map.put("order_id",order_id);
-        post(ConstantUrl.CheckWhereUrl,map,new BaseBean());
+        Map<String, String> map = new HashMap<>();
+        map.put("order_id", order_id);
+        post(ConstantUrl.CheckWhereUrl, map, new BaseBean());
     }
 
     @Override
@@ -68,10 +68,10 @@ public class CheckWhereActivity extends RequestActivity {
 
     @Override
     public void onSuccess(BaseBean data) {
-        if(data instanceof CheckWhereBean){
-            CheckWhereBean.OBean checkWhereBean =  ((CheckWhereBean) data).getO();
+        if (data instanceof CheckWhereBean) {
+            CheckWhereBean.OBean checkWhereBean = ((CheckWhereBean) data).getO();
             Glide.with(CheckWhereActivity.this).load(checkWhereBean.getImgUrl()).into(imageView_checkwhere);
-            textView_tranceportState.setText(checkWhereBean.getState().equals("3")?"已签收":"未签收");
+            textView_tranceportState.setText(checkWhereBean.getState().equals("3") ? "已签收" : "未签收");
             textView_tranceportName.setText(checkWhereBean.getShipping_name());
             textView_tranceportId.setText(checkWhereBean.getNu());
             adapter = new CheckWhereAdapter();

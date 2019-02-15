@@ -1,4 +1,4 @@
-package com.qixiu.qixiu.utils.audio;
+package com.qixiu.qixiu.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.os.Build;
 
+import com.qixiu.qixiu.utils.audio.PlayMusicService;
 import com.qixiu.qixiu.application.BaseApplication;
 
 import java.io.IOException;
@@ -105,8 +106,10 @@ public class SoundUtils {
     public static String getFilePath() {
         return filePath;
     }
+
     public static String filePath;
-    public static void playFile(Context context,String file_path) {
+
+    public static void playFile(Context context, String file_path) {
         Intent intent = new Intent(context, PlayMusicService.class);
         filePath = file_path;
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

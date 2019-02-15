@@ -5,7 +5,6 @@ import android.os.Parcelable;
 
 import com.qixiu.qixiu.request.bean.BaseBean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CreateOrderBean extends BaseBean<CreateOrderBean.OBean> {
@@ -19,18 +18,15 @@ public class CreateOrderBean extends BaseBean<CreateOrderBean.OBean> {
          * orderKey : 22d067d13220f7140504fc0d081131e1
          */
 
-        private String usableCoupon;
         private PriceGroupBean priceGroup;
         private String orderKey;
         private List<CartInfoBean> cartInfo;
+        /**
+         * usableCoupon : {"id":140,"cid":93,"uid":181,"coupon_title":"测试优惠","coupon_price":"0.01","use_min_price":"0.02","add_time":1550199487,"end_time":1551927487,"use_time":0,"type":"get","status":0,"is_fail":0}
+         */
 
-        public String getUsableCoupon() {
-            return usableCoupon;
-        }
+//        private UsableCouponBean usableCoupon;
 
-        public void setUsableCoupon(String usableCoupon) {
-            this.usableCoupon = usableCoupon;
-        }
 
         public PriceGroupBean getPriceGroup() {
             return priceGroup;
@@ -55,6 +51,14 @@ public class CreateOrderBean extends BaseBean<CreateOrderBean.OBean> {
         public void setCartInfo(List<CartInfoBean> cartInfo) {
             this.cartInfo = cartInfo;
         }
+
+//        public UsableCouponBean getUsableCoupon() {
+//            return usableCoupon;
+//        }
+//
+//        public void setUsableCoupon(UsableCouponBean usableCoupon) {
+//            this.usableCoupon = usableCoupon;
+//        }
 
         public static class PriceGroupBean implements Parcelable {
             /**
@@ -176,7 +180,7 @@ public class CreateOrderBean extends BaseBean<CreateOrderBean.OBean> {
             private int bargain_id;
             private ProductInfoBean productInfo;
             private double truePrice;
-            private int costPrice;
+            private double costPrice;
             private int trueStock;
 
             public int getId() {
@@ -299,11 +303,11 @@ public class CreateOrderBean extends BaseBean<CreateOrderBean.OBean> {
                 this.truePrice = truePrice;
             }
 
-            public int getCostPrice() {
+            public double getCostPrice() {
                 return costPrice;
             }
 
-            public void setCostPrice(int costPrice) {
+            public void setCostPrice(double costPrice) {
                 this.costPrice = costPrice;
             }
 
@@ -711,6 +715,9 @@ public class CreateOrderBean extends BaseBean<CreateOrderBean.OBean> {
                 };
             }
 
+            public CartInfoBean() {
+            }
+
             @Override
             public int describeContents() {
                 return 0;
@@ -733,11 +740,8 @@ public class CreateOrderBean extends BaseBean<CreateOrderBean.OBean> {
                 dest.writeInt(this.bargain_id);
                 dest.writeParcelable(this.productInfo, flags);
                 dest.writeDouble(this.truePrice);
-                dest.writeInt(this.costPrice);
+                dest.writeDouble(this.costPrice);
                 dest.writeInt(this.trueStock);
-            }
-
-            public CartInfoBean() {
             }
 
             protected CartInfoBean(Parcel in) {
@@ -756,7 +760,7 @@ public class CreateOrderBean extends BaseBean<CreateOrderBean.OBean> {
                 this.bargain_id = in.readInt();
                 this.productInfo = in.readParcelable(ProductInfoBean.class.getClassLoader());
                 this.truePrice = in.readDouble();
-                this.costPrice = in.readInt();
+                this.costPrice = in.readDouble();
                 this.trueStock = in.readInt();
             }
 
@@ -773,6 +777,189 @@ public class CreateOrderBean extends BaseBean<CreateOrderBean.OBean> {
             };
         }
 
+        public OBean() {
+        }
+
+        public static class UsableCouponBean implements Parcelable {
+
+
+
+            /**
+             * id : 140
+             * cid : 93
+             * uid : 181
+             * coupon_title : 测试优惠
+             * coupon_price : 0.01
+             * use_min_price : 0.02
+             * add_time : 1550199487
+             * end_time : 1551927487
+             * use_time : 0
+             * type : get
+             * status : 0
+             * is_fail : 0
+             */
+
+            private int id;
+            private int cid;
+            private int uid;
+            private String coupon_title;
+            private String coupon_price;
+            private String use_min_price;
+            private int add_time;
+            private int end_time;
+            private int use_time;
+            private String type;
+            private int status;
+            private int is_fail;
+
+            public int getId() {
+                return id;
+            }
+
+            public void setId(int id) {
+                this.id = id;
+            }
+
+            public int getCid() {
+                return cid;
+            }
+
+            public void setCid(int cid) {
+                this.cid = cid;
+            }
+
+            public int getUid() {
+                return uid;
+            }
+
+            public void setUid(int uid) {
+                this.uid = uid;
+            }
+
+            public String getCoupon_title() {
+                return coupon_title;
+            }
+
+            public void setCoupon_title(String coupon_title) {
+                this.coupon_title = coupon_title;
+            }
+
+            public String getCoupon_price() {
+                return coupon_price;
+            }
+
+            public void setCoupon_price(String coupon_price) {
+                this.coupon_price = coupon_price;
+            }
+
+            public String getUse_min_price() {
+                return use_min_price;
+            }
+
+            public void setUse_min_price(String use_min_price) {
+                this.use_min_price = use_min_price;
+            }
+
+            public int getAdd_time() {
+                return add_time;
+            }
+
+            public void setAdd_time(int add_time) {
+                this.add_time = add_time;
+            }
+
+            public int getEnd_time() {
+                return end_time;
+            }
+
+            public void setEnd_time(int end_time) {
+                this.end_time = end_time;
+            }
+
+            public int getUse_time() {
+                return use_time;
+            }
+
+            public void setUse_time(int use_time) {
+                this.use_time = use_time;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public int getStatus() {
+                return status;
+            }
+
+            public void setStatus(int status) {
+                this.status = status;
+            }
+
+            public int getIs_fail() {
+                return is_fail;
+            }
+
+            public void setIs_fail(int is_fail) {
+                this.is_fail = is_fail;
+            }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(this.id);
+                dest.writeInt(this.cid);
+                dest.writeInt(this.uid);
+                dest.writeString(this.coupon_title);
+                dest.writeString(this.coupon_price);
+                dest.writeString(this.use_min_price);
+                dest.writeInt(this.add_time);
+                dest.writeInt(this.end_time);
+                dest.writeInt(this.use_time);
+                dest.writeString(this.type);
+                dest.writeInt(this.status);
+                dest.writeInt(this.is_fail);
+            }
+
+            public UsableCouponBean() {
+            }
+
+            protected UsableCouponBean(Parcel in) {
+                this.id = in.readInt();
+                this.cid = in.readInt();
+                this.uid = in.readInt();
+                this.coupon_title = in.readString();
+                this.coupon_price = in.readString();
+                this.use_min_price = in.readString();
+                this.add_time = in.readInt();
+                this.end_time = in.readInt();
+                this.use_time = in.readInt();
+                this.type = in.readString();
+                this.status = in.readInt();
+                this.is_fail = in.readInt();
+            }
+
+            public static final Creator<UsableCouponBean> CREATOR = new Creator<UsableCouponBean>() {
+                @Override
+                public UsableCouponBean createFromParcel(Parcel source) {
+                    return new UsableCouponBean(source);
+                }
+
+                @Override
+                public UsableCouponBean[] newArray(int size) {
+                    return new UsableCouponBean[size];
+                }
+            };
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -780,24 +967,20 @@ public class CreateOrderBean extends BaseBean<CreateOrderBean.OBean> {
 
         @Override
         public void writeToParcel(Parcel dest, int flags) {
-            dest.writeString(this.usableCoupon);
             dest.writeParcelable(this.priceGroup, flags);
             dest.writeString(this.orderKey);
-            dest.writeList(this.cartInfo);
-        }
-
-        public OBean() {
+            dest.writeTypedList(this.cartInfo);
+//            dest.writeParcelable(this.usableCoupon, flags);
         }
 
         protected OBean(Parcel in) {
-            this.usableCoupon = in.readString();
             this.priceGroup = in.readParcelable(PriceGroupBean.class.getClassLoader());
             this.orderKey = in.readString();
-            this.cartInfo = new ArrayList<CartInfoBean>();
-            in.readList(this.cartInfo, CartInfoBean.class.getClassLoader());
+            this.cartInfo = in.createTypedArrayList(CartInfoBean.CREATOR);
+//            this.usableCoupon = in.readParcelable(UsableCouponBean.class.getClassLoader());
         }
 
-        public static final Parcelable.Creator<OBean> CREATOR = new Parcelable.Creator<OBean>() {
+        public static final Creator<OBean> CREATOR = new Creator<OBean>() {
             @Override
             public OBean createFromParcel(Parcel source) {
                 return new OBean(source);

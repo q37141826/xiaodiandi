@@ -52,7 +52,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:$SUPPORT_VERSION"
-//    implementation "com.android.support:design:$SUPPORT_VERSION"
+    //    implementation "com.android.support:design:$SUPPORT_VERSION"
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     //    androidTestImplementation 'com.android.support.test:runner:1.0.2'
@@ -69,7 +69,8 @@ dependencies {
     //微信支付
     implementation files('libs/libammsdk.jar')
     //支付宝支付
-    implementation files('libs/alipaySdk-20170922.jar')
+    //    implementation files('libs/alipaySdk-20180601.jar')
+    implementation(name: 'alipaySdk-15.5.9-20181123210657-noUtdid', ext: 'aar')
     implementation files('libs/open_sdk_r5781.jar')
     implementation files('libs/ShareSDK-SinaWeibo-2.8.3.jar')
     implementation files('libs/ShareSDK-Wechat-2.8.3.jar')
@@ -79,4 +80,5 @@ dependencies {
     implementation files('libs/MobCommons-2017.0412.1554.jar')
     implementation files('libs/MobTools-2017.0412.1554.jar')
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha09'
+    implementation files('libs/ShareSDK-QQ-2.8.3.jar')
 }

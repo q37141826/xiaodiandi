@@ -32,8 +32,8 @@ public class MyEditTextView extends RelativeLayout implements TextWatcherAdapter
     private boolean isEmojiEnable = false;
     private Context mContext;
     /*
-    * 去除掉emoji吧表情的一些变量
-    * */
+     * 去除掉emoji吧表情的一些变量
+     * */
     //输入表情前的光标位置
     private int cursorPos;
     //输入表情前EditText中的文本
@@ -42,6 +42,11 @@ public class MyEditTextView extends RelativeLayout implements TextWatcherAdapter
     private boolean resetText;
     //emoji表情的输入允许开关
     private IntelligentTextWatcher textwatech;
+    private TextChangeListenner textChangeListenner;
+
+    public void setTextChangeListenner(TextChangeListenner textChangeListenner) {
+        this.textChangeListenner = textChangeListenner;
+    }
 
     public MyEditTextView(final Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -116,6 +121,9 @@ public class MyEditTextView extends RelativeLayout implements TextWatcherAdapter
                 break;
             case 1:
                 editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                break;
+            case 2:
+                editText.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 break;
         }
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLenth)});
@@ -192,6 +200,9 @@ public class MyEditTextView extends RelativeLayout implements TextWatcherAdapter
             imageView.setVisibility(GONE);
         } else {
             imageView.setVisibility(VISIBLE);
+        }
+        if(textChangeListenner!=null){
+            textChangeListenner.textChange(s);
         }
     }
 

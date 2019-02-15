@@ -17,6 +17,7 @@ import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.ArshowDialogUtils;
 import com.qixiu.qixiu.utils.DrawableUtils;
 import com.qixiu.qixiu.utils.ToastUtil;
+import com.qixiu.wigit.zprogress.ZProgressHUD;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantRequest;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
@@ -73,9 +74,10 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
 
     private boolean isAllSelected = false;//是否全部选中
     private StringBuffer selectedId;
-
+    ZProgressHUD zProgressHUD;
     @Override
     public void onSuccess(BaseBean data) {
+        zProgressHUD.dismiss();
         if (data instanceof ShopCartBean) {
             ShopCartBean bean = (ShopCartBean) data;
             if (getDatas() != null && getDatas().size() != 0) {//如果有历史数据了，那么选中状态要保持
@@ -108,15 +110,18 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
     @Override
     public void onError(Exception e) {
         srlShopcar.setRefreshing(false);
+        zProgressHUD.dismiss();
     }
 
     @Override
     public void onFailure(C_CodeBean c_codeBean, String m) {
         srlShopcar.setRefreshing(false);
+        zProgressHUD.dismiss();
     }
 
     @Override
     protected void onInitData() {
+        zProgressHUD=new ZProgressHUD(getContext());
         mTitleView.setTitle("购物车");
         mTitleView.getLeftView().setVisibility(View.GONE);
         rvShopcar.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -125,6 +130,7 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
         srlShopcar.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                zProgressHUD.show();
                 ConstantRequest.getShopCarList(getOkHttpRequestModel());
             }
         });
@@ -163,6 +169,7 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
     }
 
     private void requestData() {
+        zProgressHUD.show();
         ConstantRequest.getShopCarList(getOkHttpRequestModel());
     }
 

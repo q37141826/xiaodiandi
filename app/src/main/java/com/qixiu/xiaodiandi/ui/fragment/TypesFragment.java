@@ -3,11 +3,13 @@ package com.qixiu.xiaodiandi.ui.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
@@ -18,6 +20,8 @@ import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.types.ClassifyBean;
 import com.qixiu.xiaodiandi.model.types.TypesProductListBean;
+import com.qixiu.xiaodiandi.ui.activity.baseactivity.GotoWebActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.GoodsDetailsActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
 import com.qixiu.xiaodiandi.ui.fragment.types.TypesMenueAdapter;
 import com.qixiu.xiaodiandi.ui.fragment.types.TypesVipAdapter;
@@ -38,29 +42,79 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
     @BindView(R.id.recyclerviewMenue)
     RecyclerView recyclerviewMenue;
     Unbinder unbinder;
-    @BindView(R.id.imageViewHead)
-    ImageView imageViewHead;
+
     @BindView(R.id.xrecyclerView)
     XRecyclerView xrecyclerView;
     private TypesVipAdapter adapterTypes;
     private TypesMenueAdapter menueAdapter;
     //被选择的分类id
     private String selectedId;
+    private ImageView imageViewHead;
+    private ClassifyBean classifyBean;
+
+    public String getSelectedId() {
+        return selectedId;
+    }
+
+    public void setSelectedId(String selectedId) {
+        this.selectedId = selectedId;
+    }
 
     @Override
     public void onSuccess(BaseBean data) {
         if (data instanceof ClassifyBean) {
-            ClassifyBean bean = (ClassifyBean) data;
-            menueAdapter.refreshData(bean.getO());
-            if (bean.getO().size() != 0) {
-                bean.getO().get(0).setSelected(true);
-                selectedId = bean.getO().get(0).getId() + "";
-                getRightData(selectedId);
+            classifyBean = (ClassifyBean) data;
+            if (!TextUtils.isEmpty(selectedId)) {
+                for (int i = 0; i < classifyBean.getO().size(); i++) {
+                    if ((classifyBean.getO().get(i).getId() + "").equals(selectedId)) {
+                        classifyBean.getO().get(i).setSelected(true);
+                    }
+                }
+            } else {
+                if (classifyBean.getO().size() != 0) {
+                    classifyBean.getO().get(0).setSelected(true);
+                    selectedId = classifyBean.getO().get(0).getId() + "";
+                    getRightData(selectedId);
+                }
             }
+            menueAdapter.refreshData(classifyBean.getO());
+            selectedId = "";
         }
         if (data instanceof TypesProductListBean) {
             TypesProductListBean bean = (TypesProductListBean) data;
+            //头部banner
+            if (bean.getO().getBanner().size() == 0) {
+                imageViewHead.setImageResource(R.drawable.white_btn_bg);
+            } else {
+                imageViewHead.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (bean.getO().getBanner().get(0).getType().equals("1")) {
+                            GoodsDetailsActivity.start(getContext(), GoodsDetailsActivity.class, bean.getO().getBanner().get(0).getUrl());
+                        } else {
+                            GotoWebActivity.start(getContext(), GotoWebActivity.class, bean.getO().getBanner().get(0).getUrl());
+                        }
+                    }
+                });
+                Glide.with(getContext()).load(bean.getO().getBanner().get(0).getPic()).into(imageViewHead);
+            }
+            //是否为第一个vip
+            if (classifyBean != null) {
+                if (classifyBean.getO().get(0).isSelected()) {//如果选中了会员专区，那么所有的item刷为vip
+                    adapterTypes.setIs_vip(true);
+                } else {
+                    adapterTypes.setIs_vip(false);
+                }
+            }
+            //脚底下的foot
+            TypesProductListBean.OBean.CategoryBean lastBean = new TypesProductListBean.OBean.CategoryBean();
+            lastBean.setLast(true);
+            bean.getO().getCategory().add(lastBean);//添加这一个
+            if (bean.getO().getBanner().get(1) != null) {
+                bean.getO().getCategory().get(bean.getO().getCategory().size() - 1).setBannerFoot(bean.getO().getBanner().get(1).getPic());
+            }
             adapterTypes.refreshData(bean.getO().getCategory());
+
         }
     }
 
@@ -75,6 +129,14 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
     }
 
     @Override
+    protected void onInitView(View view) {
+        super.onInitView(view);
+        View headerView = View.inflate(getContext(), R.layout.header_types, null);
+        xrecyclerView.addHeaderView(headerView);
+        imageViewHead = headerView.findViewById(R.id.imageViewHead);
+    }
+
+    @Override
     protected void onInitData() {
         mTitleView.getView().setVisibility(View.GONE);
         recyclerviewMenue.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -84,8 +146,8 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
         XrecyclerViewUtil.setXrecyclerView(xrecyclerView, this, getContext(), false, 1, null);
         adapterTypes = new TypesVipAdapter();
         xrecyclerView.setAdapter(adapterTypes);
-//        XrecyclerViewUtil.refreshFictiousData(adapterTypes);
         getTypes();
+        adapterTypes.setOnItemClickListener(this);
     }
 
     private void getTypes() {
@@ -118,7 +180,7 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
 
     @Override
     public void onLoadMore() {
-
+        xrecyclerView.loadMoreComplete();
     }
 
     @Override
@@ -143,11 +205,21 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
             bean.setSelected(true);
             menueAdapter.notifyDataSetChanged();
         }
+
     }
 
     private void getRightData(String cid) {
+        adapterTypes.refreshData(null);
         Map<String, String> map = new HashMap<>();
         map.put("cid", cid);
         post(ConstantUrl.productsUrl, map, new TypesProductListBean());
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(!hidden){
+            getTypes();
+        }
     }
 }

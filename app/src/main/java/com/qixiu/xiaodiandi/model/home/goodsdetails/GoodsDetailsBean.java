@@ -8,8 +8,7 @@ import com.qixiu.qixiu.request.bean.BaseBean;
 import java.util.List;
 
 //
-public class GoodsDetailsBean    extends BaseBean<GoodsDetailsBean.OBean> {
-
+public class GoodsDetailsBean extends BaseBean<GoodsDetailsBean.OBean> {
 
 
     public static class OBean {
@@ -183,7 +182,7 @@ public class GoodsDetailsBean    extends BaseBean<GoodsDetailsBean.OBean> {
                 private int product_id;
                 private String attr_name;
                 private List<String> attr_values;
-                private List<CharctorInnerBean>  inners;
+                private List<CharctorInnerBean> inners;
 
                 public List<CharctorInnerBean> getInners() {
                     return inners;
@@ -221,7 +220,6 @@ public class GoodsDetailsBean    extends BaseBean<GoodsDetailsBean.OBean> {
             public static class ListBean implements Parcelable {
 
 
-
                 /**
                  * product_id : 691
                  * suk : 大,红
@@ -241,6 +239,27 @@ public class GoodsDetailsBean    extends BaseBean<GoodsDetailsBean.OBean> {
                 private String image;
                 private String unique;
                 private String cost;
+
+                //下面是自定义的几个属性
+                private int num;
+                private String info;
+
+
+                public int getNum() {
+                    return num;
+                }
+
+                public void setNum(int num) {
+                    this.num = num;
+                }
+
+                public String getInfo() {
+                    return info;
+                }
+
+                public void setInfo(String info) {
+                    this.info = info;
+                }
 
                 public int getProduct_id() {
                     return product_id;
@@ -306,6 +325,9 @@ public class GoodsDetailsBean    extends BaseBean<GoodsDetailsBean.OBean> {
                     this.cost = cost;
                 }
 
+                public ListBean() {
+                }
+
                 @Override
                 public int describeContents() {
                     return 0;
@@ -321,9 +343,8 @@ public class GoodsDetailsBean    extends BaseBean<GoodsDetailsBean.OBean> {
                     dest.writeString(this.image);
                     dest.writeString(this.unique);
                     dest.writeString(this.cost);
-                }
-
-                public ListBean() {
+                    dest.writeInt(this.num);
+                    dest.writeString(this.info);
                 }
 
                 protected ListBean(Parcel in) {
@@ -335,9 +356,11 @@ public class GoodsDetailsBean    extends BaseBean<GoodsDetailsBean.OBean> {
                     this.image = in.readString();
                     this.unique = in.readString();
                     this.cost = in.readString();
+                    this.num = in.readInt();
+                    this.info = in.readString();
                 }
 
-                public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>() {
+                public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {
                     @Override
                     public ListBean createFromParcel(Parcel source) {
                         return new ListBean(source);

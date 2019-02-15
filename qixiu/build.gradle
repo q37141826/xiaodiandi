@@ -35,6 +35,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     api "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     implementation "com.android.support:design:$SUPPORT_VERSION"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
@@ -69,13 +70,11 @@ dependencies {
     api "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
     api 'com.jcodecraeer:xrecyclerview:1.3.2'
     implementation files('libs/zxingcore.jar')
-
     //轮播图
     api 'com.jude:rollviewpager:1.4.6'
     //张弘扬的lunbotu
     api 'com.zhy:magic-viewpager:1.0.1'
-
     //tablayout
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.2@aar'
-
+    api files('libs/ShareSDK-Core-2.8.3.jar')
 }

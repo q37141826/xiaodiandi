@@ -179,8 +179,13 @@ public class MainActivity extends RequestActivity {
     @Subscribe
     public void getEvent(EventAction.Action action) {
         eventAction = action.getAction();//先保存常量，在onResume方法切换fragment
+        if (eventAction == EventAction.GOTO_TYPE) {
+            typesFragment.setSelectedId(action.getId());
+            onClick(textViewTypes);
+            eventAction = 0;
+        }
         try {
-            //如果是收藏界面过来的 ，杀死收藏界面
+            //如果是收藏界面过来的 ，杀死收藏界面,在onResume方法再次切换界面到购物车
             AppManager.getAppManager().finishActivity(MyCollectionActivity.class);
         } catch (Exception e) {
         }
@@ -197,7 +202,7 @@ public class MainActivity extends RequestActivity {
         super.onResume();
         if (eventAction == EventAction.GOTO_CARTS) {//
             onClick(textViewMarket);
-            eventAction = 0;//让这个变量只能使用一次
         }
+        eventAction = 0;//让这个变量只能使用一次
     }
 }

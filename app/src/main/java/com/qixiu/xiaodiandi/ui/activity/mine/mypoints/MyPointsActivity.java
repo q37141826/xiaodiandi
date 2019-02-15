@@ -39,11 +39,10 @@ public class MyPointsActivity extends RequestActivity {
         mTitleView.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                PointsRecordActivity.start(getContext(), PointsRecordActivity.class);
             }
         });
         getData();
-
     }
 
     private void getData() {
@@ -62,11 +61,11 @@ public class MyPointsActivity extends RequestActivity {
     public void onSuccess(BaseBean data) {
         if (data instanceof PointsBean) {
             PointsBean bean = (PointsBean) data;
-            textViewPointsAll.setText(bean.getO().getIntegral()+"积分");
-            textViewPointsCanGet.setText("可提现"+bean.getO().getRmd()+"");
-            textViewPointsToday.setText(bean.getO().getToday()+"积分");
-            textViewPointsMonth.setText(bean.getO().getMonth()+"积分");
-            textViewPointsGet.setText(bean.getO().getAll()+"积分");
+            textViewPointsAll.setText(bean.getO().getIntegral() + "积分");
+            textViewPointsCanGet.setText("可提现" + bean.getO().getRmd() + "");
+            textViewPointsToday.setText(bean.getO().getToday() + "积分");
+            textViewPointsMonth.setText(bean.getO().getMonth() + "积分");
+            textViewPointsGet.setText(bean.getO().getAll() + "积分");
         }
     }
 
@@ -93,7 +92,7 @@ public class MyPointsActivity extends RequestActivity {
 
     //提现
     public void getCash(View view) {
-        GetCashActivity.start(getContext(), GetCashActivity.class);
+        GetCashActivity.start(getContext(), GetCashActivity.class, textViewPointsCanGet.getText().toString());
     }
 
     //转让
@@ -106,5 +105,10 @@ public class MyPointsActivity extends RequestActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    //提现明细
+    public void getCashDetails(View view) {
+        GetCashRecordActivity.start(getContext(),GetCashRecordActivity.class);
     }
 }

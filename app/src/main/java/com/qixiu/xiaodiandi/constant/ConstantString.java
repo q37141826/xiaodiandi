@@ -5,7 +5,7 @@ package com.qixiu.xiaodiandi.constant;
  */
 
 public class ConstantString {
-    public static final String RMB_SYMBOL="¥   ";
+    public static final String RMB_SYMBOL="¥";
     public static final String USERID = "USERID";
     public static final String USERBEAN = "USERBEAN";
     public static final String ACTION_REFRSH = "ACTION_REFRSH";

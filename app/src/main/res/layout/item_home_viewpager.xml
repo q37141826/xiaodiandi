@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
+    android:layout_height="@dimen/margin65dp"
     android:layout_margin="@dimen/margin14dp"
-    android:layout_height="wrap_content">
+    android:orientation="vertical">
+
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="@dimen/margin47dp"
-        android:layout_height="@dimen/margin47dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin5dp"
+        android:scaleType="center" />
+
     <TextView
         android:id="@+id/textView"
-        android:textSize="10sp"
-        android:layout_marginTop="@dimen/margin12dp"
-        android:textColor="@color/black"
+        style="@style/text_normal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin15dp"
         android:text="东西名称"
-        style="@style/text_normal" />
-</LinearLayout>
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+</RelativeLayout>

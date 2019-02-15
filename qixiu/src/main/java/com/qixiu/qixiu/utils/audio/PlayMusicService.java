@@ -6,6 +6,8 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.IBinder;
 
+import com.qixiu.qixiu.utils.SoundUtils;
+
 import java.io.IOException;
 
 

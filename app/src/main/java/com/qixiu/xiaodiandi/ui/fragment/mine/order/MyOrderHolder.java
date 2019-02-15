@@ -111,7 +111,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
     public void bindHolder(int position) {
         okHttpRequestModel = new OKHttpRequestModel(this);
         textView_order_goods_num.setText("共计" + mData.getTotal_num() + "件商品");
-        textView_totolPrice.setText("¥" + mData.getTotal_price());
+        textView_totolPrice.setText("¥" + mData.getPay_price());
         textView_orderCode.setText("订单编号:" + mData.getOrder_id());
         this.position = position;
         adapterl = new OrderListDetailsAdapter();
@@ -142,29 +142,28 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
         for (Button btn : buttons) {
             btn.setVisibility(View.GONE);
         }
+        //全部订单  其他状态都在全部里面
+//待付款  判断paid=0
+//待发货  paid=1 status=0
+//待收货 paid=1 status=1
+//已完成 paid=1 status=2
         String textState = "";
-        if ((0 == mData.getStatus())) {
+        if ((0 == mData.getPaid())) {
             btn_cancleOrder.setVisibility(View.VISIBLE);
             btn_payThisOrder.setVisibility(View.VISIBLE);
             textState = "待付款";
-        } else if (2 == mData.getStatus()) {
-            btn_checkwhere_list.setVisibility(View.VISIBLE);
+        } else if (1 == mData.getStatus()) {
+//            btn_checkwhere_list.setVisibility(View.VISIBLE);//todo 以后有了检查物流的功能再打开
             btn_getConform_list.setVisibility(View.VISIBLE);
             btn_change.setVisibility(View.VISIBLE);
             textState = "待收货";
-        } else if (1 == mData.getStatus()) {
+        } else if (0 == mData.getStatus()) {
             textState = "待发货";
-        } else if (8 == (mData.getStatus())) {
-            btn_deleteOrder.setVisibility(View.VISIBLE);
-            textState = "待评价";
+            btn_notice_send.setVisibility(View.VISIBLE);
         } else if (5 == (mData.getStatus())) {
-            btn_change.setVisibility(View.VISIBLE);
-            btn_change.setText("换货中");
             textState = "换货中";
-        } else if (8 == mData.getStatus()) {
-//            btn_giveComments.setVisibility(View.VISIBLE);
-            btn_deleteOrder.setVisibility(View.VISIBLE);
-            textState = "已取消";
+        } else if (2 == mData.getStatus()) {
+            textState = "已完成";
         }
         textView_order_finish.setText(textState);
     }
@@ -176,8 +175,9 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
                 break;
 
             case R.id.btn_deleteOrder:
+            case R.id.btn_cancleOrder:
                 IS_DELETE = true;
-                setDialog("确认删除订单？");
+                setDialog("确认取消订单？");
                 break;
             case R.id.btn_payThisOrder:
                 startPay();
@@ -198,24 +198,22 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
                 IS_DELETE = false;
                 setDialog("确认收货吗？");
                 break;
-            case R.id.btn_cancleOrder:
-                startCancleOrder();
+            case R.id.btn_change:
+                startChange();
                 break;
         }
     }
 
-    private void startCancleOrder() {
+    private void startChange() {
         Map<String, String> map = new HashMap<>();
         map.put("uid", LoginStatus.getId());
         map.put("oid", mData.getId() + "");
-        okHttpRequestModel.okhHttpPost(ConstantUrl.cancleOrder, map, new BaseBean());
+        okHttpRequestModel.okhHttpPost(ConstantUrl.changeGoodsUrl, map, new BaseBean());
     }
 
+
     private void startPay() {
-//        OrderPayData orderPayData = new OrderPayData();
-//        orderPayData.setMoney(mData.getPay_price());//重新发起支付的时候
-//        SelectPayMethoedActivity.start(mContext, SelectPayMethoedActivity.class, orderPayData);
-//        mContext.startActivity(intent);
+
         Map<String, String> map = new HashMap<>();
         map.put("key", mData.getOrder_id() + "");
         map.put("uid", LoginStatus.getId());
@@ -239,7 +237,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
     private void startDeleteOrder() {
         Map<String, String> map = new HashMap<>();
         map.put("uid", LoginStatus.getId());
-        map.put("oid", mData.getId() + "");
+        map.put("oid", mData.getOrder_id() + "");
         okHttpRequestModel.okhHttpPost(ConstantUrl.orderDeleteUrl, map, new BaseBean());
     }
 
@@ -283,7 +281,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
 
     @Override
     public void onFailure(PayResult payResult) {
-
+        ToastUtil.toast(payResult.getResult());
     }
 
 
@@ -313,13 +311,16 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
     //接口数据
     @Override
     public void onSuccess(BaseBean data, int i) {
-        if (ConstantUrl.cancleOrder.equals(data.getUrl()) || ConstantUrl.getGoodsUrl.equals(data.getUrl()) || ConstantUrl.orderDeleteUrl.equals(data.getUrl())) {
+        if (ConstantUrl.getGoodsUrl.equals(data.getUrl()) || ConstantUrl.orderDeleteUrl.equals(data.getUrl()) || ConstantUrl.changeGoodsUrl.equals(data.getUrl())) {
             myOrderRefreshListener.onOrderRefresh(mData, ConstantString.ACTION_REFRSH);
+            ToastUtil.toast(data.getM());
+        }
+        if (ConstantUrl.remindUrl.equals(data.getUrl())) {
             ToastUtil.toast(data.getM());
         }
         if (data instanceof AliBean) {
             AliBean aliBean = (AliBean) data;
-            new Alipay(activity,this).startPay(aliBean.getO());
+            new Alipay(activity, this).startPay(aliBean.getO());
         }
 
     }
@@ -331,6 +332,6 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
 
     @Override
     public void onFailure(C_CodeBean c_codeBean) {
-
+        ToastUtil.toast(c_codeBean.getM());
     }
 }

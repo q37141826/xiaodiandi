@@ -20,6 +20,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import cn.sharesdk.framework.ShareSDK;
 import okhttp3.OkHttpClient;
 
 
@@ -89,7 +90,7 @@ public class BaseApplication extends MultiDexApplication implements OKHttpUIUpda
     private void initSdk() {
         //初始化ShareSDK
         try {
-//            ShareSDK.initSDK(getContext());
+            ShareSDK.initSDK(getContext());
         } catch (Exception e) {
         }
 //        //初始化极光推送

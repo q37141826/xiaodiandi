@@ -47,6 +47,6 @@ public class ChangePhoneStepOneActivity extends RequestActivity {
 
     //下一步
     public void nextStep(View view) {
-        ChangePhoneStepTwoActivity.start(getContext(),ChangePhoneStepTwoActivity.class);
+        ChangePhoneStepTwoActivity.start(getContext(), ChangePhoneStepTwoActivity.class);
     }
 }

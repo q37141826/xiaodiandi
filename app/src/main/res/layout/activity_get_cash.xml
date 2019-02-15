@@ -32,12 +32,26 @@
                 android:text="可提现金额"
                 android:textColor="@color/text_grey" />
 
-            <TextView
-                style="@style/text_normal"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin13dp"
-                android:text="¥"
-                android:textColor="@color/red"
-                android:textSize="20sp" />
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/text_normal"
+                    android:text="¥"
+                    android:textColor="@color/red"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/textViewTotalMoney"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/red"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
         </LinearLayout>
 
         <com.qixiu.wigit.GotoView
@@ -48,17 +62,17 @@
             android:layout_marginTop="@dimen/margin10dp"
             android:onClick="selectGetMethoed"
             app:first_text="银行卡提现"
-            app:second_drawable="@mipmap/mine_xiala" >
+            app:second_drawable="@mipmap/mine_xiala">
 
-            <TextView
-                android:id="@+id/textViewTotalMoney"
-                style="@style/text_normal"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="71dp"
-                android:layout_marginTop="181dp"
-                android:text="5000"
-                android:textColor="@color/red" />
+            <!--<TextView-->
+            <!--android:id="@+id/textViewTotalMoney"-->
+            <!--style="@style/text_normal"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:layout_marginStart="71dp"-->
+            <!--android:layout_marginTop="181dp"-->
+            <!--android:text="5000"-->
+            <!--android:textColor="@color/red" />-->
         </com.qixiu.wigit.GotoView>
 
         <LinearLayout
@@ -135,6 +149,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="输入提现金额"
+                    android:inputType="numberDecimal"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -150,6 +165,12 @@
                     style="@style/text_normal"
                     android:text="当前总可提现"
                     android:textColor="@color/text_grey" />
+
+                <TextView
+                    android:id="@+id/textViewTotalMoney02"
+                    style="@style/text_normal"
+                    android:text=""
+                    android:textColor="@color/red" />
 
                 <TextView
                     style="@style/text_normal"
@@ -173,9 +194,9 @@
                 android:text="提交申请" />
 
             <TextView
-                android:layout_marginTop="@dimen/margin17dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin17dp"
                 android:gravity="center"
                 android:text="1%的手续费系统会自己扣除，请知悉"
                 android:textColor="@color/text_grey" />

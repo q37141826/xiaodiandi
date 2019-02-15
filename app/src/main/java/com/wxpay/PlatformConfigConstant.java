@@ -7,7 +7,7 @@ package com.wxpay;
 public class PlatformConfigConstant {
 
     //微信平台的appID
-    public static final String WEIXIN_APP_ID ="wx0f281587255df173";
+    public static final String WEIXIN_APP_ID ="wx11ec406c3161f4e7";
     /**
      * 支付广播使用
      */

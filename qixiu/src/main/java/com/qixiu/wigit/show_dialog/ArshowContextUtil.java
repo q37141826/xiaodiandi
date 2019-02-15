@@ -43,7 +43,7 @@ public class ArshowContextUtil {
     public static final String SDCARD_PATH =
             Environment.getExternalStorageDirectory() + File.separator;
 
-    public enum NetworkState {
+    public enum  NetworkState {
         NONE, WIFI, MOBILE
     }
     /**
@@ -267,9 +267,9 @@ public class ArshowContextUtil {
     @Nullable
     private static NetworkState getNetworkState(NetworkInfo networkInfo) {
         if (networkInfo.getState() == NetworkInfo.State.CONNECTED) {
-            if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE)
+            if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
                 return NetworkState.MOBILE;
-            else if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI)
+            } else if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI)
                 return NetworkState.WIFI;
         }
         return null;

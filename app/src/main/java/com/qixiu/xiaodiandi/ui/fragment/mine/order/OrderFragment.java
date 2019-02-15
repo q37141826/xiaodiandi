@@ -16,8 +16,13 @@ import com.qixiu.qixiu.utils.XrecyclerViewUtil;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
+import com.qixiu.xiaodiandi.model.order.RefreshListBean;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.OrderDetailsActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.EventBusException;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,6 +79,10 @@ public class OrderFragment extends RequestFragment implements XRecyclerView.Load
 
     @Override
     protected void onInitData() {
+        try {
+            EventBus.getDefault().register(this);
+        } catch (EventBusException e) {
+        }
         adapter = new MyOrderAdapter();
         adapter.setActivity(getActivity());
         XrecyclerViewUtil.setXrecyclerView(recycleViewMyorederall, this, getContext(), false, 2, null);
@@ -142,6 +151,20 @@ public class OrderFragment extends RequestFragment implements XRecyclerView.Load
 
     @Override
     public void onOrderRefresh(OrderBean.OBean mdata, String action) {
+        pageNo = 1;
         getData();
+    }
+
+    @Subscribe
+    public void onRefreshEvent(RefreshListBean refreshListBean) {
+        pageNo = 1;
+        getData();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

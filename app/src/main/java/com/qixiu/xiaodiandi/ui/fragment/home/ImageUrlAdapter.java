@@ -25,20 +25,18 @@ public class ImageUrlAdapter extends LoopPagerAdapter {
         if (this.datas.size() > 0) {
             this.datas.clear();
         }
-        if(datas.size()!=0){
-            if(datas.get(0) instanceof HomeBean.OBean.BannerBean){
+        if (datas.size() != 0) {
+            if (datas.get(0) instanceof HomeBean.OBean.BannerBean) {
                 this.datas.addAll(datas == null ? new ArrayList<HomeBean.OBean.BannerBean>() : datas);
-            }else if(datas.get(0) instanceof String){
-                this.datas.addAll(datas == null ?  new ArrayList<String>() : datas);
-            }else if(datas.get(0) instanceof Integer){
-                this.datas.addAll(datas == null ?  new ArrayList<Integer>() : datas);
+            } else if (datas.get(0) instanceof String) {
+                this.datas.addAll(datas == null ? new ArrayList<String>() : datas);
+            } else if (datas.get(0) instanceof Integer) {
+                this.datas.addAll(datas == null ? new ArrayList<Integer>() : datas);
             }
         }
 
         notifyDataSetChanged();
     }
-
-
 
 
     @Override
@@ -58,8 +56,8 @@ public class ImageUrlAdapter extends LoopPagerAdapter {
                     }
                 }
             });
-        }else if(datas.get(position) instanceof String){
-            Glide.with(container.getContext()).load( datas.get(position)).error(R.mipmap.ic_launcher).skipMemoryCache(false).into(view);
+        } else if (datas.get(position) instanceof String) {
+            Glide.with(container.getContext()).load(datas.get(position)).error(R.mipmap.ic_launcher).skipMemoryCache(false).into(view);
         }
         return view;
     }

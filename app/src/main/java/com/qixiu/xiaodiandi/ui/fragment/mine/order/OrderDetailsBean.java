@@ -11,19 +11,22 @@ import java.util.List;
 
 public class OrderDetailsBean extends BaseBean<OrderDetailsBean.OBean> {
 
+
+
+
     public static class OBean {
         /**
-         * id : 745
-         * order_id : wx2019013016282210005
+         * id : 753
+         * order_id : wx2019021309443410001
          * uid : 181
          * real_name : 和呵呵呵呵
          * user_phone : 13000000000
          * user_address : 内蒙古自治区 呼和浩特市 新城区 啦啦啦拉拉裤
-         * cart_id : [1307]
-         * total_num : 2
-         * total_price : 0.02
+         * cart_id : [1311]
+         * total_num : 1
+         * total_price : 70.00
          * total_postage : 0.00
-         * pay_price : 0.02
+         * pay_price : 70.00
          * pay_postage : 0.00
          * deduction_price : 0.00
          * coupon_id : 0
@@ -31,7 +34,7 @@ public class OrderDetailsBean extends BaseBean<OrderDetailsBean.OBean> {
          * paid : 0
          * pay_time :
          * pay_type : 1
-         * add_time : 1548836902
+         * add_time : 1550022274
          * status : 0
          * refund_status : 0
          * refund_reason_wap_img :
@@ -43,22 +46,22 @@ public class OrderDetailsBean extends BaseBean<OrderDetailsBean.OBean> {
          * delivery_name :
          * delivery_type :
          * delivery_id :
-         * gain_integral : 0.00
+         * gain_integral : 5.00
          * use_integral : 0.00
          * back_integral :
          * mark :
          * is_del : 0
-         * unique : b03d2a0270c9b03a7aa403b60d5f69f9
+         * unique : 4b4ea04745945c4fd76a9edf1ce42304
          * remark :
          * mer_id : 0
          * is_mer_check : 0
          * combination_id : 0
          * pink_id : 0
-         * cost : 400.00
+         * cost : 11.00
          * seckill_id : 0
          * bargain_id : 0
          * is_channel : 0
-         * cartInfo : [{"id":1307,"uid":181,"type":"product","product_id":698,"product_attr_unique":"e4598983","cart_num":2,"add_time":1548836886,"is_pay":0,"is_del":0,"is_new":0,"combination_id":0,"seckill_id":0,"bargain_id":0,"productInfo":{"id":698,"image":"https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0c362a.jpg","slider_image":["https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0d3535.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0c362a.jpg"],"price":"499.00","cost":"0.00","ot_price":"550.00","vip_price":"0.00","postage":"0.00","mer_id":0,"give_integral":"0.00","cate_id":"65,69","sales":7,"stock":94,"store_name":"Barsone朋森 即热式饮水机BS-06H04D","unit_name":"个","is_show":1,"is_del":0,"is_postage":1,"attrInfo":{"product_id":698,"suk":"10L","stock":93,"sales":1,"price":"0.01","image":"https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0c362a.jpg","unique":"e4598983","cost":"200.00"}},"truePrice":0.01,"costPrice":200,"trueStock":93,"unique":"b8687871f51fb14d80adb26f71c7b307"}]
+         * cartInfo : [{"id":1311,"uid":181,"type":"product","product_id":691,"product_attr_unique":"f5e6205b","cart_num":1,"add_time":1548915270,"is_pay":0,"is_del":0,"is_new":0,"combination_id":0,"seckill_id":0,"bargain_id":0,"productInfo":{"id":691,"image":"https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f7402c.jpg","slider_image":["https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f85c7b.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f7402c.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f6261a.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f51806.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f40243.jpg"],"price":"19.90","cost":"0.00","ot_price":"25.00","vip_price":"0.00","postage":"0.00","mer_id":0,"give_integral":"5.00","cate_id":"69,70,71","sales":11,"stock":398,"store_name":"【磨功夫 茉莉研磨真奶茶 】 原价36，现价19.9包邮 不含植脂末 无色素 无奶精 低卡路里 60g(30g*2包）*2袋","unit_name":"件","is_show":1,"is_del":0,"is_postage":1,"attrInfo":{"product_id":691,"suk":"大,绿","stock":100,"sales":0,"price":"70.00","image":"https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f7402c.jpg","unique":"f5e6205b","cost":"11.00"}},"truePrice":70,"costPrice":11,"trueStock":100,"unique":"44a03bdac2e4b55debf7c69315149e49"}]
          * _status : {"_type":0,"_title":"未支付","_msg":"立即支付订单吧","_class":"nobuy","_payType":"支付宝"}
          */
 
@@ -79,7 +82,7 @@ public class OrderDetailsBean extends BaseBean<OrderDetailsBean.OBean> {
         private int paid;
         private String pay_time;
         private String pay_type;
-        private int add_time;
+        private String add_time;
         private int status;
         private int refund_status;
         private String refund_reason_wap_img;
@@ -246,11 +249,11 @@ public class OrderDetailsBean extends BaseBean<OrderDetailsBean.OBean> {
             this.pay_type = pay_type;
         }
 
-        public int getAdd_time() {
+        public String getAdd_time() {
             return add_time;
         }
 
-        public void setAdd_time(int add_time) {
+        public void setAdd_time(String add_time) {
             this.add_time = add_time;
         }
 
@@ -544,24 +547,24 @@ public class OrderDetailsBean extends BaseBean<OrderDetailsBean.OBean> {
 
         public static class CartInfoBean {
             /**
-             * id : 1307
+             * id : 1311
              * uid : 181
              * type : product
-             * product_id : 698
-             * product_attr_unique : e4598983
-             * cart_num : 2
-             * add_time : 1548836886
+             * product_id : 691
+             * product_attr_unique : f5e6205b
+             * cart_num : 1
+             * add_time : 1548915270
              * is_pay : 0
              * is_del : 0
              * is_new : 0
              * combination_id : 0
              * seckill_id : 0
              * bargain_id : 0
-             * productInfo : {"id":698,"image":"https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0c362a.jpg","slider_image":["https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0d3535.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0c362a.jpg"],"price":"499.00","cost":"0.00","ot_price":"550.00","vip_price":"0.00","postage":"0.00","mer_id":0,"give_integral":"0.00","cate_id":"65,69","sales":7,"stock":94,"store_name":"Barsone朋森 即热式饮水机BS-06H04D","unit_name":"个","is_show":1,"is_del":0,"is_postage":1,"attrInfo":{"product_id":698,"suk":"10L","stock":93,"sales":1,"price":"0.01","image":"https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0c362a.jpg","unique":"e4598983","cost":"200.00"}}
-             * truePrice : 0.01
-             * costPrice : 200
-             * trueStock : 93
-             * unique : b8687871f51fb14d80adb26f71c7b307
+             * productInfo : {"id":691,"image":"https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f7402c.jpg","slider_image":["https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f85c7b.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f7402c.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f6261a.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f51806.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f40243.jpg"],"price":"19.90","cost":"0.00","ot_price":"25.00","vip_price":"0.00","postage":"0.00","mer_id":0,"give_integral":"5.00","cate_id":"69,70,71","sales":11,"stock":398,"store_name":"【磨功夫 茉莉研磨真奶茶 】 原价36，现价19.9包邮 不含植脂末 无色素 无奶精 低卡路里 60g(30g*2包）*2袋","unit_name":"件","is_show":1,"is_del":0,"is_postage":1,"attrInfo":{"product_id":691,"suk":"大,绿","stock":100,"sales":0,"price":"70.00","image":"https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f7402c.jpg","unique":"f5e6205b","cost":"11.00"}}
+             * truePrice : 70
+             * costPrice : 11
+             * trueStock : 100
+             * unique : 44a03bdac2e4b55debf7c69315149e49
              */
 
             private int id;
@@ -579,7 +582,7 @@ public class OrderDetailsBean extends BaseBean<OrderDetailsBean.OBean> {
             private int bargain_id;
             private ProductInfoBean productInfo;
             private double truePrice;
-            private int costPrice;
+            private double costPrice;
             private int trueStock;
             private String unique;
 
@@ -703,11 +706,11 @@ public class OrderDetailsBean extends BaseBean<OrderDetailsBean.OBean> {
                 this.truePrice = truePrice;
             }
 
-            public int getCostPrice() {
+            public double getCostPrice() {
                 return costPrice;
             }
 
-            public void setCostPrice(int costPrice) {
+            public void setCostPrice(double costPrice) {
                 this.costPrice = costPrice;
             }
 
@@ -729,25 +732,25 @@ public class OrderDetailsBean extends BaseBean<OrderDetailsBean.OBean> {
 
             public static class ProductInfoBean {
                 /**
-                 * id : 698
-                 * image : https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0c362a.jpg
-                 * slider_image : ["https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0d3535.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0c362a.jpg"]
-                 * price : 499.00
+                 * id : 691
+                 * image : https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f7402c.jpg
+                 * slider_image : ["https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f85c7b.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f7402c.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f6261a.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f51806.jpg","https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f40243.jpg"]
+                 * price : 19.90
                  * cost : 0.00
-                 * ot_price : 550.00
+                 * ot_price : 25.00
                  * vip_price : 0.00
                  * postage : 0.00
                  * mer_id : 0
-                 * give_integral : 0.00
-                 * cate_id : 65,69
-                 * sales : 7
-                 * stock : 94
-                 * store_name : Barsone朋森 即热式饮水机BS-06H04D
-                 * unit_name : 个
+                 * give_integral : 5.00
+                 * cate_id : 69,70,71
+                 * sales : 11
+                 * stock : 398
+                 * store_name : 【磨功夫 茉莉研磨真奶茶 】 原价36，现价19.9包邮 不含植脂末 无色素 无奶精 低卡路里 60g(30g*2包）*2袋
+                 * unit_name : 件
                  * is_show : 1
                  * is_del : 0
                  * is_postage : 1
-                 * attrInfo : {"product_id":698,"suk":"10L","stock":93,"sales":1,"price":"0.01","image":"https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0c362a.jpg","unique":"e4598983","cost":"200.00"}
+                 * attrInfo : {"product_id":691,"suk":"大,绿","stock":100,"sales":0,"price":"70.00","image":"https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f7402c.jpg","unique":"f5e6205b","cost":"11.00"}
                  */
 
                 private int id;
@@ -924,14 +927,14 @@ public class OrderDetailsBean extends BaseBean<OrderDetailsBean.OBean> {
 
                 public static class AttrInfoBean {
                     /**
-                     * product_id : 698
-                     * suk : 10L
-                     * stock : 93
-                     * sales : 1
-                     * price : 0.01
-                     * image : https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04ade0c362a.jpg
-                     * unique : e4598983
-                     * cost : 200.00
+                     * product_id : 691
+                     * suk : 大,绿
+                     * stock : 100
+                     * sales : 0
+                     * price : 70.00
+                     * image : https://shop.qixiuu.com/public/uploads/attach/2018/12/03/s_5c04a75f7402c.jpg
+                     * unique : f5e6205b
+                     * cost : 11.00
                      */
 
                     private int product_id;

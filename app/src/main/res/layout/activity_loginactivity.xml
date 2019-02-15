@@ -31,6 +31,7 @@
             android:textSize="14sp" />
 
         <Button
+            android:onClick="weichatLogin"
             style="@style/btn_normal"
             android:layout_marginTop="@dimen/margin100dp"
             android:text="微信快捷登录" />

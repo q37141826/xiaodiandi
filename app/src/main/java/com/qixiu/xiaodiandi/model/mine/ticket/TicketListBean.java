@@ -4,36 +4,38 @@ import com.qixiu.qixiu.request.bean.BaseBean;
 
 import java.util.List;
 
+//
 public class TicketListBean extends BaseBean< List<TicketListBean.OBean> > {
+
 
 
     public static class OBean {
         /**
-         * id : 136
-         * cid : 90
-         * uid : 118
-         * coupon_title : 满100减10元
-         * coupon_price : 10
-         * use_min_price : 100
-         * add_time : 1546682882
-         * end_time : 1547287682
-         * use_time : 1546682999
+         * id : 138
+         * cid : 93
+         * uid : 181
+         * coupon_title : 测试优惠
+         * coupon_price : 0.01
+         * use_min_price : 0.02
+         * add_time : 1550198707
+         * end_time : 1551926707
+         * use_time : 0
          * type : get
-         * status : 1
+         * status : 0
          * is_fail : 0
-         * _add_time : 2019/01/05
-         * _end_time : 2019/01/12
-         * _type : 0
-         * _msg : 已使用
+         * _add_time : 2019/02/15
+         * _end_time : 2019/03/07
+         * _type : 2
+         * _msg : 可使用
          */
 
         private int id;
-        private int cid;
+        private String cid;
         private int uid;
         private String coupon_title;
-        private int coupon_price;
-        private int use_min_price;
-        private int add_time;
+        private double coupon_price;
+        private double use_min_price;
+        private String add_time;
         private int end_time;
         private int use_time;
         private String type;
@@ -52,11 +54,11 @@ public class TicketListBean extends BaseBean< List<TicketListBean.OBean> > {
             this.id = id;
         }
 
-        public int getCid() {
+        public String getCid() {
             return cid;
         }
 
-        public void setCid(int cid) {
+        public void setCid(String cid) {
             this.cid = cid;
         }
 
@@ -76,27 +78,27 @@ public class TicketListBean extends BaseBean< List<TicketListBean.OBean> > {
             this.coupon_title = coupon_title;
         }
 
-        public int getCoupon_price() {
+        public double getCoupon_price() {
             return coupon_price;
         }
 
-        public void setCoupon_price(int coupon_price) {
+        public void setCoupon_price(double coupon_price) {
             this.coupon_price = coupon_price;
         }
 
-        public int getUse_min_price() {
+        public double getUse_min_price() {
             return use_min_price;
         }
 
-        public void setUse_min_price(int use_min_price) {
+        public void setUse_min_price(double use_min_price) {
             this.use_min_price = use_min_price;
         }
 
-        public int getAdd_time() {
+        public String getAdd_time() {
             return add_time;
         }
 
-        public void setAdd_time(int add_time) {
+        public void setAdd_time(String add_time) {
             this.add_time = add_time;
         }
 

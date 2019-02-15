@@ -34,9 +34,7 @@ public class GotoView extends RelativeLayout {
         textViewTitle.setTextColor(firsttextcolor);
         textViewTitle.setTextSize(firstsize);
         int firstres = array.getResourceId(R.styleable.GotoView_first_drawable, 0);
-        if (firstres != 0) {
-            DrawableUtils.setLeftDrawableResouce(textViewTitle, context, firstres);
-        }
+        setFirsDrawable(context,firstres);
         String firstText = array.getString(R.styleable.GotoView_first_text);
         setFirstText(firstText);
         float firstdrawblepadding = array.getDimensionPixelSize(R.styleable.GotoView_first_drawble_padding, 15);
@@ -46,9 +44,8 @@ public class GotoView extends RelativeLayout {
         int secondtextcolor = array.getColor(R.styleable.GotoView_second_text_color, getResources().getColor(R.color.font_grey));
         float secondsize = array.getDimensionPixelSize(R.styleable.GotoView_second_size, 15);
         int secondres = array.getResourceId(R.styleable.GotoView_second_drawable, 0);
-        if (secondres != 0) {
-            DrawableUtils.setRightDrawableResouce(textViewName, context, secondres);
-        }
+        setSecondDrawable(context,secondres);
+
         textViewName.setTextSize(secondsize);
         textViewName.setTextColor(secondtextcolor);
         String secondText = array.getString(R.styleable.GotoView_second_text);
@@ -60,6 +57,18 @@ public class GotoView extends RelativeLayout {
         //是否显示
         boolean showGoto = array.getBoolean(R.styleable.GotoView_show_goto, true);
         setGotoVisble(showGoto);
+    }
+
+    public void setSecondDrawable(Context context, int firstres) {
+        if (firstres != 0) {
+            DrawableUtils.setRightDrawableResouce(textViewName, context, firstres);
+        }
+    }
+
+    private void setFirsDrawable(Context context,int second) {
+        if (second != 0) {
+            DrawableUtils.setLeftDrawableResouce(textViewTitle, context, second);
+        }
     }
 
     public void setGotoVisble(boolean visble) {

@@ -225,6 +225,7 @@
                         app:second_text_color="@color/font_grey02"></com.qixiu.wigit.GotoView>
 
                     <com.qixiu.wigit.GotoView
+                        android:onClick="usePoints"
                         android:id="@+id/gotoViewPoints"
                         style="@style/mine_gotoview"
                         android:layout_height="@dimen/margin49dp"

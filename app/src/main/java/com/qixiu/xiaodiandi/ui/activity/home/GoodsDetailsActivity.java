@@ -12,13 +12,17 @@ import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.qixiu.utils.MyTimer;
+import com.qixiu.qixiu.utils.NavagationUtils;
 import com.qixiu.qixiu.utils.StatusBarUtils;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.qixiu.utils.html_utils.HtmlUtils;
@@ -28,6 +32,7 @@ import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.constant.EventAction;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.model.home.goodsdetails.CharctorInnerBean;
+import com.qixiu.xiaodiandi.model.home.goodsdetails.GetPointsTimeBean;
 import com.qixiu.xiaodiandi.model.home.goodsdetails.GoodsDetailsBean;
 import com.qixiu.xiaodiandi.model.order.GotoAddCartsData;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
@@ -88,6 +93,13 @@ public class GoodsDetailsActivity extends RequestActivity {
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//设置黑色
         StatusBarUtils.setWindowStatusBarColor(this, Color.WHITE);
         loadDetails();
+        addPoints(1 + "");//浏览获得积分
+    }
+
+    private void addPoints(String type) {
+        Map<String, String> map = new HashMap<>();
+        map.put("type", type + "");
+        post(ConstantUrl.scanPointsUrl, map, new GetPointsTimeBean());
     }
 
     private void loadDetails() {
@@ -136,7 +148,28 @@ public class GoodsDetailsActivity extends RequestActivity {
             loadDetails();
             ToastUtil.toast(data.getM());
         }
+        if (data instanceof GetPointsTimeBean) {
+            GetPointsTimeBean bean = (GetPointsTimeBean) data;
+            long limit = NumUtils.getInterger(bean.getO().getTimefen()) * 60 * 1000;
+            MyTimer myTimer = new MyTimer(limit, 1000);
+            myTimer.setListenner(new MyTimer.TimeStateListenner() {
+                @Override
+                public void onRunning(long lastTime) {
+
+                }
+
+                @Override
+                public void onFinished() {
+                    addPoints(2 + "");//浏览获得积分
+                }
+            });
+            myTimer.start();
+        }
+        if (!(data instanceof GetPointsTimeBean) && data.getUrl().equals(ConstantUrl.scanPointsUrl)) {
+            ToastUtil.toast(data.getM());
+        }
     }
+
 
     @Override
     public void onError(Exception e) {
@@ -171,7 +204,7 @@ public class GoodsDetailsActivity extends RequestActivity {
         selectedProduct = null;
         View contentView = View.inflate(getActivity(), R.layout.pop_goodsdetail, null);
         contentView.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.push_bottom_in_2));
-        pw = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,
+        pw = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
                 true);
         pw.setBackgroundDrawable(new BitmapDrawable());
         pw.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
@@ -181,7 +214,7 @@ public class GoodsDetailsActivity extends RequestActivity {
         if (!pw.isShowing())
             pw.showAtLocation(
                     getActivity().getWindow().getDecorView().findViewById(android.R.id.content),
-                    Gravity.BOTTOM, 0, 0);
+                    Gravity.BOTTOM, 0, NavagationUtils.getNavigationBarHeight(getContext()));
         Button bt_buy_pp = contentView.findViewById(R.id.bt_buy_pp);
         RecyclerView rv_good_details_spec = contentView.findViewById(R.id.rv_good_details_spec);
 
@@ -194,6 +227,8 @@ public class GoodsDetailsActivity extends RequestActivity {
         TextView tv_shopcar_minus = contentView.findViewById(R.id.tv_shopcar_minus);
         TextView tv_repertory = contentView.findViewById(R.id.tv_repertory);
         TextView tv_add = contentView.findViewById(R.id.tv_add);
+        ImageView iv_goodsdetail_ppw_picture = contentView.findViewById(R.id.iv_goodsdetail_ppw_picture);
+        Glide.with(getContext()).load(detailsBean.getO().getProduct().getImage()).into(iv_goodsdetail_ppw_picture);
         tv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -242,6 +277,8 @@ public class GoodsDetailsActivity extends RequestActivity {
                 gotoAddCartsData.setUnique(selectedProduct == null ? "" : selectedProduct.getUnique());
                 gotoAddCartsData.setMoney(NumUtils.getDouble(selectedProduct.getPrice()) * selectNum + "");
                 gotoAddCartsData.setListBean(selectedProduct);
+                selectedProduct.setNum(selectNum);
+                selectedProduct.setInfo(detailsBean.getO().getProduct().getStore_name());
                 ConfirmOrderActivity.start(getContext(), ConfirmOrderActivity.class, gotoAddCartsData);
 
             }

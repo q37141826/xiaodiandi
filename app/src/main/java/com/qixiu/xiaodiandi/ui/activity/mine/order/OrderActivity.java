@@ -91,6 +91,7 @@ public class OrderActivity extends RequestActivity {
         OrderFragmentAdapter orderFragmentAdapter = new OrderFragmentAdapter(getSupportFragmentManager(), fragmentInterfaces);
         orderFragmentAdapter.setPageTitle(titles);
         viewpagerMyoreder.setAdapter(orderFragmentAdapter);
+        viewpagerMyoreder.setOffscreenPageLimit(5);
         tablayoutMyorder.setupWithViewPager(viewpagerMyoreder);
         index = getIntent().getIntExtra(IntentDataKeyConstant.DATA, 0);
         viewpagerMyoreder.setCurrentItem(index);

@@ -28,7 +28,9 @@ import com.qixiu.wigit.hviewpager.HackyViewPager;
 import com.qixiu.wigit.show_dialog.ArshowContextUtil;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.constant.EventAction;
 import com.qixiu.xiaodiandi.model.home.HomeBean;
+import com.qixiu.xiaodiandi.ui.activity.baseactivity.GotoWebActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.GoodsDetailsActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.SearchActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.BaseFragment;
@@ -41,6 +43,8 @@ import com.qixiu.xiaodiandi.ui.fragment.home.ImageUrlAdapter;
 import com.qixiu.xiaodiandi.ui.fragment.home.ItemClickListenner;
 import com.qixiu.xiaodiandi.ui.fragment.home.ViewPagerAdapter;
 import com.zhy.magicviewpager.transformer.ScaleInTransformer;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,6 +90,16 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
 
                 //vip部分的东西
                 HomeVipAdapter homeVipAdapter = new HomeVipAdapter();
+                homeVipAdapter.setOnItemClickListener(new OnRecyclerItemListener() {
+                    @Override
+                    public void onItemClick(View v, RecyclerView.Adapter adapter, Object data) {
+                        if (data instanceof HomeBean.OBean.VipCategoryBean) {
+                            HomeBean.OBean.VipCategoryBean bean = (HomeBean.OBean.VipCategoryBean) data;
+                            EventAction.Action action = new EventAction.Action(EventAction.GOTO_TYPE);
+                            EventBus.getDefault().post(action);
+                        }
+                    }
+                });
                 recyclerViewVipList.setAdapter(homeVipAdapter);
                 homeVipAdapter.refreshData(homeBean.getO().getVip_category());
             } else {
@@ -100,8 +114,6 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         viewpagerFragments.clear();
         radiogroup.removeAllViews();
         List<String> titles = new ArrayList<>();
-
-
         int max = category.size() / 10 + 1;//页数
         for (int i = 0; i < max; i++) {
             HomeViepagerFragment viepagerFragment01 = new HomeViepagerFragment();
@@ -310,7 +322,12 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
     public void onclick(Object data) {
         if (data instanceof HomeBean.OBean.BannerBean) {
             HomeBean.OBean.BannerBean bean = (HomeBean.OBean.BannerBean) data;
-
+            //如果type=2，那么就是url
+            if (bean.getType().equals("2")) {
+                GotoWebActivity.start(getContext(), GotoWebActivity.class, bean.getUrl());
+            } else {
+                GoodsDetailsActivity.start(getContext(), GoodsDetailsActivity.class, bean.getUrl());
+            }
         }
         if (data instanceof HomeBean.OBean.ProductBestBean) {
             HomeBean.OBean.ProductBestBean bean = (HomeBean.OBean.ProductBestBean) data;

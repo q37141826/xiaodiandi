@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.qixiu.xiaodiandi.model.order.RefreshListBean;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -12,6 +13,8 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.wxpay.PlatformConfigConstant;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEventHandler {
@@ -62,7 +65,7 @@ public class WXPayEntryActivity extends AppCompatActivity implements IWXAPIEvent
     private void startNoticeMarket(BaseResp resp) {
         Bundle bundle = new Bundle();
         //type是本项目中车费类型
-
+        EventBus.getDefault().post(new RefreshListBean());
     }
 
 }

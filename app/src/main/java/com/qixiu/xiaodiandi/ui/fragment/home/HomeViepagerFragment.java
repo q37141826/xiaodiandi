@@ -17,9 +17,11 @@ import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.constant.EventAction;
 import com.qixiu.xiaodiandi.model.home.HomeBean;
-import com.qixiu.xiaodiandi.ui.activity.home.SearchActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,7 +109,9 @@ public class HomeViepagerFragment extends RequestFragment implements OnRecyclerI
     public void onItemClick(View v, RecyclerView.Adapter adapter, Object data) {
         if (data instanceof HomeBean.OBean.CategoryBean) {
             HomeBean.OBean.CategoryBean bean = (HomeBean.OBean.CategoryBean) data;
-            SearchActivity.start(getContext(), SearchActivity.class, bean.getCate_name() + "");
+            EventAction.Action action=new EventAction.Action(EventAction.GOTO_TYPE);
+            action.setId(bean.getId()+"");
+            EventBus.getDefault().post(action);
         }
     }
 
@@ -142,4 +146,6 @@ public class HomeViepagerFragment extends RequestFragment implements OnRecyclerI
             }
         }
     }
+
+
 }

@@ -50,15 +50,17 @@
             android:name=".ui.activity.MainActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
 
 
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".ui.activity.mine.DtestActivity" />
-        <activity android:name=".ui.activity.home.GoodsDetailsActivity" />
+        <activity
+            android:name=".ui.activity.home.GoodsDetailsActivity"
+            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity android:name=".ui.activity.home.ConfirmOrderActivity" />
         <activity
             android:name=".ui.activity.home.SearchActivity"
@@ -110,10 +112,10 @@
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <!-- android:configChanges="orientation|keyboardHidden|navigation|screenSize" -->
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -124,7 +126,9 @@
         <!-- alipay sdk end -->
 
         <activity android:name=".ui.activity.mine.mypoints.MyPointsActivity" />
-        <activity android:name=".ui.activity.mine.mypoints.GetCashActivity" android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity
+            android:name=".ui.activity.mine.mypoints.GetCashActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
         <activity android:name=".ui.activity.mine.mypoints.GiveToOtherActivity" />
         <activity android:name=".ui.activity.mine.mycollection.MyCollectionActivity" />
         <activity android:name=".ui.activity.mine.mycollection.FindSameActivity" />
@@ -136,7 +140,10 @@
         <activity android:name=".ui.activity.community.ConsultingDetailsActivity" />
         <activity android:name=".ui.activity.mine.vip.InviteActivity" />
         <activity android:name=".ui.activity.Loginactivity" />
-        <activity android:name=".ui.activity.PhoneLoginActivity"></activity>
+        <activity android:name=".ui.activity.PhoneLoginActivity" />
+        <activity android:name=".ui.activity.baseactivity.GotoWebActivity" />
+        <activity android:name=".ui.activity.mine.mypoints.PointsRecordActivity" />
+        <activity android:name=".ui.activity.mine.mypoints.GetCashRecordActivity"></activity>
     </application>
 
 </manifest>

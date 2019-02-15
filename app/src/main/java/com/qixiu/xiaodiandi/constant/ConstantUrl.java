@@ -11,6 +11,9 @@ public class ConstantUrl {
     //登录
     public static String loginUrl = BuildConfig.BASE_URL + "/api/home/login";
 
+    //微信登录
+    public static String wxloginUrl = BuildConfig.BASE_URL + "/api/home/wxlogin";
+
     //发送验证码
     public static String sendCodeUrl = BuildConfig.BASE_URL + "/api/home/sendsms";
 //    phone		是	手机号
@@ -35,6 +38,9 @@ public class ConstantUrl {
 
     //我的积分
     public static String waterlistUrl = BuildConfig.BASE_URL + "/api/home/waterlist";
+
+    //浏览获得积分
+    public static String scanPointsUrl = BuildConfig.BASE_URL +  "/api/home/browse";
 
 
     //我的优惠券
@@ -80,11 +86,15 @@ public class ConstantUrl {
     //我的订单
     public static String myOrderListUrl = BuildConfig.BASE_URL + "/api/home/order";
 
+    //领取优惠券
+    public static String getTicketUrl = BuildConfig.BASE_URL + "/api/home/couponadd";
+
 
     //快速支付
     public static String fastPayUrl = BuildConfig.BASE_URL + "";
     //购物车支付
 //    public static String cartsPayUrl = BuildConfig.BASE_URL + "";
+
 
     public static String fastPayOrderMakeUrl = BuildConfig.BASE_URL + "";
 
@@ -99,8 +109,6 @@ public class ConstantUrl {
     public static String addressDelUrl = BuildConfig.BASE_URL + "/api/home/addressdel";
 
 
-    //取消订单
-    public static String cancleOrder = BuildConfig.BASE_URL + "/api/home/orderdel";
     //订单删除
     public static String orderDeleteUrl = BuildConfig.BASE_URL + "/api/home/orderdel";
     //确认收货
@@ -111,9 +119,30 @@ public class ConstantUrl {
     //看物流
     public static String CheckWhereUrl = BuildConfig.BASE_URL + "";
 
+    //换货
+    public static String changeGoodsUrl = BuildConfig.BASE_URL + "/api/home/goods";
+
+
     //支付订单
     public static String payOrderUrl = BuildConfig.BASE_URL + "/api/home/orderpay";
 
     //订单详情
     public static String orderDetailUrl = BuildConfig.BASE_URL + "/api/home/orderinfo";
+
+
+    //我的邀请二维码
+    public static String inviteQrcodeUrl = BuildConfig.BASE_URL + "/api/home/myqrcode";
+
+    //提现
+    public static String getCashUrl = BuildConfig.BASE_URL + "/api/home/withdraw";
+
+    //积分转让
+    public static String transToOtherUrl = BuildConfig.BASE_URL + "/api/home/transfer";
+
+    //积分明细
+    public static String pointsListUrl = BuildConfig.BASE_URL +   "/api/home/waterinfo";
+
+    //点滴提现明细
+    public static String getCashRecordUrl = BuildConfig.BASE_URL +   "/api/home/withdrawinfo";
+
 }

@@ -45,6 +45,7 @@ public class SearchActivity extends RequestActivity implements XRecyclerView.Loa
     protected void onInitData() {
         String search = getIntent().getStringExtra(IntentDataKeyConstant.DATA);
         edittextSearch.setText(search);
+        edittextSearch.setSelection(search.length());
         XrecyclerViewUtil.setXrecyclerView(xrecyclerview, this, this, true,
                 1, new GridLayoutManager(getContext(), 2));
         adapter = new SearchAdapter();

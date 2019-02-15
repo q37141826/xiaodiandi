@@ -36,6 +36,7 @@
                 android:src="@mipmap/mine_phone" />
 
             <com.qixiu.wigit.myedittext.MyEditTextView
+                app:input_type="number"
                 android:id="@+id/myedittextPhone"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin36dp"
@@ -59,6 +60,7 @@
                 android:src="@mipmap/mine_points" />
 
             <com.qixiu.wigit.myedittext.MyEditTextView
+                app:input_type="number"
                 android:id="@+id/myedittextPoints"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin36dp"

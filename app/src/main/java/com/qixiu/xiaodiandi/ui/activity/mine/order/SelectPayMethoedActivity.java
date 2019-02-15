@@ -18,6 +18,7 @@ import com.qixiu.qixiu.application.AppManager;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.request.parameter.StringConstants;
+import com.qixiu.qixiu.utils.CommonUtils;
 import com.qixiu.qixiu.utils.Preference;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.xiaodiandi.R;
@@ -118,6 +119,8 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
         map.put("paytype", type + "");
         map.put("key", payData.getKey() + "");
         map.put("address", payData.getAddress() + "");
+        CommonUtils.putDataIntoMap(map, "coupon", payData.getCoupon());
+        CommonUtils.putDataIntoMap(map, "integral", payData.getIntegral());
         BaseBean bean;
         if (type == 1) {
             bean = new AliBean();
