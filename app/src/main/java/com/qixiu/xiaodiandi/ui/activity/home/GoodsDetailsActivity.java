@@ -86,6 +86,7 @@ public class GoodsDetailsActivity extends RequestActivity {
     private int selectNum = 1;//选择了多少数量
     private TextView tv_goodsdetail_ppw_price_txt;
     private String id;
+    private MyTimer myTimer;
 
     @Override
     protected void onInitData() {
@@ -151,7 +152,7 @@ public class GoodsDetailsActivity extends RequestActivity {
         if (data instanceof GetPointsTimeBean) {
             GetPointsTimeBean bean = (GetPointsTimeBean) data;
             long limit = NumUtils.getInterger(bean.getO().getTimefen()) * 60 * 1000;
-            MyTimer myTimer = new MyTimer(limit, 1000);
+            myTimer = new MyTimer(limit, 1000);
             myTimer.setListenner(new MyTimer.TimeStateListenner() {
                 @Override
                 public void onRunning(long lastTime) {
@@ -382,5 +383,12 @@ public class GoodsDetailsActivity extends RequestActivity {
         map.put("type", detailsBean.getO().getProduct().getCollect() == 1 ? "2" : "1");
         map.put("sid", detailsBean.getO().getProduct().getId() + "");
         post(ConstantUrl.addToCollectUrl, map, new BaseBean());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        myTimer.cancleTimer();//注销时干掉他
+        myTimer = null;
     }
 }

@@ -42,12 +42,28 @@ public class ConstantRequest {
     }
 
 
-    public static void getAddressList(OKHttpRequestModel okHttpRequestModel){
-        Map<String, String> map = new HashMap<>();
+    public static void getAddressList(OKHttpRequestModel okHttpRequestModel) {
+        Map<String, String> map = getMap();
 //        map.put("pageNo", pageNo + "");
 //        map.put("pageSize", pageSize + "");
-        map.put("uid", LoginStatus.getId());
         AddressBean bean = new AddressBean();
         okHttpRequestModel.okhHttpPost(ConstantUrl.addressUrl, map, bean);
     }
+
+    public static void leaveMessage(OKHttpRequestModel okHttpRequestModel, String url, String type, String nid, String content) {
+        leaveMessage(okHttpRequestModel, url, type, nid, content, "", "");
+    }
+
+    public static void leaveMessage(OKHttpRequestModel okHttpRequestModel, String url, String type, String nid, String content, String chat, String hid) {
+        //	类型1视频专题，2公司动态，3最新资讯，4娱乐社区
+        Map<String, String> map = getMap();
+        map.put("type", type);
+        map.put("nid", nid);
+        map.put("content", content);
+        CommonUtils.putDataIntoMap(map, "chat", chat);
+        CommonUtils.putDataIntoMap(map, "hid", hid);
+        okHttpRequestModel.okhHttpPost(url, map, new BaseBean());
+    }
+
+
 }

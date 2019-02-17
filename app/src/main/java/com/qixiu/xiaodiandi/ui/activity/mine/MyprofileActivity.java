@@ -3,8 +3,6 @@ package com.qixiu.xiaodiandi.ui.activity.mine;
 
 import android.Manifest;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.SystemClock;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.view.Gravity;
@@ -31,6 +29,9 @@ import com.qixiu.wigit.zprogress.ZProgressHUD;
 import com.qixiu.xiaodiandi.BuildConfig;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.engine.PlatformLoginEngine;
+import com.qixiu.xiaodiandi.engine.bean.UserInfo;
+import com.qixiu.xiaodiandi.model.login.LoginBean;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.model.mine.UserBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.TitleActivity;
@@ -40,13 +41,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.sharesdk.wechat.friends.Wechat;
 import de.hdodenhof.circleimageview.CircleImageView;
 import me.iwf.photopicker.PhotoPicker;
 import me.iwf.photopicker.PhotoPreview;
 import me.iwf.photopicker.utils.ImageCaptureManager;
 import okhttp3.Call;
 
-public class MyprofileActivity extends TitleActivity implements View.OnClickListener, TextWatcherAdapterInterface, OKHttpUIUpdataListener<BaseBean> {
+public class MyprofileActivity extends TitleActivity implements View.OnClickListener, TextWatcherAdapterInterface, OKHttpUIUpdataListener<BaseBean>, PlatformLoginEngine.PlatformResultListener {
     private RelativeLayout relativeLayout_changehead, relativeLayout_changenickname;
     private TextView textView_nickname_change;
     private PopupWindow popwindow;
@@ -66,7 +68,9 @@ public class MyprofileActivity extends TitleActivity implements View.OnClickList
 
     OKHttpRequestModel okHttpRequestModel;
     private GotoView gotoviewLevel;
+    private GotoView gotoViewBindWeichat;
     private GotoView gotoviewPhone;
+    private UserBean userBean;
 
     @Override
     protected void onInitData() {
@@ -84,6 +88,7 @@ public class MyprofileActivity extends TitleActivity implements View.OnClickList
         textView_nickname_change = (TextView) findViewById(R.id.textView_nickname_change);
         gotoviewLevel = findViewById(R.id.gotoviewLevel);
         gotoviewPhone = findViewById(R.id.gotoviewPhone);
+        gotoViewBindWeichat = findViewById(R.id.gotoViewBindWeichat);
         initTitle();
         setClick();
     }
@@ -157,11 +162,11 @@ public class MyprofileActivity extends TitleActivity implements View.OnClickList
         PictureCut.CompressImageWithThumb.callBase64(path, new PictureCut.CompressImageWithThumb.CallBackBase64() {
             @Override
             public void callBack(String base64) {
-                if(TextUtils.isEmpty(base64)){
+                if (TextUtils.isEmpty(base64)) {
                     return;
                 }
                 Map<String, String> map = new HashMap<>();
-                map.put("img",base64);
+                map.put("img", base64);
                 map.put("uid", LoginStatus.getId());
                 okHttpRequestModel.okhHttpPost(ConstantUrl.editProfile, map, new BaseBean());
             }
@@ -248,24 +253,11 @@ public class MyprofileActivity extends TitleActivity implements View.OnClickList
     public void onSuccess(BaseBean data, int i) {
         if (data.getUrl().equals(ConstantUrl.editProfile)) {
             zProgressHUD.dismissWithSuccess("修改成功");
-            AsyncTask asyncTask = new AsyncTask() {
-                @Override
-                protected Object doInBackground(Object[] params) {
-                    SystemClock.sleep(501);
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Object o) {
-                    super.onPostExecute(o);
-//                finish();
-                }
-            }.execute();
         } else {
             zProgressHUD.dismiss();
             if (data instanceof UserBean) {
-                UserBean bean = (UserBean) data;
-                switch (bean.getO().getLevel()) {
+                userBean = (UserBean) data;
+                switch (userBean.getO().getLevel()) {
                     case 0:
                         gotoviewLevel.setSecondText("普通会员");
                         break;
@@ -279,10 +271,20 @@ public class MyprofileActivity extends TitleActivity implements View.OnClickList
                         gotoviewLevel.setSecondText("黑卡会员");
                         break;
                 }
-                Glide.with(getContext()).load(BuildConfig.BASE_URL + bean.getO().getAvatar().replace(BuildConfig.BASE_URL, "")).into(circular_head_edit);
-                gotoviewPhone.setSecondText(bean.getO().getPhone());
-                textView_nickname_change.setText(bean.getO().getAccount());
+                Glide.with(getContext()).load(BuildConfig.BASE_URL + userBean.getO().getAvatar().replace(BuildConfig.BASE_URL, "")).into(circular_head_edit);
+                gotoviewPhone.setSecondText(userBean.getO().getPhone());
+                textView_nickname_change.setText(userBean.getO().getAccount());
+                if (userBean.getO().getWechat_user() != 1) {
+                    gotoViewBindWeichat.setSecondText("去绑定");
+                } else {
+                    gotoViewBindWeichat.setSecondText("已绑定");
+                }
             }
+        }
+        if (data.getUrl().equals(ConstantUrl.wxloginUrl)) {
+            zProgressHUD.dismissWithSuccess("绑定成功");
+            gotoViewBindWeichat.setSecondText("已绑定");
+            gotoViewBindWeichat.setEnabled(false);
         }
     }
 
@@ -303,8 +305,39 @@ public class MyprofileActivity extends TitleActivity implements View.OnClickList
     }
 
 
-
     //绑定微信
     public void bindWeichat(View view) {
+        zProgressHUD.show();
+        if (userBean.getO().getWechat_user() != 1) {
+            PlatformLoginEngine loginEngine = new PlatformLoginEngine(this);
+            loginEngine.startAuthorize(Wechat.NAME);
+        } else {
+            ToastUtil.toast("您已经绑定了微信");
+            zProgressHUD.dismiss();
+        }
+    }
+
+
+    @Override
+    public void onCancel() {
+
+    }
+
+    @Override
+    public void onFailure() {
+
+    }
+
+    @Override
+    public void onSuccess(UserInfo userInfo) {
+        Map<String, String> map = new HashMap();
+        map.put("uid", LoginStatus.getId());
+        map.put("openid", userInfo.getUserId());
+        map.put("nickname", userInfo.getUserName());
+        map.put("avatar", userInfo.getUserIcon());
+        map.put("device", deviceId);
+        map.put("device_type", "1");//设备类型，1、安卓，2、IOS
+        map.put("type", "2");//设备类型，1、安卓，2、IOS
+        okHttpRequestModel.okhHttpPost(ConstantUrl.wxloginUrl, map, new LoginBean());
     }
 }

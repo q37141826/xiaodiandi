@@ -4,6 +4,7 @@ import com.qixiu.qixiu.request.OKHttpRequestModel;
 import com.qixiu.qixiu.request.OKHttpUIUpdataListener;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.qixiu.utils.CommonUtils;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.wigit.zprogress.ZProgressHUD;
 import com.qixiu.xiaodiandi.R;
@@ -29,7 +30,7 @@ public abstract class RequestActivity extends TitleActivity implements OKHttpUIU
             map = new HashMap();
         }
         if (LoginStatus.isLogin()) {
-            map.put("uid", LoginStatus.getId());
+          CommonUtils.putDataIntoMap(map,"uid", LoginStatus.getId());
         }
         okHttpRequestModel.okhHttpPost(url, map, bean);
         mZProgressHUD.show();

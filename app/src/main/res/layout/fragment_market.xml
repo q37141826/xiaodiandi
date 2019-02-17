@@ -2,9 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/white">
-
+    <View
+        android:id="@+id/belowme"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin12dp"></View>
     <RelativeLayout
+        android:layout_below="@+id/belowme"
         android:id="@+id/vg_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></RelativeLayout>

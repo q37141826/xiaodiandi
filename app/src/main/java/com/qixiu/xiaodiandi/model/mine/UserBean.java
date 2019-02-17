@@ -1,28 +1,37 @@
 package com.qixiu.xiaodiandi.model.mine;
 
+//
+
 import com.qixiu.qixiu.request.bean.BaseBean;
 
 public class UserBean extends BaseBean<UserBean.OBean> {
 
-    EBean eBean;
 
-    public EBean geteBean() {
-        return eBean;
+
+    private EBean e;
+
+
+
+
+
+    public EBean getE() {
+        return e;
     }
 
-    public void seteBean(EBean eBean) {
-        this.eBean = eBean;
+    public void setE(EBean e) {
+        this.e = e;
     }
 
     public static class OBean {
         /**
-         * uid : 179
-         * avatar :
-         * phone : 17612738977
-         * account :
-         * level : 0
-         * integral : 0.00
-         * group_name :
+         * uid : 181
+         * avatar : /public/uploads/2019-01-30/15488104973419.png
+         * phone : 13554540382
+         * account : s191548410986
+         * level : 1
+         * integral : 9.50
+         * signed : 1
+         * group_name : 普通会员
          * wechat_user : 2
          */
 
@@ -32,6 +41,7 @@ public class UserBean extends BaseBean<UserBean.OBean> {
         private String account;
         private int level;
         private String integral;
+        private int signed;
         private String group_name;
         private int wechat_user;
 
@@ -83,6 +93,14 @@ public class UserBean extends BaseBean<UserBean.OBean> {
             this.integral = integral;
         }
 
+        public int getSigned() {
+            return signed;
+        }
+
+        public void setSigned(int signed) {
+            this.signed = signed;
+        }
+
         public String getGroup_name() {
             return group_name;
         }
@@ -102,9 +120,9 @@ public class UserBean extends BaseBean<UserBean.OBean> {
 
     public static class EBean {
         /**
-         * noBuy : 0
+         * noBuy : 11
          * noTake : 0
-         * noReply : 0
+         * noReply : 3
          */
 
         private int noBuy;

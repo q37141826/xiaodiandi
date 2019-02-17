@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.model.comminity.entertainment.EntertaimentDetailsBean;
 
 /**
  * Created by my on 2019/1/15.
@@ -40,10 +41,13 @@ public class EntertainmentDetailsCommitInnerAdapter extends RecyclerBaseAdapter 
 
         @Override
         public void bindHolder(int position) {
-            SpannableString spannableString = new SpannableString("[回复]  测试内容122893478237498123123123237498237498");
-            spannableString.setSpan(new ForegroundColorSpan(Color.GRAY), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-            textViewInnerContent.setText(spannableString);
+            if(mData instanceof EntertaimentDetailsBean.EBean.ReplyBean){
+                EntertaimentDetailsBean.EBean.ReplyBean replyBean= (EntertaimentDetailsBean.EBean.ReplyBean) mData;
+                SpannableString spannableString = new SpannableString("[回复]  "+replyBean.getContent());
+                spannableString.setSpan(new ForegroundColorSpan(Color.GRAY), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                textViewInnerContent.setText(spannableString);
+            }
         }
     }
 }

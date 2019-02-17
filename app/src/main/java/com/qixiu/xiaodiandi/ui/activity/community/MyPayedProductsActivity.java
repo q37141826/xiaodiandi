@@ -2,30 +2,53 @@ package com.qixiu.xiaodiandi.ui.activity.community;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.XrecyclerViewUtil;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.model.comminity.entertainment.PayedShopListBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MyPayedProductsActivity extends RequestActivity {
+public class MyPayedProductsActivity extends RequestActivity implements XRecyclerView.LoadingListener, OnRecyclerItemListener {
 
 
-    @BindView(R.id.recyclerview)
-    RecyclerView recyclerview;
+    @BindView(R.id.xrecyclerview)
+    XRecyclerView xrecyclerview;
+    @BindView(R.id.swip_refreshlayout)
+    SwipeRefreshLayout swipRefreshlayout;
+    int pageNo = 1, pageSize = 10;
+    private MyPayedAdapter adapter;
 
     @Override
     public void onSuccess(BaseBean data) {
-
+        if(data instanceof PayedShopListBean){
+            PayedShopListBean bean= (PayedShopListBean) data;
+            if(pageNo==1){
+                adapter.refreshData(bean.getO());
+            }else {
+                adapter.addDatas(bean.getO());
+            }
+        }
     }
 
     @Override
@@ -41,10 +64,25 @@ public class MyPayedProductsActivity extends RequestActivity {
     @Override
     protected void onInitViewNew() {
         setTitle("我已购买");
-        recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        MyPayedAdapter adapter = new MyPayedAdapter();
-        recyclerview.setAdapter(adapter);
-        XrecyclerViewUtil.refreshFictiousData(adapter);
+        XrecyclerViewUtil.setXrecyclerView(xrecyclerview, this, this, false, 1, null);
+        adapter = new MyPayedAdapter();
+        xrecyclerview.setAdapter(adapter);
+        requestData();
+        swipRefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pageNo = 1;
+                requestData();
+            }
+        });
+        adapter.setOnItemClickListener(this);
+    }
+
+    private void requestData() {
+        Map<String, String> map = new HashMap<>();
+        map.put("pageNo", pageNo + "");
+        map.put("pageSize", pageSize + "");
+        post(ConstantUrl.payedProductListUrl, map, new PayedShopListBean());
     }
 
     @Override
@@ -69,6 +107,22 @@ public class MyPayedProductsActivity extends RequestActivity {
         ButterKnife.bind(this);
     }
 
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+        pageNo++;
+        requestData();
+    }
+
+    @Override
+    public void onItemClick(View v, RecyclerView.Adapter adapter, Object data) {
+        EventBus.getDefault().post(data);
+    }
+
     public class MyPayedAdapter extends RecyclerBaseAdapter {
         @Override
         public int getLayoutId() {
@@ -81,14 +135,22 @@ public class MyPayedProductsActivity extends RequestActivity {
         }
 
         public class MyPayedHolder extends RecyclerBaseHolder {
+            ImageView imageView;
+            TextView textViewDescribe;
 
             public MyPayedHolder(View itemView, Context context, RecyclerView.Adapter adapter) {
                 super(itemView, context, adapter);
+                imageView = itemView.findViewById(R.id.imageView);
+                textViewDescribe = itemView.findViewById(R.id.textViewDescribe);
             }
 
             @Override
             public void bindHolder(int position) {
-
+                if (mData instanceof PayedShopListBean.OBean) {
+                    PayedShopListBean.OBean bean = (PayedShopListBean.OBean) mData;
+                    Glide.with(mContext).load(bean.getImage()).into(imageView);
+                    textViewDescribe.setText(bean.getStore_name());
+                }
             }
         }
     }

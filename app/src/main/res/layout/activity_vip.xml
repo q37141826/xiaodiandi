@@ -4,15 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@mipmap/vip_bg"
+    android:orientation="vertical"
     tools:context="com.qixiu.xiaodiandi.ui.activity.mine.vip.VipActivity">
 
     <RelativeLayout
         android:id="@+id/vg_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-     ></RelativeLayout>
+        android:layout_height="wrap_content"></RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,45 +47,49 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/textViewAccount"
                             style="@style/text_normal"
                             android:text="13545454151"
                             android:textSize="14sp" />
 
                         <TextView
+                            android:id="@+id/textViewVipName"
                             style="@style/text_normal"
                             android:text="普通会员" />
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/textViewPhone"
                         style="@style/text_normal"
                         android:text="1556216154" />
                 </LinearLayout>
 
                 <TextView
-                    android:onClick="gotoSugestion"
                     android:layout_width="@dimen/margin96dp"
                     android:layout_height="@dimen/margin34dp"
                     android:layout_alignParentRight="true"
                     android:background="@drawable/shape_mine_vip"
                     android:drawableLeft="@mipmap/mine_vip"
                     android:gravity="center"
+                    android:onClick="gotoSugestion"
                     android:paddingLeft="@dimen/margin10dp"
                     android:text="我要推荐"
                     android:textColor="@color/white"></TextView>
             </RelativeLayout>
 
             <com.qixiu.wigit.GotoView
-                android:layout_marginTop="@dimen/margin5dp"
-                android:onClick="myPoints"
                 style="@style/mine_gotoview"
                 android:layout_height="@dimen/margin28dp"
+                android:layout_marginTop="@dimen/margin5dp"
                 android:background="@color/transparent"
+                android:onClick="myPoints"
                 android:paddingLeft="@dimen/margin25dp"
                 android:paddingRight="@dimen/margin26dp"
                 app:first_size="6sp"
                 app:first_text="我的点滴"></com.qixiu.wigit.GotoView>
 
             <TextView
+                android:id="@+id/textViewPointsAll"
                 style="@style/text_normal"
                 android:layout_width="match_parent"
                 android:gravity="center"
@@ -106,6 +109,7 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/textViewPointsCanGet"
                     style="@style/text_normal"
                     android:text="0"
                     android:textColor="@color/red" />
@@ -118,12 +122,12 @@
             </LinearLayout>
 
             <RelativeLayout
-                android:layout_marginTop="@dimen/margin15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin15dp"
                 android:paddingLeft="@dimen/margin25dp"
-                android:paddingRight="@dimen/margin25dp"
-                android:paddingTop="@dimen/margin5dp">
+                android:paddingTop="@dimen/margin5dp"
+                android:paddingRight="@dimen/margin25dp">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -137,6 +141,7 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/textViewPointsToday"
                         style="@style/text_normal"
                         android:text="0积分" />
                 </LinearLayout>
@@ -154,6 +159,7 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/textViewPointsMonth"
                         style="@style/text_normal"
                         android:text="0积分" />
                 </LinearLayout>
@@ -171,6 +177,7 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/textViewPointsGet"
                         style="@style/text_normal"
                         android:text="0积分" />
                 </LinearLayout>
@@ -178,11 +185,26 @@
         </LinearLayout>
 
         <com.qixiu.wigit.GotoView
-            android:onClick="gotoFriends"
             style="@style/mine_gotoview"
             android:layout_height="@dimen/margin39dp"
             app:first_size="6sp"
-            app:first_text="我的好友"></com.qixiu.wigit.GotoView>
+            app:first_text="好友"
+            app:show_goto="false"></com.qixiu.wigit.GotoView>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin1dp"
+            android:background="@color/line_color"></View>
+
+        <com.qixiu.wigit.GotoView
+            android:id="@+id/gotoMyFriends"
+            style="@style/mine_gotoview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin40dp"
+            android:onClick="gotoFriends"
+            app:first_text="我的好友"
+            app:second_text="0人"></com.qixiu.wigit.GotoView>
 
         <View
             android:layout_width="match_parent"
@@ -191,23 +213,47 @@
             android:layout_marginRight="@dimen/margin15dp"
             android:background="@color/line_color"></View>
 
+        <com.qixiu.wigit.GotoView
+            android:id="@+id/gotoFriendNumGroup"
+            style="@style/mine_gotoview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin40dp"
+            app:first_text="社群好友"
+            app:second_text="0人"></com.qixiu.wigit.GotoView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin1dp"
+            android:layout_marginLeft="@dimen/margin15dp"
+            android:layout_marginRight="@dimen/margin15dp"
+            android:background="@color/line_color"></View>
+
+        <com.qixiu.wigit.GotoView
+            android:id="@+id/gotoInvite"
+            style="@style/mine_gotoview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin40dp"
+            android:onClick="gotoSugestion"
+            app:first_text="邀请好友"></com.qixiu.wigit.GotoView>
+
         <LinearLayout
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin60dp"
             android:background="@color/white"
+            android:gravity="center"
             android:orientation="horizontal"
-
-            android:paddingTop="@dimen/margin5dp">
+            android:paddingTop="@dimen/margin5dp"
+            android:visibility="gone">
 
             <LinearLayout
-                android:paddingRight="@dimen/margin38dp"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingRight="@dimen/margin38dp"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/text_normal"
@@ -218,10 +264,12 @@
                     style="@style/text_normal"
                     android:text="0人" />
             </LinearLayout>
+
             <View
-                android:background="@color/line_color"
                 android:layout_width="@dimen/margin1dp"
-                android:layout_height="@dimen/margin29dp"></View>
+                android:layout_height="@dimen/margin29dp"
+                android:background="@color/line_color"></View>
+
             <LinearLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
@@ -240,19 +288,21 @@
                     style="@style/text_normal"
                     android:text="0人" />
             </LinearLayout>
+
             <View
-                android:background="@color/line_color"
                 android:layout_width="@dimen/margin1dp"
-                android:layout_height="@dimen/margin29dp"></View>
+                android:layout_height="@dimen/margin29dp"
+                android:background="@color/line_color"></View>
+
             <LinearLayout
-                android:paddingLeft="@dimen/margin38dp"
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin38dp">
 
                 <TextView
                     style="@style/text_normal"

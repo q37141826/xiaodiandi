@@ -45,10 +45,10 @@
             android:layout_height="wrap_content">
 
             <com.qixiu.wigit.myedittext.MyEditTextView
-                android:layout_marginLeft="@dimen/margin15dp"
                 android:id="@+id/myedittextCode"
                 style="@style/login_input_edittext"
                 android:layout_height="@dimen/margin40dp"
+                android:layout_marginLeft="@dimen/margin15dp"
                 android:layout_marginRight="@dimen/margin170dp"
                 app:input_type="number"
                 app:my_edittext_hint="请输入短信验证码"

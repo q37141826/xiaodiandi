@@ -143,7 +143,9 @@
         <activity android:name=".ui.activity.PhoneLoginActivity" />
         <activity android:name=".ui.activity.baseactivity.GotoWebActivity" />
         <activity android:name=".ui.activity.mine.mypoints.PointsRecordActivity" />
-        <activity android:name=".ui.activity.mine.mypoints.GetCashRecordActivity"></activity>
+        <activity android:name=".ui.activity.mine.mypoints.GetCashRecordActivity" />
+        <activity android:name=".ui.activity.community.upload.EntertainmentPhotoUploadActivity" />
+        <activity android:name=".ui.activity.community.upload.EntertainmentVideoUploadActivity"></activity>
     </application>
 
 </manifest>

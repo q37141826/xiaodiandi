@@ -14,6 +14,7 @@ import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.mine.ticket.TicketListBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
@@ -130,9 +131,9 @@ public class TicketActivity extends RequestActivity implements OnRecyclerItemLis
                 if (mData instanceof TicketListBean.OBean) {
                     TicketListBean.OBean bean = (TicketListBean.OBean) mData;
                     textViewHighFloor.setText(bean.getCoupon_title());
-                    textViewMoney.setText(bean.getCoupon_price() + "");
-                    textViewLimit.setText("领取后" + bean.getUse_time() / 3600 / 24 + "天内有效");
-                    textViewUserRule.setText(bean.getUse_min_price() + "");
+                    textViewMoney.setText(ConstantString.RMB_SYMBOL + bean.getCoupon_price() + "");
+                    textViewLimit.setText("领取后" + bean.getUse_time() / 3600 / 24 / 1000 + "天内有效");
+                    textViewUserRule.setText("满" + bean.getUse_min_price() + "元使用");
                 }
             }
         }

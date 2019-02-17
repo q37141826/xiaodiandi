@@ -15,6 +15,7 @@ import com.qixiu.qixiu.request.OKHttpRequestModel;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.CommonUtils;
+import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.wigit.GotoView;
 import com.qixiu.wigit.show_dialog.ArshowDialog;
 import com.qixiu.xiaodiandi.R;
@@ -152,10 +153,18 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
                     FastPayNewBean fastPayNewBean = new FastPayNewBean();
                     fastPayNewBean.setGotoAddCartsData(gotoAddCartsData);
                     fastPayNewBean.setOrderPayData(orderPayData);
-                    orderPayData.setAddress(selectedAddress.getId());
+                    if(selectedAddress!=null){
+                        orderPayData.setAddress(selectedAddress.getId());
+                    }else {
+                        AddressListActivity.start(getContext(),AddressListActivity.class);
+                    }
                     SelectPayMethoedActivity.start(getContext(), SelectPayMethoedActivity.class, fastPayNewBean);
                 } else {
-                    orderPayData.setAddress(selectedAddress.getId());
+                    if(selectedAddress!=null){
+                        orderPayData.setAddress(selectedAddress.getId());
+                    }else {
+                        AddressListActivity.start(getContext(),AddressListActivity.class);
+                    }
                     orderPayData.setKey(orderBean.getOrderKey());
                     SelectPayMethoedActivity.start(getContext(), SelectPayMethoedActivity.class, orderPayData);
                 }
@@ -250,6 +259,10 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
                     setAddress(addressBean.getO().get(i));
                     selectedAddress = addressBean.getO().get(i);
                 }
+            }
+            if(selectedAddress==null){
+                AddressListActivity.start(getContext(),AddressListActivity.class);
+                ToastUtil.toast("请创建并且选择一个默认地址");
             }
             refreshAddressState();
         }

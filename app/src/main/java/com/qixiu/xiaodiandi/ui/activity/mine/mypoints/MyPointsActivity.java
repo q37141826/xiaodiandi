@@ -62,7 +62,7 @@ public class MyPointsActivity extends RequestActivity {
         if (data instanceof PointsBean) {
             PointsBean bean = (PointsBean) data;
             textViewPointsAll.setText(bean.getO().getIntegral() + "积分");
-            textViewPointsCanGet.setText("可提现" + bean.getO().getRmd() + "");
+            textViewPointsCanGet.setText("可提现" + bean.getO().getRmd() + "元");
             textViewPointsToday.setText(bean.getO().getToday() + "积分");
             textViewPointsMonth.setText(bean.getO().getMonth() + "积分");
             textViewPointsGet.setText(bean.getO().getAll() + "积分");

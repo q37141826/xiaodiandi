@@ -45,7 +45,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin60dp"
-            android:background="@color/white"
+            android:background="@color/alpha_20_green"
             android:gravity="center"
             android:orientation="horizontal"
 
@@ -61,15 +61,16 @@
                 android:paddingRight="@dimen/margin38dp">
 
                 <TextView
-
                     style="@style/text_normal"
                     android:text="今日收益"
+                    android:textColor="@color/white"
                     android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/textViewPointsToday"
                     style="@style/text_normal"
                     android:text="0积分"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -90,12 +91,14 @@
                 <TextView
                     style="@style/text_normal"
                     android:text="本月收益"
+                    android:textColor="@color/white"
                     android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/textViewPointsMonth"
                     style="@style/text_normal"
                     android:text="0积分"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -117,27 +120,29 @@
                 <TextView
                     style="@style/text_normal"
                     android:text="累计收益"
+                    android:textColor="@color/white"
                     android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/textViewPointsGet"
                     style="@style/text_normal"
                     android:text="0积分"
+                    android:textColor="@color/white"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
         <Button
-            android:onClick="getCash"
             style="@style/btn_normal"
+            android:layout_width="match_parent"
             android:layout_marginTop="@dimen/margin27dp"
-            android:text="申请提现"
-            android:layout_width="match_parent" />
+            android:onClick="getCash"
+            android:text="申请提现" />
 
         <Button
-            android:onClick="giveToOther"
             style="@style/btn_normal"
             android:layout_marginTop="@dimen/margin10dp"
+            android:onClick="giveToOther"
             android:text="申请转让" />
 
         <LinearLayout
@@ -147,8 +152,8 @@
             android:gravity="center">
 
             <TextView
-                android:onClick="getCashDetails"
                 style="@style/text_normal"
+                android:onClick="getCashDetails"
                 android:text="提现明细>"
                 android:textColor="@color/theme_color"
                 android:textSize="14sp" />

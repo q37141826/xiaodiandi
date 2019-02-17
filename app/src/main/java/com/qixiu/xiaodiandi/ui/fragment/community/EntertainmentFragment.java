@@ -1,6 +1,7 @@
 package com.qixiu.xiaodiandi.ui.fragment.community;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -13,9 +14,14 @@ import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.XrecyclerViewUtil;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.model.comminity.entertainment.EntertainmentListBean;
 import com.qixiu.xiaodiandi.ui.activity.community.EntertainmentDetailsActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.mycollection.CollectionCommunityAdapter;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +35,10 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
     @BindView(R.id.xrecyclerView)
     XRecyclerView xrecyclerView;
     Unbinder unbinder;
+    @BindView(R.id.swip_refreshlayout)
+    SwipeRefreshLayout swipRefreshlayout;
     private CollectionCommunityAdapter adapter;
+    int pageNo = 1, pageSize = 10;
 
     @Override
     public void moveToPosition(int position) {
@@ -38,17 +47,28 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
 
     @Override
     public void onSuccess(BaseBean data) {
-
+        if (data instanceof EntertainmentListBean) {
+            EntertainmentListBean bean = (EntertainmentListBean) data;
+            if (pageNo == 1) {
+                adapter.refreshData(bean.getO());
+            } else {
+                adapter.addDatas(bean.getO());
+            }
+        }
+        xrecyclerView.loadMoreComplete();
+        swipRefreshlayout.setRefreshing(false);
     }
 
     @Override
     public void onError(Exception e) {
-
+        xrecyclerView.loadMoreComplete();
+        swipRefreshlayout.setRefreshing(false);
     }
 
     @Override
     public void onFailure(C_CodeBean c_codeBean, String m) {
-
+        xrecyclerView.loadMoreComplete();
+        swipRefreshlayout.setRefreshing(false);
     }
 
     @Override
@@ -58,8 +78,23 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
                 , staggeredGridLayoutManager);
         adapter = new CollectionCommunityAdapter();
         xrecyclerView.setAdapter(adapter);
-        XrecyclerViewUtil.refreshFictiousData(adapter);
         adapter.setOnItemClickListener(this);
+        swipRefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                pageNo = 1;
+                requestData();
+            }
+        });
+        requestData();
+    }
+
+    private void requestData() {
+        Map<String, String> map = new HashMap<>();
+        map.put("pageNo", pageNo + "");
+        map.put("pageSize", pageSize + "");
+        post(ConstantUrl.entertainmentListUrl, map, new EntertainmentListBean());
+
     }
 
     @Override
@@ -88,11 +123,16 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
 
     @Override
     public void onLoadMore() {
-
+        pageNo++;
+        requestData();
     }
 
     @Override
     public void onItemClick(View v, RecyclerView.Adapter adapter, Object data) {
-        EntertainmentDetailsActivity.start(getContext(), EntertainmentDetailsActivity.class);
+        if (data instanceof EntertainmentListBean.OBean) {
+            EntertainmentListBean.OBean bean = (EntertainmentListBean.OBean) data;
+            EntertainmentDetailsActivity.start(getContext(), EntertainmentDetailsActivity.class, bean);
+        }
+
     }
 }

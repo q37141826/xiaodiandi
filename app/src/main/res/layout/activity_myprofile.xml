@@ -32,9 +32,9 @@
                 android:id="@+id/relativeLayout_changehead"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin40dp"
-                android:paddingBottom="@dimen/margin10dp"
                 android:paddingLeft="@dimen/margin20dp"
-                android:paddingRight="@dimen/margin20dp">
+                android:paddingRight="@dimen/margin20dp"
+                android:paddingBottom="@dimen/margin10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -48,8 +48,8 @@
                     android:id="@+id/tomyleft"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginBottom="@dimen/margin5dp"
                     android:src="@mipmap/rightgo" />
 
@@ -69,9 +69,9 @@
                 android:id="@+id/relativeLayout_changenickname"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin40dp"
-                android:paddingBottom="@dimen/margin10dp"
                 android:paddingLeft="@dimen/margin20dp"
-                android:paddingRight="@dimen/margin20dp">
+                android:paddingRight="@dimen/margin20dp"
+                android:paddingBottom="@dimen/margin10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -85,8 +85,8 @@
                     android:id="@+id/tomyleft01"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginBottom="@dimen/margin5dp" />
 
                 <TextView
@@ -117,9 +117,10 @@
                 app:show_goto="false"></com.qixiu.wigit.GotoView>
 
             <com.qixiu.wigit.GotoView
-                android:onClick="bindWeichat"
+                android:id="@+id/gotoViewBindWeichat"
                 style="@style/myprofile_gotoview"
                 android:layout_height="@dimen/margin41dp"
+                android:onClick="bindWeichat"
                 app:first_text="微信"
                 app:first_text_color="@color/font_grey"></com.qixiu.wigit.GotoView>
         </LinearLayout>

@@ -13,6 +13,7 @@
         android:scaleType="centerInside"
         android:layout_height="@dimen/margin76dp" />
     <TextView
+        android:id="@+id/textViewDescribe"
         android:layout_marginLeft="@dimen/margin9dp"
         app:layout_constraintLeft_toRightOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent"

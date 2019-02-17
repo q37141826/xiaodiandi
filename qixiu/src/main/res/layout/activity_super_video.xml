@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <SurfaceView
+        android:id="@+id/surfaceview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin55dp"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/top_model2_left_img"
+            android:layout_width="@dimen/margin50dp"
+            android:layout_height="@dimen/margin50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin20dp" />
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:id="@+id/top_model2_txt"
+            style="@style/text_normal"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/top_model2_right_img"
+            android:layout_width="@dimen/margin50dp"
+            android:layout_height="@dimen/margin50dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin20dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/margin80dp"
+        android:layout_height="@dimen/margin80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin50dp">
+
+        <com.github.rahatarmanahmed.cpv.CircularProgressView
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@color/transparent" />
+
+        <Button
+            android:id="@+id/shoot_button"
+            android:layout_width="@dimen/margin70dp"
+            android:layout_height="@dimen/margin70dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/circular_white"
+            android:text="录制"
+            android:textColor="@color/theme_color" />
+
+    </RelativeLayout>
+
+
+    <TextView
+        android:id="@+id/circle_camera_time"
+        style="@style/text_normal"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/margin20dp"
+        android:layout_marginBottom="@dimen/margin20dp"
+        android:textColor="@color/theme_color" />
+
+    <ImageView
+        android:layout_marginTop="@dimen/margin100dp"
+        android:id="@+id/circle_change_camera_btn"
+        android:layout_width="@dimen/margin40dp"
+        android:layout_height="@dimen/margin40dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin20dp"
+        android:src="@mipmap/shizi" />
+
+    <ImageView
+        android:src="@drawable/camera_light"
+        android:id="@+id/circle_light_btn"
+        android:layout_width="@dimen/margin40dp"
+        android:layout_height="@dimen/margin40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin10dp" />
+</RelativeLayout>

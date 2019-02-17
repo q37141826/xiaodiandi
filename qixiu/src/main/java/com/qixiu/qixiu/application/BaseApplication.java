@@ -8,6 +8,7 @@ import android.support.multidex.MultiDex;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
+import com.qixiu.qixiu.engine.oss.AliOssEngine;
 import com.qixiu.qixiu.request.OKHttpRequestModel;
 import com.qixiu.qixiu.request.OKHttpUIUpdataListener;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
@@ -95,7 +96,7 @@ public class BaseApplication extends MultiDexApplication implements OKHttpUIUpda
         }
 //        //初始化极光推送
 //        JpushEngine.initJPush(getContext());
-
+        AliOssEngine.initAliYun(getContext());
     }
 
     @Override

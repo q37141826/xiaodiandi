@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/margin97dp"
-    android:paddingLeft="@dimen/margin15dp"
-    android:paddingRight="@dimen/margin15dp"
+    android:background="@color/white"
     android:paddingTop="@dimen/margin10dp">
 
     <RelativeLayout
+        android:foreground="@mipmap/ticket_bg"
         android:background="@color/theme_color"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -1,5 +1,6 @@
 package com.qixiu.xiaodiandi.ui.fragment;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.TabLayout;
@@ -15,9 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jude.rollviewpager.RollPagerView;
+import com.qixiu.qixiu.google.zxing.client.android.CaptureActivity;
 import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
@@ -72,6 +75,7 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
     private HackyViewPager viewpagerFragment;
     private TabLayout tablelayout;
     private RadioGroup radiogroup;
+    private TextView textViewGotoScan;
 
     @Override
     public void onSuccess(BaseBean data) {
@@ -248,7 +252,8 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         RelativeLayout.LayoutParams layoutParams02 = (RelativeLayout.LayoutParams) rollpagerProduct.getViewPager().getLayoutParams();
         layoutParams02.setMargins(ArshowContextUtil.dp2px(89), 0, ArshowContextUtil.dp2px(89), 0);
 //        rollAdapter.refreshData(productBeans);
-
+        textViewGotoScan = view.findViewById(R.id.textViewGotoScan);
+        textViewGotoScan.setOnClickListener(this);
     }
 
     @Override
@@ -292,6 +297,10 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         switch (v.getId()) {
             case R.id.imageViewSearch:
                 SearchActivity.start(getContext(), SearchActivity.class, edittext.getText().toString());
+                break;
+            case R.id.textViewGotoScan:
+                Intent intent = new Intent(getContext(), CaptureActivity.class);
+                startActivity(intent);
                 break;
         }
     }

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.activity.community.upload.EntertainmentPhotoUploadActivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/back_grey"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin15dp"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <com.qixiu.wigit.GotoView
+                android:onClick="gotoSelectProduct"
+                android:id="@+id/gotoViewSelectProduct"
+                style="@style/mine_gotoview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin38dp"
+                app:first_text="请选择所购产品"
+                app:first_text_color="@color/text_grey">
+            </com.qixiu.wigit.GotoView>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:onClick="gotoSelectProduct"
+                android:id="@+id/relativeSelectProduct"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin80dp">
+
+                <ImageView
+                    android:id="@+id/imageViewProductIcon"
+                    android:layout_width="@dimen/margin78dp"
+                    android:layout_height="@dimen/margin76dp" />
+
+                <TextView
+                    android:id="@+id/textViewProductName"
+                    style="@style/text_normal"
+                    android:layout_marginLeft="@dimen/margin12dp"
+                    android:layout_marginTop="@dimen/margin11dp"
+                    android:layout_toRightOf="@id/imageViewProductIcon" />
+
+                <ImageView
+                    android:layout_width="@dimen/margin10dp"
+                    android:layout_height="@dimen/margin19dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/margin13dp"
+                    android:src="@mipmap/rightgo" />
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin10dp"
+                android:background="@color/back_grey"></View>
+
+            <EditText
+                android:id="@+id/edittextComments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:hint="宝贝满足您的期待么？说说您的想 法，分享给想买的他们吧~"
+                android:padding="@dimen/margin15dp"
+                android:textSize="12sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+
+        <Button
+            style="@style/btn_normal"
+            android:layout_marginTop="@dimen/margin74dp"
+            android:text="发表" />
+
+    </LinearLayout>
+</LinearLayout>

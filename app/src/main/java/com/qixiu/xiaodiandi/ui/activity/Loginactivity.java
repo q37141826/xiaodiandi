@@ -35,14 +35,19 @@ public class Loginactivity extends RequestActivity implements PlatformLoginEngin
     public void onSuccess(BaseBean data) {
         if (data instanceof LoginBean) {
             LoginBean bean = (LoginBean) data;
-            LoginStatus.saveState(bean);
-            Map<String, String> map = new HashMap<>();
-            map.put("id", 90 + "");
-            map.put("uid", LoginStatus.getId() + "");
-            post(ConstantUrl.getTicketUrl, map, new BaseBean());
-        }
-        if(ConstantUrl.getTicketUrl.equals(data.getUrl())){
-            finish();
+            if (data.getUrl().equals(ConstantUrl.loginUrl)) {
+                LoginStatus.saveState(bean);
+                finish();
+                MainActivity.start(getContext(), MainActivity.class);
+            } else if (data.getUrl().equals(ConstantUrl.wxloginUrl)) {
+                if (data.getC() == 2) {
+                    PhoneLoginActivity.start(getContext(), PhoneLoginActivity.class, bean.getO());
+                } else {
+                    LoginStatus.saveState(bean);
+                    MainActivity.start(getContext(), MainActivity.class);
+                    finish();
+                }
+            }
         }
     }
 
@@ -53,9 +58,7 @@ public class Loginactivity extends RequestActivity implements PlatformLoginEngin
 
     @Override
     public void onFailure(C_CodeBean c_codeBean, String m) {
-        if(ConstantUrl.getTicketUrl.equals(c_codeBean.getUrl())){
-            finish();
-        }
+
     }
 
     @Override
@@ -95,6 +98,7 @@ public class Loginactivity extends RequestActivity implements PlatformLoginEngin
         map.put("avatar", userInfo.getUserIcon());
         map.put("device", deviceId);
         map.put("device_type", "1");//设备类型，1、安卓，2、IOS
+        map.put("type", "1");//设备类型，1、安卓，2、IOS
         post(ConstantUrl.wxloginUrl, map, new LoginBean());
     }
 }

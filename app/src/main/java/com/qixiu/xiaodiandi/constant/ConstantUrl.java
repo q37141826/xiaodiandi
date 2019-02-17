@@ -145,4 +145,31 @@ public class ConstantUrl {
     //点滴提现明细
     public static String getCashRecordUrl = BuildConfig.BASE_URL + "/api/home/withdrawinfo";
 
+    //修改手机号
+    public static String changePhoneUrl = BuildConfig.BASE_URL + "/api/home/phone";
+
+    //绑定手机号
+    public static String bindphoneUrl = BuildConfig.BASE_URL + "/api/home/bandphone";
+
+    //vip资料
+    public static String mywaterUrl = BuildConfig.BASE_URL + "/api/home/mywater";
+
+    //朋友列表
+    public static String friendsUrl = BuildConfig.BASE_URL + "/api/home/myfriend";
+
+
+    /*
+     *
+     * 社区
+     */
+    //我已经购买的商品列表
+    public static String payedProductListUrl = BuildConfig.BASE_URL + "/api/home/shoplist";
+    //娱乐发布
+    public static String sendEntertaimentUrl = BuildConfig.BASE_URL + "/api/home/release";
+    //娱乐社区列表
+    public static String entertainmentListUrl = BuildConfig.BASE_URL + "/api/home/entertainment";
+    //娱乐社区详情
+    public static String entertainmentDetailsUrl = BuildConfig.BASE_URL + "/api/home/releaseinfo";
+    //发布留言
+    public static String leaveMessageUrl = BuildConfig.BASE_URL + "/api/home/message";
 }

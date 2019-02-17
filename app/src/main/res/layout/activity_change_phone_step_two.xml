@@ -48,6 +48,7 @@
                     android:text="验证码" />
 
                 <EditText
+                    android:id="@+id/ediitextPhone"
                     android:maxLength="11"
                     android:layout_width="@dimen/margin70dp"
                     android:layout_height="wrap_content"
@@ -72,6 +73,7 @@
                     android:text="验证码" />
 
                 <EditText
+                    android:id="@+id/ediitexVercode"
                     android:maxLength="6"
                     android:layout_width="@dimen/margin70dp"
                     android:layout_height="wrap_content"
@@ -83,6 +85,7 @@
                     android:textSize="12sp" />
 
                 <Button
+                    android:onClick="sendVercode"
                     android:id="@+id/btn_sendCode"
                     android:layout_width="@dimen/margin103dp"
                     android:layout_height="@dimen/margin25dp"
@@ -97,6 +100,8 @@
         </LinearLayout>
 
         <Button
+            android:onClick="confirmChangePhone"
+            android:id="@+id/btnConfirm"
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin32dp"
             android:layout_marginLeft="@dimen/margin15dp"

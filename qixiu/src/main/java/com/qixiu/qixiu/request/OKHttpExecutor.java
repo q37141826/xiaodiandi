@@ -68,7 +68,7 @@ public class OKHttpExecutor {
                 C_CodeBean c_codeBean = gson.fromJson(s, C_CodeBean.class);
                 c_codeBean.setUrl(baseBean.getUrl());
                 Log.e("dataUrl", (baseBean.getUrl()));
-                if (c_codeBean.getC() == 1) {
+                if (c_codeBean.getC() != 0) {
                     try {
                         BaseBean resultBean = gson.fromJson(s, baseBean.getClass());
                         resultBean.setUrl(baseBean.getUrl());

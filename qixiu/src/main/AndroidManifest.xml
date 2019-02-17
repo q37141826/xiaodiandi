@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
 
     <application>
 
@@ -34,7 +35,10 @@
         <activity
             android:name=".google.zxing.client.android.CaptureActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:name=".camera.CircleViedoActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

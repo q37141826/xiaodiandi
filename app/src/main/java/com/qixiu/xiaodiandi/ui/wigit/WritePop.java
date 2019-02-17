@@ -68,4 +68,8 @@ public class WritePop {
     public void setSendListenner(View.OnClickListener onClickListener) {
         imageViewSend.setOnClickListener(onClickListener);
     }
+
+    public int getViewId(){
+        return imageViewSend.getId();
+    }
 }

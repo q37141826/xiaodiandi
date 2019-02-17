@@ -37,18 +37,18 @@ public class MyTimer extends CountDownTimer {
     @Override
     public void onTick(long millisUntilFinished) {
         Log.i("test", "??");
-        if(textView!=null){
+        if (textView != null) {
             textView.setText(millisUntilFinished / 1000 + "秒后重发");
             textView.setEnabled(false);
         }
-        if(listenner!=null){
+        if (listenner != null) {
             listenner.onRunning(millisUntilFinished);
         }
     }
 
     @Override
     public void onFinish() {
-        if(textView!=null){
+        if (textView != null) {
             if (!TextUtils.isEmpty(originalText)) {
                 textView.setText(originalText);
             } else {
@@ -56,16 +56,21 @@ public class MyTimer extends CountDownTimer {
             }
             textView.setEnabled(true);
         }
-        if(listenner!=null){
+        if (listenner != null) {
             listenner.onFinished();
         }
     }
 
 
-    public interface TimeStateListenner{
+    public interface TimeStateListenner {
         void onRunning(long lastTime);
+
         void onFinished();
 
+    }
+
+    public void cancleTimer(){
+        cancel();
     }
 
 }

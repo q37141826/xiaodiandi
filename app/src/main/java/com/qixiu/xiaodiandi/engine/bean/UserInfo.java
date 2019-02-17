@@ -1,10 +1,13 @@
 package com.qixiu.xiaodiandi.engine.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Administrator on 2017/5/24 0024.
  */
 
-public class UserInfo {
+public class UserInfo implements Parcelable {
 
     public String getUserIcon() {
         return userIcon;
@@ -54,4 +57,41 @@ public class UserInfo {
     }
     //
     private int type;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.userId);
+        dest.writeString(this.userIcon);
+        dest.writeString(this.userName);
+        dest.writeString(this.gender);
+        dest.writeInt(this.type);
+    }
+
+    public UserInfo() {
+    }
+
+    protected UserInfo(Parcel in) {
+        this.userId = in.readString();
+        this.userIcon = in.readString();
+        this.userName = in.readString();
+        this.gender = in.readString();
+        this.type = in.readInt();
+    }
+
+    public static final Parcelable.Creator<UserInfo> CREATOR = new Parcelable.Creator<UserInfo>() {
+        @Override
+        public UserInfo createFromParcel(Parcel source) {
+            return new UserInfo(source);
+        }
+
+        @Override
+        public UserInfo[] newArray(int size) {
+            return new UserInfo[size];
+        }
+    };
 }

@@ -84,7 +84,7 @@
                     <com.qixiu.wigit.GotoView
                         android:id="@+id/gotoAddress"
                         style="@style/mine_gotoview"
-                        app:first_drawable="@mipmap/mine_address"
+                        app:first_drawable="@mipmap/address_green"
                         app:first_size="4sp"
                         app:first_text="地址"
                         app:show_goto="false"></com.qixiu.wigit.GotoView>

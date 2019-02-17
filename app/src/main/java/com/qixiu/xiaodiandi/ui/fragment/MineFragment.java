@@ -41,21 +41,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 
 public class MineFragment extends RequestFragment {
-    @BindView(R.id.textViewWaitPay)
-    TextView textViewWaitPay;
-    Unbinder unbinder;
-    @BindView(R.id.imageViewSetting)
-    ImageView imageViewSetting;
-    @BindView(R.id.textViewWaitSend)
-    TextView textViewWaitSend;
-    @BindView(R.id.textViewWaitReceive)
-    TextView textViewWaitReceive;
-    @BindView(R.id.textViewWaitBack)
-    TextView textViewWaitBack;
-    @BindView(R.id.circularHead)
-    CircleImageView circularHead;
+
+
     @BindView(R.id.textViewGotoVip)
     TextView textViewGotoVip;
+    @BindView(R.id.circularHead)
+    CircleImageView circularHead;
     @BindView(R.id.textViewPhone)
     TextView textViewPhone;
     @BindView(R.id.textViewVipname)
@@ -64,8 +55,26 @@ public class MineFragment extends RequestFragment {
     TextView textViewSign;
     @BindView(R.id.textViewVipId)
     TextView textViewVipId;
+    @BindView(R.id.imageViewSetting)
+    ImageView imageViewSetting;
     @BindView(R.id.gotoAllOrder)
     GotoView gotoAllOrder;
+    @BindView(R.id.textViewWaitPay)
+    TextView textViewWaitPay;
+    @BindView(R.id.textViewNumWaitPay)
+    TextView textViewNumWaitPay;
+    @BindView(R.id.textViewNumWaitSend)
+    TextView textViewNumWaitSend;
+    @BindView(R.id.textViewWaitSend)
+    TextView textViewWaitSend;
+    @BindView(R.id.textViewNumWaitReceive)
+    TextView textViewNumWaitReceive;
+    @BindView(R.id.textViewWaitReceive)
+    TextView textViewWaitReceive;
+    @BindView(R.id.textViewNumChange)
+    TextView textViewNumChange;
+    @BindView(R.id.textViewWaitBack)
+    TextView textViewWaitBack;
     @BindView(R.id.gotoMyPoints)
     GotoView gotoMyPoints;
     @BindView(R.id.gotoTicket)
@@ -74,12 +83,13 @@ public class MineFragment extends RequestFragment {
     GotoView gotoAddress;
     @BindView(R.id.gotoMyCollection)
     GotoView gotoMyCollection;
+    private Unbinder unbinder;
 
     @Override
     public void onSuccess(BaseBean data) {
         if (data instanceof UserBean) {
             UserBean bean = (UserBean) data;
-            Glide.with(getContext()).load(BuildConfig.BASE_URL+bean.getO().getAvatar().replace(BuildConfig.BASE_URL,"")).into(circularHead);
+            Glide.with(getContext()).load(BuildConfig.BASE_URL + bean.getO().getAvatar().replace(BuildConfig.BASE_URL, "")).into(circularHead);
             textViewPhone.setText(bean.getO().getPhone());
             switch (bean.getO().getLevel()) {
                 case 0:
@@ -96,11 +106,28 @@ public class MineFragment extends RequestFragment {
                     break;
             }
             textViewVipId.setText(bean.getO().getAccount());
-            textViewWaitPay.setText(bean.geteBean().getNoBuy() + "");
-            textViewWaitSend.setText(bean.geteBean().getNoTake() + "");
-            textViewWaitBack.setText(bean.geteBean().getNoReply() + "");
+//            textViewWaitPay.setText(bean.geteBean().getNoBuy() + "");
+//            textViewWaitSend.setText(bean.geteBean().getNoTake() + "");
+//            textViewWaitBack.setText(bean.geteBean().getNoReply() + "");
+            gotoMyPoints.setSecondText(bean.getO().getIntegral() + "点滴");
+
+            textViewNumWaitPay.setText(bean.getE().getNoBuy() + "");
+            textViewNumWaitPay.setVisibility(bean.getE().getNoBuy() == 0 ? View.GONE : View.VISIBLE);
+            textViewNumWaitSend.setText(bean.getE().getNoReply() + "");
+            textViewNumWaitSend.setVisibility(bean.getE().getNoReply() == 0 ? View.GONE : View.VISIBLE);
+            textViewNumWaitReceive.setText(bean.getE().getNoTake() + "");
+            textViewNumWaitReceive.setVisibility(bean.getE().getNoTake() == 0 ? View.GONE : View.VISIBLE);
+
+            if (bean.getO().getSigned() == 1) {
+                textViewSign.setEnabled(false);
+                textViewSign.setText("已签到");
+            } else {
+                textViewSign.setEnabled(true);
+                textViewSign.setText("签到");
+            }
         }
         if (data.getUrl().equals(ConstantUrl.sign)) {
+            getData();
             ToastUtil.toast(data.getM());
         }
     }
@@ -129,7 +156,7 @@ public class MineFragment extends RequestFragment {
 
     private void getData() {
         Map<String, String> map = new HashMap<>();
-        map.put("uid",LoginStatus.getId());
+        map.put("uid", LoginStatus.getId());
         post(ConstantUrl.mineCenter, map, new UserBean());
     }
 

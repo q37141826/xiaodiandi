@@ -12,6 +12,7 @@ import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.wigit.myedittext.MyEditTextView;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.model.login.LoginBean;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.model.login.SendCodeBean;
@@ -34,10 +35,12 @@ public class PhoneLoginActivity extends RequestActivity {
     Button btnSendCode;
     private String phone;
     private String code;
+    private String uid;
 
     @Override
     protected void onInitData() {
         setTitle("手机号登录");
+        uid = getIntent().getStringExtra(IntentDataKeyConstant.DATA);
     }
 
     @Override
@@ -58,6 +61,15 @@ public class PhoneLoginActivity extends RequestActivity {
             MainActivity.start(getContext(), MainActivity.class);
             finish();
         }
+        if (data.getUrl().equals(ConstantUrl.bindphoneUrl)) {
+            LoginBean loginBean = new LoginBean();
+            loginBean.setO(uid);
+            LoginStatus.saveState(loginBean);
+            ToastUtil.toast(data.getM());
+            MainActivity.start(getContext(), MainActivity.class);
+            finish();
+        }
+
     }
 
     @Override
@@ -92,9 +104,27 @@ public class PhoneLoginActivity extends RequestActivity {
 
     //登录
     public void login(View view) {
-        if (!getDataOk()) {
+        if (!getPhoneCheck() || !getDataOk()) {
             return;
         }
+        if (TextUtils.isEmpty(uid)) {
+            phoneLogin();
+        } else {
+            bindPhone();
+
+        }
+    }
+
+    private void bindPhone() {
+        Map<String, String> map = new HashMap();
+        map.put("phone", phone);
+        map.put("verify", code);
+        map.put("verify_id", verify_id);
+        map.put("uid", uid);
+        post(ConstantUrl.bindphoneUrl, map, new BaseBean());
+    }
+
+    private void phoneLogin() {
         Map<String, String> map = new HashMap();
         map.put("phone", phone);
         map.put("verify", code);

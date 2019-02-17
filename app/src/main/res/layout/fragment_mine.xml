@@ -42,10 +42,10 @@
                     android:drawableLeft="@mipmap/mine_vip_head"
                     android:drawablePadding="@dimen/margin5dp"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/margin5dp"
                     android:paddingLeft="@dimen/margin10dp"
-                    android:paddingRight="@dimen/margin10dp"
                     android:paddingTop="@dimen/margin5dp"
+                    android:paddingRight="@dimen/margin10dp"
+                    android:paddingBottom="@dimen/margin5dp"
                     android:text="VIP会员"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
@@ -104,21 +104,21 @@
                             android:orientation="horizontal">
 
                             <TextView
-                                android:paddingRight="@dimen/margin5dp"
-                                android:paddingLeft="@dimen/margin5dp"
                                 android:id="@+id/textViewSign"
-                                android:background="@drawable/btn_grey_alpa"
                                 style="@style/text_normal"
+                                android:background="@drawable/btn_grey_alpa"
+                                android:paddingLeft="@dimen/margin5dp"
+                                android:paddingRight="@dimen/margin5dp"
                                 android:text="每日签到"
                                 android:textColor="@color/white" />
 
                             <TextView
-                                android:paddingRight="@dimen/margin5dp"
-                                android:paddingLeft="@dimen/margin5dp"
                                 android:id="@+id/textViewVipId"
-                                android:background="@drawable/btn_grey_alpa"
                                 style="@style/text_normal"
                                 android:layout_marginLeft="@dimen/margin10dp"
+                                android:background="@drawable/btn_grey_alpa"
+                                android:paddingLeft="@dimen/margin5dp"
+                                android:paddingRight="@dimen/margin5dp"
                                 android:text="ID"
                                 android:textColor="@color/white" />
                         </LinearLayout>
@@ -177,20 +177,23 @@
                     android:gravity="center"
                     android:text="待付款" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/margin20dp"
-                    android:layout_marginTop="@dimen/margin5dp" />
 
+
+                <TextView
+
+                    android:id="@+id/textViewNumWaitPay"
+                    style="@style/mine_num"
+                    />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-
+                <TextView
+                    style="@style/mine_num"
+                    android:id="@+id/textViewNumWaitSend"
+                     />
                 <TextView
                     android:id="@+id/textViewWaitSend"
                     android:layout_width="match_parent"
@@ -199,12 +202,6 @@
                     android:gravity="center"
                     android:text="待发货" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/margin20dp"
-                    android:layout_marginTop="@dimen/margin5dp" />
 
             </RelativeLayout>
 
@@ -221,12 +218,11 @@
                     android:gravity="center"
                     android:text="待收货" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/margin20dp"
-                    android:layout_marginTop="@dimen/margin5dp" />
+                <TextView
+                    android:id="@+id/textViewNumWaitReceive"
+                    style="@style/mine_num"
+
+                    />
 
             </RelativeLayout>
 
@@ -242,13 +238,11 @@
                     android:drawableTop="@mipmap/mine_sendback"
                     android:gravity="center"
                     android:text="换货" />
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/textViewNumChange"
+                    style="@style/mine_num"/>
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/margin20dp"
-                    android:layout_marginTop="@dimen/margin5dp" />
 
             </RelativeLayout>
         </LinearLayout>
