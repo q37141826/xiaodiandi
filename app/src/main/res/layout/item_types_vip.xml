@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/margin39dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -43,10 +43,10 @@
 
 
     <ImageView
-        android:scaleType="centerCrop"
         android:id="@+id/imageViewFoot"
         android:layout_width="@dimen/margin248dp"
         android:layout_height="@dimen/margin113dp"
-       />
+        android:layout_marginTop="@dimen/margin10dp"
+        android:scaleType="centerCrop" />
 
 </LinearLayout>

@@ -38,6 +38,7 @@
                 android:layout_toRightOf="@+id/textView_name_address" />
 
             <ImageView
+                android:padding="@dimen/margin10dp"
                 android:src="@mipmap/commit"
                 android:id="@+id/imageView_edite_right"
                 android:layout_width="wrap_content"

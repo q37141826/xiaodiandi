@@ -8,8 +8,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.xiaodiandi.BuildConfig;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.engine.ShareLikeEngine;
+import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.model.mine.QrCodeBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
 
@@ -46,8 +50,8 @@ public class InviteActivity extends RequestActivity {
             QrCodeBean qrCodeBean = (QrCodeBean) data;
             Glide.with(getContext()).load(qrCodeBean.getO().getAvatar()).into(circularHead);
             Glide.with(getContext()).load(qrCodeBean.getO().getQrcode()).into(imageErweima);
-            textViewId.setText(qrCodeBean.getO().getAccount()+"");
-            textViewPhone.setText(qrCodeBean.getO().getPhone()+"");
+            textViewId.setText(qrCodeBean.getO().getAccount() + "");
+            textViewPhone.setText(qrCodeBean.getO().getPhone() + "");
         }
     }
 
@@ -76,5 +80,13 @@ public class InviteActivity extends RequestActivity {
         super.onCreate(savedInstanceState);
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
+    }
+
+    //分享邀请
+    public void shareInvite(View view) {
+        ShareLikeEngine shareLikeEngine = new ShareLikeEngine();
+        shareLikeEngine.releaseShareData(getActivity(), ConstantUrl.SHARE_IMAGE_URL,
+                ConstantString.INVITE_SHARECONTENT, BuildConfig.BASE_URL + "/api/home/recommend" + "?uid=" + LoginStatus.getId(), null);
+        shareLikeEngine.setShareTitle(ConstantString.INVITE_SHARECONTENT);
     }
 }

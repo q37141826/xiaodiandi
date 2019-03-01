@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin107dp"
+    android:background="@color/white"
+    android:paddingLeft="@dimen/margin15dp"
+    android:paddingRight="@dimen/margin15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/margin164dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            style="@style/text_normal"
+            android:maxLines="2"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textViewTimes"
+                style="@style/text_normal"
+                android:text="播放次数"
+                android:textColor="@color/text_grey" />
+
+            <TextView
+                android:id="@+id/textViewComments"
+                style="@style/text_normal"
+                android:layout_marginLeft="@dimen/margin20dp"
+                android:text="1024评论"
+                android:textColor="@color/text_grey" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/margin125dp"
+        android:layout_height="@dimen/margin74dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/margin15dp"
+        android:layout_marginRight="@dimen/margin15dp"
+        android:background="@color/line_color"></View>
+</RelativeLayout>

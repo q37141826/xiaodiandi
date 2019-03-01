@@ -15,13 +15,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/vg_title"
-        android:background="@color/white"
+        android:background="@color/back_grey"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin71dp"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView_howmuch"
+                style="@style/text_normal"
+                android:text="0"
+                android:textColor="@color/red" />
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_marginTop="@dimen/margin10dp"
+                android:text="需支付" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="11dp"
+            android:background="@color/white"
+            android:paddingBottom="@dimen/margin48dp">
 
             <TextView
                 android:id="@+id/text_belowme"
@@ -39,149 +60,154 @@
                 android:layout_marginTop="@dimen/margin10dp"
                 android:background="@color/lineColor"></View>
 
-            <RelativeLayout
-                android:id="@+id/relativeLayout_alipay"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="@dimen/margin40dp"
-                android:layout_marginRight="10dp"
-                android:padding="10dp">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textView_tomyright"
-                    android:layout_width="@dimen/margin70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin5dp"
-                    android:layout_toRightOf="@+id/tomyright2"
-                    android:text="支付宝支付"
-                    android:textColor="@color/font_grey" />
-
-
-                <ImageView
-                    android:id="@+id/imageView_alipay"
+                <RelativeLayout
+                    android:id="@+id/relativeLayout_alipay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/shopcar_goods_notselect" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="@dimen/margin40dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="10dp">
 
-                <ImageView
-                    android:id="@+id/tomyright2"
+                    <TextView
+                        android:id="@+id/textView_tomyright"
+                        android:layout_width="@dimen/margin70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin5dp"
+                        android:layout_toRightOf="@+id/tomyright2"
+                        android:text="支付宝支付"
+                        android:textColor="@color/font_grey" />
+
+
+                    <ImageView
+                        android:id="@+id/imageView_alipay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/shopcar_goods_notselect" />
+
+                    <ImageView
+                        android:id="@+id/tomyright2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/margin5dp"
+                        android:src="@mipmap/alipay2x" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout_weixinpay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="@dimen/margin5dp"
-                    android:src="@mipmap/alipay2x" />
-            </RelativeLayout>
+                    android:layout_below="@+id/relativeLayout_alipay"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="@dimen/margin20dp"
+                    android:layout_marginRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:visibility="gone">
 
-            <RelativeLayout
-                android:id="@+id/relativeLayout_weixinpay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativeLayout_alipay"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="@dimen/margin20dp"
-                android:layout_marginRight="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:visibility="gone">
+                    <ImageView
+                        android:id="@+id/imageView_tomytight_01"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin5dp"
+                        android:src="@mipmap/weixinpay2x" />
 
-                <ImageView
-                    android:id="@+id/imageView_tomytight_01"
+                    <TextView
+                        android:id="@+id/tomyright5"
+                        android:layout_width="@dimen/margin70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin5dp"
+                        android:layout_toRightOf="@+id/imageView_tomytight_01"
+                        android:text="微信支付    "
+                        android:textColor="@color/font_grey" />
+
+
+                    <ImageView
+                        android:id="@+id/imageView_weixinpay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/shopcar_goods_notselect" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin1dp"
+                    android:background="@color/line_color"></View>
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout_yinlianpay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/margin5dp"
-                    android:src="@mipmap/weixinpay2x" />
+                    android:layout_below="@+id/relativeLayout_alipay"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/tomyright5"
-                    android:layout_width="@dimen/margin70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin5dp"
-                    android:layout_toRightOf="@+id/imageView_tomytight_01"
-                    android:text="微信支付    "
-                    android:textColor="@color/font_grey" />
-
-
-                <ImageView
-                    android:id="@+id/imageView_weixinpay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/shopcar_goods_notselect" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relativeLayout_yinlianpay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativeLayout_alipay"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/textView_tomyright01"
-                    android:layout_width="@dimen/margin70dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/margin5dp"
-                    android:layout_toRightOf="@+id/tomyright02"
-                    android:text="微信支付"
-                    android:textColor="@color/font_grey" />
+                    <TextView
+                        android:id="@+id/textView_tomyright01"
+                        android:layout_width="@dimen/margin70dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="@dimen/margin5dp"
+                        android:layout_toRightOf="@+id/tomyright02"
+                        android:text="微信支付"
+                        android:textColor="@color/font_grey" />
 
 
-                <ImageView
-                    android:id="@+id/imageView_weixin_selected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/shopcar_goods_notselect" />
+                    <ImageView
+                        android:id="@+id/imageView_weixin_selected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/shopcar_goods_notselect" />
 
-                <ImageView
-                    android:id="@+id/tomyright02"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="@dimen/margin5dp"
-                    android:src="@mipmap/weixinpay2x" />
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/tomyright02"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/margin5dp"
+                        android:src="@mipmap/weixinpay2x" />
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin0.5dp"
+                    android:layout_below="@+id/text_belowme"
+                    android:layout_marginTop="@dimen/margin10dp"
+                    android:background="@color/lineColor"></View>
+            </LinearLayout>
+
 
         </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin0.5dp"
-            android:layout_marginTop="@dimen/margin30dp"
-            android:background="@color/lineColor"></View>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin50dp">
+        <Button
+            android:onClick="startOrderPay"
+            style="@style/btn_normal"
+            android:layout_marginTop="@dimen/margin54dp"
+            android:text="确认支付" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/textView_howmuch"
-                android:text="合计:"
-                android:textColor="@color/font_grey" />
+        <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/margin0.5dp"-->
+        <!--android:layout_marginTop="@dimen/margin30dp"-->
+        <!--android:background="@color/lineColor"></View>-->
 
-            <TextView
-                android:id="@+id/textView_howmuch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/margin15dp"
-                android:textColor="@color/red" />
 
-        </RelativeLayout>
     </LinearLayout>
     <!--<fragment-->
     <!--android:id="@+id/fragment"-->

@@ -18,6 +18,10 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/theme_color</item>
     </style>
-
+    <style name="goods_confirm" parent="text_normal">
+        <item name="android:gravity">center</item>
+        <item name="android:width">0px</item>
+        <item name="android:layout_weight">1</item>
+    </style>
 
 </resources>

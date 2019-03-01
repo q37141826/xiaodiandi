@@ -49,6 +49,8 @@
                     android:layout_height="@dimen/margin76dp" />
 
                 <TextView
+                    android:paddingLeft="@dimen/margin5dp"
+                    android:paddingRight="@dimen/margin30dp"
                     android:id="@+id/textViewProductName"
                     style="@style/text_normal"
                     android:layout_marginLeft="@dimen/margin12dp"
@@ -79,6 +81,25 @@
                 android:padding="@dimen/margin15dp"
                 android:textSize="12sp" />
 
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/relativeLayoutImage"
+                android:layout_width="@dimen/margin120dp"
+                android:layout_height="@dimen/margin150dp">
+
+
+                <ImageView
+                    android:id="@+id/imageViewVideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/player" />
+            </RelativeLayout>
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
@@ -86,6 +107,7 @@
         </LinearLayout>
 
         <Button
+            android:onClick="publishEntertainment"
             style="@style/btn_normal"
             android:layout_marginTop="@dimen/margin74dp"
             android:text="发表" />

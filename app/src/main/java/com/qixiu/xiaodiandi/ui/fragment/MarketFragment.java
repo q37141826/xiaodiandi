@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.ArshowDialogUtils;
@@ -27,6 +28,9 @@ import com.qixiu.xiaodiandi.model.order.CreateOrderBean;
 import com.qixiu.xiaodiandi.model.shopcar.ShopCartBean;
 import com.qixiu.xiaodiandi.presenter.home.MarketPresenter;
 import com.qixiu.xiaodiandi.ui.activity.home.ConfirmOrderActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.GoodsDetailsActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.MarketActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.confirm_order.CartPriceParse;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
 import com.qixiu.xiaodiandi.ui.fragment.cart.ShopCarAdapter;
 import com.qixiu.xiaodiandi.utils.NumUtils;
@@ -44,7 +48,7 @@ import butterknife.Unbinder;
  * Created by my on 2019/1/2.
  */
 
-public class MarketFragment extends RequestFragment implements MarketPresenter.RefreshInterf, ArshowDialogUtils.ArshowDialogListener {
+public class MarketFragment extends RequestFragment implements MarketPresenter.RefreshInterf, ArshowDialogUtils.ArshowDialogListener, OnRecyclerItemListener<ShopCartBean.OBean.ValidBean> {
     @BindView(R.id.tv_shopcar_totalnum)
     TextView tvShopcarTotalnum;
     @BindView(R.id.rl_clearall)
@@ -75,6 +79,7 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
     private boolean isAllSelected = false;//是否全部选中
     private StringBuffer selectedId;
     ZProgressHUD zProgressHUD;
+
     @Override
     public void onSuccess(BaseBean data) {
         zProgressHUD.dismiss();
@@ -121,7 +126,10 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
 
     @Override
     protected void onInitData() {
-        zProgressHUD=new ZProgressHUD(getContext());
+        if (getActivity() instanceof MarketActivity) {
+            mTitleView.getView().setVisibility(View.GONE);
+        }
+        zProgressHUD = new ZProgressHUD(getContext());
         mTitleView.setTitle("购物车");
         mTitleView.getLeftView().setVisibility(View.GONE);
         rvShopcar.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -135,6 +143,7 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
             }
         });
         adapter.setInterf(this);
+        adapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -213,7 +222,7 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
 
     public void updateData(ShopCartBean.OBean.ValidBean data) {
         showProgress();
-        ConstantRequest.addTopShopCart(getOkHttpRequestModel(), data.getProduct_id()+"", data.getCart_num() + "", data.getProduct_attr_unique());
+        ConstantRequest.addTopShopCart(getOkHttpRequestModel(), data.getProduct_id() + "", data.getCart_num() + "", data.getProduct_attr_unique());
     }
 
     @Override
@@ -224,8 +233,7 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
         for (int i = 0; i < getDatas().size(); i++) {
             if (getDatas().get(i).isSelected()) {
                 num += getDatas().get(i).getCart_num();//商品数量
-                money += getDatas().get(i).getCart_num() * NumUtils.getDouble(getDatas().get(i).getProductInfo().getAttrInfo().getPrice());//商品总价
-
+                money += getDatas().get(i).getCart_num() * NumUtils.getDouble(CartPriceParse.getPrice(getDatas().get(i).getProductInfo()));//商品总价
                 if (i == getDatas().size()) {
                     selectedId.append(getDatas().get(i).getId());
                 } else {
@@ -285,5 +293,10 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
     @Override
     public void onClickNegative(DialogInterface dialogInterface, int which) {
 
+    }
+
+    @Override
+    public void onItemClick(View v, RecyclerView.Adapter adapter, ShopCartBean.OBean.ValidBean data) {
+        GoodsDetailsActivity.start(getContext(), GoodsDetailsActivity.class, data.getProduct_id() + "");
     }
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/alpha_black_50">
+
+    <ImageView
+        android:id="@+id/imageViewConfirm"
+        android:layout_marginRight="@dimen/margin50dp"
+        android:layout_marginBottom="@dimen/margin100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/wechat_confirm"
+        android:layout_width="@dimen/margin60dp"
+        android:layout_height="@dimen/margin60dp" />
+
+    <ImageView
+        android:id="@+id/imageViewGoback"
+        android:layout_marginLeft="@dimen/margin50dp"
+        android:layout_marginBottom="@dimen/margin100dp"
+        android:layout_alignParentBottom="true"
+        android:src="@mipmap/wechat_goback"
+        android:layout_width="@dimen/margin60dp"
+        android:layout_height="@dimen/margin60dp" />
+
+</RelativeLayout>

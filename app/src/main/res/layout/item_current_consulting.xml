@@ -21,6 +21,7 @@
         android:textColor="@color/font_grey02" />
 
     <TextView
+        android:id="@+id/textViewTime"
         style="@style/text_normal"
         android:layout_below="@+id/textViewDescribe"
         android:layout_marginLeft="@dimen/margin15dp"

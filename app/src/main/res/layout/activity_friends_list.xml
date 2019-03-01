@@ -18,10 +18,16 @@
         android:layout_height="match_parent"
         android:background="@color/back_grey">
 
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
-            android:id="@+id/xrecyclerView"
+        <com.qixiu.wigit.VerticalSwipeRefreshLayout
+            android:id="@+id/swiprefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></com.jcodecraeer.xrecyclerview.XRecyclerView>
+            android:layout_height="match_parent">
+
+            <com.jcodecraeer.xrecyclerview.XRecyclerView
+                android:id="@+id/xrecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></com.jcodecraeer.xrecyclerview.XRecyclerView>
+        </com.qixiu.wigit.VerticalSwipeRefreshLayout>
     </LinearLayout>
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.Manifest;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,10 +14,9 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.wigit.hviewpager.HackyViewPager;
-import com.qixiu.wigit.picker.MyPopOneListPicker;
-import com.qixiu.wigit.picker.SelectedDataBean;
 import com.qixiu.wigit.show_dialog.ArshowContextUtil;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.ui.activity.community.game.GameFragment;
 import com.qixiu.xiaodiandi.ui.activity.community.upload.EntertainmentPhotoUploadActivity;
 import com.qixiu.xiaodiandi.ui.activity.community.upload.EntertainmentVideoUploadActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.BaseFragment;
@@ -43,7 +43,8 @@ public class CommunityFragment extends MenueFragment {
     @BindView(R.id.viewpager)
     HackyViewPager viewpager;
     Unbinder unbinder;
-    String permissions[]={Manifest.permission.RECORD_AUDIO};
+    String permissions[] = {Manifest.permission.RECORD_AUDIO};
+
     @Override
     public void onSuccess(BaseBean data) {
 
@@ -66,6 +67,42 @@ public class CommunityFragment extends MenueFragment {
 
         titles.add("娱乐社区");
         titles.add("新闻社区");
+        titles.add("研发中");
+
+        setTitleStyle();
+
+        mTitleView.setRightListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPicker();
+            }
+        });
+        EntertainmentFragment entertainmentFragment = new EntertainmentFragment();
+        fragments.add(entertainmentFragment);
+        NewsFragment newsFragment = new NewsFragment();
+        fragments.add(newsFragment);
+        GameFragment gameFragment = new GameFragment();
+        fragments.add(gameFragment);
+        initFragment(fragments, titles, tablelayout, viewpager);
+        viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+               mTitleView.getRightText().setVisibility(position==0?View.VISIBLE:View.GONE);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void setTitleStyle() {
         mTitleView.getLeftView().setVisibility(View.GONE);
         mTitleView.setTitle("社区");
         mTitleView.setRightText("我要发布");
@@ -75,42 +112,26 @@ public class CommunityFragment extends MenueFragment {
         mTitleView.getRightText().setTextColor(Color.WHITE);
         mTitleView.getRightText().setCompoundDrawablePadding(10);
         mTitleView.getRightText().setGravity(Gravity.CENTER);
-        mTitleView.setRightListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPicker();
-            }
-        });
-
-
-        EntertainmentFragment entertainmentFragment = new EntertainmentFragment();
-        fragments.add(entertainmentFragment);
-        NewsFragment newsFragment = new NewsFragment();
-        fragments.add(newsFragment);
-        initFragment(fragments, titles, tablelayout, viewpager);
     }
 
     private void showPicker() {
-        List<SelectedDataBean> datas = new ArrayList<>();
-        SelectedDataBean selectedDataBean = new SelectedDataBean("0", "相册");
-        datas.add(selectedDataBean);
-        selectedDataBean = new SelectedDataBean("1", "拍摄");
-        datas.add(selectedDataBean);
-        MyPopOneListPicker picker = new MyPopOneListPicker(getContext(), datas, new MyPopOneListPicker.Pop_selectedListenner() {
-            @Override
-            public void getData(SelectedDataBean data) {
-                if (data.getId().equals("0")) {
-                    EntertainmentPhotoUploadActivity.start(getContext(), EntertainmentPhotoUploadActivity.class);
-                } else {
-                    if(hasPermission(getContext(),permissions)){
-                        EntertainmentVideoUploadActivity.start(getContext(),EntertainmentVideoUploadActivity.class);
-                    }else {
-                        hasRequse(getActivity(),1,permissions);
-                    }
-
-                }
-            }
-        });
+        EntertainmentPhotoUploadActivity.start(getContext(), EntertainmentPhotoUploadActivity.class);
+//        WechatTakeCameraSelectPop wechatTakeCameraSelectPop = new WechatTakeCameraSelectPop(getContext());
+//        wechatTakeCameraSelectPop.setClickListenner(new WechatTakeCameraSelectPop.ClickListenner() {
+//            @Override
+//            public void takeVideo() {
+//                if (hasPermission(getContext(), permissions)) {
+//                    EntertainmentVideoUploadActivity.start(getContext(), EntertainmentVideoUploadActivity.class);
+//                } else {
+//                    hasRequse(getActivity(), 1, permissions);
+//                }
+//            }
+//
+//            @Override
+//            public void takePhoto() {
+//                EntertainmentPhotoUploadActivity.start(getContext(), EntertainmentPhotoUploadActivity.class);
+//            }
+//        });
     }
 
     @Override
@@ -140,8 +161,8 @@ public class CommunityFragment extends MenueFragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if(hasPermission(getContext(),permissions)){
-            EntertainmentVideoUploadActivity.start(getContext(),EntertainmentVideoUploadActivity.class);
+        if (hasPermission(getContext(), permissions)) {
+            EntertainmentVideoUploadActivity.start(getContext(), EntertainmentVideoUploadActivity.class);
         }
     }
 }

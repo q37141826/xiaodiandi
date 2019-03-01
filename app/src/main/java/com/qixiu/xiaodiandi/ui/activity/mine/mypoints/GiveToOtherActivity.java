@@ -41,6 +41,7 @@ public class GiveToOtherActivity extends RequestActivity {
     public void onSuccess(BaseBean data) {
         if (data.getUrl().equals(ConstantUrl.transToOtherUrl)) {
             ToastUtil.toast(data.getM());
+            finish();
         }
     }
 

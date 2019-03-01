@@ -12,6 +12,7 @@ import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.wigit.show_dialog.ArshowContextUtil;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.model.home.HomeBean;
 import com.qixiu.xiaodiandi.model.mine.collection.SimilarBean;
 
@@ -56,7 +57,7 @@ public class HomeAdapter extends RecyclerBaseAdapter {
                 HomeBean.OBean.ProductBean bean = (HomeBean.OBean.ProductBean) mData;
                 Glide.with(mContext).load(bean.getImage()).into(imageView);
                 textViewName.setText(bean.getStore_name());
-                textViewPrice.setText(bean.getPrice());
+                textViewPrice.setText(ConstantString.RMB_SYMBOL + bean.getPrice());
             }
 
             if (mData instanceof SimilarBean.OBean) {

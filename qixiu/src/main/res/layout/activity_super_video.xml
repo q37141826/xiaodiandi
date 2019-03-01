@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:longClickable="true"
     android:orientation="vertical">
 
     <SurfaceView
@@ -14,7 +15,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin55dp"
-        android:background="@color/white">
+        android:background="@color/transparent">
 
         <ImageView
             android:id="@+id/top_model2_left_img"
@@ -24,9 +25,9 @@
             android:layout_marginLeft="@dimen/margin20dp" />
 
         <TextView
-            android:layout_centerInParent="true"
             android:id="@+id/top_model2_txt"
             style="@style/text_normal"
+            android:layout_centerInParent="true"
             android:textSize="20sp" />
 
         <ImageView
@@ -50,7 +51,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:background="@color/transparent" />
+            android:background="@color/transparent"
+            app:cpv_animAutostart="true"
+            app:cpv_color="@color/theme_color" />
 
         <Button
             android:id="@+id/shoot_button"
@@ -58,6 +61,7 @@
             android:layout_height="@dimen/margin70dp"
             android:layout_centerInParent="true"
             android:background="@drawable/circular_white"
+            android:longClickable="true"
             android:text="录制"
             android:textColor="@color/theme_color" />
 
@@ -74,20 +78,20 @@
         android:textColor="@color/theme_color" />
 
     <ImageView
-        android:layout_marginTop="@dimen/margin100dp"
         android:id="@+id/circle_change_camera_btn"
         android:layout_width="@dimen/margin40dp"
         android:layout_height="@dimen/margin40dp"
         android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/margin100dp"
         android:layout_marginRight="@dimen/margin20dp"
         android:src="@mipmap/shizi" />
 
     <ImageView
-        android:src="@drawable/camera_light"
         android:id="@+id/circle_light_btn"
         android:layout_width="@dimen/margin40dp"
         android:layout_height="@dimen/margin40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/margin10dp" />
+        android:layout_marginBottom="@dimen/margin10dp"
+        android:src="@drawable/camera_light" />
 </RelativeLayout>

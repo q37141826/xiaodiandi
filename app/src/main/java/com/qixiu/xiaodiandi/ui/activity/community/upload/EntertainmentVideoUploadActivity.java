@@ -2,6 +2,7 @@ package com.qixiu.xiaodiandi.ui.activity.community.upload;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,16 +16,18 @@ import com.qixiu.qixiu.engine.oss.AliOssEngine;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.ToastUtil;
+import com.qixiu.qixiu.utils.video.VideoThumbUtils;
 import com.qixiu.wigit.GotoView;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.comminity.entertainment.PayedShopListBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
-import com.qixiu.xiaodiandi.ui.activity.community.MyPayedProductsActivity;
+import com.qixiu.xiaodiandi.ui.activity.community.entertainment.MyPayedProductsActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +36,7 @@ import butterknife.ButterKnife;
 
 import static com.qixiu.qixiu.camera.CircleViedoActivity.FILE_PATH;
 
-public class EntertainmentVideoUploadActivity extends RequestActivity  {
+public class EntertainmentVideoUploadActivity extends RequestActivity {
 
 
     @BindView(R.id.gotoViewSelectProduct)
@@ -122,6 +125,22 @@ public class EntertainmentVideoUploadActivity extends RequestActivity  {
             ToastUtil.toast("请选择商品");
             return;
         }
+        if (TextUtils.isEmpty(filePath) || !new File(filePath).exists()) {
+            ToastUtil.toast("文件意外被清理");
+            return;
+        }
+        mZProgressHUD.show();
+        VideoThumbUtils.getVideoThumbnailBase64(getActivity(), filePath, new VideoThumbUtils.ResultListenner() {
+            @Override
+            public void result(String base64) {
+                upLoad(base64);
+            }
+        });
+
+//
+    }
+
+    private void upLoad(String base64) {
         AliOssEngine engine = new AliOssEngine(new AliOssEngine.SendSuccess() {
             @Override
             public void onSuccess(String url) {
@@ -130,15 +149,14 @@ public class EntertainmentVideoUploadActivity extends RequestActivity  {
                 map.put("sid", selectedProductBean.getSid() + "");
                 map.put("type", 2 + "");//	图片base64，多个用英文逗号隔开;type=2是视频oss
                 map.put("content", edittextComments.getText().toString());
-                map.put("img", url);
+                map.put("img", base64 + "," + url);
                 post(ConstantUrl.sendEntertaimentUrl, map, new BaseBean());
             }
         });
-        mZProgressHUD.show();
         engine.startUpload((filePath), new AliOssEngine.UploadProgress() {
             @Override
             public void sendProgress(String progress) {
-                mZProgressHUD.setMessage("上传进度" + progress);
+                mZProgressHUD.setMessage( progress);
             }
 
             @Override
@@ -151,8 +169,6 @@ public class EntertainmentVideoUploadActivity extends RequestActivity  {
 
             }
         });
-
-//
     }
 
 

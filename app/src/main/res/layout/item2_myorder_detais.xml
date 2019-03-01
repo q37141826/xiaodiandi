@@ -39,6 +39,7 @@
         android:orientation="vertical">
 
         <TextView
+            android:layout_marginRight="@dimen/margin70dp"
             android:id="@+id/textView_goodsContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

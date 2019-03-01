@@ -1,4 +1,4 @@
-package com.qixiu.xiaodiandi.ui.activity.community;
+package com.qixiu.xiaodiandi.ui.activity.community.entertainment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -41,24 +41,28 @@ public class MyPayedProductsActivity extends RequestActivity implements XRecycle
 
     @Override
     public void onSuccess(BaseBean data) {
-        if(data instanceof PayedShopListBean){
-            PayedShopListBean bean= (PayedShopListBean) data;
-            if(pageNo==1){
+        if (data instanceof PayedShopListBean) {
+            PayedShopListBean bean = (PayedShopListBean) data;
+            if (pageNo == 1) {
                 adapter.refreshData(bean.getO());
-            }else {
+            } else {
                 adapter.addDatas(bean.getO());
             }
         }
+        swipRefreshlayout.setRefreshing(false);
+        xrecyclerview.loadMoreComplete();
     }
 
     @Override
     public void onError(Exception e) {
-
+        swipRefreshlayout.setRefreshing(false);
+        xrecyclerview.loadMoreComplete();
     }
 
     @Override
     public void onFailure(C_CodeBean c_codeBean, String m) {
-
+        swipRefreshlayout.setRefreshing(false);
+        xrecyclerview.loadMoreComplete();
     }
 
     @Override

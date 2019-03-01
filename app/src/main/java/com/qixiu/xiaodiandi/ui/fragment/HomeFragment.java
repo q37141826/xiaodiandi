@@ -3,6 +3,7 @@ package com.qixiu.xiaodiandi.ui.fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -10,7 +11,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jude.rollviewpager.RollPagerView;
+import com.jude.rollviewpager.hintview.ColorPointHintView;
 import com.qixiu.qixiu.google.zxing.client.android.CaptureActivity;
 import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
 import com.qixiu.qixiu.request.bean.BaseBean;
@@ -34,7 +36,9 @@ import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.constant.EventAction;
 import com.qixiu.xiaodiandi.model.home.HomeBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.GotoWebActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.BindWebActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.GoodsDetailsActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.MessageActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.SearchActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.BaseFragment;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
@@ -54,17 +58,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+import static com.qixiu.qixiu.google.zxing.client.android.CaptureActivity.ZXING_VALUE;
+
 /**
  * Created by my on 2019/1/2.
  */
 
 public class HomeFragment extends RequestFragment implements XRecyclerView.LoadingListener, OnRecyclerItemListener, View.OnClickListener, ItemClickListenner {
     int pageNo = 1, pageSize = 10;
-    private XRecyclerView recyclerView;
+    @BindView(R.id.textViewGotoScan)
+    TextView textViewGotoScan;
+    @BindView(R.id.edittext_search)
+    TextView edittextSearch;
+    @BindView(R.id.imageViewMessage)
+    ImageView imageViewMessage;
+    @BindView(R.id.imageViewSearch)
+    ImageView imageViewSearch;
+    @BindView(R.id.recyclerView)
+    XRecyclerView recyclerView;
+    @BindView(R.id.swip_refreshlayout)
+    VerticalSwipeRefreshLayout swipRefreshlayout;
+    Unbinder unbinder;
     VerticalSwipeRefreshLayout swipeRefreshLayout;
-    private EditText edittext;
     private RollPagerView rollpager;
-    private ImageView imageViewSearch;
     private ImageUrlAdapter imageUrlAdapter;
     private RollPagerView rollpagerProduct;
     private HomeOthersRollAdapter rollAdapter;
@@ -75,10 +95,15 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
     private HackyViewPager viewpagerFragment;
     private TabLayout tablelayout;
     private RadioGroup radiogroup;
-    private TextView textViewGotoScan;
 
+    //    private TextView textViewGotoScan;
     @Override
     public void onSuccess(BaseBean data) {
+        try {
+            swipeRefreshLayout.setRefreshing(false);
+            recyclerView.loadMoreComplete();
+        } catch (Exception e) {
+        }
         if (data instanceof HomeBean) {
             HomeBean homeBean = (HomeBean) data;
             if (pageNo == 1) {
@@ -110,7 +135,6 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
                 homeAdapter.addDatas(homeBean.getO().getProduct());
             }
         }
-        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void setViewpagerList(View view, List<HomeBean.OBean.CategoryBean> category) {
@@ -118,7 +142,7 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         viewpagerFragments.clear();
         radiogroup.removeAllViews();
         List<String> titles = new ArrayList<>();
-        int max = category.size() / 10 + 1;//页数
+        int max = (category.size() - 1) / 10 + 1;//页数
         for (int i = 0; i < max; i++) {
             HomeViepagerFragment viepagerFragment01 = new HomeViepagerFragment();
             viewpagerFragments.add(viepagerFragment01);
@@ -173,17 +197,24 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         if (viewpagerFragments.size() != 0) {
             ((RadioButton) radiogroup.getChildAt(0)).setChecked(true);
         }
-
+        //如果只有一页不显示进度条
+        if (max >= 2) {
+            radiogroup.setVisibility(View.VISIBLE);
+        } else {
+            radiogroup.setVisibility(View.GONE);
+        }
     }
 
     @Override
     public void onError(Exception e) {
         swipeRefreshLayout.setRefreshing(false);
+        recyclerView.loadMoreComplete();
     }
 
     @Override
     public void onFailure(C_CodeBean c_codeBean, String m) {
         swipeRefreshLayout.setRefreshing(false);
+        recyclerView.loadMoreComplete();
     }
 
     @Override
@@ -216,6 +247,7 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         homeAdapter = new HomeAdapter();
         recyclerView.setAdapter(homeAdapter);
         homeAdapter.setOnItemClickListener(this);
+        imageViewMessage.setOnClickListener(this);
     }
 
     private void findHeadView(View view) {
@@ -229,19 +261,22 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         viewpagerFragment = view.findViewById(R.id.viewpagerFragment);
         tablelayout = view.findViewById(R.id.tablelayout);
 
-        edittext = view.findViewById(R.id.edittext_search);
         //设置轮播图
         rollpager = view.findViewById(R.id.rollpager);
-        imageViewSearch = view.findViewById(R.id.imageViewSearch);
         imageViewSearch.setOnClickListener(this);
         rollpager.getViewPager().setPageMargin(20);//设置page间间距，自行根据需求设置
 
         imageUrlAdapter = new ImageUrlAdapter(rollpager);
         rollpager.setAdapter(imageUrlAdapter);
+        rollpager.setHintView(new ColorPointHintView(getActivity(), getResources().getColor(R.color.theme_color), getResources().getColor(R.color.alpha_black_50)));
+
         imageUrlAdapter.setItemClickListenner(this);
 //        adapter.refreshData(banners);
         //设置轮播商品
         rollpagerProduct = view.findViewById(R.id.rollpagerProduct);
+        ColorPointHintView colorPointHintView = new ColorPointHintView(getActivity(), getResources().getColor(R.color.theme_color), getResources().getColor(R.color.alpha_black_50));
+        rollpagerProduct.setHintView(colorPointHintView);
+        colorPointHintView.setVisibility(View.GONE);
         rollAdapter = new HomeOthersRollAdapter(rollpagerProduct);
         rollpagerProduct.setAdapter(rollAdapter);
         rollAdapter.setItemClickListenner(this);
@@ -252,8 +287,13 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         RelativeLayout.LayoutParams layoutParams02 = (RelativeLayout.LayoutParams) rollpagerProduct.getViewPager().getLayoutParams();
         layoutParams02.setMargins(ArshowContextUtil.dp2px(89), 0, ArshowContextUtil.dp2px(89), 0);
 //        rollAdapter.refreshData(productBeans);
-        textViewGotoScan = view.findViewById(R.id.textViewGotoScan);
         textViewGotoScan.setOnClickListener(this);
+        edittextSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SearchActivity.start(getContext(), SearchActivity.class);
+            }
+        });
     }
 
     @Override
@@ -289,18 +329,21 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
     public void onResume() {
         super.onResume();
         rollpager.requestFocus();
-        ArshowContextUtil.hideSoftKeybord(edittext);
+        ArshowContextUtil.hideSoftKeybord(edittextSearch);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.imageViewSearch:
-                SearchActivity.start(getContext(), SearchActivity.class, edittext.getText().toString());
+                SearchActivity.start(getContext(), SearchActivity.class, edittextSearch.getText().toString());
                 break;
             case R.id.textViewGotoScan:
                 Intent intent = new Intent(getContext(), CaptureActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1000);
+                break;
+            case R.id.imageViewMessage:
+                MessageActivity.start(getContext(), MessageActivity.class);
                 break;
         }
     }
@@ -345,4 +388,27 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
     }
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            String qrCodeValue = data.getStringExtra(ZXING_VALUE);
+            BindWebActivity.start(getContext(), BindWebActivity.class, qrCodeValue);
+        }
+    }
 }

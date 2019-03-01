@@ -15,6 +15,7 @@ import com.qixiu.qixiu.utils.StatusBarUtils;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.EventAction;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.BindWebActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.mycollection.MyCollectionActivity;
 import com.qixiu.xiaodiandi.ui.fragment.CommunityFragment;
 import com.qixiu.xiaodiandi.ui.fragment.HomeFragment;
@@ -56,7 +57,7 @@ public class MainActivity extends RequestActivity {
     private CommunityFragment communityFragment;
     private MarketFragment marketFragment;
     private MineFragment mineFragment;
-    private int eventAction;
+    private EventAction.Action eventAction;
 
     @Override
     protected void onInitData() {
@@ -81,6 +82,11 @@ public class MainActivity extends RequestActivity {
         fragmentTransaction.commit();
         switchFragment(homeFragment, framlayoutForFragment.getId());
         setClick();
+        //如果登录界面还在，那么干掉
+        try {
+            AppManager.getAppManager().finishActivity(Loginactivity.class);
+        } catch (Exception e) {
+        }
     }
 
     private void setClick() {
@@ -178,16 +184,20 @@ public class MainActivity extends RequestActivity {
 
     @Subscribe
     public void getEvent(EventAction.Action action) {
-        eventAction = action.getAction();//先保存常量，在onResume方法切换fragment
-        if (eventAction == EventAction.GOTO_TYPE) {
-            typesFragment.setSelectedId(action.getId());
-            onClick(textViewTypes);
-            eventAction = 0;
-        }
-        try {
-            //如果是收藏界面过来的 ，杀死收藏界面,在onResume方法再次切换界面到购物车
-            AppManager.getAppManager().finishActivity(MyCollectionActivity.class);
-        } catch (Exception e) {
+        //先保存常量，在onResume方法切换fragment
+        eventAction = action;
+        if (AppManager.getAppManager().currentActivity() instanceof MainActivity) {//如果当前界面是主界面，那么直接跳转，如果不是,那么跳转动作放到onresume里面
+            gotoOtherPage();
+        } else {
+            try {
+                //如果是收藏界面过来的 ，杀死收藏界面,在onResume方法再次切换界面到购物车
+                AppManager.getAppManager().finishActivity(MyCollectionActivity.class);
+            } catch (Exception e) {
+            }
+            try {
+                AppManager.getAppManager().finishActivity(BindWebActivity.class);
+            } catch (Exception e) {
+            }
         }
     }
 
@@ -200,9 +210,20 @@ public class MainActivity extends RequestActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (eventAction == EventAction.GOTO_CARTS) {//
-            onClick(textViewMarket);
+        gotoOtherPage();
+
+    }
+
+    private void gotoOtherPage() {
+        if (eventAction != null) {
+            if (eventAction.getAction() == EventAction.GOTO_CARTS) {//
+                onClick(textViewMarket);
+            }
+            if (eventAction.getAction() == EventAction.GOTO_TYPE) {
+                typesFragment.setSelectedId(eventAction.getId());
+                onClick(textViewTypes);
+            }
+            eventAction = null;//让这个变量只能使用一次
         }
-        eventAction = 0;//让这个变量只能使用一次
     }
 }

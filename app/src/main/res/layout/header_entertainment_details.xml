@@ -36,6 +36,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:onClick="shareEnterTainment"
                 android:id="@+id/textViewShare"
                 style="@style/text_normal"
                 android:layout_alignParentRight="true"
@@ -50,10 +51,10 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin200dp"></com.jude.rollviewpager.RollPagerView>
 
-        <VideoView
-            android:id="@+id/videoView"
+        <cn.jzvd.JZVideoPlayerStandard
+            android:id="@+id/jcplayer"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin200dp" />
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/textViewContent"
@@ -67,6 +68,7 @@
             android:paddingLeft="@dimen/margin15dp">
 
             <ImageView
+                android:onClick="shareEnterTainment"
                 android:id="@+id/imageViewTrance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,6 +86,7 @@
 
 
             <ImageView
+                android:onClick="addToCollect"
                 android:id="@+id/imageViewCollect"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

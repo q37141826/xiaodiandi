@@ -43,7 +43,16 @@ public class UserBean extends BaseBean<UserBean.OBean> {
         private String integral;
         private int signed;
         private String group_name;
+        private String servicetelephone;
         private int wechat_user;
+
+        public String getServicetelephone() {
+            return servicetelephone;
+        }
+
+        public void setServicetelephone(String servicetelephone) {
+            this.servicetelephone = servicetelephone;
+        }
 
         public int getUid() {
             return uid;

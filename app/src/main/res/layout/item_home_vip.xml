@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/margin135dp"
-    android:elevation="0px"
-    android:layout_margin="@dimen/margin5dp"
+    android:layout_marginLeft="@dimen/margin5dp"
+    android:layout_marginRight="@dimen/margin5dp"
+    app:cardElevation="0px"
     app:cardCornerRadius="@dimen/margin5dp">
 
     <RelativeLayout
@@ -15,31 +16,31 @@
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            />
+            android:scaleType="centerCrop" />
 
         <LinearLayout
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
             <TextView
-                android:visibility="gone"
                 android:id="@+id/textViewTitle"
                 style="@style/text_normal"
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:textColor="@color/red"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:visibility="gone" />
 
             <TextView
-                android:visibility="gone"
                 style="@style/text_normal"
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:text="成VIP会员
 赚点滴积分"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                android:visibility="gone" />
         </LinearLayout>
     </RelativeLayout>
 

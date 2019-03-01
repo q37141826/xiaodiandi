@@ -1,6 +1,7 @@
 package com.qixiu.xiaodiandi.ui.activity.home;
 
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jude.rollviewpager.RollPagerView;
+import com.jude.rollviewpager.hintview.ColorPointHintView;
+import com.qixiu.qixiu.application.AppManager;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
@@ -28,9 +31,10 @@ import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.qixiu.utils.html_utils.HtmlUtils;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantRequest;
+import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
-import com.qixiu.xiaodiandi.constant.EventAction;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
+import com.qixiu.xiaodiandi.engine.ShareLikeEngine;
 import com.qixiu.xiaodiandi.model.home.goodsdetails.CharctorInnerBean;
 import com.qixiu.xiaodiandi.model.home.goodsdetails.GetPointsTimeBean;
 import com.qixiu.xiaodiandi.model.home.goodsdetails.GoodsDetailsBean;
@@ -40,8 +44,6 @@ import com.qixiu.xiaodiandi.ui.adapter.home.GoodsDetailsCharactorAdapter;
 import com.qixiu.xiaodiandi.ui.fragment.home.ImageUrlAdapter;
 import com.qixiu.xiaodiandi.utils.NumUtils;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,8 +52,6 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.qixiu.xiaodiandi.constant.EventAction.GOTO_CARTS;
 
 public class GoodsDetailsActivity extends RequestActivity {
 
@@ -80,6 +80,10 @@ public class GoodsDetailsActivity extends RequestActivity {
     TextView textViewPricePrevious;
     @BindView(R.id.textViewCart)
     TextView textViewCart;
+    @BindView(R.id.textViewGetPoints)
+    TextView textViewGetPoints;
+    @BindView(R.id.textViewService)
+    TextView textViewService;
     private PopupWindow pw;
     private GoodsDetailsBean detailsBean;
     private GoodsDetailsBean.OBean.ResultBean.ListBean selectedProduct;
@@ -93,11 +97,16 @@ public class GoodsDetailsActivity extends RequestActivity {
         mTitleView.setTitle("商品详情");
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//设置黑色
         StatusBarUtils.setWindowStatusBarColor(this, Color.WHITE);
-        loadDetails();
+//        loadDetails();
         addPoints(1 + "");//浏览获得积分
     }
 
     private void addPoints(String type) {
+        if (AppManager.getAppManager().currentActivity() instanceof GoodsDetailsActivity) {
+
+        } else {
+            return;
+        }
         Map<String, String> map = new HashMap<>();
         map.put("type", type + "");
         post(ConstantUrl.scanPointsUrl, map, new GetPointsTimeBean());
@@ -120,22 +129,30 @@ public class GoodsDetailsActivity extends RequestActivity {
         if (data instanceof GoodsDetailsBean) {
             detailsBean = (GoodsDetailsBean) data;
 //            CommonUtils.setWebview(webview, detailsBean.getO().getProduct().getDescription(), true);
-
+            if(detailsBean.getO().getProduct().getIntergral()==null){
+                textViewGetPoints.setText("购买得赠送" +0 + "点滴");
+            }else {
+                textViewGetPoints.setText("购买得赠送" + detailsBean.getO().getProduct().getIntergral() + "点滴");
+            }
             HtmlUtils.getInstance().setWindowWith(windowWith);
             HtmlUtils.getInstance().setHtml(textViewPText, detailsBean.getO().getProduct().getDescription(), this);
-
             textViewCartsNum.setText(detailsBean.getO().getProduct().getCartnum() + "");
+            textViewCartsNum.setVisibility(detailsBean.getO().getProduct().getCartnum() != 0 ? View.VISIBLE : View.GONE);
             if (detailsBean.getO().getProduct().getCollect() == 1) {
                 textViewCollect.setText("已收藏");
             } else {
                 textViewCollect.setText("收藏");
             }
+            textViewService.setText(detailsBean.getO().getProduct().getKeyword());
             textViewProductname.setText(detailsBean.getO().getProduct().getStore_name());
             textViewProductDescribe.setText(detailsBean.getO().getProduct().getStore_info());
-            textViewPriceNow.setText("¥   " + detailsBean.getO().getProduct().getPrice());
-            textViewPricePrevious.setText("¥   " + detailsBean.getO().getProduct().getOt_price());
+            textViewPriceNow.setText("¥ " + detailsBean.getO().getProduct().getPrice());
+            textViewPricePrevious.setText("¥ " + detailsBean.getO().getProduct().getOt_price());
+            textViewPricePrevious.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
             ImageUrlAdapter adapter = new ImageUrlAdapter(rollpager);
             rollpager.setAdapter(adapter);
+            rollpager.setHintView(new ColorPointHintView(getContext(),getContext().getResources().getColor(R.color.theme_color),
+                    getContext().getResources().getColor(R.color.alpha_black_50)));
             adapter.refreshData(detailsBean.getO().getProduct().getSlider_image());
         }
         if (ConstantUrl.addShopCarURl.equals(data.getUrl())) {
@@ -233,11 +250,12 @@ public class GoodsDetailsActivity extends RequestActivity {
         tv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (selectedProduct == null) {
+                if (selectedProduct == null && isHaveParams(detailsBean)) {
                     ToastUtil.toast("请选择规格");
                     return;
                 }
-                if (getNum(tv_repertory.getText().toString()) >= selectedProduct.getStock()) {
+                int stock = getStock();
+                if (getNum(tv_repertory.getText().toString()) >= stock) {
                     ToastUtil.toast("没有更多库存了");
                     return;
                 } else {
@@ -249,7 +267,7 @@ public class GoodsDetailsActivity extends RequestActivity {
         tv_shopcar_minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (selectedProduct == null) {
+                if (selectedProduct == null && isHaveParams(detailsBean)) {
                     ToastUtil.toast("请选择规格");
                     return;
                 }
@@ -267,7 +285,7 @@ public class GoodsDetailsActivity extends RequestActivity {
         bt_buy_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (selectedProduct == null) {
+                if (selectedProduct == null && isHaveParams(detailsBean)) {
                     ToastUtil.toast("请选择产品规格");
                     return;
                 }
@@ -276,6 +294,11 @@ public class GoodsDetailsActivity extends RequestActivity {
                 gotoAddCartsData.setBuyNum(selectNum + "");
                 gotoAddCartsData.setProdeuctId(detailsBean.getO().getProduct().getId() + "");
                 gotoAddCartsData.setUnique(selectedProduct == null ? "" : selectedProduct.getUnique());
+                if (selectedProduct == null) {
+                    selectedProduct = new GoodsDetailsBean.OBean.ResultBean.ListBean();
+                    selectedProduct.setPrice(detailsBean.getO().getProduct().getPrice());
+                    selectedProduct.setImage(detailsBean.getO().getProduct().getImage());
+                }
                 gotoAddCartsData.setMoney(NumUtils.getDouble(selectedProduct.getPrice()) * selectNum + "");
                 gotoAddCartsData.setListBean(selectedProduct);
                 selectedProduct.setNum(selectNum);
@@ -289,7 +312,7 @@ public class GoodsDetailsActivity extends RequestActivity {
         bt_addto_shopcar_pp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (selectedProduct == null) {
+                if (selectedProduct == null && isHaveParams(detailsBean)) {
                     ToastUtil.toast("请选择产品规格");
                     return;
                 }
@@ -305,8 +328,8 @@ public class GoodsDetailsActivity extends RequestActivity {
             }
         });
 
-
     }
+
 
     private int getNum(String str) {
         int num = 0;
@@ -366,15 +389,16 @@ public class GoodsDetailsActivity extends RequestActivity {
                 selectedProduct = detailsBean.getO().getResult().getList().get(i);
             }
         }
-        tv_goodsdetail_ppw_price_txt.setText(selectedProduct.getPrice());
+        tv_goodsdetail_ppw_price_txt.setText(ConstantString.RMB_SYMBOL + selectedProduct.getPrice());
     }
 
 
     //跳转购物车
     public void gotoCarts(View view) {
-        EventAction.Action action = new EventAction.Action(GOTO_CARTS);
-        EventBus.getDefault().post(action);
-        finish();
+//        EventAction.Action action = new EventAction.Action(GOTO_CARTS);
+//        EventBus.getDefault().post(action);
+//        finish();
+        MarketActivity.start(getContext(), MarketActivity.class);
     }
 
     //加入收藏
@@ -386,9 +410,50 @@ public class GoodsDetailsActivity extends RequestActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        myTimer.cancleTimer();//注销时干掉他
-        myTimer = null;
+    protected void onStop() {
+        super.onStop();
+        try {
+            myTimer.cancleTimer();//注销时干掉他
+        } catch (Exception e) {
+        }
+    }
+
+
+    //弹出窗体
+    public void showBuyPop(View view) {
+        showPop(view);
+    }
+
+    //判断是不是有规格的商品
+    private boolean isHaveParams(GoodsDetailsBean goodsDetailsBean) {
+        if (goodsDetailsBean.getO().getResult().getCharc().size() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    //获取库存
+    private int getStock() {
+        int stock;
+        if (selectedProduct == null) {
+            stock = detailsBean.getE();
+        } else {
+            stock = selectedProduct.getStock();
+        }
+        return stock;
+    }
+
+    //分享
+    public void shareGoods(View view) {
+        ShareLikeEngine shareLikeEngine = new ShareLikeEngine();
+        shareLikeEngine.releaseShareData(this, ConstantUrl.SHARE_IMAGE_URL, ConstantString.PRODUCT_SHARECONTENT, ConstantUrl.SHARE_CLICK_GO_URL, null);
+        shareLikeEngine.setShareTitle(detailsBean.getO().getProduct().getStore_name());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadDetails();
     }
 }

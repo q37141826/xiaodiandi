@@ -145,7 +145,7 @@ public class GetCashRecordActivity extends RequestActivity implements XRecyclerV
             public void bindHolder(int position) {
                 if (mData instanceof GetCatshRecordBean.OBean) {
                     GetCatshRecordBean.OBean bean = (GetCatshRecordBean.OBean) mData;
-                    textViewContent.setText(bean.getMark());
+                    textViewContent.setText("提现至"+bean.getExtract_type()+"账户");
                     textViewTime.setText(bean.getAdd_time());
                     textViewMoney.setText(ConstantString.RMB_SYMBOL + bean.getBalance());
                     if (bean.getStatus() == -1) {

@@ -83,14 +83,16 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
                 imageView_alipay.setImageResource(R.mipmap.shopcar_goods_select);
                 imageView_yinlian_selected.setImageResource(R.mipmap.shopcar_goods_notselect);
                 imageView_weixinpay.setImageResource(R.mipmap.shopcar_goods_notselect);
-                getOrderData();
+//                getOrderData();
                 break;
             case R.id.imageView_weixinpay:
             case R.id.relativeLayout_weixinpay:
                 type = 2;
-                imageView_weixinpay.setImageResource(R.mipmap.shopcar_goods_notselect);
+                imageView_weixinpay.setImageResource(R.mipmap.shopcar_goods_select);
                 imageView_alipay.setImageResource(R.mipmap.shopcar_goods_notselect);
-                getOrderData();
+                imageView_yinlian_selected.setImageResource(R.mipmap.shopcar_goods_notselect);
+
+//                getOrderData();
                 break;
 
             case R.id.relativeLayout_yinlianpay:
@@ -98,7 +100,8 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
                 type = 2;
                 imageView_yinlian_selected.setImageResource(R.mipmap.shopcar_goods_select);
                 imageView_alipay.setImageResource(R.mipmap.shopcar_goods_notselect);
-                getOrderData();
+                imageView_weixinpay.setImageResource(R.mipmap.shopcar_goods_notselect);
+//                getOrderData();
                 break;
         }
     }
@@ -202,8 +205,8 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
             payData = fastPayNewBean.getOrderPayData();
             payData.setKey(createOrderBean.getO().getOrderKey());
             payData.setMoney(createOrderBean.getO().getPriceGroup().getCostPrice());
-//                orderPayData.setCoupon();  //todo 这两个地方后续要补上
-//                orderPayData.setIntegral();
+//            payData.setCoupon();  //todo 这两个地方后续要补上
+//            payData.setIntegral();
             startGetPaData();
         }
     }
@@ -267,4 +270,8 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
     }
 
 
+    //开始支付
+    public void startOrderPay(View view) {
+        getOrderData();
+    }
 }

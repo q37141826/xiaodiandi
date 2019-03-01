@@ -21,68 +21,53 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/margin50dp"></FrameLayout>
+
         <LinearLayout
-            android:layout_alignParentBottom="true"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
             <View
-                android:background="@color/line_color"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin1dp"></View>
+                android:layout_height="@dimen/margin1dp"
+                android:background="@color/line_color"></View>
+
             <LinearLayout
-                android:paddingTop="@dimen/margin5dp"
-                android:background="@color/white"
-                android:orientation="horizontal"
+                android:gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin55dp"
-               >
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingTop="@dimen/margin5dp">
 
                 <TextView
-                    android:textColor="@color/text_normal"
-                    android:text="首页"
                     android:id="@+id/textViewHome"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent" />
+                    style="@style/home_bottom"
+                    android:text="首页" />
 
                 <TextView
-                    android:textColor="@color/text_normal"
-                    android:text="分类"
                     android:id="@+id/textViewTypes"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent" />
+                    style="@style/home_bottom"
+                    android:text="分类" />
 
                 <TextView
-                    android:textColor="@color/text_normal"
                     android:text="社区"
+                    style="@style/home_bottom"
                     android:id="@+id/textViewCommunity"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent" />
+                    android:textColor="@color/text_normal" />
 
                 <TextView
-                    android:textColor="@color/text_normal"
-                    android:text="购物车"
                     android:id="@+id/textViewMarket"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent" />
+                    style="@style/home_bottom"
+                    android:text="购物车" />
 
 
                 <TextView
-                    android:textColor="@color/text_normal"
-                    android:text="我的"
+                    style="@style/home_bottom"
                     android:id="@+id/textViewMine"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:layout_width="0px"
-                    android:layout_height="match_parent" />
+                    android:text="我的"
+                  />
 
             </LinearLayout>
         </LinearLayout>

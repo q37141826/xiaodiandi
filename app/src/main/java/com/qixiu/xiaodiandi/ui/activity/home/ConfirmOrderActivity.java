@@ -153,17 +153,17 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
                     FastPayNewBean fastPayNewBean = new FastPayNewBean();
                     fastPayNewBean.setGotoAddCartsData(gotoAddCartsData);
                     fastPayNewBean.setOrderPayData(orderPayData);
-                    if(selectedAddress!=null){
+                    if (selectedAddress != null) {
                         orderPayData.setAddress(selectedAddress.getId());
-                    }else {
-                        AddressListActivity.start(getContext(),AddressListActivity.class);
+                    } else {
+                        AddressListActivity.start(getContext(), AddressListActivity.class);
                     }
                     SelectPayMethoedActivity.start(getContext(), SelectPayMethoedActivity.class, fastPayNewBean);
                 } else {
-                    if(selectedAddress!=null){
+                    if (selectedAddress != null) {
                         orderPayData.setAddress(selectedAddress.getId());
-                    }else {
-                        AddressListActivity.start(getContext(),AddressListActivity.class);
+                    } else {
+                        AddressListActivity.start(getContext(), AddressListActivity.class);
                     }
                     orderPayData.setKey(orderBean.getOrderKey());
                     SelectPayMethoedActivity.start(getContext(), SelectPayMethoedActivity.class, orderPayData);
@@ -260,8 +260,8 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
                     selectedAddress = addressBean.getO().get(i);
                 }
             }
-            if(selectedAddress==null){
-                AddressListActivity.start(getContext(),AddressListActivity.class);
+            if (selectedAddress == null) {
+                AddressListActivity.start(getContext(), AddressListActivity.class);
                 ToastUtil.toast("请创建并且选择一个默认地址");
             }
             refreshAddressState();
@@ -370,7 +370,7 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
             finalMoney = finalMoney - NumUtils.getDouble(selectedPoints.getO().getRmd());
             if (finalMoney <= 0) {//如果扣除积分之后变成了负的，那么只能使用到让金额变成0的地步
                 interger = totoalFinalMoney * 10;
-                finalMoney = 0.01;
+                finalMoney = 0;
             } else {
                 interger = selectedPoints.getO().getIntegral();
             }

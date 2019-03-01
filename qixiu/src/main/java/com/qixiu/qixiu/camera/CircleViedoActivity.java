@@ -2,7 +2,6 @@ package com.qixiu.qixiu.camera;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
@@ -12,6 +11,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 import com.github.rahatarmanahmed.cpv.CircularProgressView;
 import com.qixiu.qixiu.R;
+import com.qixiu.qixiu.utils.PictureCut;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,6 +36,7 @@ import java.util.TimerTask;
 public class CircleViedoActivity extends Activity implements View.OnClickListener, MediaRecorder.OnErrorListener {
 
     public static final String FILE_PATH = "FILE_PATH";
+    public static final String BITMAP = "BITMAP";
 
 
     private SurfaceView mSurfaceView;
@@ -62,10 +64,10 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
     private boolean isBackCamera = true;
     private int mbackCamera;
     private int mfrontCamera;
-    private CommonDialog commonDialog;
 
     private static final int MOVICE_SUCCESS = 1000;//录制完成
     private static final int MOVICE_FILE = 1001;//录制失败
+    private int screenHeight;
 
 
     public static void start(Context context) {
@@ -86,7 +88,7 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
 
     private void init_datas() {
         isOpenCamera = true;//默认一开始就打开相机
-        mRecordMaxTime = 10;//设置录制的时间
+        mRecordMaxTime = 15;//设置录制的时间
 
         //获取手机摄像头的数量
         Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
@@ -104,11 +106,13 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
     }
 
     private void init_view() {
+        //获取屏幕的宽度
+        screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+        screenHeight = getWindowManager().getDefaultDisplay().getHeight();
         mWidth = 640;
         mHeight = 480;
 
-        //获取屏幕的宽度
-        screenWidth = getWindowManager().getDefaultDisplay().getWidth();
+
         mSurfaceView = (SurfaceView) findViewById(R.id.surfaceview);//预览界面
         mProgressBar = findViewById(R.id.progressBar);//进度条
         shoot_button = findViewById(R.id.shoot_button);//拍摄按钮
@@ -146,6 +150,7 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    Log.e("action", "ACTION_DOWN");
                     record(new OnRecordFinishListener() {
                         @Override
                         public void onRecordFinish() {
@@ -153,17 +158,20 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
                             handler.sendEmptyMessage(MOVICE_SUCCESS);
                         }
                     });
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (mTimeCount > 1 && mTimeCount < 10) { //防止达到最大值up事件
+                } else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL) {
+                    Log.e("action", "ACTION" + event.getAction());
+                    shoot_button.setEnabled(false);
+                    if (mTimeCount > 1 && mTimeCount < 15) { //防止达到最大值up事件
                         //录制时间大于一秒
                         handler.sendEmptyMessage(MOVICE_SUCCESS);
+                        shoot_button.setEnabled(true);
                     } else if (mTimeCount <= 1) {
                         //删除小于一秒的视频
                         if (getmVecordFile() != null) {
                             getmVecordFile().delete();
+                            mVecordFile = null;
                         }
                         handler.sendEmptyMessage(MOVICE_FILE);
-
                     }
                 }
                 return true;
@@ -187,7 +195,7 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        //   mRecorderView.stop();
+//           mRecorderView.stop();
     }
 
     private Handler handler = new Handler() {
@@ -197,38 +205,35 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
             stopRecord();
             switch (msg.what) {
                 case MOVICE_SUCCESS:
-                    String msgs = "确认上传吗?";
-//                    commonDialog = new CommonDialog(CircleViedoActivity.this, new CommonDialog.GoCommonDialog() {
-//                        @Override
-//                        public void go() {
-//                            finishActivity();
-//                            commonDialog.dismiss();
-//                        }
-//                        @Override
-//                        public void cancel() {
-//                            //删除没有上传的视频
-//                            if (getmVecordFile() != null) {
-//                                getmVecordFile().delete();
-//                            }
-//                            commonDialog.dismiss();
-//                        }
-//                    }, msgs, "确定", "取消");
-                    commonDialog = new CommonDialog(CircleViedoActivity.this);
-                    commonDialog.showDialog(CircleViedoActivity.this);
-                    commonDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    mProgressBar.setProgress(0);
+                    PopVideoCode popVideoCode = new PopVideoCode(CircleViedoActivity.this);
+                    popVideoCode.setConfirmListenner(new View.OnClickListener() {
                         @Override
-                        public boolean onKey(DialogInterface dialogInterface, int i, KeyEvent keyEvent) {
-                            //  mVecordFile todo
-                            Intent intent = new Intent();
-                            intent.putExtra(FILE_PATH, mVecordFile.getPath());
-                            setResult(1000, intent);
-                            finish();
-                            commonDialog.dismiss();
-                            return false;
+                        public void onClick(View view) {
+                            finishActivity();
                         }
                     });
+                    popVideoCode.setCancleListenner(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            getmVecordFile().delete();
+                            finish();
+                        }
+                    });
+                    popVideoCode.show();
                     break;
                 case MOVICE_FILE:
+
+                    mTimeCount = 0;
+                    shoot_button.setEnabled(true);
+                    mProgressBar.setProgress(0);
+                    stop();
+                    try {
+                        initCamera();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     Toast.makeText(CircleViedoActivity.this, "视频录制时间太短", Toast.LENGTH_SHORT).show();
                     break;
             }
@@ -236,25 +241,21 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
         }
     };
 
-
     private void finishActivity() {
         stop();
-        Bitmap bitmap = null;
-        if (getmVecordFile() != null) {
-            //得到文件 File类型
-            File mfile = getmVecordFile();
-            bitmap = getVideoThumbnail(mfile.toString());
-        }
-
-
+//        Bitmap bitmap = null;
+//        if (getmVecordFile() != null) {
+//            //得到文件 File类型
+//            File mfile = getmVecordFile();
+//            bitmap = getVideoThumbnail(mfile.toString());
+//        }
 //----------
 //部分Android手机缩略图拉不到，找到一种解决办法不是太满意 有没有大神提供思路
 //----------
-
-
         // VideoPlayerActivity.startActivity(this, mRecorderView.getVecordFile().toString());
         Intent intent = new Intent();
-        intent.putExtra("bitmap", bitmap);
+        intent.putExtra(FILE_PATH, mVecordFile.getPath());
+//        intent.putExtra(BITMAP, bitmap);
         setResult(RESULT_OK, intent);
         finish();
     }
@@ -402,6 +403,7 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
 
     private void createRecordDir() {
         File sampleDir = new File(Environment.getExternalStorageDirectory() + File.separator + "ATOMImg/video/");
+        PictureCut.deleteFileWith(sampleDir, "recording");
         if (!sampleDir.exists()) {
             sampleDir.mkdirs();
         }
@@ -409,7 +411,6 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
         // 创建文件
         try {
             mVecordFile = File.createTempFile("recording", ".mp4", vecordDir);//mp4格式
-
         } catch (IOException e) {
         }
     }
@@ -450,7 +451,7 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
 //----------
 
 
-        // mediaRecorder.setMaxDuration(Constant.MAXVEDIOTIME * 1000);
+//        mMediaRecorder.setMaxDuration(Constant.MAXVEDIOTIME * 1000);
         mMediaRecorder.setOutputFile(mVecordFile.getAbsolutePath());
         mMediaRecorder.prepare();
         try {
@@ -479,7 +480,7 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
     public void record(final OnRecordFinishListener onRecordFinishListener) {
         this.mOnRecordFinishListener = onRecordFinishListener;
         createRecordDir();//创建目录
-
+//        mProgressBar.startAnimation();//start没看出效果
         try {
             if (!isOpenCamera)// 如果未打开摄像头，则打开
                 initCamera();//初始化摄像头
@@ -489,7 +490,6 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
             mTimer = new Timer();//创建一个定时器
 
             mTimer.schedule(new TimerTask() {
-
                 @Override
                 public void run() {
                     // TODO Auto-generated method stub
@@ -527,7 +527,7 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
      * 停止录制
      */
     public void stopRecord() {
-        mProgressBar.setProgress(0);
+        mProgressBar.resetAnimation();
         circle_camera_time.setText("");
         if (mTimer != null)
             mTimer.cancel();

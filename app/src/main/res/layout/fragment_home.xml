@@ -10,8 +10,50 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"></RelativeLayout>
+    <RelativeLayout
+        android:layout_marginTop="@dimen/margin12dp"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin60dp"
+        android:background="@color/white">
+        <TextView
+            android:id="@+id/textViewGotoScan"
+            style="@style/text_normal"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin15dp"
+            android:drawableTop="@mipmap/home_scan"
+            android:text="扫一扫"
+            android:textColor="@color/font_grey02" />
+
+        <TextView
+            android:gravity="center_vertical"
+            android:textSize="14sp"
+            android:id="@+id/edittext_search"
+            android:layout_width="@dimen/margin216dp"
+            android:layout_height="@dimen/margin33dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin92dp"
+            android:background="@drawable/home_search"
+            android:hint="搜索喜欢的宝贝"
+            android:paddingLeft="@dimen/margin70dp" />
+
+        <ImageView
+            android:id="@+id/imageViewMessage"
+            android:layout_width="@dimen/margin22dp"
+            android:layout_height="@dimen/margin22dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin20dp"
+            android:src="@mipmap/home_message" />
+
+        <ImageView
+            android:id="@+id/imageViewSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin136dp"
+            android:src="@mipmap/home_search" />
+    </RelativeLayout>
     <com.qixiu.wigit.VerticalSwipeRefreshLayout
-        android:layout_marginTop="@dimen/margin18dp"
         android:id="@+id/swip_refreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

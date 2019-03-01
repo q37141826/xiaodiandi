@@ -133,19 +133,28 @@
         <activity android:name=".ui.activity.mine.mycollection.MyCollectionActivity" />
         <activity android:name=".ui.activity.mine.mycollection.FindSameActivity" />
         <activity android:name=".ui.activity.mine.TicketActivity" />
-        <activity android:name=".ui.activity.community.EntertainmentDetailsActivity" />
-        <activity android:name=".ui.activity.community.MyPayedProductsActivity" />
-        <activity android:name=".ui.activity.community.NewsVideoActivity" />
-        <activity android:name=".ui.activity.community.CurrentConsultingActivity" />
-        <activity android:name=".ui.activity.community.ConsultingDetailsActivity" />
+        <activity
+            android:name=".ui.activity.community.entertainment.EntertainmentDetailsActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden" />
+        <activity android:name=".ui.activity.community.entertainment.MyPayedProductsActivity" />
+        <activity android:name=".ui.activity.community.news.NewsVideoActivity" />
+        <activity android:name=".ui.activity.community.news.CurrentConsultingActivity" />
+        <activity android:name=".ui.activity.community.news.ConsultingDetailsActivity" />
         <activity android:name=".ui.activity.mine.vip.InviteActivity" />
         <activity android:name=".ui.activity.Loginactivity" />
         <activity android:name=".ui.activity.PhoneLoginActivity" />
         <activity android:name=".ui.activity.baseactivity.GotoWebActivity" />
         <activity android:name=".ui.activity.mine.mypoints.PointsRecordActivity" />
         <activity android:name=".ui.activity.mine.mypoints.GetCashRecordActivity" />
-        <activity android:name=".ui.activity.community.upload.EntertainmentPhotoUploadActivity" />
-        <activity android:name=".ui.activity.community.upload.EntertainmentVideoUploadActivity"></activity>
+        <activity
+            android:name=".ui.activity.community.upload.EntertainmentPhotoUploadActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity android:name=".ui.activity.community.upload.EntertainmentVideoUploadActivity" />
+        <activity android:name=".ui.activity.community.news.NewsVideoDetailsActivity" />
+        <activity android:name=".ui.activity.home.MarketActivity" />
+        <activity android:name=".ui.activity.home.MessageActivity" />
+        <activity android:name=".ui.activity.home.BindWebActivity" />
+        <activity android:name=".ui.activity.mine.TestActivity"></activity>
     </application>
 
 </manifest>

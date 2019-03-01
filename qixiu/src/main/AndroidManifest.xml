@@ -22,9 +22,11 @@
 
         <activity
             android:name="me.iwf.photopicker.PhotoPickerActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name="me.iwf.photopicker.PhotoPagerActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
 
         <service
@@ -36,9 +38,9 @@
             android:name=".google.zxing.client.android.CaptureActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:theme="@style/Theme.AppCompat.NoActionBar"
             android:name=".camera.CircleViedoActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 
 </manifest>

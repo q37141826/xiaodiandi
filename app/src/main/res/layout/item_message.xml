@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin40dp"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin39dp"
+        android:paddingLeft="@dimen/margin15dp"
+        android:paddingRight="@dimen/margin15dp">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/margin5dp"
+            android:layout_height="@dimen/margin5dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/shape_circle_theme" />
+
+        <TextView
+            android:text="12873612371236127"
+            android:id="@+id/textViewTitle"
+            style="@style/text_normal"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/margin5dp"
+            android:layout_toRightOf="@+id/imageView" />
+
+        <TextView
+            android:text="1824378123"
+            android:id="@+id/textViewTime"
+            style="@style/text_normal"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin1dp"
+        android:layout_marginLeft="@dimen/margin15dp"
+        android:layout_marginRight="@dimen/margin15dp"
+        android:background="@color/line_color"></View>
+</LinearLayout>

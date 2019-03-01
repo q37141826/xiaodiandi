@@ -22,6 +22,7 @@ import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.model.shopcar.ShopCartBean;
 import com.qixiu.xiaodiandi.presenter.home.MarketPresenter;
+import com.qixiu.xiaodiandi.ui.activity.home.confirm_order.CartPriceParse;
 
 import okhttp3.Call;
 
@@ -150,7 +151,7 @@ public class ShopCarHolder extends RecyclerBaseHolder implements View.OnClickLis
         if (mData instanceof ShopCartBean.OBean.ValidBean) {
             shopCarInfo = (ShopCartBean.OBean.ValidBean) mData;
             mTv_good_title.setText(shopCarInfo.getProductInfo().getStore_name());
-            mTv_pice.setText(StringConstants.STRING_RMB + shopCarInfo.getProductInfo().getAttrInfo().getPrice());
+            mTv_pice.setText(StringConstants.STRING_RMB + CartPriceParse.getPrice(shopCarInfo.getProductInfo()));
             Glide.with(BaseApplication.getContext()).load(shopCarInfo.getProductInfo().getImage()).crossFade().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(mIv_good_picture);
         }
         mNumber = shopCarInfo.getCart_num();

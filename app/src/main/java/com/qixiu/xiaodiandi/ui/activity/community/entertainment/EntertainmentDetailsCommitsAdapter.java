@@ -1,15 +1,18 @@
-package com.qixiu.xiaodiandi.ui.activity.community;
+package com.qixiu.xiaodiandi.ui.activity.community.entertainment;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.model.comminity.entertainment.EntertaimentDetailsBean;
+import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -59,12 +62,13 @@ public class EntertainmentDetailsCommitsAdapter extends RecyclerBaseAdapter {
                 textViewBack.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        getClickListenner().click(view,mData);
+                        getClickListenner().click(view, mData);
                     }
                 });
                 textViewContent.setText(bean.getContent());
-                textViewPhone.setText(bean.getUser().getNickname());
+                textViewPhone.setText(TextUtils.isEmpty(bean.getUser().getNickname()) ? bean.getUser().getPhone() : bean.getUser().getNickname());
                 textViewTime.setText(bean.getAddtime());
+                Glide.with(mContext).load(ImageUrlUtils.getFinnalImageUrl(bean.getUser().getAvatar())).into(circularHead);
             }
         }
     }

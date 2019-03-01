@@ -23,10 +23,25 @@
             android:background="@color/back_grey"
             android:orientation="vertical">
 
-            <com.jude.rollviewpager.RollPagerView
-                android:id="@+id/rollpager"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/screenwith"></com.jude.rollviewpager.RollPagerView>
+                android:layout_height="wrap_content">
+
+                <com.jude.rollviewpager.RollPagerView
+                    android:id="@+id/rollpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/screenwith"></com.jude.rollviewpager.RollPagerView>
+
+                <ImageView
+                    android:id="@+id/imageViewShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin18dp"
+                    android:onClick="shareGoods"
+                    android:src="@mipmap/goods_share" />
+            </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,53 +95,157 @@
                 <com.qixiu.wigit.GotoView
                     style="@style/mine_gotoview"
                     android:layout_height="@dimen/margin43dp"
+                    android:onClick="showBuyPop"
                     app:first_text="规格数量"></com.qixiu.wigit.GotoView>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin1dp"
+                    android:background="@color/line_color"></View>
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/margin41dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/margin15dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin15dp"
-                        android:text="点滴"
-                        android:textColor="@color/font_grey" />
+                        style="@style/text_normal"
+                        android:text="点滴" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin15dp"
-                        android:layout_marginTop="@dimen/margin15dp"
-                        android:text="购买赠送399点滴"
+                        android:id="@+id/textViewGetPoints"
+                        style="@style/text_normal"
+                        android:layout_marginLeft="@dimen/margin12dp"
+                        android:text="购买得赠送多少点滴"
                         android:textColor="@color/text_grey" />
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin1dp"
+                    android:background="@color/line_color"></View>
+
                 <LinearLayout
+                    android:paddingBottom="@dimen/margin10dp"
+                    android:paddingTop="@dimen/margin10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingLeft="@dimen/margin15dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin15dp"
-                        android:text="服务"
-                        android:textColor="@color/font_grey" />
+                        style="@style/text_normal"
+                        android:layout_height="match_parent"
+                        android:gravity="top"
+                        android:text="服务" />
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin15dp"
-                        android:layout_marginTop="@dimen/margin15dp"
-                        android:text="购买赠送399点滴"
-                        android:textColor="@color/text_grey" />
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin12dp"
+                        android:gravity="top"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewService"
+                            style="@style/text_normal"
+                            android:textColor="@color/text_grey" />
+
+
+                    </LinearLayout>
+
 
                 </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin10dp"
+                    android:background="@color/back_grey"></View>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin38dp"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin10dp"
+                    android:paddingRight="@dimen/margin10dp">
+
+                    <TextView
+                        style="@style/goods_confirm"
+                        android:drawableLeft="@mipmap/goods_jingping"
+                        android:text="全球精品" />
+
+                    <TextView
+                        style="@style/goods_confirm"
+                        android:drawableLeft="@mipmap/goods_zhengpin"
+                        android:text="正品签证" />
+
+                    <TextView
+                        style="@style/goods_confirm"
+                        android:drawableLeft="@mipmap/goods_trans"
+                        android:text="1件包邮" />
+
+                    <TextView
+                        style="@style/goods_confirm"
+                        android:drawableLeft="@mipmap/goods_serivice"
+                        android:text="售后无忧" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin10dp"
+                    android:background="@color/back_grey"></View>
+
+                <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="@dimen/margin15dp">-->
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="@dimen/margin15dp"-->
+                <!--android:text="点滴"-->
+                <!--android:textColor="@color/font_grey" />-->
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="@dimen/margin15dp"-->
+                <!--android:layout_marginTop="@dimen/margin15dp"-->
+                <!--android:text="购买赠送399点滴"-->
+                <!--android:textColor="@color/text_grey" />-->
+
+                <!--</LinearLayout>-->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin40dp"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/margin15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin15dp"
+                        android:text="商品详情"
+                        android:textColor="@color/font_grey"
+                        android:textSize="14sp" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/margin1dp"
+                        android:background="@color/line_color"></View>
+                </LinearLayout>
+
+
             </LinearLayout>
 
 

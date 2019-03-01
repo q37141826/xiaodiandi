@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.qixiu.request.bean.BaseBean;
@@ -21,6 +23,7 @@ import com.qixiu.qixiu.utils.CommonUtils;
 import com.qixiu.qixiu.utils.XrecyclerViewUtil;
 import com.qixiu.wigit.show_dialog.ArshowContextUtil;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.model.home.HomeSearchBean;
@@ -32,7 +35,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SearchActivity extends RequestActivity implements XRecyclerView.LoadingListener {
+public class SearchActivity extends RequestActivity implements XRecyclerView.LoadingListener, OnRecyclerItemListener {
     @BindView(R.id.edittext_search)
     EditText edittextSearch;
     @BindView(R.id.xrecyclerview)
@@ -45,9 +48,12 @@ public class SearchActivity extends RequestActivity implements XRecyclerView.Loa
     protected void onInitData() {
         String search = getIntent().getStringExtra(IntentDataKeyConstant.DATA);
         edittextSearch.setText(search);
-        edittextSearch.setSelection(search.length());
+        if (!TextUtils.isEmpty(search)) {
+            edittextSearch.setSelection(search.length());
+        }
+        GridLayoutManager manager = new GridLayoutManager(getContext(), 2);
         XrecyclerViewUtil.setXrecyclerView(xrecyclerview, this, this, true,
-                1, new GridLayoutManager(getContext(), 2));
+                1, manager);
         adapter = new SearchAdapter();
         xrecyclerview.setAdapter(adapter);
         edittextSearch.addTextChangedListener(new TextWatcher() {
@@ -67,6 +73,7 @@ public class SearchActivity extends RequestActivity implements XRecyclerView.Loa
             }
         });
         getData();
+        adapter.setOnItemClickListener(this);
     }
 
     private void getData() {
@@ -74,7 +81,7 @@ public class SearchActivity extends RequestActivity implements XRecyclerView.Loa
         CommonUtils.putDataIntoMap(map, "keywords", edittextSearch.getText().toString());
         CommonUtils.putDataIntoMap(map, "pageNo", pageNo + "");
         CommonUtils.putDataIntoMap(map, "pageSize", pageSize + "");
-        post(ConstantUrl.homeSearch, map, new HomeSearchBean());
+        getOkHttpRequestModel().okhHttpPost(ConstantUrl.homeSearch, map, new HomeSearchBean());
     }
 
     @Override
@@ -145,6 +152,14 @@ public class SearchActivity extends RequestActivity implements XRecyclerView.Loa
         getData();
     }
 
+    @Override
+    public void onItemClick(View v, RecyclerView.Adapter adapter, Object data) {
+        if (data instanceof HomeSearchBean.OBean) {
+            HomeSearchBean.OBean bean = (HomeSearchBean.OBean) data;
+            GoodsDetailsActivity.start(getContext(), GoodsDetailsActivity.class, bean.getId() + "");
+        }
+    }
+
 
     public class SearchAdapter extends RecyclerBaseAdapter {
         @Override
@@ -175,7 +190,7 @@ public class SearchActivity extends RequestActivity implements XRecyclerView.Loa
                     HomeSearchBean.OBean bean = (HomeSearchBean.OBean) mData;
                     Glide.with(mContext).load(bean.getImage()).into(imageView);
                     textViewName.setText(bean.getStore_name());
-                    textViewPrice.setText(bean.getPrice());
+                    textViewPrice.setText(ConstantString.RMB_SYMBOL + bean.getPrice());
                 }
             }
         }

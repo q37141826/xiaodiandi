@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".ui.activity.community.upload.EntertainmentVideoUploadActivity"
-  >
+    tools:context=".ui.activity.community.upload.EntertainmentVideoUploadActivity">
 
     <RelativeLayout
         android:id="@+id/vg_title"
@@ -28,21 +27,22 @@
             android:orientation="vertical">
 
             <com.qixiu.wigit.GotoView
-                android:onClick="gotoSelectProduct"
                 android:id="@+id/gotoViewSelectProduct"
                 style="@style/mine_gotoview"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin38dp"
+                android:onClick="gotoSelectProduct"
+                android:paddingLeft="@dimen/margin5dp"
+                android:paddingRight="@dimen/margin20dp"
                 app:first_text="请选择所购产品"
-                app:first_text_color="@color/text_grey">
-            </com.qixiu.wigit.GotoView>
+                app:first_text_color="@color/text_grey"></com.qixiu.wigit.GotoView>
 
             <RelativeLayout
-                android:visibility="gone"
-                android:onClick="gotoSelectProduct"
                 android:id="@+id/relativeSelectProduct"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin80dp">
+                android:layout_height="@dimen/margin80dp"
+                android:onClick="gotoSelectProduct"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/imageViewProductIcon"
@@ -79,6 +79,7 @@
                 android:hint="宝贝满足您的期待么？说说您的想 法，分享给想买的他们吧~"
                 android:padding="@dimen/margin15dp"
                 android:textSize="12sp" />
+
             <RelativeLayout
                 android:layout_width="@dimen/margin120dp"
                 android:layout_height="@dimen/margin150dp">
@@ -90,18 +91,18 @@
                     android:layout_height="match_parent" />
 
                 <ImageView
-                    android:src="@mipmap/player"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true" />
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/player" />
             </RelativeLayout>
 
         </LinearLayout>
 
         <Button
-            android:onClick="publishEntertainment"
             style="@style/btn_normal"
             android:layout_marginTop="@dimen/margin74dp"
+            android:onClick="publishEntertainment"
             android:text="发表" />
 
     </LinearLayout>

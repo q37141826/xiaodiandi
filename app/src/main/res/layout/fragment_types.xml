@@ -18,19 +18,23 @@
         android:layout_marginTop="@dimen/margin40dp">
 
         <EditText
+            android:id="@+id/edittext"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/margin15dp"
             android:layout_marginRight="@dimen/margin15dp"
             android:background="@drawable/shape_editeext_back_grey"
             android:hint="搜索喜欢的宝贝"
-            android:paddingLeft="@dimen/margin100dp" />
+            android:paddingLeft="@dimen/margin100dp"
+            android:textSize="14sp" />
 
         <ImageView
+            android:id="@+id/imageViewGotoSearch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin72dp"
+            android:padding="@dimen/margin5dp"
             android:src="@mipmap/home_search" />
     </RelativeLayout>
 
@@ -57,14 +61,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-           >
+            android:layout_height="match_parent">
 
             <com.jcodecraeer.xrecyclerview.XRecyclerView
                 android:id="@+id/xrecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-               ></com.jcodecraeer.xrecyclerview.XRecyclerView>
+                android:layout_height="match_parent"></com.jcodecraeer.xrecyclerview.XRecyclerView>
         </RelativeLayout>
     </LinearLayout>
 

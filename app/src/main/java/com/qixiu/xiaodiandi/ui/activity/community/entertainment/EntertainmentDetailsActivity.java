@@ -1,24 +1,19 @@
-package com.qixiu.xiaodiandi.ui.activity.community;
+package com.qixiu.xiaodiandi.ui.activity.community.entertainment;
 
+import android.Manifest;
 import android.graphics.Color;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.MediaController;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.jude.rollviewpager.RollPagerView;
+import com.jude.rollviewpager.hintview.ColorPointHintView;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
@@ -27,34 +22,43 @@ import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.qixiu.utils.XrecyclerViewUtil;
 import com.qixiu.wigit.VerticalSwipeRefreshLayout;
 import com.qixiu.wigit.show_dialog.ArshowContextUtil;
-import com.qixiu.xiaodiandi.BuildConfig;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantRequest;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
+import com.qixiu.xiaodiandi.engine.ShareLikeEngine;
+import com.qixiu.xiaodiandi.model.IdInterfer;
 import com.qixiu.xiaodiandi.model.comminity.entertainment.EntertaimentDetailsBean;
-import com.qixiu.xiaodiandi.model.comminity.entertainment.EntertainmentListBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
+import com.qixiu.xiaodiandi.ui.activity.community.upload.EntertainmentPhotoUploadActivity;
 import com.qixiu.xiaodiandi.ui.fragment.home.ImageUrlAdapter;
 import com.qixiu.xiaodiandi.ui.wigit.WritePop;
+import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jzvd.JZVideoPlayer;
+import cn.jzvd.JZVideoPlayerStandard;
 
-public class EntertainmentDetailsActivity extends RequestActivity implements XRecyclerView.LoadingListener, MediaPlayer.OnCompletionListener, MediaPlayer.OnErrorListener, MediaPlayer.OnPreparedListener, View.OnTouchListener {
+public class EntertainmentDetailsActivity extends RequestActivity implements XRecyclerView.LoadingListener {
+
+
     private int replyWho = 0;
     private final int REPLY_COMMENTS = 1;
     private final int COMMENTS = 0;
+    String permissions[] = {Manifest.permission.RECORD_AUDIO};
 
 
     @BindView(R.id.xrecyclerView)
     XRecyclerView xrecyclerView;
     @BindView(R.id.swip_refreshlayout)
     VerticalSwipeRefreshLayout swipRefreshlayout;
-    private EntertainmentListBean.OBean entertainmentBean;
+    private IdInterfer entertainmentBean;
     private EntertaimentDetailsBean detailsBean;
     private WritePop writePop;//输入框
     private ImageView imageViewTrance, imageViewCollect;//转发次数额图标
@@ -66,7 +70,7 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
     private EntertainmentDetailsCommitsAdapter adapter;
     private EntertaimentDetailsBean.EBean clickCommentsBean;//点击了哪一条评论的回复
 
-    VideoView videoView;
+    JZVideoPlayerStandard jcplayer;
     private View headerView;
 
     @Override
@@ -83,7 +87,7 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
         mTitleView.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyPayedProductsActivity.start(getContext(), MyPayedProductsActivity.class);
+                shoPicker();
             }
         });
         XrecyclerViewUtil.setXrecyclerView(xrecyclerView, this, this, false, 1, null);
@@ -113,7 +117,10 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
                 getData();
             }
         });
+    }
 
+    private void shoPicker() {
+        EntertainmentPhotoUploadActivity.start(getContext(), EntertainmentPhotoUploadActivity.class);
     }
 
     private void getData() {
@@ -135,6 +142,7 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
         });
 
         rollpager = view.findViewById(R.id.rollpager);
+        rollpager.setHintView(new ColorPointHintView(getActivity(), getResources().getColor(R.color.theme_color), getResources().getColor(R.color.alpha_black_50)));
         imageViewHead = view.findViewById(R.id.imageViewHead);
         textViewName = view.findViewById(R.id.textViewName);
         textViewShare = view.findViewById(R.id.textViewShare);
@@ -143,8 +151,7 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
         imageViewCollect = view.findViewById(R.id.imageViewCollect);
         textViewContent = view.findViewById(R.id.textViewContent);
         textViewCollectionNum = view.findViewById(R.id.textViewCollectionNum);
-
-        videoView = view.findViewById(R.id.videoView);
+        jcplayer = view.findViewById(R.id.jcplayer);
     }
 
     @Override
@@ -157,21 +164,28 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
         swipRefreshlayout.setRefreshing(false);
         if (data instanceof EntertaimentDetailsBean) {
             detailsBean = (EntertaimentDetailsBean) data;
-            Glide.with(getContext()).load(BuildConfig.BASE_URL + detailsBean.getO().getUser().getAvatar().replace(BuildConfig.BASE_URL, "")).into(imageViewHead);
+            Glide.with(getContext()).load(ImageUrlUtils.getFinnalImageUrl(detailsBean.getO().getUser().getAvatar())).into(imageViewHead);
             textViewName.setText(detailsBean.getO().getUser().getNickname());
             textViewTranceNum.setText(detailsBean.getO().getForward() + "");
             textViewContent.setText(detailsBean.getO().getContent());
             textViewCollectionNum.setText(detailsBean.getO().getCollection() + "");
             adapter.refreshData(detailsBean.getE());
+            //如果已经收藏，把图标变更一下
+            imageViewCollect.setImageResource(detailsBean.getO().getCollectionor() == 0 ? R.mipmap.entertainment_collection : R.mipmap.aready_collect);
+
             if (detailsBean.getO().getType() == 1) {
-                videoView.setVisibility(View.GONE);
+                jcplayer.setVisibility(View.GONE);
                 ImageUrlAdapter adapter = new ImageUrlAdapter(rollpager);
                 rollpager.setAdapter(adapter);
-                adapter.refreshData(detailsBean.getO().getImgList());
-            }else {
+                List<String> images = new ArrayList<>();
+                for (int i = 0; i < detailsBean.getO().getImg().size(); i++) {
+                    images.add(detailsBean.getO().getImg().get(i));
+                }
+                adapter.refreshData(images);
+            } else {
                 rollpager.setVisibility(View.GONE);
-                videoView.setVisibility(View.VISIBLE);
-                initVideoView(headerView);
+                jcplayer.setVisibility(View.VISIBLE);
+                initJCView(headerView);
             }
         }
         if (data.getUrl().equals(ConstantUrl.leaveMessageUrl)) {
@@ -179,7 +193,11 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
             writePop.dismiss();
             getData();
         }
+        if (data.getUrl().equals(ConstantUrl.forwardCollectionUrl)) {
+            getData();
+        }
     }
+
 
     @Override
     public void onError(Exception e) {
@@ -229,88 +247,54 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
     }
 
 
-    /**
-     * 初始化videoview播放
-     */
-    public void initVideoView(View view) {
-        //初始化进度条
-        ProgressBar progressBar = view.findViewById(R.id.progress);
-        //初始化VideoView
-        VideoView videoView = view.findViewById(R.id.videoView);
-        //初始化videoview控制条
-        MediaController mediaController = new MediaController(getContext());
-        //设置videoview的控制条
-        videoView.setMediaController(mediaController);
-        //设置显示控制条
-        mediaController.show(0);
-        //设置播放完成以后监听
-        videoView.setOnCompletionListener(this);
-        //设置发生错误监听，如果不设置videoview会向用户提示发生错误
-        videoView.setOnErrorListener(this);
-        //设置在视频文件在加载完毕以后的回调函数
-        videoView.setOnPreparedListener(this);
-        //设置videoView的点击监听
-        videoView.setOnTouchListener(this);
-        //设置网络视频路径
-        Uri uri = Uri.parse(detailsBean.getO().getImgList().get(0).getImg());
-        videoView.setVideoURI(uri);
-    }
-
-
-    @Override
-    public void onCompletion(MediaPlayer mediaPlayer) {
-
-    }
-
-    /**
-     * 视频播放发生错误时调用的回调函数
-     */
-    @Override
-    public boolean onError(MediaPlayer mp, int what, int extra) {
-        switch (what) {
-            case MediaPlayer.MEDIA_ERROR_UNKNOWN:
-                Log.e("text", "发生未知错误");
-
-                break;
-            case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
-                Log.e("text", "媒体服务器死机");
-                break;
-            default:
-                Log.e("text", "onError+" + what);
-                break;
+    private void initJCView(View view) {
+        jcplayer = view.findViewById(R.id.jcplayer);
+        if (detailsBean.getO().getImg().size() == 2) {
+            jcplayer.thumbImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            Glide.with(getContext()).load(detailsBean.getO().getImg().get(0)).into(jcplayer.thumbImageView);
+            jcplayer.setUp(detailsBean.getO().getImg().get(1), JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL);
+        } else {
+            jcplayer.setUp(detailsBean.getO().getImg().get(0), JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL);
         }
-        switch (extra) {
-            case MediaPlayer.MEDIA_ERROR_IO:
-                //io读写错误
-                Log.e("text", "文件或网络相关的IO操作错误");
-                break;
-            case MediaPlayer.MEDIA_ERROR_MALFORMED:
-                //文件格式不支持
-                Log.e("text", "比特流编码标准或文件不符合相关规范");
-                break;
-            case MediaPlayer.MEDIA_ERROR_TIMED_OUT:
-                //一些操作需要太长时间来完成,通常超过3 - 5秒。
-                Log.e("text", "操作超时");
-                break;
-            case MediaPlayer.MEDIA_ERROR_UNSUPPORTED:
-                //比特流编码标准或文件符合相关规范,但媒体框架不支持该功能
-                Log.e("text", "比特流编码标准或文件符合相关规范,但媒体框架不支持该功能");
-                break;
-            default:
-                Log.e("text", "onError+" + extra);
-                break;
+        jcplayer.battery_level.setVisibility(View.GONE);
+
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (JZVideoPlayer.backPress()) {
+            return;
         }
-        //如果未指定回调函数， 或回调函数返回假，VideoView 会通知用户发生了错误。这点需要特别注意</span>
-        return false;
+        super.onBackPressed();
     }
 
     @Override
-    public void onPrepared(MediaPlayer mediaPlayer) {
+    protected void onPause() {
+        super.onPause();
+        JZVideoPlayer.releaseAllVideos();
+    }
 
+
+    //分享
+    public void shareEnterTainment(View view) {
+        ShareLikeEngine shareLikeEngine = new ShareLikeEngine();
+        shareLikeEngine.releaseShareData(this, ConstantUrl.SHARE_IMAGE_URL, "测试一下", ConstantUrl.SHARE_CLICK_GO_URL, "");
+        ConstantRequest.collectionOrTrans(getOkHttpRequestModel(), ConstantUrl.forwardCollectionUrl, detailsBean.getO().getId() + "", 2 + "", "");
+    }
+
+    //添加收藏
+    public void addToCollect(View view) {
+        int state = 0;
+        if (detailsBean.getO().getCollectionor() == 0) {
+            state = 1;
+        }
+        ConstantRequest.collectionOrTrans(getOkHttpRequestModel(), ConstantUrl.forwardCollectionUrl, detailsBean.getO().getId() + "", 1 + "", state + "");
     }
 
     @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        return false;
+    protected void onDestroy() {
+        super.onDestroy();
+        JZVideoPlayer.releaseAllVideos();
     }
 }

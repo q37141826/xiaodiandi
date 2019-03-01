@@ -48,6 +48,7 @@ public class StartPageActivity extends AppCompatActivity {
 
     //跳转的延迟线程
     Handler handeler = new Handler();
+
     class MyRunnable implements Runnable {
         private int type;
 
@@ -58,9 +59,9 @@ public class StartPageActivity extends AppCompatActivity {
         @Override
         public void run() {
             if (type == 1) {
-                Loginactivity.start(StartPageActivity.this,Loginactivity.class);
+                Loginactivity.start(StartPageActivity.this, Loginactivity.class);
             } else {
-                MainActivity.start(StartPageActivity.this,MainActivity.class);
+                MainActivity.start(StartPageActivity.this, MainActivity.class);
             }
             StartPageActivity.this.finish();
         }

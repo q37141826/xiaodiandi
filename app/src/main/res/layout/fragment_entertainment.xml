@@ -12,7 +12,9 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swip_refreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/margin7dp"
+        android:paddingRight="@dimen/margin7dp">
 
         <com.jcodecraeer.xrecyclerview.XRecyclerView
             android:id="@+id/xrecyclerView"

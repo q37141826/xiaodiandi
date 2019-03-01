@@ -11,13 +11,12 @@
         android:id="@+id/circularHead"
         android:layout_width="@dimen/margin45dp"
         android:layout_height="@dimen/margin45dp"
-        android:layout_marginLeft="@dimen/margin15dp"
-      />
+        android:layout_marginLeft="@dimen/margin15dp" />
 
     <LinearLayout
-        android:layout_marginLeft="@dimen/margin5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin5dp"
         android:orientation="vertical">
 
         <TextView
@@ -33,19 +32,20 @@
 
             <TextView
                 android:id="@+id/textViewName"
-                android:textSize="10sp"
-                android:paddingLeft="@dimen/margin4dp"
-                android:paddingRight="@dimen/margin4dp"
-                android:padding="@dimen/margin2dp"
                 style="@style/text_normal"
                 android:background="@drawable/firends_vip_bg"
-                android:text="环球合伙人" />
-                <TextView
-                    android:id="@+id/textViewId"
-                    android:layout_marginLeft="@dimen/margin4dp"
-                    android:text="ID:48125185"
-                    android:textColor="@color/text_grey"
-                    style="@style/text_normal" />
+                android:padding="@dimen/margin2dp"
+                android:paddingLeft="@dimen/margin5dp"
+                android:paddingRight="@dimen/margin5dp"
+                android:text="环球合伙人"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/textViewId"
+                style="@style/text_normal"
+                android:layout_marginLeft="@dimen/margin4dp"
+                android:text="ID:48125185"
+                android:textColor="@color/text_grey" />
         </LinearLayout>
     </LinearLayout>
 

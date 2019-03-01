@@ -16,7 +16,7 @@ import com.qixiu.qixiu.utils.XrecyclerViewUtil;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.comminity.entertainment.EntertainmentListBean;
-import com.qixiu.xiaodiandi.ui.activity.community.EntertainmentDetailsActivity;
+import com.qixiu.xiaodiandi.ui.activity.community.entertainment.EntertainmentDetailsActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.mycollection.CollectionCommunityAdapter;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
 
@@ -55,8 +55,11 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
                 adapter.addDatas(bean.getO());
             }
         }
-        xrecyclerView.loadMoreComplete();
-        swipRefreshlayout.setRefreshing(false);
+        try {
+            xrecyclerView.loadMoreComplete();
+            swipRefreshlayout.setRefreshing(false);
+        } catch (Exception e) {
+        }
     }
 
     @Override

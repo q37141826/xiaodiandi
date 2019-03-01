@@ -1,4 +1,4 @@
-package com.qixiu.xiaodiandi.ui.activity.community;
+package com.qixiu.xiaodiandi.ui.activity.community.entertainment;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -41,9 +41,9 @@ public class EntertainmentDetailsCommitInnerAdapter extends RecyclerBaseAdapter 
 
         @Override
         public void bindHolder(int position) {
-            if(mData instanceof EntertaimentDetailsBean.EBean.ReplyBean){
-                EntertaimentDetailsBean.EBean.ReplyBean replyBean= (EntertaimentDetailsBean.EBean.ReplyBean) mData;
-                SpannableString spannableString = new SpannableString("[回复]  "+replyBean.getContent());
+            if (mData instanceof EntertaimentDetailsBean.EBean.ReplyBean) {
+                EntertaimentDetailsBean.EBean.ReplyBean replyBean = (EntertaimentDetailsBean.EBean.ReplyBean) mData;
+                SpannableString spannableString = new SpannableString("[回复]  " + replyBean.getContent());
                 spannableString.setSpan(new ForegroundColorSpan(Color.GRAY), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 spannableString.setSpan(new ForegroundColorSpan(Color.BLACK), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
                 textViewInnerContent.setText(spannableString);

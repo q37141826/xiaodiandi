@@ -66,7 +66,7 @@
                     android:src="@mipmap/mine_head" />
 
                 <LinearLayout
-                    android:layout_width="@dimen/margin180dp"
+                    android:layout_width="@dimen/margin220dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin15dp"
                     android:orientation="vertical">
@@ -178,22 +178,17 @@
                     android:text="待付款" />
 
 
-
                 <TextView
 
                     android:id="@+id/textViewNumWaitPay"
-                    style="@style/mine_num"
-                    />
+                    style="@style/mine_num" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <TextView
-                    style="@style/mine_num"
-                    android:id="@+id/textViewNumWaitSend"
-                     />
+
                 <TextView
                     android:id="@+id/textViewWaitSend"
                     android:layout_width="match_parent"
@@ -202,6 +197,9 @@
                     android:gravity="center"
                     android:text="待发货" />
 
+                <TextView
+                    android:id="@+id/textViewNumWaitSend"
+                    style="@style/mine_num" />
 
             </RelativeLayout>
 
@@ -238,10 +236,11 @@
                     android:drawableTop="@mipmap/mine_sendback"
                     android:gravity="center"
                     android:text="换货" />
+
                 <TextView
-                    android:visibility="gone"
                     android:id="@+id/textViewNumChange"
-                    style="@style/mine_num"/>
+                    style="@style/mine_num"
+                    android:visibility="gone" />
 
 
             </RelativeLayout>
@@ -288,6 +287,7 @@
                 app:first_text="我的收藏"></com.qixiu.wigit.GotoView>
 
             <com.qixiu.wigit.GotoView
+                android:id="@+id/gotoVip"
                 style="@style/mine_gotoview"
                 app:first_drawable="@mipmap/mine_vip"
                 app:first_text="我要成为会员"></com.qixiu.wigit.GotoView>
@@ -303,15 +303,23 @@
             android:showDividers="middle">
 
             <com.qixiu.wigit.GotoView
+                android:id="@+id/gotoPhone"
                 style="@style/mine_gotoview"
                 app:first_drawable="@mipmap/mine_service"
                 app:first_text="在线客服"></com.qixiu.wigit.GotoView>
 
             <com.qixiu.wigit.GotoView
+                android:id="@+id/gotoViewHelp"
                 style="@style/mine_gotoview"
                 app:first_drawable="@mipmap/mine_help"
                 app:first_text="帮助中心"></com.qixiu.wigit.GotoView>
 
+            <com.qixiu.wigit.GotoView
+                android:id="@+id/gotoTest"
+                style="@style/mine_gotoview"
+                android:visibility="gone"
+                app:first_drawable="@mipmap/mine_help"
+                app:first_text="测试"></com.qixiu.wigit.GotoView>
         </LinearLayout>
     </LinearLayout>
 

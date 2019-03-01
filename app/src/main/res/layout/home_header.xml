@@ -6,46 +6,6 @@
     android:background="@color/back_grey"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/margin60dp"
-        android:background="@color/white">
-
-        <TextView
-            android:id="@+id/textViewGotoScan"
-            style="@style/text_normal"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin15dp"
-            android:drawableTop="@mipmap/home_scan"
-            android:text="扫一扫"
-            android:textColor="@color/font_grey02" />
-
-        <EditText
-            android:id="@+id/edittext_search"
-            android:layout_width="@dimen/margin216dp"
-            android:layout_height="@dimen/margin33dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin92dp"
-            android:background="@drawable/home_search"
-            android:hint="搜索喜欢的宝贝"
-            android:paddingLeft="@dimen/margin70dp" />
-
-        <ImageView
-            android:layout_width="@dimen/margin22dp"
-            android:layout_height="@dimen/margin22dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/margin20dp"
-            android:src="@mipmap/home_message" />
-
-        <ImageView
-            android:id="@+id/imageViewSearch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin136dp"
-            android:src="@mipmap/home_search" />
-    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -70,7 +30,7 @@
     <com.qixiu.wigit.hviewpager.HackyViewPager
         android:id="@+id/viewpagerFragment"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin190dp"></com.qixiu.wigit.hviewpager.HackyViewPager>
+        android:layout_height="@dimen/margin156dp"></com.qixiu.wigit.hviewpager.HackyViewPager>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tablelayout"
@@ -96,7 +56,7 @@
         <TextView
             style="@style/text_normal"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/margin17dp"
+            android:layout_marginTop="@dimen/margin15dp"
             android:gravity="center"
             android:text="会员商品"
             android:textSize="17sp" />
@@ -120,18 +80,33 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="361dp"
+        android:layout_height="375dp"
         android:layout_marginTop="@dimen/margin8dp"
-        android:background="@color/theme_color"
+        android:background="@color/home_product_bg"
         android:clipChildren="false">
 
-        <TextView
-            style="@style/text_normal"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/margin25dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin20dp"
             android:gravity="center"
-            android:text="--- 口碑尖货 ---"
-            android:textSize="17sp" />
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="@dimen/margin27dp"
+                android:layout_height="@dimen/margin1dp"
+                android:background="@color/font_grey02"></View>
+
+            <TextView
+                style="@style/text_normal"
+                android:text="  口碑尖货  "
+                android:textSize="17sp" />
+
+            <View
+                android:layout_width="@dimen/margin27dp"
+                android:layout_height="@dimen/margin1dp"
+                android:background="@color/font_grey02"></View>
+        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"
@@ -144,10 +119,11 @@
         <com.jude.rollviewpager.RollPagerView
             android:id="@+id/rollpagerProduct"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
+            android:layout_height="270dp"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/margin79dp"
-            android:clipChildren="false"></com.jude.rollviewpager.RollPagerView>
+            android:clipChildren="false"
+            app:rollviewpager_hint_color="@color/theme_color"></com.jude.rollviewpager.RollPagerView>
     </FrameLayout>
 
     <LinearLayout

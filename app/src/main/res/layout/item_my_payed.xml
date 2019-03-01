@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/margin110dp"
     android:paddingLeft="@dimen/margin15dp"
-    android:layout_height="@dimen/margin110dp">
-    
+    android:paddingRight="@dimen/margin20dp">
+
     <ImageView
         android:id="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/margin15dp"
         android:layout_width="@dimen/margin78dp"
+        android:layout_height="@dimen/margin76dp"
+        android:layout_marginTop="@dimen/margin15dp"
         android:scaleType="centerInside"
-        android:layout_height="@dimen/margin76dp" />
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textViewDescribe"
+        style="@style/text_normal"
         android:layout_marginLeft="@dimen/margin9dp"
-        app:layout_constraintLeft_toRightOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="@dimen/margin21dp"
-        android:text="描述"
-        style="@style/text_normal" />
+        android:paddingLeft="@dimen/margin15dp"
+        android:text=""
+        app:layout_constraintLeft_toRightOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <View
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/back_grey"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin1dp"></View>
+        android:layout_height="@dimen/margin1dp"
+        android:background="@color/back_grey"
+        app:layout_constraintBottom_toBottomOf="parent"></View>
 </android.support.constraint.ConstraintLayout>

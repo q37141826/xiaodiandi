@@ -121,7 +121,7 @@ public class ChangePhoneStepTwoActivity extends RequestActivity {
         }
         Map<String, String> map = new HashMap<>();
         map.put("phone", phone);
-        map.put("type", 2+"");
+        map.put("type", 1 + "");
         post(ConstantUrl.sendCodeUrl, map, new SendCodeBean());
     }
 }

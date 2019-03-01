@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/relativeLayout_back_for_dismiss"
+    android:background="@color/alpha_black_50">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/viewTake"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin50dp"
+            android:background="@color/white_alpha"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_normal"
+                android:text="拍摄"
+                android:textSize="15sp" />
+
+            <TextView
+                style="@style/text_normal"
+                android:text="视频"
+                android:textColor="@color/text_grey"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin1dp"
+     ></View>
+
+        <LinearLayout
+            android:id="@+id/viewPhone"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin50dp"
+            android:background="@color/white_alpha"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_normal"
+                android:text="从手机相册选择"
+                android:textSize="15sp" />
+            <TextView
+                style="@style/text_normal"
+                android:text="选择照片或者拍摄照片"
+                android:textColor="@color/text_grey"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin5dp"
+           ></View>
+
+        <LinearLayout
+            android:id="@+id/viewCancle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin50dp"
+            android:background="@color/white_alpha"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/text_normal"
+                android:text="取消"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

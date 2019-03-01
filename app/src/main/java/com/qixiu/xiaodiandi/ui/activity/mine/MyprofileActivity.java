@@ -26,7 +26,6 @@ import com.qixiu.wigit.GotoView;
 import com.qixiu.wigit.myedittext.IntelligentTextWatcher;
 import com.qixiu.wigit.myedittext.TextWatcherAdapterInterface;
 import com.qixiu.wigit.zprogress.ZProgressHUD;
-import com.qixiu.xiaodiandi.BuildConfig;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.engine.PlatformLoginEngine;
@@ -35,6 +34,7 @@ import com.qixiu.xiaodiandi.model.login.LoginBean;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.model.mine.UserBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.TitleActivity;
+import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -257,21 +257,8 @@ public class MyprofileActivity extends TitleActivity implements View.OnClickList
             zProgressHUD.dismiss();
             if (data instanceof UserBean) {
                 userBean = (UserBean) data;
-                switch (userBean.getO().getLevel()) {
-                    case 0:
-                        gotoviewLevel.setSecondText("普通会员");
-                        break;
-                    case 1:
-                        gotoviewLevel.setSecondText("金牌会员");
-                        break;
-                    case 2:
-                        gotoviewLevel.setSecondText("钻石会员");
-                        break;
-                    case 3:
-                        gotoviewLevel.setSecondText("黑卡会员");
-                        break;
-                }
-                Glide.with(getContext()).load(BuildConfig.BASE_URL + userBean.getO().getAvatar().replace(BuildConfig.BASE_URL, "")).into(circular_head_edit);
+                gotoviewLevel.setSecondText(userBean.getO().getGroup_name());
+                Glide.with(getContext()).load(ImageUrlUtils.getFinnalImageUrl(userBean.getO().getAvatar())).into(circular_head_edit);
                 gotoviewPhone.setSecondText(userBean.getO().getPhone());
                 textView_nickname_change.setText(userBean.getO().getAccount());
                 if (userBean.getO().getWechat_user() != 1) {
@@ -320,12 +307,12 @@ public class MyprofileActivity extends TitleActivity implements View.OnClickList
 
     @Override
     public void onCancel() {
-
+        zProgressHUD.dismiss();
     }
 
     @Override
     public void onFailure() {
-
+        zProgressHUD.dismiss();
     }
 
     @Override

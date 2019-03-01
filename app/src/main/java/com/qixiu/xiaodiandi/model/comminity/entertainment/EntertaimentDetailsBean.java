@@ -5,7 +5,8 @@ import com.qixiu.qixiu.request.bean.BaseBean;
 import java.util.List;
 
 //
-public class EntertaimentDetailsBean  extends BaseBean<EntertaimentDetailsBean.OBean> {
+public class EntertaimentDetailsBean extends BaseBean<EntertaimentDetailsBean.OBean> {
+
 
 
     private List<EBean> e;
@@ -21,16 +22,16 @@ public class EntertaimentDetailsBean  extends BaseBean<EntertaimentDetailsBean.O
 
     public static class OBean {
         /**
-         * id : 3
+         * id : 9
          * uid : 118
-         * content : 测试一下
+         * content : 哈哈哈哈哈
          * type : 1
-         * img : []
-         * user : {"nickname":"韩韩","avatar":"/public/uploads/2019-01-22/15481256887980.png"}
-         * forward : 0
-         * forwardor : 0
-         * collection : 0
-         * collectionor : 0
+         * img : ["http://xdd.qixiuu.com/public/uploads/2019-02-18/15504697863291.png","http://xdd.qixiuu.com/public/uploads/2019-02-18/15504697865068.png"]
+         * user : {"nickname":"韩韩","avatar":"https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIveS9MIL9ngyAI7vxzQDsicNmoZ6RbSM4sGib1UXfJr1q2On6iaA5H0K0xOdAf4u5zgml7YPuJ2RX8w/132"}
+         * forward : 5
+         * forwardor : 1
+         * collection : 1
+         * collectionor : 1
          */
 
         private int id;
@@ -42,7 +43,7 @@ public class EntertaimentDetailsBean  extends BaseBean<EntertaimentDetailsBean.O
         private int forwardor;
         private int collection;
         private int collectionor;
-        private List<ImageBean> img;
+        private List<String> img;
 
         public int getId() {
             return id;
@@ -116,18 +117,18 @@ public class EntertaimentDetailsBean  extends BaseBean<EntertaimentDetailsBean.O
             this.collectionor = collectionor;
         }
 
-        public List<ImageBean> getImgList() {
+        public List<String> getImg() {
             return img;
         }
 
-        public void setImg(List<ImageBean> img) {
+        public void setImg(List<String> img) {
             this.img = img;
         }
 
         public static class UserBean {
             /**
              * nickname : 韩韩
-             * avatar : /public/uploads/2019-01-22/15481256887980.png
+             * avatar : https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIveS9MIL9ngyAI7vxzQDsicNmoZ6RbSM4sGib1UXfJr1q2On6iaA5H0K0xOdAf4u5zgml7YPuJ2RX8w/132
              */
 
             private String nickname;
@@ -149,34 +150,16 @@ public class EntertaimentDetailsBean  extends BaseBean<EntertaimentDetailsBean.O
                 this.avatar = avatar;
             }
         }
-
-        public class ImageBean {
-
-
-            /**
-             * img : http://tz1.oss-cn-shanghai.aliyuncs.com/Upload/vedio/2019-02-17recording779622284.mp4
-             */
-
-            private String img;
-
-            public String getImg() {
-                return img;
-            }
-
-            public void setImg(String img) {
-                this.img = img;
-            }
-        }
     }
 
     public static class EBean {
         /**
-         * id : 1
-         * uid : 179
-         * content : 怪蜀黍三个
-         * addtime : 2019-02-16
-         * user : {"nickname":"a邓拼搏13554540382","avatar":"http://xdd.qixiuu.com/public/uploads/2019-02-16/15503090744927.png"}
-         * reply : [{"content":"pappapa"}]
+         * id : 9
+         * uid : 181
+         * content : 哥哈哈哈哈
+         * addtime : 2019-02-18
+         * user : {"nickname":"","avatar":"http://xdd.qixiuu.com/public/uploads/2019-02-18/15504762711811.png","phone":"13554540382"}
+         * reply : []
          */
 
         private int id;
@@ -236,12 +219,14 @@ public class EntertaimentDetailsBean  extends BaseBean<EntertaimentDetailsBean.O
 
         public static class UserBeanX {
             /**
-             * nickname : a邓拼搏13554540382
-             * avatar : http://xdd.qixiuu.com/public/uploads/2019-02-16/15503090744927.png
+             * nickname :
+             * avatar : http://xdd.qixiuu.com/public/uploads/2019-02-18/15504762711811.png
+             * phone : 13554540382
              */
 
             private String nickname;
             private String avatar;
+            private String phone;
 
             public String getNickname() {
                 return nickname;
@@ -258,8 +243,15 @@ public class EntertaimentDetailsBean  extends BaseBean<EntertaimentDetailsBean.O
             public void setAvatar(String avatar) {
                 this.avatar = avatar;
             }
-        }
 
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
+        }
         public static class ReplyBean {
             /**
              * content : pappapa

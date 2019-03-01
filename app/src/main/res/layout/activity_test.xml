@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activity.mine.TestActivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <Button
+        style="@style/btn_normal"
+        android:onClick="startScan"
+        android:text="扫描" />
+
+    <TextView
+        android:id="@+id/edittextQr"
+        style="@style/text_normal"
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/margin10dp"
+        android:hint="二维码code" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edittextStart"
+            android:layout_width="@dimen/margin150dp"
+            android:layout_height="wrap_content"
+            android:hint="起始号码" />
+
+        <EditText
+            android:id="@+id/edittextEnd"
+            android:layout_width="@dimen/margin150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:hint="结束号码" />
+
+        <Button
+            style="@style/btn_normal"
+            android:layout_marginTop="@dimen/margin60dp"
+            android:onClick="register"
+            android:text="注册" />
+
+        <Button
+            style="@style/btn_normal"
+            android:layout_marginTop="@dimen/margin120dp"
+            android:text="绑定" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edittextPhone"
+                style="@style/text_normal"
+                android:layout_width="match_parent"
+                android:hint="购买手机号" />
+
+            <Button
+                android:layout_width="@dimen/margin100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin50dp"
+                android:text="-" />
+
+            <Button
+                android:layout_width="@dimen/margin100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/margin50dp"
+                android:text="+" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin20dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin10dp"
+            android:paddingRight="@dimen/margin10dp">
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_centerVertical="true"
+                android:text="商品1" />
+
+            <Button
+                style="@style/text_normal"
+                android:layout_alignParentRight="true"
+                android:text="购买" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin20dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin10dp"
+            android:paddingRight="@dimen/margin10dp">
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_centerVertical="true"
+                android:text="商品2" />
+
+            <Button
+                style="@style/text_normal"
+                android:layout_alignParentRight="true"
+                android:text="购买" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin20dp"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin10dp"
+            android:paddingRight="@dimen/margin10dp">
+
+            <TextView
+                style="@style/text_normal"
+                android:layout_centerVertical="true"
+                android:text="商品3" />
+
+            <Button
+                style="@style/text_normal"
+                android:layout_alignParentRight="true"
+                android:text="购买" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

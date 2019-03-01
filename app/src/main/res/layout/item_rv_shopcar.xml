@@ -28,7 +28,7 @@
         android:layout_toEndOf="@+id/rl_select"
         android:layout_toRightOf="@+id/rl_select"
         android:background="@color/white"
-        android:elevation="@dimen/margin3dp" />
+   />
 
     <RelativeLayout
         android:id="@+id/rl_item_delect"

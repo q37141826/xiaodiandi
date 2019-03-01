@@ -15,6 +15,7 @@ import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSStsTokenCredentialProvider;
 import com.alibaba.sdk.android.oss.internal.OSSAsyncTask;
+import com.alibaba.sdk.android.oss.model.ObjectMetadata;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.qixiu.qixiu.utils.TimeDataUtil;
@@ -29,16 +30,23 @@ import java.util.Date;
 
 public class AliOssEngine {
 
-    public static String endpoint = "oss-cn-shanghai.aliyuncs.com";
-    public static String key = "LTAI0j4WxFlrrgC3";
-    public static String keySec = "Lhg3UoXXwtnRsTXD0SgpjJWxmlzj7u";
-    public static String bcname = "tz1";
+//    public static String endpoint = "oss-cn-shanghai.aliyuncs.com";
+//    public static String key = "LTAI0j4WxFlrrgC3";
+//    public static String keySec = "Lhg3UoXXwtnRsTXD0SgpjJWxmlzj7u";
+//    public static String bcname = "tz1";
+
+    public static String endpoint = "oss-cn-beijing.aliyuncs.com";
+    public static String key = "LTAIbWAgmllX93oq";
+    public static String keySec = "W8Nesj7VzLZudJ6oJoeQWJGkd8oXJ1";
+    public static String bcname = "xdd-community";
+
+
     public static OSS oss;
     public String finnalUrl;
     private SendSuccess call;
 
     //路径前缀
-    private static String before = "Upload/vedio/" + TimeDataUtil.getTimeStamp(new Date().getTime());
+    private static String before = "test/" + TimeDataUtil.getTimeStamp(new Date().getTime());
 
 
     public SendSuccess getCall() {
@@ -71,6 +79,8 @@ public class AliOssEngine {
         conf.setMaxConcurrentRequest(5); // 最大并发请求书，默认5个
         conf.setMaxErrorRetry(2); // 失败后最大重试次数，默认2次
         oss = new OSSClient(context, endpoint, credentialProvider, conf);
+
+
     }
 
     public void startUpload(String uploadFilePath, final UploadProgress call) {
@@ -85,10 +95,12 @@ public class AliOssEngine {
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 // 将返回值回调到callBack的参数中
-                Log.e("LOGCAT", "success");
                 String s = (String) msg.obj;
+                Log.e("oss", s);
                 if (s.contains("finish")) {
-                    call.onSucccess(s);
+                    //                        finnalUrl= oss.presignConstrainedObjectURL(bcname, objectKey, 30 * 60);
+                    finnalUrl = oss.presignPublicObjectURL(bcname, objectKey);
+                    call.onSucccess(finnalUrl);
                 } else if (s.contains("error")) {
                     call.onFailure(s);
                 } else {
@@ -106,6 +118,19 @@ public class AliOssEngine {
                 handler.sendMessage(mess);
             }
         });
+//        //验证签名
+        ObjectMetadata metadata = new ObjectMetadata();
+////        metadata.setContentType("application/video/mp4"); // 设置content-type。
+        metadata.setContentType("application/video/mpeg4"); // 设置content-type。
+//        try {
+//            finnalUrl = finnalUrl + BinaryUtil.calculateBase64Md5(uploadFilePath);
+//            metadata.setContentMD5(BinaryUtil.calculateBase64Md5(uploadFilePath)); // 校验MD5。
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            Log.e("oss", e.getMessage());
+//        }
+//        Log.e("oss", finnalUrl);
+//        put.setMetadata(metadata);
         OSSAsyncTask task = oss.asyncPutObject(put, new OSSCompletedCallback<PutObjectRequest, PutObjectResult>() {
             @Override
             public void onSuccess(PutObjectRequest request, PutObjectResult result) {
@@ -155,5 +180,6 @@ public class AliOssEngine {
 
         void onFailure(String msg);
     }
+
 
 }

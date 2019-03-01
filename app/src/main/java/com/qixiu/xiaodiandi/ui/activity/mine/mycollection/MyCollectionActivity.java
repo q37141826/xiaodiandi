@@ -14,8 +14,11 @@ import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.XrecyclerViewUtil;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.model.IdInterfer;
+import com.qixiu.xiaodiandi.model.mine.collection.EntertainmentCollectionBean;
 import com.qixiu.xiaodiandi.model.mine.collection.MyGoodsCollectionBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
+import com.qixiu.xiaodiandi.ui.activity.community.entertainment.EntertainmentDetailsActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.GoodsDetailsActivity;
 
 import java.util.HashMap;
@@ -40,6 +43,10 @@ public class MyCollectionActivity extends RequestActivity implements XRecyclerVi
     SwipeRefreshLayout swipRefreshlayout;
     int pageNo = 1, pageSize = 10;
     private CollectionProductAdapter productAdapter;
+    private int type = 1;//那种类型的收藏
+    private final int TYPE_PRODUCT = 1;
+    private final int TYPE_COMMUNITY = 2;
+    private CollectionCommunityAdapter communityAdapter;
 
     @Override
     protected void onInitData() {
@@ -50,7 +57,7 @@ public class MyCollectionActivity extends RequestActivity implements XRecyclerVi
         radioProduct.setChecked(true);
         productAdapter = new CollectionProductAdapter();
         xrecyclerviewProduct.setAdapter(productAdapter);
-        CollectionCommunityAdapter communityAdapter = new CollectionCommunityAdapter();
+        communityAdapter = new CollectionCommunityAdapter();
         xrecyclerviewCommunity.setAdapter(communityAdapter);
         xrecyclerviewCommunity.setVisibility(View.GONE);
 //        XrecyclerViewUtil.refreshFictiousData(productAdapter);
@@ -64,13 +71,18 @@ public class MyCollectionActivity extends RequestActivity implements XRecyclerVi
         });
         getdata();
         productAdapter.setOnItemClickListener(this);
+        communityAdapter.setOnItemClickListener(this);
     }
 
     private void getdata() {
         Map<String, String> map = new HashMap<>();
         map.put("pageNo", pageNo + "");
         map.put("pageSize", pageSize + "");
-        post(ConstantUrl.collectionlist, map, new MyGoodsCollectionBean());
+        if (type == 1) {
+            post(ConstantUrl.collectionlist, map, new MyGoodsCollectionBean());
+        } else {
+            post(ConstantUrl.communitycollectionlist, map, new EntertainmentCollectionBean());
+        }
     }
 
     @Override
@@ -86,6 +98,15 @@ public class MyCollectionActivity extends RequestActivity implements XRecyclerVi
                 productAdapter.refreshData(bean.getO());
             } else {
                 productAdapter.addDatas(bean.getO());
+            }
+        }
+
+        if (data instanceof EntertainmentCollectionBean) {
+            EntertainmentCollectionBean bean = (EntertainmentCollectionBean) data;
+            if (pageNo == 1) {
+                communityAdapter.refreshData(bean.getO());
+            } else {
+                communityAdapter.addDatas(bean.getO());
             }
         }
         swipRefreshlayout.setRefreshing(false);
@@ -139,12 +160,18 @@ public class MyCollectionActivity extends RequestActivity implements XRecyclerVi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.radioProduct:
+                type = TYPE_PRODUCT;
+                pageNo = 1;
                 xrecyclerviewCommunity.setVisibility(View.GONE);
                 xrecyclerviewProduct.setVisibility(View.VISIBLE);
+                getdata();
                 break;
             case R.id.radioCommunity:
+                type = TYPE_COMMUNITY;
+                pageNo = 1;
                 xrecyclerviewCommunity.setVisibility(View.VISIBLE);
                 xrecyclerviewProduct.setVisibility(View.GONE);
+                getdata();
                 break;
         }
     }
@@ -154,6 +181,12 @@ public class MyCollectionActivity extends RequestActivity implements XRecyclerVi
         if (data instanceof MyGoodsCollectionBean.OBean) {
             MyGoodsCollectionBean.OBean oBean = (MyGoodsCollectionBean.OBean) data;
             GoodsDetailsActivity.start(getContext(), GoodsDetailsActivity.class, oBean.getId() + "");
+        }
+        if (data instanceof EntertainmentCollectionBean.OBean) {
+            EntertainmentCollectionBean.OBean bean = (EntertainmentCollectionBean.OBean) data;
+            IdInterfer idInterfer=new EntertainmentCollectionBean.OBean();
+            idInterfer.setId(bean.getAid()+"");
+            EntertainmentDetailsActivity.start(getContext(), EntertainmentDetailsActivity.class, idInterfer);
         }
     }
 }

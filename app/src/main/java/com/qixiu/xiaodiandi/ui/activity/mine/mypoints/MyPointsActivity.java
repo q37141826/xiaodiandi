@@ -111,4 +111,10 @@ public class MyPointsActivity extends RequestActivity {
     public void getCashDetails(View view) {
         GetCashRecordActivity.start(getContext(),GetCashRecordActivity.class);
     }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getData();//提现成功后回来要刷新数据
+    }
 }

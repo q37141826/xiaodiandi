@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -22,6 +23,7 @@ import com.qixiu.xiaodiandi.model.types.ClassifyBean;
 import com.qixiu.xiaodiandi.model.types.TypesProductListBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.GotoWebActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.GoodsDetailsActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.SearchActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
 import com.qixiu.xiaodiandi.ui.fragment.types.TypesMenueAdapter;
 import com.qixiu.xiaodiandi.ui.fragment.types.TypesVipAdapter;
@@ -38,19 +40,24 @@ import butterknife.Unbinder;
  * Created by my on 2019/1/2.
  */
 
-public class TypesFragment extends RequestFragment implements XRecyclerView.LoadingListener, OnRecyclerItemListener {
+public class TypesFragment extends RequestFragment implements XRecyclerView.LoadingListener, OnRecyclerItemListener, View.OnClickListener {
     @BindView(R.id.recyclerviewMenue)
     RecyclerView recyclerviewMenue;
     Unbinder unbinder;
 
     @BindView(R.id.xrecyclerView)
     XRecyclerView xrecyclerView;
+    @BindView(R.id.edittext)
+    EditText edittext;
+    @BindView(R.id.imageViewGotoSearch)
+    ImageView imageViewGotoSearch;
     private TypesVipAdapter adapterTypes;
     private TypesMenueAdapter menueAdapter;
     //被选择的分类id
     private String selectedId;
     private ImageView imageViewHead;
     private ClassifyBean classifyBean;
+    private ClassifyBean.OBean selectedBean;
 
     public String getSelectedId() {
         return selectedId;
@@ -68,17 +75,17 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
                 for (int i = 0; i < classifyBean.getO().size(); i++) {
                     if ((classifyBean.getO().get(i).getId() + "").equals(selectedId)) {
                         classifyBean.getO().get(i).setSelected(true);
+                        selectedBean = classifyBean.getO().get(i);
                     }
                 }
             } else {
                 if (classifyBean.getO().size() != 0) {
                     classifyBean.getO().get(0).setSelected(true);
                     selectedId = classifyBean.getO().get(0).getId() + "";
-                    getRightData(selectedId);
                 }
             }
             menueAdapter.refreshData(classifyBean.getO());
-            selectedId = "";
+            getRightData(selectedId);
         }
         if (data instanceof TypesProductListBean) {
             TypesProductListBean bean = (TypesProductListBean) data;
@@ -106,14 +113,18 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
                     adapterTypes.setIs_vip(false);
                 }
             }
-            //脚底下的foot
-            TypesProductListBean.OBean.CategoryBean lastBean = new TypesProductListBean.OBean.CategoryBean();
-            lastBean.setLast(true);
-            bean.getO().getCategory().add(lastBean);//添加这一个
-            if (bean.getO().getBanner().get(1) != null) {
-                bean.getO().getCategory().get(bean.getO().getCategory().size() - 1).setBannerFoot(bean.getO().getBanner().get(1).getPic());
-            }
             adapterTypes.refreshData(bean.getO().getCategory());
+            if (!adapterTypes.isIs_vip()) {
+                //脚底下的foot
+                if (bean.getO().getBanner().size() > 2) {
+                    bean.getO().getCategory().get(bean.getO().getCategory().size() - 1).setBannerFoot(bean.getO().getBanner().get(1).getPic());
+                }
+            } else {
+                TypesProductListBean.OBean.CategoryBean lastBean = new TypesProductListBean.OBean.CategoryBean();
+                lastBean.setLast(true);
+                bean.getO().getCategory().add(lastBean);//添加这一个
+            }
+
 
         }
     }
@@ -134,6 +145,7 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
         View headerView = View.inflate(getContext(), R.layout.header_types, null);
         xrecyclerView.addHeaderView(headerView);
         imageViewHead = headerView.findViewById(R.id.imageViewHead);
+        imageViewGotoSearch.setOnClickListener(this);
     }
 
     @Override
@@ -180,7 +192,11 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
 
     @Override
     public void onLoadMore() {
-        xrecyclerView.loadMoreComplete();
+        try {
+            xrecyclerView.loadMoreComplete();
+        } catch (Exception e) {
+        }
+
     }
 
     @Override
@@ -218,8 +234,17 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if(!hidden){
+        if (!hidden) {
             getTypes();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.imageViewGotoSearch:
+                SearchActivity.start(getContext(), SearchActivity.class, edittext.getText().toString());
+                break;
         }
     }
 }

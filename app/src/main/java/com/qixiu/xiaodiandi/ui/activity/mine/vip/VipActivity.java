@@ -8,7 +8,6 @@ import com.bumptech.glide.Glide;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.wigit.GotoView;
-import com.qixiu.xiaodiandi.BuildConfig;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
@@ -16,6 +15,7 @@ import com.qixiu.xiaodiandi.model.mine.points.PointsBean;
 import com.qixiu.xiaodiandi.model.mine.vip.VipBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.mypoints.MyPointsActivity;
+import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,6 +59,11 @@ public class VipActivity extends RequestActivity {
         getVipData();
     }
 
+    @Override
+    public void adustTitle() {
+//        super.adustTitle();
+    }
+
     private void getVipData() {
         post(ConstantUrl.mywaterUrl, null, new VipBean());
     }
@@ -91,10 +96,12 @@ public class VipActivity extends RequestActivity {
         }
         if (data instanceof VipBean) {
             VipBean bean = (VipBean) data;
-            Glide.with(getContext()).load(BuildConfig.BASE_URL+bean.getO().getAvatar().replace(BuildConfig.BASE_URL,"")).into(circularhead);
+            Glide.with(getContext()).load(ImageUrlUtils.getFinnalImageUrl(bean.getO().getAvatar())).into(circularhead);
             textViewPhone.setText(bean.getO().getPhone());
             textViewAccount.setText(bean.getO().getAccount());
             textViewVipName.setText(bean.getO().getGroup_name());
+            gotoMyFriends.setSecondText(bean.getO().getFriend() + "");
+            gotoFriendNumGroup.setSecondText(bean.getO().getFriendsum() + "");
         }
     }
 
@@ -119,11 +126,14 @@ public class VipActivity extends RequestActivity {
     }
 
 
-    //好友列表
+    //好友列表	类型：1我的好友，2社群好友
     public void gotoFriends(View view) {
-        FriendsListActivity.start(getContext(), FriendsListActivity.class);
+        FriendsListActivity.start(getContext(), FriendsListActivity.class, 1 + "");
     }
 
+    public void gotoMember(View view) {
+        FriendsListActivity.start(getContext(), FriendsListActivity.class, 2 + "");
+    }
 
     //我的点滴
     public void myPoints(View view) {
@@ -142,4 +152,6 @@ public class VipActivity extends RequestActivity {
         // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
+
+
 }

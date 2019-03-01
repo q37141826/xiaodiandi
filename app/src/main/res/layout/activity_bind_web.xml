@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".ui.activity.home.BindWebActivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1fe5d8">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <WebView
+                    android:id="@+id/webview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></WebView>
+
+                <Button
+                    style="@style/btn_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin40dp"
+                    android:layout_below="@+id/webview"
+                    android:layout_marginLeft="@dimen/margin25dp"
+                    android:layout_marginTop="@dimen/margin25dp"
+                    android:layout_marginRight="@dimen/margin25dp"
+                    android:layout_marginBottom="@dimen/margin50dp"
+                    android:background="@drawable/btn_alpa_grey_bg"
+                    android:onClick="gotoBeVip"
+                    android:text="我要成为vip"></Button>
+            </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </RelativeLayout>
+
+</LinearLayout>

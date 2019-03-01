@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relativeLayout_xrecyclerview_father"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:id="@+id/relativeLayout_xrecyclerview_father"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/vg_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></RelativeLayout>
+
     <LinearLayout
-        android:layout_below="@+id/vg_title"
-        android:paddingBottom="@dimen/margin150dp"
-        android:orientation="vertical"
-        android:background="@color/back_grey"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/vg_title"
+        android:background="@color/back_grey"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin150dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -40,38 +42,44 @@
         </LinearLayout>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin40dp">
 
+        <Button
+            android:onClick="addAddress"
+            android:id="@+id/btn_confirm_addaddress"
+            style="@style/btn_normal"
+            android:text="新增地址" />
+
+    </LinearLayout>
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/relativeLayout_no_message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/vg_title">
-        <ImageView
-            android:layout_centerInParent="true"
-            android:src="@mipmap/shizi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        android:layout_below="@+id/vg_title"
+        android:background="@color/back_grey">
 
+        <TextView
+            style="@style/text_normal"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin100dp"
+            android:text="您还没有添加地址"
+            android:textColor="@color/text_grey" />
+
+        <Button
+            android:onClick="addAddress"
+            android:layout_marginTop="@dimen/margin150dp"
+            style="@style/btn_normal"
+            android:layout_width="180dp"
+            android:layout_height="@dimen/margin37dp"
+            android:layout_centerHorizontal="true"
+            android:text="添加地址" />
 
     </RelativeLayout>
-    <LinearLayout
-        android:paddingBottom="@dimen/margin40dp"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            style="@style/btn_normal"
-            android:id="@+id/btn_confirm_addaddress"
-            android:text="新增地址"
-           />
-        <Button
-            android:layout_marginTop="@dimen/margin10dp"
-            style="@style/btn_normal"
-            android:id="@+id/btn_delete_addaddress"
-            android:text="删除地址"
-            />
 
-    </LinearLayout>
+
 </RelativeLayout>

@@ -10,6 +10,15 @@ import java.util.List;
 //
 public class GoodsDetailsBean extends BaseBean<GoodsDetailsBean.OBean> {
 
+    private int e;
+
+    public int getE() {
+        return e;
+    }
+
+    public void setE(int e) {
+        this.e = e;
+    }
 
     public static class OBean {
         /**
@@ -52,16 +61,44 @@ public class GoodsDetailsBean extends BaseBean<GoodsDetailsBean.OBean> {
              */
 
             private int id;
+            private int stock;
             private String image;
             private String video;
             private String store_name;
             private String store_info;
             private String price;
             private String ot_price;
+            private String keyword;
             private String description;
             private int collect;
             private int cartnum;
+            private String intergral;
+
+            public String getKeyword() {
+                return keyword;
+            }
+
+            public void setKeyword(String keyword) {
+                this.keyword = keyword;
+            }
+
+            public String getIntergral() {
+                return intergral;
+            }
+
+            public void setIntergral(String intergral) {
+                this.intergral = intergral;
+            }
+
             private List<String> slider_image;
+
+            public int getStock() {
+                return stock;
+            }
+
+            public void setStock(int stock) {
+                this.stock = stock;
+            }
 
             public int getId() {
                 return id;

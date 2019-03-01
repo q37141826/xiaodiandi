@@ -29,7 +29,7 @@
             android:gravity="center"
             android:text=""
             android:textColor="@color/font_grey"
-            android:textSize="24sp" />
+            android:textSize="19sp" />
 
         <TextView
             android:id="@+id/right_text"

@@ -36,7 +36,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin45dp">
+                    android:layout_height="@dimen/margin40dp">
 
                     <TextView
                         android:id="@+id/tv_shopcar_totalnum"

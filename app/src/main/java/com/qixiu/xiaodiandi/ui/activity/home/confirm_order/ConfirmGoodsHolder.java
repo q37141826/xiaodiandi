@@ -43,7 +43,7 @@ public class ConfirmGoodsHolder extends RecyclerBaseHolder {
         if (mData instanceof CreateOrderBean.OBean.CartInfoBean) {
             CreateOrderBean.OBean.CartInfoBean bean = (CreateOrderBean.OBean.CartInfoBean) mData;
             Glide.with(mContext).load(bean.getProductInfo().getImage()).into(imageView_orderIcon);
-            textView_goodsPrice.setText("¥  " + bean.getProductInfo().getAttrInfo().getPrice());
+            textView_goodsPrice.setText("¥  " +CartPriceParse.getPrice(bean.getProductInfo()));
             textView_goodsPrice.setTextColor(mContext.getResources().getColor(R.color.red));
             textView_goodsCount.setText("X  " + +bean.getCart_num());
             textView_goodsContent.setText(bean.getProductInfo().getStore_name());

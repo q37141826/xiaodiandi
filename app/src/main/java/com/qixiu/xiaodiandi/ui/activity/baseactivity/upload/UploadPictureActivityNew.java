@@ -50,6 +50,7 @@ public abstract class UploadPictureActivityNew extends RequestActivity implement
     private BaseBean uploadbean;
     private String imageKey;//上传图片的字段
     private String connectionSymbol;//上传图片的连接符号
+
     //设置预览是否可以被删除
     public void setIs_preview_can_delete(boolean is_preview_can_delete) {
         this.is_preview_can_delete = is_preview_can_delete;
@@ -82,7 +83,7 @@ public abstract class UploadPictureActivityNew extends RequestActivity implement
         initUpLoadView();
         mRecyclerView = getRecyclerView();
         if (mRecyclerView == null) return;
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
         mOkHttpRequestModel = new OKHttpRequestModel(this);
         captureManager = new ImageCaptureManager(this);
         mRcAdapter = new UpLoadPictureAdapter();
@@ -229,6 +230,16 @@ public abstract class UploadPictureActivityNew extends RequestActivity implement
 
     @Override
     public void onItemClick(View v, RecyclerView.Adapter adapter, Object data) {
+        if(!isSelectPhoto()){
+            onItemClickNew( v,  adapter,  data);
+        }else {
+            itemClickNormal(v);
+        }
+    }
+
+    protected abstract void onItemClickNew(View v, RecyclerView.Adapter adapter, Object data);
+
+    protected  void itemClickNormal(View v){
         int position = mRecyclerView.getChildLayoutPosition(v);
         if (position == mRcAdapter.getDatas().size()) {
             if (selectPhotos.size() < maxPictureCount) {
@@ -239,7 +250,8 @@ public abstract class UploadPictureActivityNew extends RequestActivity implement
             PhotoPreview.builder().setPhotos(selectPhotos).setShowDeleteButton(is_preview_can_delete).setCurrentItem(position).start(
                     this);
         }
-    }
+    };
+
 
     @Override
     public void onSuccess(BaseBean data) {
@@ -283,15 +295,15 @@ public abstract class UploadPictureActivityNew extends RequestActivity implement
             public void run() {
                 if (mZProgressHUD.isShowing()) {
                     mZProgressHUD.dismissWithFailure("上传失败");
-                }else {
+                } else {
                     mZProgressHUD.dismiss();
                 }
-                if(c_codeBean!=null&&c_codeBean.getM()!=null){
+                if (c_codeBean != null && c_codeBean.getM() != null) {
                     ToastUtil.toast(c_codeBean.getM());
-                }else if(c_codeBean instanceof ErrorBeanOne){
-                    ErrorBeanOne errorBeanOne= (ErrorBeanOne) c_codeBean;
+                } else if (c_codeBean instanceof ErrorBeanOne) {
+                    ErrorBeanOne errorBeanOne = (ErrorBeanOne) c_codeBean;
                     ToastUtil.toast(errorBeanOne.getError().getMessage());
-                    onFailure(errorBeanOne,errorBeanOne.getError().getMessage());
+                    onFailure(errorBeanOne, errorBeanOne.getError().getMessage());
                 }
             }
         });
@@ -312,7 +324,7 @@ public abstract class UploadPictureActivityNew extends RequestActivity implement
 
     @Override
     public String doInBackground(Object... params) {
-        mOkHttpRequestModel.okhHttpPost(mUrl, mMap, uploadbean == null ? new BaseBean() : uploadbean );
+        mOkHttpRequestModel.okhHttpPost(mUrl, mMap, uploadbean == null ? new BaseBean() : uploadbean);
         return "";
     }
 
@@ -335,4 +347,6 @@ public abstract class UploadPictureActivityNew extends RequestActivity implement
     public void onProgressUpdate(Object... values) {
 
     }
+
+    public abstract boolean isSelectPhoto();
 }

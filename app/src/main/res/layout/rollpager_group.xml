@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center"
+    android:layout_height="265dp"
     android:background="@mipmap/home_koubei_bg"
+    android:gravity="center"
     android:orientation="vertical">
 
     <TextView
-        android:maxLines="1"
         android:id="@+id/textViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin10dp"
+        android:ellipsize="end"
         android:gravity="center"
-        android:textColor="@color/font_grey" />
+        android:maxLines="1"
+        android:paddingLeft="@dimen/margin10dp"
+        android:paddingRight="@dimen/margin10dp"
+        android:textColor="@color/text_grey"
+        android:textSize="17sp" />
 
     <ImageView
         android:id="@+id/imagview"
@@ -25,15 +29,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin20dp"
+        android:ellipsize="end"
         android:gravity="center"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/margin10dp"
+        android:paddingTop="@dimen/margin5dp"
+        android:paddingRight="@dimen/margin10dp"
         android:textColor="@color/font_grey" />
 
     <TextView
         android:id="@+id/textViewmoney"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin14dp"
         android:layout_marginTop="@dimen/margin9dp"
+        android:layout_marginBottom="@dimen/margin10dp"
         android:gravity="center"
         android:textColor="@color/red"
         android:textSize="19sp" />

@@ -7,10 +7,10 @@
     android:paddingTop="@dimen/margin10dp">
 
     <RelativeLayout
-        android:foreground="@mipmap/ticket_bg"
-        android:background="@color/theme_color"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/ticket_bg"
+        android:foreground="@mipmap/ticket_bg">
 
         <TextView
             android:id="@+id/textViewMoney"

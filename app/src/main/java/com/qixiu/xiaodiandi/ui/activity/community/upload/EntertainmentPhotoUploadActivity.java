@@ -1,6 +1,9 @@
 package com.qixiu.xiaodiandi.ui.activity.community.upload;
 
+import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
@@ -10,14 +13,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.qixiu.qixiu.application.AppManager;
+import com.qixiu.qixiu.camera.CircleViedoActivity;
+import com.qixiu.qixiu.engine.oss.AliOssEngine;
+import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.ToastUtil;
+import com.qixiu.qixiu.utils.video.VideoThumbUtils;
 import com.qixiu.wigit.GotoView;
+import com.qixiu.wigit.WechatTakeCameraSelectPop;
+import com.qixiu.wigit.show_dialog.ArshowContextUtil;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.comminity.entertainment.PayedShopListBean;
+import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.upload.UploadPictureActivityNew;
-import com.qixiu.xiaodiandi.ui.activity.community.MyPayedProductsActivity;
+import com.qixiu.xiaodiandi.ui.activity.community.entertainment.MyPayedProductsActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,8 +38,10 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
+import static com.qixiu.qixiu.camera.CircleViedoActivity.FILE_PATH;
 
+public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
+    private String[] permissions = {Manifest.permission.RECORD_AUDIO};
 
     @BindView(R.id.edittextComments)
     EditText edittextComments;
@@ -43,13 +55,20 @@ public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
     TextView textViewProductName;
     @BindView(R.id.relativeSelectProduct)
     RelativeLayout relativeSelectProduct;
+    @BindView(R.id.imageViewVideo)
+    ImageView imageViewVideo;
+    @BindView(R.id.relativeLayoutImage)
+    RelativeLayout relativeLayoutImage;
     private PayedShopListBean.OBean selectedProductBean;
+    String filePath;
+    String type = 1 + "";
 
     @Override
     protected void onInitData() {
         mTitleView.setTitle("发布");
         EventBus.getDefault().register(this);
         setConnectionSymbol(",");
+        setImageKey("img");
     }
 
     @Override
@@ -64,12 +83,50 @@ public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
 
     @Override
     public void initUpLoadView() {
-
+        ArshowContextUtil.hideSoftInput(getActivity());
     }
 
     @Override
     public RecyclerView getRecyclerView() {
         return recyclerView;
+    }
+
+
+    //
+    @Override
+    protected void onItemClickNew(View v, RecyclerView.Adapter adapter, Object data) {
+        WechatTakeCameraSelectPop wechatTakeCameraSelectPop = new WechatTakeCameraSelectPop(getContext());
+        wechatTakeCameraSelectPop.show();
+        wechatTakeCameraSelectPop.setClickListenner(new WechatTakeCameraSelectPop.ClickListenner() {
+            @Override
+            public void takeVideo() {
+                if (!hasPermission(permissions)) {
+                    hasRequse(1, permissions);
+                } else {
+                    gotoRecordView();
+                }
+            }
+
+            @Override
+            public void takePhoto() {
+                itemClickNormal(v);
+                type = 1 + "";
+            }
+        });
+    }
+
+    private void gotoRecordView() {
+        Intent intent = new Intent(getContext(), CircleViedoActivity.class);
+        startActivityForResult(intent, 1000);
+        recyclerView.setVisibility(View.GONE);
+        relativeLayoutImage.setVisibility(View.VISIBLE);
+        type = 2 + "";
+    }
+
+    //如果这个地方返回ture择默认选择照片，否则就自己定义
+    @Override
+    public boolean isSelectPhoto() {
+        return false;
     }
 
     @Override
@@ -80,6 +137,14 @@ public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
     @Override
     public void onFailure(C_CodeBean c_codeBean, String m) {
 
+    }
+
+
+    @Override
+    public void onSuccess(BaseBean data) {
+        super.onSuccess(data);
+        ToastUtil.toast(data.getM());
+        finish();
     }
 
     @Override
@@ -123,19 +188,82 @@ public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
 
     //发布娱乐
     public void publishEntertainment(View view) {
+        mZProgressHUD.show();
         if (selectedProductBean == null) {
             ToastUtil.toast("请选择商品");
             return;
         }
-        if (selectPhotos.size() == 0) {
-            ToastUtil.toast("请选择至少一张图片");
-            return;
-        }
         Map<String, String> map = new HashMap<>();
+        map.put("type", type + "");//		是	类型：1图片，2视频
+        map.put("uid", LoginStatus.getId());
         map.put("id", selectedProductBean.getId() + "");
         map.put("sid", selectedProductBean.getSid() + "");
-        map.put("type", 1 + "");//		是	类型：1图片，2视频
         map.put("content", edittextComments.getText().toString());
-        requestUpLoad(ConstantUrl.sendEntertaimentUrl, map);
+        if (type.equals(1 + "")) {
+            if (selectPhotos.size() == 0) {
+                ToastUtil.toast("请选择至少一张图片");
+                return;
+            }
+            requestUpLoad(ConstantUrl.sendEntertaimentUrl, map);
+        } else {
+            VideoThumbUtils.getVideoThumbnailBase64(getActivity(), filePath, new VideoThumbUtils.ResultListenner() {
+                @Override
+                public void result(String base64) {
+                    uolpadPhoto(base64);
+                }
+            });
+        }
+    }
+
+    private void uolpadPhoto(String base64) {
+        AliOssEngine engine = new AliOssEngine(new AliOssEngine.SendSuccess() {
+            @Override
+            public void onSuccess(String url) {
+                Map<String, String> map = new HashMap<>();
+                map.put("id", selectedProductBean.getId() + "");
+                map.put("sid", selectedProductBean.getSid() + "");
+                map.put("type", type + "");//	图片base64，多个用英文逗号隔开;type=2是视频oss
+                map.put("content", edittextComments.getText().toString());
+                map.put("img", base64 + "," + url);
+                post(ConstantUrl.sendEntertaimentUrl, map, new BaseBean());
+            }
+        });
+        engine.startUpload((filePath), new AliOssEngine.UploadProgress() {
+            @Override
+            public void sendProgress(String progress) {
+                mZProgressHUD.setMessage("" + progress);
+            }
+
+            @Override
+            public void onSucccess(String msg) {
+
+            }
+
+            @Override
+            public void onFailure(String msg) {
+
+            }
+        });
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null) {
+            filePath = data.getStringExtra(FILE_PATH);
+            Glide.with(getContext()).load(filePath).into(imageViewVideo);
+        } else {
+            finish();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (hasPermission(permissions)) {
+            gotoRecordView();
+        }
     }
 }

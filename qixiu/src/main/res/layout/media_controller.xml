@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_alignTop="@+id/tomy"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin30dp">
+        <TextView
+            android:layout_marginLeft="@dimen/margin50dp"
+            android:id="@+id/time_current"
+            android:text="0:00"
+            style="@style/text_normal" />
+        <TextView
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/margin100dp"
+            android:id="@+id/time"
+            android:text="0:00"
+            style="@style/text_normal" />
+    </RelativeLayout>
+    <LinearLayout
+        android:gravity="bottom"
+        android:id="@+id/tomy"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/pause"
+            android:layout_width="@dimen/margin40dp"
+            android:layout_height="@dimen/margin40dp" />
+        <ImageButton
+            android:id="@+id/prev"
+            android:layout_width="@dimen/margin40dp"
+            android:layout_height="@dimen/margin40dp" />
+        <ProgressBar
+            android:id="@+id/mediacontroller_progress"
+            android:layout_weight="1"
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0px"
+            android:layout_height="@dimen/margin30dp" />
+        <ImageButton
+            android:id="@+id/next"
+            android:layout_width="@dimen/margin40dp"
+            android:layout_height="@dimen/margin40dp" />
+        <ImageButton
+            android:id="@+id/ffwd"
+            android:layout_width="@dimen/margin40dp"
+            android:layout_height="@dimen/margin40dp" />
+        <ImageButton
+            android:id="@+id/rew"
+            android:layout_width="@dimen/margin40dp"
+            android:layout_height="@dimen/margin40dp" />
+        <ImageButton
+            android:id="@+id/is_full_screen"
+            android:layout_width="@dimen/margin40dp"
+            android:layout_height="@dimen/margin40dp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

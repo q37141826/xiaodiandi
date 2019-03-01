@@ -69,7 +69,7 @@ public class WritePop {
         imageViewSend.setOnClickListener(onClickListener);
     }
 
-    public int getViewId(){
+    public int getViewId() {
         return imageViewSend.getId();
     }
 }

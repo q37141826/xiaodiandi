@@ -32,6 +32,7 @@ import com.qixiu.xiaodiandi.model.order.RefreshListBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.TitleActivity;
 import com.qixiu.xiaodiandi.ui.fragment.mine.order.OrderDetailsAdapter;
 import com.qixiu.xiaodiandi.ui.fragment.mine.order.OrderDetailsBean;
+import com.qixiu.xiaodiandi.utils.NumUtils;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -72,6 +73,7 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
     GotoView gotoAddress;
 
     LinearLayout linearLayoutTimeDown;
+    private GotoView gotoViewPoints, gotoViewTikets;
 
     @Override
     protected void onInitData() {
@@ -276,6 +278,8 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
         textView_goodstotolprice_detail = findViewById(R.id.textView_goodstotolprice_detail);
         textViewName = findViewById(R.id.textViewName);
         gotoAddress = findViewById(R.id.gotoAddress);
+        gotoViewPoints = findViewById(R.id.gotoViewPoints);
+        gotoViewTikets = findViewById(R.id.gotoViewTikets);
         textView_goodstotolprice_detail = findViewById(R.id.textView_goodstotolprice_detail);
     }
 
@@ -292,6 +296,17 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
             textView_goodsNum.setText(orderDetailsBean.getO().getTotal_num() + "");
             textViewName.setText(orderDetailsBean.getO().getReal_name());
             gotoAddress.setFirstText(orderDetailsBean.getO().getUser_address());
+            if (NumUtils.getDouble(orderDetailsBean.getO().getCoupon_price()) == 0) {
+                gotoViewTikets.setSecondText("未使用优惠券");
+            } else {
+                gotoViewTikets.setSecondText("使用优惠券" + orderDetailsBean.getO().getCoupon_price());
+            }
+            if (NumUtils.getDouble(orderDetailsBean.getO().getUse_integral()) == 0) {
+                gotoViewPoints.setSecondDrawable(getContext(), R.mipmap.order_switch);
+            } else {
+                gotoViewPoints.setSecondDrawable(getContext(), R.mipmap.order_switch_on);
+                gotoViewPoints.setSecondText("使用积分" + orderDetailsBean.getO().getUse_integral());
+            }
             setVisble();
         }
         if (ConstantUrl.getGoodsUrl.equals(data.getUrl())) {

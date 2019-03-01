@@ -8,6 +8,7 @@
     android:paddingRight="@dimen/margin15dp">
 
     <ImageView
+        android:id="@+id/imageView"
         android:layout_width="@dimen/margin125dp"
         android:layout_height="@dimen/margin75dp"
         android:layout_marginTop="@dimen/margin18dp"
@@ -22,6 +23,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/textViewTiltle"
             style="@style/text_normal"
             android:ellipsize="end"
             android:maxLines="2"
@@ -29,6 +31,7 @@
             android:textSize="14sp" />
 
         <TextView
+            android:id="@+id/textViewTime"
             style="@style/text_normal"
             android:layout_marginTop="@dimen/margin16dp"
             android:text="发布时间"

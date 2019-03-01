@@ -2,6 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/margin7dp"
+    android:layout_marginTop="@dimen/margin10dp"
+    android:layout_marginRight="@dimen/margin7dp"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -12,6 +15,7 @@
         android:layout_height="@dimen/margin194dp" />
 
     <TextView
+        android:maxLines="2"
         android:id="@+id/textViewPhone"
         style="@style/text_normal"
         android:layout_width="match_parent"

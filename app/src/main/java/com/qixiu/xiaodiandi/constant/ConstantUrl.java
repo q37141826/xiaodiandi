@@ -7,6 +7,8 @@ import com.qixiu.xiaodiandi.BuildConfig;
  */
 
 public class ConstantUrl {
+    public static String SHARE_IMAGE_URL = "https://mmbiz.qlogo.cn/mmbiz_png/3h6B6T6oWvblgWuBdGUyvCaETnZD54cIMMwd1p8uoqhWFAQBckicvnpACXibgOIm1CdzZCrSQRg2fyYuLEic3Hvqw/0?wx_fmt=png";
+    public static String SHARE_CLICK_GO_URL = BuildConfig.BASE_URL+"/api/home/recommend";
 
     //登录
     public static String loginUrl = BuildConfig.BASE_URL + "/api/home/login";
@@ -49,6 +51,9 @@ public class ConstantUrl {
 
     //我的收藏
     public static String collectionlist = BuildConfig.BASE_URL + "/api/home/collectionlist";
+
+    //娱乐收藏
+    public static String communitycollectionlist = BuildConfig.BASE_URL + "/api/home/communitycollection";
 
     //分类类表
     public static String classifyUrl = BuildConfig.BASE_URL + "/api/home/classify";
@@ -157,6 +162,8 @@ public class ConstantUrl {
     //朋友列表
     public static String friendsUrl = BuildConfig.BASE_URL + "/api/home/myfriend";
 
+    //绑定成为下级
+    public static String bindfriendsUrl = BuildConfig.BASE_URL + "/api/home/sweep";
 
     /*
      *
@@ -172,4 +179,33 @@ public class ConstantUrl {
     public static String entertainmentDetailsUrl = BuildConfig.BASE_URL + "/api/home/releaseinfo";
     //发布留言
     public static String leaveMessageUrl = BuildConfig.BASE_URL + "/api/home/message";
+    //收藏和转发
+    public static String forwardCollectionUrl = BuildConfig.BASE_URL + "/api/home/forwardcollection";
+
+
+    //新闻社区
+    public static String newsUrl = BuildConfig.BASE_URL + "/api/home/news";
+    //新闻跳转的列表
+    public static String newsListUrl = BuildConfig.BASE_URL + "/api/home/newslist";
+
+    //新闻
+    public static String newsinfoUrl = BuildConfig.BASE_URL + "/api/home/newsinfo";
+
+    //评论
+    public static String leaveCommentsUrl = BuildConfig.BASE_URL + "/api/home/message";
+
+
+    //系统公告
+    public static String messageListUrl = BuildConfig.BASE_URL + "/api/home/msg";
+
+    public static String readMsgUrl = BuildConfig.BASE_URL + "/api/home/msgsee";
+
+
+    /*
+     * h5
+     */
+    public static String helpUrl = BuildConfig.BASE_URL + "/api/home/help";
+    //扫描后绑定背景h5
+    public static String scanDetailsUrl = BuildConfig.BASE_URL + "api/home/vip";
+
 }

@@ -2,6 +2,7 @@ package com.qixiu.xiaodiandi.ui.activity.mine.vip;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -13,10 +14,15 @@ import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.XrecyclerViewUtil;
+import com.qixiu.wigit.VerticalSwipeRefreshLayout;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.model.mine.vip.FriendsListBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,15 +32,33 @@ public class FriendsListActivity extends RequestActivity implements XRecyclerVie
 
     @BindView(R.id.xrecyclerView)
     XRecyclerView xrecyclerView;
+    @BindView(R.id.swiprefresh)
+    VerticalSwipeRefreshLayout swiprefresh;
+    private String type;
+    private FriendsAdapter adapter;
 
     @Override
     protected void onInitData() {
-        setTitle("我的好友");
+        type = getIntent().getStringExtra(IntentDataKeyConstant.DATA);
+        if (type.equals("1")) {
+            setTitle("我的好友");
+        } else {
+            setTitle("社群好友");
+        }
         loadFriendsList();
+        swiprefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadFriendsList();
+            }
+        });
     }
 
     private void loadFriendsList() {
-        post(ConstantUrl.friendsUrl, null, new FriendsListBean());
+//        type		是	类型：1我的好友，2社群好友
+        Map<String, String> map = new HashMap<>();
+        map.put("type", type);
+        post(ConstantUrl.friendsUrl, map, new FriendsListBean());
     }
 
     @Override
@@ -44,22 +68,26 @@ public class FriendsListActivity extends RequestActivity implements XRecyclerVie
 
     @Override
     public void onSuccess(BaseBean data) {
-
+        if (data instanceof FriendsListBean) {
+            FriendsListBean friendsListBean = (FriendsListBean) data;
+            adapter.refreshData(friendsListBean.getO());
+        }
+        swiprefresh.setRefreshing(false);
     }
 
     @Override
     public void onError(Exception e) {
-
+        swiprefresh.setRefreshing(false);
     }
 
     @Override
     public void onFailure(C_CodeBean c_codeBean, String m) {
-
+        swiprefresh.setRefreshing(false);
     }
 
     @Override
     protected void onInitViewNew() {
-        FriendsAdapter adapter = new FriendsAdapter();
+        adapter = new FriendsAdapter();
         XrecyclerViewUtil.setXrecyclerView(xrecyclerView, this, this, false, 1, null);
         xrecyclerView.setAdapter(adapter);
     }
@@ -112,8 +140,8 @@ public class FriendsListActivity extends RequestActivity implements XRecyclerVie
 
             @Override
             public void bindHolder(int position) {
-                if(mData instanceof FriendsListBean.OBean){
-                    FriendsListBean.OBean bean= (FriendsListBean.OBean) mData;
+                if (mData instanceof FriendsListBean.OBean) {
+                    FriendsListBean.OBean bean = (FriendsListBean.OBean) mData;
                     Glide.with(mContext).load(bean.getAvatar()).into(circularHead);
                     textViewPhone.setText(bean.getPhone());
                     textViewName.setText(bean.getGroup_name());

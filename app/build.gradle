@@ -81,6 +81,7 @@ dependencies {
     implementation files('libs/MobTools-2017.0412.1554.jar')
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha09'
     implementation files('libs/ShareSDK-QQ-2.8.3.jar')
-
-
+    //节操播放器
+    implementation 'cn.jzvd:jiaozivideoplayer:6.0.0'
+    implementation files('libs/ShareSDK-QZone-2.8.3.jar')
 }

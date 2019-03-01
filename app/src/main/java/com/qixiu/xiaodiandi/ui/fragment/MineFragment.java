@@ -1,5 +1,7 @@
 package com.qixiu.xiaodiandi.ui.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,11 +14,12 @@ import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.wigit.GotoView;
-import com.qixiu.xiaodiandi.BuildConfig;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.model.mine.UserBean;
+import com.qixiu.xiaodiandi.ui.activity.baseactivity.GotoWebActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.BindWebActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.address.AddressListActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.MyprofileActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.SettingActivity;
@@ -26,6 +29,7 @@ import com.qixiu.xiaodiandi.ui.activity.mine.mypoints.MyPointsActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.OrderActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.vip.VipActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
+import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -84,28 +88,17 @@ public class MineFragment extends RequestFragment {
     @BindView(R.id.gotoMyCollection)
     GotoView gotoMyCollection;
     private Unbinder unbinder;
+    private String serivicePhone;
 
     @Override
     public void onSuccess(BaseBean data) {
         if (data instanceof UserBean) {
             UserBean bean = (UserBean) data;
-            Glide.with(getContext()).load(BuildConfig.BASE_URL + bean.getO().getAvatar().replace(BuildConfig.BASE_URL, "")).into(circularHead);
+            serivicePhone = bean.getO().getServicetelephone();
+            Glide.with(getContext()).load(ImageUrlUtils.getFinnalImageUrl(bean.getO().getAvatar())).into(circularHead);
             textViewPhone.setText(bean.getO().getPhone());
-            switch (bean.getO().getLevel()) {
-                case 0:
-                    textViewVipname.setText("普通会员");
-                    break;
-                case 1:
-                    textViewVipname.setText("金牌会员");
-                    break;
-                case 2:
-                    textViewVipname.setText("钻石会员");
-                    break;
-                case 3:
-                    textViewVipname.setText("黑卡会员");
-                    break;
-            }
-            textViewVipId.setText(bean.getO().getAccount());
+            textViewVipname.setText(bean.getO().getGroup_name());
+            textViewVipId.setText("ID:  " + bean.getO().getAccount());
 //            textViewWaitPay.setText(bean.geteBean().getNoBuy() + "");
 //            textViewWaitSend.setText(bean.geteBean().getNoTake() + "");
 //            textViewWaitBack.setText(bean.geteBean().getNoReply() + "");
@@ -123,7 +116,7 @@ public class MineFragment extends RequestFragment {
                 textViewSign.setText("已签到");
             } else {
                 textViewSign.setEnabled(true);
-                textViewSign.setText("签到");
+                textViewSign.setText("每日签到");
             }
         }
         if (data.getUrl().equals(ConstantUrl.sign)) {
@@ -183,7 +176,8 @@ public class MineFragment extends RequestFragment {
     @OnClick({R.id.circularHead, R.id.imageViewSetting, R.id.gotoAddress,
             R.id.textViewGotoVip, R.id.textViewWaitPay, R.id.textViewWaitSend,
             R.id.textViewWaitReceive, R.id.textViewWaitBack, R.id.gotoAllOrder,
-            R.id.gotoMyPoints, R.id.gotoMyCollection, R.id.gotoTicket, R.id.textViewSign
+            R.id.gotoMyPoints, R.id.gotoMyCollection, R.id.gotoTicket, R.id.textViewSign,
+            R.id.gotoViewHelp, R.id.gotoVip, R.id.gotoTest, R.id.gotoPhone
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -227,6 +221,20 @@ public class MineFragment extends RequestFragment {
                 TicketActivity.start(getContext(), TicketActivity.class);
                 break;
 
+            case R.id.gotoVip:
+                BindWebActivity.start(getContext(), BindWebActivity.class);
+                break;
+
+            case R.id.gotoViewHelp:
+                GotoWebActivity.start(getContext(), GotoWebActivity.class, ConstantUrl.helpUrl);
+                break;
+            case R.id.gotoTest:
+
+                break;
+            case R.id.gotoPhone:
+                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + serivicePhone));//跳转到拨号界面，同时传递电话号码
+                startActivity(dialIntent);
+                break;
         }
     }
 

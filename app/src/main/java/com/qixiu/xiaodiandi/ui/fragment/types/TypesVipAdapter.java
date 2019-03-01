@@ -13,6 +13,7 @@ import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.model.types.TypesProductListBean;
 import com.qixiu.xiaodiandi.ui.activity.home.GoodsDetailsActivity;
 
@@ -132,6 +133,7 @@ public class TypesVipAdapter extends RecyclerBaseAdapter {
             super(itemView, context, adapter);
             imageView = itemView.findViewById(R.id.imageView);
             textViewName = itemView.findViewById(R.id.textViewName);
+            textViewPrice = itemView.findViewById(R.id.textViewPrice);
 
         }
 
@@ -141,7 +143,7 @@ public class TypesVipAdapter extends RecyclerBaseAdapter {
                 TypesProductListBean.OBean.CategoryBean.ProductBean bean = (TypesProductListBean.OBean.CategoryBean.ProductBean) mData;
                 Glide.with(mContext).load(bean.getImage()).into(imageView);
                 textViewName.setText(bean.getStore_name());
-                textViewPrice.setText(bean.getPrice());
+                textViewPrice.setText(ConstantString.RMB_SYMBOL +bean.getPrice());
 
             }
         }
@@ -170,7 +172,7 @@ public class TypesVipAdapter extends RecyclerBaseAdapter {
                 Glide.with(mContext).load(bean.getImage()).into(imageView);
                 textViewName.setText(bean.getStore_name());
                 textViewBrand.setText(bean.getStore_info());
-                textViewPrice.setText(bean.getPrice());
+                textViewPrice.setText(ConstantString.RMB_SYMBOL +bean.getPrice());
             }
         }
     }

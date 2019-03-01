@@ -9,6 +9,7 @@ import com.jude.rollviewpager.RollPagerView;
 import com.jude.rollviewpager.adapter.LoopPagerAdapter;
 import com.qixiu.qixiu.R;
 import com.qixiu.wigit.show_dialog.ArshowContextUtil;
+import com.qixiu.xiaodiandi.model.comminity.news.NewsHomeBean;
 import com.qixiu.xiaodiandi.model.home.HomeBean;
 
 import java.util.ArrayList;
@@ -32,6 +33,8 @@ public class ImageUrlAdapter extends LoopPagerAdapter {
                 this.datas.addAll(datas == null ? new ArrayList<String>() : datas);
             } else if (datas.get(0) instanceof Integer) {
                 this.datas.addAll(datas == null ? new ArrayList<Integer>() : datas);
+            } else if (datas.get(0) instanceof NewsHomeBean.OBean.BannerBean) {
+                this.datas.addAll(datas == null ? new ArrayList<NewsHomeBean.OBean.BannerBean>() : datas);
             }
         }
 
@@ -48,17 +51,21 @@ public class ImageUrlAdapter extends LoopPagerAdapter {
             Glide.with(container.getContext()).load((int) datas.get(position)).error(R.mipmap.ic_launcher).skipMemoryCache(false).into(view);
         } else if (datas.get(position) instanceof HomeBean.OBean.BannerBean) {
             Glide.with(container.getContext()).load(((HomeBean.OBean.BannerBean) datas.get(position)).getPic()).error(R.mipmap.ic_launcher).skipMemoryCache(false).into(view);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (itemClickListenner != null) {
-                        itemClickListenner.onclick(datas.get(position));
-                    }
-                }
-            });
+
         } else if (datas.get(position) instanceof String) {
             Glide.with(container.getContext()).load(datas.get(position)).error(R.mipmap.ic_launcher).skipMemoryCache(false).into(view);
+        } else if (datas.get(position) instanceof NewsHomeBean.OBean.BannerBean) {
+            NewsHomeBean.OBean.BannerBean bannerBean = (NewsHomeBean.OBean.BannerBean) datas.get(position);
+            Glide.with(container.getContext()).load(bannerBean.getPic()).error(R.mipmap.ic_launcher).skipMemoryCache(false).into(view);
         }
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (itemClickListenner != null) {
+                    itemClickListenner.onclick(datas.get(position));
+                }
+            }
+        });
         return view;
     }
 

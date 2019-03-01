@@ -6,51 +6,56 @@
     android:orientation="vertical">
 
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/margin69dp"
+        android:layout_height="@dimen/margin111dp"
+        android:scaleType="fitXY" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/margin69dp"
-            android:layout_height="@dimen/margin111dp" />
+    <TextView
+        android:id="@+id/textViewBrand"
+        style="@style/text_normal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin24dp"
+        android:layout_marginLeft="@dimen/margin10dp"
+        android:layout_marginTop="@dimen/margin20dp"
+        android:layout_marginRight="@dimen/margin10dp"
+        android:background="@drawable/type_item_namebk"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:maxLength="11"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/margin5dp"
+        android:paddingTop="@dimen/margin3dp"
+        android:paddingRight="@dimen/margin5dp"
+        android:paddingBottom="@dimen/margin3dp"
+        android:text="品牌" />
 
-        <TextView
-            android:id="@+id/textViewBrand"
-            style="@style/text_normal"
-            android:layout_height="@dimen/margin24dp"
-            android:layout_marginTop="@dimen/margin20dp"
-            android:background="@drawable/type_item_namebk"
-            android:ellipsize="end"
-            android:maxLength="11"
-            android:maxLines="1"
-            android:paddingLeft="@dimen/margin5dp"
-            android:paddingTop="@dimen/margin3dp"
-            android:paddingRight="@dimen/margin5dp"
-            android:paddingBottom="@dimen/margin3dp"
-            android:text="品牌" />
+    <TextView
+        android:id="@+id/textViewName"
+        style="@style/text_normal"
+        android:layout_height="@dimen/margin30dp"
+        android:layout_marginLeft="@dimen/margin10dp"
+        android:layout_marginRight="@dimen/margin10dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:paddingLeft="@dimen/margin5dp"
+        android:paddingRight="@dimen/margin5dp"
+        android:text="名称"
+        android:textSize="10sp" />
 
-        <TextView
-            android:maxLines="2"
-            android:paddingRight="@dimen/margin5dp"
-            android:paddingLeft="@dimen/margin5dp"
-            android:gravity="center"
-            android:layout_height="@dimen/margin30dp"
+    <TextView
+        android:id="@+id/textViewPrice"
+        style="@style/text_normal"
+        android:text="价钱"
+        android:textSize="14sp" />
 
-            android:id="@+id/textViewName"
-            style="@style/text_normal"
-            android:text="名称"
-            android:textSize="10sp" />
-
-        <TextView
-            android:id="@+id/textViewPrice"
-            style="@style/text_normal"
-            android:text="价钱"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/textViewBuy"
-            style="@style/text_normal"
-            android:text="立即购买"
-            android:textColor="@color/red"
-            android:textSize="12sp" />
+    <TextView
+        android:id="@+id/textViewBuy"
+        style="@style/text_normal"
+        android:text="立即购买"
+        android:textColor="@color/red"
+        android:textSize="12sp" />
 
 
 </LinearLayout>

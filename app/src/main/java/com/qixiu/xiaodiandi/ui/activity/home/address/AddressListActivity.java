@@ -15,7 +15,6 @@ import com.qixiu.qixiu.request.OKHttpRequestModel;
 import com.qixiu.qixiu.request.OKHttpUIUpdataListener;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
-import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.qixiu.utils.XrecyclerViewUtil;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantRequest;
@@ -61,12 +60,11 @@ public class AddressListActivity extends TitleActivity implements OKHttpUIUpdata
             adapter.refreshData(bean.getO());
             setBackVisblity();
             refreshLoadStop();
-            if(selectedBean!=null){
+            if (selectedBean != null) {
                 EventBus.getDefault().post(selectedBean);
             }
         }
         if (ConstantUrl.addAddressUrl.equals(data.getUrl())) {
-            ToastUtil.toast(data.getM());
             getNetData();
         }
 
@@ -134,15 +132,6 @@ public class AddressListActivity extends TitleActivity implements OKHttpUIUpdata
         adapter.setOnItemClickListener(this);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btn_confirm_addaddress:
-                Intent intent = new Intent(this, EditAddressActivity.class);
-                startActivityForResult(intent, 10000);
-                break;
-        }
-    }
 
     @Override
     protected void onInitData() {
@@ -197,5 +186,16 @@ public class AddressListActivity extends TitleActivity implements OKHttpUIUpdata
     public void onItemClick(View v, RecyclerView.Adapter adapter, AddressBean.OBean data) {
         setDefultAddress(data);
         selectedBean = data;
+    }
+
+    //添加地址
+    public void addAddress(View view) {
+        Intent intent = new Intent(this, EditAddressActivity.class);
+        startActivityForResult(intent, 10000);
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 }
