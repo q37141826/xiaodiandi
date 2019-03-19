@@ -4,7 +4,7 @@ import android.os.Parcelable;
 
 public class EventAction {
     public static final int GOTO_CARTS=0x1001;//切换到购物车
-    public static final int GOTO_TYPE=0x1002;//切换到购物车
+    public static final int GOTO_TYPE=0x1002;//切换到分类列表
 
     public static class Action{
         private int action;

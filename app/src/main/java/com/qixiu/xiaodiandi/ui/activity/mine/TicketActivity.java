@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
@@ -31,6 +32,8 @@ public class TicketActivity extends RequestActivity implements OnRecyclerItemLis
     RecyclerView recyclerview;
     @BindView(R.id.swip_refreshlayout)
     SwipeRefreshLayout swipRefreshlayout;
+    @BindView(R.id.relativeNothing)
+    RelativeLayout relativeNothing;
     private TicketAdapter adapter;
 
     @Override
@@ -40,6 +43,11 @@ public class TicketActivity extends RequestActivity implements OnRecyclerItemLis
             adapter.refreshData(bean.getO());
         }
         swipRefreshlayout.setRefreshing(false);
+        if (adapter.getDatas().size() == 0) {
+            relativeNothing.setVisibility(View.VISIBLE);
+        } else {
+            relativeNothing.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -131,9 +139,9 @@ public class TicketActivity extends RequestActivity implements OnRecyclerItemLis
                 if (mData instanceof TicketListBean.OBean) {
                     TicketListBean.OBean bean = (TicketListBean.OBean) mData;
                     textViewHighFloor.setText(bean.getCoupon_title());
-                    textViewMoney.setText(ConstantString.RMB_SYMBOL + bean.getCoupon_price() + "");
-                    textViewLimit.setText("领取后" + bean.getUse_time() / 3600 / 24 / 1000 + "天内有效");
-                    textViewUserRule.setText("满" + bean.getUse_min_price() + "元使用");
+                    textViewMoney.setText(ConstantString.RMB_SYMBOL + ((int) (bean.getCoupon_price())) + "");
+                    textViewLimit.setText("使用期限：领取后" + bean.getUse_time() / 3600 / 24 / 1000 + "天内有效");
+                    textViewUserRule.setText("使用条件：满" + ((int) bean.getUse_min_price()) + "元使用");
                 }
             }
         }

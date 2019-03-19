@@ -8,7 +8,7 @@ import com.qixiu.xiaodiandi.BuildConfig;
 
 public class ConstantUrl {
     public static String SHARE_IMAGE_URL = "https://mmbiz.qlogo.cn/mmbiz_png/3h6B6T6oWvblgWuBdGUyvCaETnZD54cIMMwd1p8uoqhWFAQBckicvnpACXibgOIm1CdzZCrSQRg2fyYuLEic3Hvqw/0?wx_fmt=png";
-    public static String SHARE_CLICK_GO_URL = BuildConfig.BASE_URL+"/api/home/recommend";
+    public static String SHARE_CLICK_GO_URL = BuildConfig.BASE_URL + "/api/home/recommend";
 
     //登录
     public static String loginUrl = BuildConfig.BASE_URL + "/api/home/login";
@@ -207,5 +207,8 @@ public class ConstantUrl {
     public static String helpUrl = BuildConfig.BASE_URL + "/api/home/help";
     //扫描后绑定背景h5
     public static String scanDetailsUrl = BuildConfig.BASE_URL + "api/home/vip";
+
+    //版本检测
+    public static String versionUrl = BuildConfig.BASE_URL + "api/home/version";
 
 }

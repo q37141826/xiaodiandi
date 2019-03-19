@@ -67,6 +67,22 @@
                 android:id="@+id/xrecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"></com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+            <RelativeLayout
+                android:visibility="gone"
+                android:id="@+id/relativeNothing"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    style="@style/text_normal"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/screenwith_half"
+                    android:gravity="center"
+                    android:text="暂无数据"
+                    android:textColor="@color/hint_color"
+                    android:textSize="15sp" />
+            </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
 

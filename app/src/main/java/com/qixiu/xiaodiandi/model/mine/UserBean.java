@@ -45,6 +45,15 @@ public class UserBean extends BaseBean<UserBean.OBean> {
         private String group_name;
         private String servicetelephone;
         private int wechat_user;
+        private String code;
+
+        public String getCode() {
+            return code;
+        }
+
+        public void setCode(String code) {
+            this.code = code;
+        }
 
         public String getServicetelephone() {
             return servicetelephone;

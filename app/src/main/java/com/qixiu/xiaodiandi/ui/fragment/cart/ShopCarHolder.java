@@ -61,7 +61,7 @@ public class ShopCarHolder extends RecyclerBaseHolder implements View.OnClickLis
         mRl_item_delect.setOnClickListener(this);
         mTv_good_title = (TextView) itemView.findViewById(R.id.tv_good_title);
 
-        mTv_shopcar_color = (TextView) itemView.findViewById(R.id.tv_shopcar_color);
+        mTv_shopcar_color = (TextView) itemView.findViewById(R.id.tv_shopcar_color_txt);
         mTv_size = (TextView) itemView.findViewById(R.id.tv_size);
         mTv_pice = (TextView) itemView.findViewById(R.id.tv_pice);
         mIv_good_picture = (ImageView) itemView.findViewById(R.id.iv_good_picture);
@@ -161,6 +161,10 @@ public class ShopCarHolder extends RecyclerBaseHolder implements View.OnClickLis
         if (shopCarInfo != null) {
             mIv_shopcar_select_icon.setImageResource(shopCarInfo.isSelected() ? R.mipmap.shopcar_goods_select : R.mipmap.shopcar_goods_notselect);
         }
+        try {
+            mTv_shopcar_color.setText(shopCarInfo.getProductInfo().getAttrInfo().getSuk());//把这个设置上规格
+        } catch (Exception e) {
+        }
     }
 
 //    private void setEditEnable(boolean editEnable) {
@@ -184,7 +188,7 @@ public class ShopCarHolder extends RecyclerBaseHolder implements View.OnClickLis
                             tempNumber = currentShowNumber - 1;
                         } else {
                             tempNumber = 1;
-                            ToastUtil.showToast(BaseApplication.getContext(), "库存不能为0");
+                            ToastUtil.showToast(BaseApplication.getContext(), "数量不能为0");
 //                            setEditEnable(true);
                             return;
                         }

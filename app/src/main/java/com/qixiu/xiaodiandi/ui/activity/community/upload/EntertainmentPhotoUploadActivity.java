@@ -62,6 +62,7 @@ public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
     private PayedShopListBean.OBean selectedProductBean;
     String filePath;
     String type = 1 + "";
+    private WechatTakeCameraSelectPop wechatTakeCameraSelectPop;
 
     @Override
     protected void onInitData() {
@@ -95,8 +96,8 @@ public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
     //
     @Override
     protected void onItemClickNew(View v, RecyclerView.Adapter adapter, Object data) {
-        WechatTakeCameraSelectPop wechatTakeCameraSelectPop = new WechatTakeCameraSelectPop(getContext());
-        wechatTakeCameraSelectPop.show();
+        wechatTakeCameraSelectPop = new WechatTakeCameraSelectPop(getContext());
+        wechatTakeCameraSelectPop.showContainsBar(getContext(), navigationBarIsUp);
         wechatTakeCameraSelectPop.setClickListenner(new WechatTakeCameraSelectPop.ClickListenner() {
             @Override
             public void takeVideo() {
@@ -188,7 +189,6 @@ public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
 
     //发布娱乐
     public void publishEntertainment(View view) {
-        mZProgressHUD.show();
         if (selectedProductBean == null) {
             ToastUtil.toast("请选择商品");
             return;
@@ -213,6 +213,7 @@ public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
                 }
             });
         }
+        mZProgressHUD.show();
     }
 
     private void uolpadPhoto(String base64) {
@@ -241,7 +242,8 @@ public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
 
             @Override
             public void onFailure(String msg) {
-
+                ToastUtil.toast("您的手机环境暂不支持大文件上传");
+                mZProgressHUD.dismiss();
             }
         });
 
@@ -264,6 +266,15 @@ public class EntertainmentPhotoUploadActivity extends UploadPictureActivityNew {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (hasPermission(permissions)) {
             gotoRecordView();
+        }
+    }
+
+    @Override
+    public void onNavigationBarStatusChanged(int navigationBarIsMin) {
+        super.onNavigationBarStatusChanged(navigationBarIsMin);
+        if (wechatTakeCameraSelectPop != null && wechatTakeCameraSelectPop.isShowing()) {
+            wechatTakeCameraSelectPop.dismiss();
+            wechatTakeCameraSelectPop.showContainsBar(getContext(), navigationBarIsUp);
         }
     }
 }

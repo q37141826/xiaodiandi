@@ -7,6 +7,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
@@ -39,6 +40,7 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
     SwipeRefreshLayout swipRefreshlayout;
     private CollectionCommunityAdapter adapter;
     int pageNo = 1, pageSize = 10;
+    RelativeLayout relativeNothing;
 
     @Override
     public void moveToPosition(int position) {
@@ -60,6 +62,12 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
             swipRefreshlayout.setRefreshing(false);
         } catch (Exception e) {
         }
+
+        if(adapter.getDatas().size()==0){
+            relativeNothing .setVisibility(View.VISIBLE);
+        }else {
+            relativeNothing .setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -72,6 +80,13 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
     public void onFailure(C_CodeBean c_codeBean, String m) {
         xrecyclerView.loadMoreComplete();
         swipRefreshlayout.setRefreshing(false);
+    }
+
+
+    @Override
+    protected void onInitView(View view) {
+        super.onInitView(view);
+        relativeNothing = view.findViewById(R.id.relativeNothing);
     }
 
     @Override
@@ -89,7 +104,7 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
                 requestData();
             }
         });
-        requestData();
+//        requestData();
     }
 
     private void requestData() {
@@ -98,6 +113,13 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
         map.put("pageSize", pageSize + "");
         post(ConstantUrl.entertainmentListUrl, map, new EntertainmentListBean());
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        pageNo = 1;
+        requestData();
     }
 
     @Override
@@ -136,6 +158,5 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
             EntertainmentListBean.OBean bean = (EntertainmentListBean.OBean) data;
             EntertainmentDetailsActivity.start(getContext(), EntertainmentDetailsActivity.class, bean);
         }
-
     }
 }

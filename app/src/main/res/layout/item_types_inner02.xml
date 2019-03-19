@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingTop="@dimen/margin10dp">
 
     <ImageView
-        android:scaleType="centerCrop"
         android:id="@+id/imageView"
-        android:layout_width="@dimen/margin113dp"
-        android:layout_height="@dimen/margin128dp" />
+        android:layout_width="@dimen/margin114dp"
+        android:layout_height="@dimen/margin114dp"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/textViewName"
@@ -19,10 +20,10 @@
         android:ellipsize="end"
         android:maxLength="11"
         android:maxLines="1"
-        android:paddingBottom="@dimen/margin3dp"
         android:paddingLeft="@dimen/margin15dp"
-        android:paddingRight="@dimen/margin5dp"
         android:paddingTop="@dimen/margin3dp"
+        android:paddingRight="@dimen/margin5dp"
+        android:paddingBottom="@dimen/margin3dp"
         android:text="商品名称1111111111111111111" />
 
     <TextView

@@ -30,11 +30,14 @@ public abstract class RequestActivity extends TitleActivity implements OKHttpUIU
             map = new HashMap();
         }
         if (LoginStatus.isLogin()) {
-          CommonUtils.putDataIntoMap(map,"uid", LoginStatus.getId());
+            CommonUtils.putDataIntoMap(map, "uid", LoginStatus.getId());
         }
         okHttpRequestModel.okhHttpPost(url, map, bean);
-        mZProgressHUD.show();
+//        showProgress();
+    }
 
+    public void showProgress() {
+        mZProgressHUD.show();
     }
 
 
@@ -63,9 +66,13 @@ public abstract class RequestActivity extends TitleActivity implements OKHttpUIU
 
     @Override
     public void onFailure(C_CodeBean c_codeBean) {
-        ToastUtil.toast(c_codeBean.getM());
+        toastFailue(c_codeBean);
         onFailure(c_codeBean, c_codeBean.getM());
         mZProgressHUD.dismiss();
+    }
+
+    public void toastFailue(C_CodeBean c_codeBean) {
+        ToastUtil.toast(c_codeBean.getM());
     }
 
 

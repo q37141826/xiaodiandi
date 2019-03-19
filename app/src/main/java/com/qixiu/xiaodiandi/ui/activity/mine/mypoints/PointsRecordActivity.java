@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -26,11 +27,13 @@ import butterknife.ButterKnife;
 
 public class PointsRecordActivity extends RequestActivity implements XRecyclerView.LoadingListener {
 
-    int pageNo = 1, pageSize = 10;
+    int pageNo = 1, pageSize = 20;
     @BindView(R.id.xrecyclerView)
     XRecyclerView xrecyclerView;
     @BindView(R.id.swip_refreshlayout)
     SwipeRefreshLayout swipRefreshlayout;
+    @BindView(R.id.relativeNothing)
+    RelativeLayout relativeNothing;
     private PointsRecordAdapter adapter;
 
     @Override
@@ -73,6 +76,12 @@ public class PointsRecordActivity extends RequestActivity implements XRecyclerVi
         }
         xrecyclerView.loadMoreComplete();
         swipRefreshlayout.setRefreshing(false);
+
+        if (adapter.getDatas().size() == 0) {
+            relativeNothing.setVisibility(View.VISIBLE);
+        } else {
+            relativeNothing.setVisibility(View.GONE);
+        }
     }
 
     @Override

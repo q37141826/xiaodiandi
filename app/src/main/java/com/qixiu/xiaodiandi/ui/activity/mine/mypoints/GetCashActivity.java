@@ -1,5 +1,6 @@
 package com.qixiu.xiaodiandi.ui.activity.mine.mypoints;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,9 +10,10 @@ import android.widget.TextView;
 
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.qixiu.utils.ArshowDialogUtils;
 import com.qixiu.qixiu.utils.CommonUtils;
 import com.qixiu.qixiu.utils.ToastUtil;
-import com.qixiu.qixiu.utils.bankutil.BankCheckUtil;
+import com.qixiu.qixiu.utils.bankutil.BankUtil;
 import com.qixiu.wigit.GotoView;
 import com.qixiu.wigit.myedittext.MyEditTextView;
 import com.qixiu.wigit.myedittext.TextChangeListenner;
@@ -20,7 +22,10 @@ import com.qixiu.wigit.picker.SelectedDataBean;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
+import com.qixiu.xiaodiandi.model.mine.vip.VipBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
+import com.qixiu.xiaodiandi.utils.InputUtils;
+import com.qixiu.xiaodiandi.utils.NumUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,6 +56,10 @@ public class GetCashActivity extends RequestActivity {
     GotoView gotoSelectMethoth;
     @BindView(R.id.textViewTotalMoney02)
     TextView textViewTotalMoney02;
+    @BindView(R.id.textViewPerCost)
+    TextView textViewPerCost;
+    @BindView(R.id.textViewPerMsg)
+    TextView textViewPerMsg;
     private String payType = 0 + "";
     private String getMoney;
     private String name;
@@ -63,8 +72,15 @@ public class GetCashActivity extends RequestActivity {
     protected void onInitData() {
         setTitle("提现");
         total = getIntent().getStringExtra(IntentDataKeyConstant.DATA).replace("可提现", "");
+        total = total.replace("元", "");
         textViewTotalMoney.setText(total);
         textViewTotalMoney02.setText(total);
+        InputUtils.setEdittextLimit(edittextMoney, NumUtils.getDouble(total));
+        getVipData();
+    }
+
+    private void getVipData() {
+        post(ConstantUrl.mywaterUrl, null, new VipBean());
     }
 
     @Override
@@ -77,6 +93,12 @@ public class GetCashActivity extends RequestActivity {
         if (data.getUrl().equals(ConstantUrl.getCashUrl)) {
             ToastUtil.toast(data.getM());
             finish();
+        }
+        if (data instanceof VipBean) {
+            VipBean bean = (VipBean) data;
+            textViewPerCost.setText(bean.getE().getCharge() + "%的手续费系统会自己扣除，请知悉");
+            textViewPerMsg.setText(bean.getE().getChargemsg().replace(" ", "\n"));
+//            HtmlUtils.getInstance().setHtml(textViewPerCost, bean.getE().getChargemsg(), getActivity());
         }
     }
 
@@ -98,9 +120,10 @@ public class GetCashActivity extends RequestActivity {
             @Override
             public void textChange(CharSequence charSequence) {
                 if (payType.equals("0")) {
-                    if (BankCheckUtil.isBankCard(charSequence.toString())) {
-                        bankName = BankCheckUtil.check(charSequence.toString());
+                    try {
+                        bankName = BankUtil.getNameOfBank(charSequence.toString());
                         gotoSelectBank.setFirstText(bankName);
+                    } catch (Exception e) {
                     }
                 }
             }
@@ -112,18 +135,36 @@ public class GetCashActivity extends RequestActivity {
 
     }
 
+    @Override
+    public void adustTitle() {
+//        super.adustTitle();
+    }
 
     //提取全部
     public void getAll(View view) {
         if (getInputData()) {
             getMoney = total;
-            requestGet();
+            ArshowDialogUtils.showDialog(getContext(), "确定将" + total + "元全部提现吗？", new ArshowDialogUtils.ArshowDialogListener() {
+                @Override
+                public void onClickPositive(DialogInterface dialogInterface, int which) {
+                    requestGet();
+                }
+
+                @Override
+                public void onClickNegative(DialogInterface dialogInterface, int which) {
+
+                }
+            });
         }
     }
 
     //普通提现
     public void getCashRequest(View view) {
         if (getInputData()) {
+            if (TextUtils.isEmpty(getMoney)) {
+                ToastUtil.toast("请输入提现金额");
+                return;
+            }
             requestGet();
         }
     }
@@ -131,7 +172,11 @@ public class GetCashActivity extends RequestActivity {
     private void requestGet() {
         //   bank = 银行卡 alipay = 支付宝wx=微信
         Map<String, String> map = new HashMap();
-        map.put("type", "alipay");
+        if (payType.equals("1")) {
+            map.put("type", "alipay");
+        } else {
+            map.put("type", "bank");
+        }
         map.put("real_name", name);
         map.put("code", aliId);
         map.put("price", getMoney);
@@ -153,10 +198,6 @@ public class GetCashActivity extends RequestActivity {
         aliId = myedittextNum.getText().toString();
         if (TextUtils.isEmpty(name)) {
             ToastUtil.toast("请输入姓名");
-            return false;
-        }
-        if (TextUtils.isEmpty(getMoney)) {
-            ToastUtil.toast("请输入提现金额");
             return false;
         }
         if (TextUtils.isEmpty(name)) {

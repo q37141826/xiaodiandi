@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -37,6 +38,8 @@ public class MyPayedProductsActivity extends RequestActivity implements XRecycle
     @BindView(R.id.swip_refreshlayout)
     SwipeRefreshLayout swipRefreshlayout;
     int pageNo = 1, pageSize = 10;
+    @BindView(R.id.relativeNothing)
+    RelativeLayout relativeNothing;
     private MyPayedAdapter adapter;
 
     @Override
@@ -51,6 +54,11 @@ public class MyPayedProductsActivity extends RequestActivity implements XRecycle
         }
         swipRefreshlayout.setRefreshing(false);
         xrecyclerview.loadMoreComplete();
+        if(adapter.getDatas().size()==0){
+            relativeNothing .setVisibility(View.VISIBLE);
+        }else {
+            relativeNothing .setVisibility(View.GONE);
+        }
     }
 
     @Override

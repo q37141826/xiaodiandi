@@ -1,6 +1,7 @@
 package com.qixiu.xiaodiandi.ui.activity.community.news;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.qixiu.request.bean.BaseBean;
@@ -27,6 +29,7 @@ import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.engine.ShareLikeEngine;
 import com.qixiu.xiaodiandi.model.comminity.news.NewsDetailsBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.PlayActivity;
 import com.qixiu.xiaodiandi.ui.wigit.WritePop;
 import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
@@ -35,7 +38,7 @@ import butterknife.ButterKnife;
 import cn.jzvd.JZVideoPlayer;
 import cn.jzvd.JZVideoPlayerStandard;
 
-public class NewsVideoDetailsActivity extends RequestActivity implements XRecyclerView.LoadingListener {
+public class NewsVideoDetailsActivity extends RequestActivity implements XRecyclerView.LoadingListener, OnRecyclerItemListener {
 
     @BindView(R.id.xrecyclerview)
     XRecyclerView xrecyclerview;
@@ -54,6 +57,8 @@ public class NewsVideoDetailsActivity extends RequestActivity implements XRecycl
     private WritePop writePop;
     private LinearLayout linearlayout_parent;
     private SuggestionAdapter suggestionAdapter;
+    private ImageView imageViewThumb;
+    private ImageView imageViewPlay;
 
     @Override
     public void onSuccess(BaseBean data) {
@@ -61,11 +66,31 @@ public class NewsVideoDetailsActivity extends RequestActivity implements XRecycl
             detailsBean = (NewsDetailsBean) data;
             jcplayer.setUp(BuildConfig.BASE_URL + detailsBean.getO().getVideo().replace(BuildConfig.BASE_URL, ""),
                     JZVideoPlayerStandard.SCREEN_LAYOUT_NORMAL);
+            jcplayer.thumbImageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
+            Glide.with(getContext()).load(detailsBean.getO().getImage_input()).into(jcplayer.thumbImageView);
+            Glide.with(getContext()).load(detailsBean.getO().getImage_input()).into(imageViewThumb);
             commentAdapter.refreshData(detailsBean.getE());
             HtmlUtils.getInstance().setHtml(textViewContent, detailsBean.getO().getContent(), this);
-            textViewPlayTimes.setText(detailsBean.getO().getMessage().get(0).getVisit() + "次播放");
             textViewTransTimes.setText(detailsBean.getO().getForward() + "");
             suggestionAdapter.refreshData(detailsBean.getO().getMessage());
+//            jcplayer.startButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    jcplayer.startWindowFullscreen();jcplayer.startVideo();
+//                }
+//            });
+            imageViewPlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getContext(), PlayActivity.class);
+                    intent.putExtra(IntentDataKeyConstant.DATA, BuildConfig.BASE_URL + detailsBean.getO().getVideo().replace(BuildConfig.BASE_URL, ""));
+                    intent.putExtra("thumb", detailsBean.getO().getImage_input());
+                    startActivity(intent);
+                }
+            });
+
+            textViewPlayTimes.setText(detailsBean.getO().getVisit() + "次播放");
+
         }
         mTitleView.getView().setVisibility(View.GONE);
         swiprefresh.setRefreshing(false);
@@ -73,6 +98,11 @@ public class NewsVideoDetailsActivity extends RequestActivity implements XRecycl
         if (ConstantUrl.leaveCommentsUrl.equals(data.getUrl())) {
             ToastUtil.toast(data.getM());
             writePop.dismiss();
+            getData();
+        }
+        commentAdapter.setOnItemClickListener(this);
+        suggestionAdapter.setOnItemClickListener(this);
+        if (data.getUrl().equals(ConstantUrl.forwardCollectionUrl)) {
             getData();
         }
     }
@@ -117,9 +147,10 @@ public class NewsVideoDetailsActivity extends RequestActivity implements XRecycl
         textViewGiveComments = view.findViewById(R.id.textViewGiveComments);
         imageViewShare = view.findViewById(R.id.imageViewShare);
         linearlayout_parent = view.findViewById(R.id.linearlayout_parent);
+        ImageView imageViewBack = view.findViewById(R.id.imageViewBack);
+        imageViewThumb = view.findViewById(R.id.imageViewThumb);
+        imageViewPlay = view.findViewById(R.id.imageViewPlay);
         recyclerviewSuggistion = view.findViewById(R.id.recyclerviewSuggistion);
-
-
         jcplayer.batteryTimeLayout.setVisibility(View.GONE);
         jcplayer.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +162,13 @@ public class NewsVideoDetailsActivity extends RequestActivity implements XRecycl
         suggestionAdapter = new SuggestionAdapter();
         recyclerviewSuggistion.setLayoutManager(new LinearLayoutManager(this));
         recyclerviewSuggistion.setAdapter(suggestionAdapter);
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
     }
 
     @Override
@@ -186,6 +224,17 @@ public class NewsVideoDetailsActivity extends RequestActivity implements XRecycl
     public void shareVideo(View view) {
         ShareLikeEngine shareLikeEngine = new ShareLikeEngine();
         shareLikeEngine.releaseShareData(this, ConstantUrl.SHARE_IMAGE_URL, "视频分享", ConstantUrl.SHARE_CLICK_GO_URL, "");
+        ConstantRequest.collectionOrTrans(getOkHttpRequestModel(), ConstantUrl.forwardCollectionUrl, detailsBean.getO().getId() + "", 2 + "", "");
+
+    }
+
+    @Override
+    public void onItemClick(View v, RecyclerView.Adapter adapter, Object data) {
+        if (data instanceof NewsDetailsBean.OBean.MessageBean) {
+            NewsDetailsBean.OBean.MessageBean oBean = (NewsDetailsBean.OBean.MessageBean) data;
+            id = oBean.getId() + "";
+            getData();
+        }
     }
 
 

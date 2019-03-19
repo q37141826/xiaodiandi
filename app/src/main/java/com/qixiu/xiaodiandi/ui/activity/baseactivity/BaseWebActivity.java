@@ -31,6 +31,7 @@ public abstract class BaseWebActivity extends TitleActivity {
 
     private WebView webView;
     private String currentUrl;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +124,7 @@ public abstract class BaseWebActivity extends TitleActivity {
         Logger.d(TAG, "shouldOverrideUrlLoading: " + url);
         if (url.startsWith("http")) {
             view.loadUrl(url);
-            currentUrl=url;
+            currentUrl = url;
         }
         return true;
     }
@@ -214,7 +215,7 @@ public abstract class BaseWebActivity extends TitleActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        if(!TextUtils.isEmpty(currentUrl)){
+        if (!TextUtils.isEmpty(currentUrl)) {
             webView.loadUrl(currentUrl);
         }
     }

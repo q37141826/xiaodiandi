@@ -23,9 +23,11 @@ import android.widget.Toast;
 
 import com.qixiu.qixiu.application.BaseApplication;
 import com.qixiu.qixiu.utils.BitmapDecodeUtil;
+import com.qixiu.qixiu.utils.NavagationUtils;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.utils.SizeUtils;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 
@@ -79,6 +81,7 @@ public class ShareLikeEngine implements OnClickListener, IUiListener {
     private TextView tv_close;
     private View tv_qzon;
     private TextView tv_clipbord;
+    private View contentView;
 
     public void setShareResultListenner(ShareResultListenner shareResultListenner) {
         this.shareResultListenner = shareResultListenner;
@@ -106,7 +109,7 @@ public class ShareLikeEngine implements OnClickListener, IUiListener {
      * @param imageUrl 动态的图片url(可选择默认动态的第一张图片没有就为空)
      * @param text     动态的文本
      * @param shareUrl 分享的url连接
-     * @param  name  分享的第三方SDK名字 比如QQ.NAME
+     * @param name     分享的第三方SDK名字 比如QQ.NAME
      */
     public void releaseShareData(Activity activity, String imageUrl, String text, String shareUrl
             , String name) {
@@ -133,13 +136,13 @@ public class ShareLikeEngine implements OnClickListener, IUiListener {
         this.text = text;
         WindowManager wm = (WindowManager) activity.getSystemService(Context.WINDOW_SERVICE);
         final int wmHeight = wm.getDefaultDisplay().getHeight();
-        View contentView = View.inflate(activity, R.layout.layout_share_popuwindowd_dialog, null);
-        tv_qQshape =  contentView.findViewById(R.id.imageView_share_qq);
-        tv_weixinshape =  contentView.findViewById(R.id.imageView_share_weichat);
-        tv_friendshape =  contentView.findViewById(R.id.imageView_share_weichatcore);
-        tv_weiboShape =  contentView.findViewById(R.id.imageView_share_sinna);
+        contentView = View.inflate(activity, R.layout.layout_share_popuwindowd_dialog, null);
+        tv_qQshape = contentView.findViewById(R.id.imageView_share_qq);
+        tv_weixinshape = contentView.findViewById(R.id.imageView_share_weichat);
+        tv_friendshape = contentView.findViewById(R.id.imageView_share_weichatcore);
+        tv_weiboShape = contentView.findViewById(R.id.imageView_share_sinna);
         tv_close = contentView.findViewById(R.id.tv_close);
-        tv_qzon =  contentView.findViewById(R.id.imageView_share_qzon);
+        tv_qzon = contentView.findViewById(R.id.imageView_share_qzon);
         tv_clipbord = contentView.findViewById(R.id.imageView_share_clibord);
         framelayout_sharesdk = (FrameLayout) contentView.findViewById(R.id.framelayout_sharesdk);
         final View ll_share_community = contentView.findViewById(R.id.ll_share_community);
@@ -154,6 +157,13 @@ public class ShareLikeEngine implements OnClickListener, IUiListener {
 //这句话让popuwindow沉浸状态栏
             pw.setClippingEnabled(false);
             pw.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+            if (!SizeUtils.isIsBarUp()) {
+                pw.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+            } else {
+                pw.showAtLocation(
+                        activity.getWindow().getDecorView().findViewById(android.R.id.content),
+                        Gravity.BOTTOM, 0, NavagationUtils.getNavigationBarHeight(contentView.getContext()));
+            }
         }
 
 
@@ -565,6 +575,19 @@ public class ShareLikeEngine implements OnClickListener, IUiListener {
         }
         if (pw != null) {
             pw.dismiss();
+        }
+    }
+
+    public void refreshPop(Activity activity){
+        if(pw.isShowing()){
+            pw.dismiss();
+        }
+        if (!SizeUtils.isIsBarUp()) {
+            pw.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+        } else {
+            pw.showAtLocation(
+                    activity.getWindow().getDecorView().findViewById(android.R.id.content),
+                    Gravity.BOTTOM, 0, NavagationUtils.getNavigationBarHeight(contentView.getContext()));
         }
     }
 }

@@ -20,6 +20,28 @@
 
         <LinearLayout
             android:layout_width="match_parent"
+            android:layout_height="@dimen/margin35dp"
+            android:background="#FFF0FDFA"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text_normal"
+                android:text="请在" />
+
+            <TextView
+                style="@style/text_normal"
+                android:text="30"
+                android:textColor="@color/red" />
+
+            <TextView
+
+                style="@style/text_normal"
+                android:text="分钟内付款，否则订单将会自动关闭" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="@dimen/margin71dp"
             android:background="@color/white"
             android:gravity="center"
@@ -91,7 +113,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:src="@mipmap/shopcar_goods_notselect" />
+                        android:src="@mipmap/shopcar_goods_select" />
 
                     <ImageView
                         android:id="@+id/tomyright2"
@@ -147,6 +169,7 @@
                     android:background="@color/line_color"></View>
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/relativeLayout_yinlianpay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -196,9 +219,9 @@
 
 
         <Button
-            android:onClick="startOrderPay"
             style="@style/btn_normal"
             android:layout_marginTop="@dimen/margin54dp"
+            android:onClick="startOrderPay"
             android:text="确认支付" />
 
         <!--<View-->

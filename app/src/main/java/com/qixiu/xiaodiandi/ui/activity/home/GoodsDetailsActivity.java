@@ -1,11 +1,12 @@
 package com.qixiu.xiaodiandi.ui.activity.home;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,8 @@ import com.qixiu.qixiu.application.AppManager;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.qixiu.utils.DownLoadFileUtils;
+import com.qixiu.qixiu.utils.DrawableUtils;
 import com.qixiu.qixiu.utils.MyTimer;
 import com.qixiu.qixiu.utils.NavagationUtils;
 import com.qixiu.qixiu.utils.StatusBarUtils;
@@ -39,9 +42,10 @@ import com.qixiu.xiaodiandi.model.home.goodsdetails.CharctorInnerBean;
 import com.qixiu.xiaodiandi.model.home.goodsdetails.GetPointsTimeBean;
 import com.qixiu.xiaodiandi.model.home.goodsdetails.GoodsDetailsBean;
 import com.qixiu.xiaodiandi.model.order.GotoAddCartsData;
+import com.qixiu.xiaodiandi.ui.activity.MainActivity;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
 import com.qixiu.xiaodiandi.ui.adapter.home.GoodsDetailsCharactorAdapter;
-import com.qixiu.xiaodiandi.ui.fragment.home.ImageUrlAdapter;
+import com.qixiu.xiaodiandi.ui.fragment.home.ImageAndVideoAdapter;
 import com.qixiu.xiaodiandi.utils.NumUtils;
 
 import java.util.ArrayList;
@@ -52,9 +56,12 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.jzvd.JZVideoPlayer;
 
 public class GoodsDetailsActivity extends RequestActivity {
 
+//    @BindView(R.id.jcplayer)
+//    JZVideoPlayerStandard jcplayer;
 
     @BindView(R.id.textViewAddCart)
     TextView textViewAddCart;
@@ -84,6 +91,11 @@ public class GoodsDetailsActivity extends RequestActivity {
     TextView textViewGetPoints;
     @BindView(R.id.textViewService)
     TextView textViewService;
+    @BindView(R.id.imageViewHome)
+    ImageView imageViewHome;
+    @BindView(R.id.fatherView)
+    View fatherView;
+
     private PopupWindow pw;
     private GoodsDetailsBean detailsBean;
     private GoodsDetailsBean.OBean.ResultBean.ListBean selectedProduct;
@@ -91,9 +103,13 @@ public class GoodsDetailsActivity extends RequestActivity {
     private TextView tv_goodsdetail_ppw_price_txt;
     private String id;
     private MyTimer myTimer;
+    private int runOnlyOne = 0;
+    private View contentView;
+    private ShareLikeEngine shareLikeEngine;
 
     @Override
     protected void onInitData() {
+
         mTitleView.setTitle("商品详情");
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//设置黑色
         StatusBarUtils.setWindowStatusBarColor(this, Color.WHITE);
@@ -129,19 +145,21 @@ public class GoodsDetailsActivity extends RequestActivity {
         if (data instanceof GoodsDetailsBean) {
             detailsBean = (GoodsDetailsBean) data;
 //            CommonUtils.setWebview(webview, detailsBean.getO().getProduct().getDescription(), true);
-            if(detailsBean.getO().getProduct().getIntergral()==null){
-                textViewGetPoints.setText("购买得赠送" +0 + "点滴");
-            }else {
+            if (detailsBean.getO().getProduct().getIntergral() == null) {
+                textViewGetPoints.setText("购买得赠送" + 0 + "点滴");
+            } else {
                 textViewGetPoints.setText("购买得赠送" + detailsBean.getO().getProduct().getIntergral() + "点滴");
             }
-            HtmlUtils.getInstance().setWindowWith(windowWith);
-            HtmlUtils.getInstance().setHtml(textViewPText, detailsBean.getO().getProduct().getDescription(), this);
+            //这个位置非常耗内存，因为是从SD卡加载的，所以只加载一次
+            runOneMethoned();
             textViewCartsNum.setText(detailsBean.getO().getProduct().getCartnum() + "");
             textViewCartsNum.setVisibility(detailsBean.getO().getProduct().getCartnum() != 0 ? View.VISIBLE : View.GONE);
             if (detailsBean.getO().getProduct().getCollect() == 1) {
                 textViewCollect.setText("已收藏");
+                DrawableUtils.setTopDrawableResouce(textViewCollect, getContext(), R.mipmap.aready_collect);
             } else {
                 textViewCollect.setText("收藏");
+                DrawableUtils.setTopDrawableResouce(textViewCollect, getContext(), R.mipmap.goods_favorites);
             }
             textViewService.setText(detailsBean.getO().getProduct().getKeyword());
             textViewProductname.setText(detailsBean.getO().getProduct().getStore_name());
@@ -149,11 +167,28 @@ public class GoodsDetailsActivity extends RequestActivity {
             textViewPriceNow.setText("¥ " + detailsBean.getO().getProduct().getPrice());
             textViewPricePrevious.setText("¥ " + detailsBean.getO().getProduct().getOt_price());
             textViewPricePrevious.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);//中划线
-            ImageUrlAdapter adapter = new ImageUrlAdapter(rollpager);
+            ImageAndVideoAdapter adapter = new ImageAndVideoAdapter(rollpager);
             rollpager.setAdapter(adapter);
-            rollpager.setHintView(new ColorPointHintView(getContext(),getContext().getResources().getColor(R.color.theme_color),
+            rollpager.setHintView(new ColorPointHintView(getContext(), getContext().getResources().getColor(R.color.theme_color),
                     getContext().getResources().getColor(R.color.alpha_black_50)));
-            adapter.refreshData(detailsBean.getO().getProduct().getSlider_image());
+            adapter.refreshDatas(detailsBean.getO().getProduct().getSlider_image());
+            if (detailsBean.getO().getProduct().getSlider_image().size() > 0) {
+                adapter.setThumb(detailsBean.getO().getProduct().getSlider_image().get(0));
+                adapter.setVideoUrl(detailsBean.getO().getProduct().getVideo());
+            }
+            adapter.setItemClickListenner(new ImageAndVideoAdapter.itemClickListenner() {
+                @Override
+                public void onItemClick(Object data, int position) {
+                    if (position == 0 && !TextUtils.isEmpty(detailsBean.getO().getProduct().getVideo())) {
+//                        playUrl();
+//                        downloadAndPlay();//先下载后跳转
+                        Intent intent = new Intent(getContext(), PlayActivity.class);
+                        intent.putExtra(IntentDataKeyConstant.DATA, detailsBean.getO().getProduct().getVideo());
+                        intent.putExtra("thumb", detailsBean.getO().getProduct().getSlider_image().get(0));
+                        startActivity(intent);
+                    }
+                }
+            });
         }
         if (ConstantUrl.addShopCarURl.equals(data.getUrl())) {
             ToastUtil.toast(data.getM());
@@ -164,11 +199,11 @@ public class GoodsDetailsActivity extends RequestActivity {
         }
         if (data.getUrl().equals(ConstantUrl.addToCollectUrl)) {
             loadDetails();
-            ToastUtil.toast(data.getM());
+//            ToastUtil.toast(data.getM());
         }
         if (data instanceof GetPointsTimeBean) {
             GetPointsTimeBean bean = (GetPointsTimeBean) data;
-            long limit = NumUtils.getInterger(bean.getO().getTimefen()) * 60 * 1000;
+            long limit = (long) (NumUtils.getDouble(bean.getO().getTimefen()) * 60 * 1000);
             myTimer = new MyTimer(limit, 1000);
             myTimer.setListenner(new MyTimer.TimeStateListenner() {
                 @Override
@@ -189,6 +224,38 @@ public class GoodsDetailsActivity extends RequestActivity {
     }
 
 
+    private void runOneMethoned() {
+        runOnlyOne++;
+        if (runOnlyOne <= 1) {
+            HtmlUtils.getInstance().setWindowWith(windowWith);
+            HtmlUtils.getInstance().setHtml(textViewPText, detailsBean.getO().getProduct().getDescription(), this);
+        }
+    }
+
+    private void playUrl() {
+        Intent intent = new Intent(getContext(), PlayActivity.class);
+        intent.putExtra(IntentDataKeyConstant.DATA, detailsBean.getO().getProduct().getVideo());
+        intent.putExtra("thumb", detailsBean.getO().getProduct().getSlider_image().get(0));
+        startActivity(intent);
+    }
+
+    private void downloadAndPlay() {
+        mZProgressHUD.setMessage("下载视频..");
+        mZProgressHUD.show();
+        DownLoadFileUtils.InitFile.callFile(detailsBean.getO().getProduct().getVideo(), new DownLoadFileUtils.FileCallBack() {
+            @Override
+            public void callBack(String path) {
+//                                initVideoView(path);
+                Intent intent = new Intent(getContext(), PlayActivity.class);
+                intent.putExtra(IntentDataKeyConstant.DATA, path);
+                intent.putExtra("thumb", detailsBean.getO().getProduct().getSlider_image().get(0));
+                startActivity(intent);
+                mZProgressHUD.dismiss();
+            }
+        });
+    }
+
+
     @Override
     public void onError(Exception e) {
 
@@ -200,13 +267,35 @@ public class GoodsDetailsActivity extends RequestActivity {
     }
 
     @Override
+    public void toastFailue(C_CodeBean c_codeBean) {
+//        super.toastFailue(c_codeBean);
+    }
+
+    @Override
     protected void onInitViewNew() {
+        imageViewHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppManager.getAppManager().finishAllActivity();
+                MainActivity.start(getContext(), MainActivity.class);
+            }
+        });
+        openNavagationBar(fatherView);//界面OK后加载布局变动监听
+        textViewAddCart.setOnClickListener(this);
+        textViewBuy.setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()) {
+            case R.id.textViewAddCart:
+                showBuyPop(v);
+                break;
+            case R.id.textViewBuy:
+                showBuyPop(v);
+                break;
+        }
     }
 
     @Override
@@ -220,19 +309,15 @@ public class GoodsDetailsActivity extends RequestActivity {
     //弹窗显示
     public void showPop(View view) {
         selectedProduct = null;
-        View contentView = View.inflate(getActivity(), R.layout.pop_goodsdetail, null);
-        contentView.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.push_bottom_in_2));
-        pw = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT,
+        contentView = View.inflate(getActivity(), R.layout.pop_goodsdetail, null);
+        contentView.startAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.push_bottom_in_2));//关闭动画
+        pw = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,
                 true);
-        pw.setBackgroundDrawable(new BitmapDrawable());
+//        pw.setBackgroundDrawable(new BitmapDrawable());
         pw.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
         pw.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-//这句话让popuwindow沉浸状态栏
+////这句话让popuwindow沉浸状态栏
         pw.setClippingEnabled(false);
-        if (!pw.isShowing())
-            pw.showAtLocation(
-                    getActivity().getWindow().getDecorView().findViewById(android.R.id.content),
-                    Gravity.BOTTOM, 0, NavagationUtils.getNavigationBarHeight(getContext()));
         Button bt_buy_pp = contentView.findViewById(R.id.bt_buy_pp);
         RecyclerView rv_good_details_spec = contentView.findViewById(R.id.rv_good_details_spec);
 
@@ -304,7 +389,6 @@ public class GoodsDetailsActivity extends RequestActivity {
                 selectedProduct.setNum(selectNum);
                 selectedProduct.setInfo(detailsBean.getO().getProduct().getStore_name());
                 ConfirmOrderActivity.start(getContext(), ConfirmOrderActivity.class, gotoAddCartsData);
-
             }
         });
 
@@ -327,9 +411,8 @@ public class GoodsDetailsActivity extends RequestActivity {
                 pw.dismiss();
             }
         });
-
+        adustPop();
     }
-
 
     private int getNum(String str) {
         int num = 0;
@@ -342,11 +425,9 @@ public class GoodsDetailsActivity extends RequestActivity {
 
     private void setChara(RecyclerView rv_good_details_spec) {
         Map<String, CharctorInnerBean> selectedDatas = new HashMap<>();
-
         GoodsDetailsCharactorAdapter adapter = new GoodsDetailsCharactorAdapter();
         rv_good_details_spec.setLayoutManager(new LinearLayoutManager(getContext()));
         rv_good_details_spec.setAdapter(adapter);
-
         for (int i = 0; i < detailsBean.getO().getResult().getCharc().size(); i++) {
             List<CharctorInnerBean> datas = new ArrayList<>();
             for (int j = 0; j < detailsBean.getO().getResult().getCharc().get(i).getAttr_values().size(); j++) {
@@ -361,7 +442,7 @@ public class GoodsDetailsActivity extends RequestActivity {
         adapter.setClickListenner(new RecyclerBaseAdapter.ClickListenner() {
             @Override
             public void click(View view, Object data) {
-                adapter.notifyDataSetChanged();
+//                adapter.notifyDataSetChanged();
                 if (data instanceof CharctorInnerBean) {
                     CharctorInnerBean innerBean = (CharctorInnerBean) data;
                     selectedDatas.put(innerBean.getAttr_name(), innerBean);
@@ -375,7 +456,7 @@ public class GoodsDetailsActivity extends RequestActivity {
     }
 
 
-    private void searchStoreData(Map<String, CharctorInnerBean> selectedDatas) {
+    private boolean searchStoreData(Map<String, CharctorInnerBean> selectedDatas) {
         for (int i = 0; i < detailsBean.getO().getResult().getList().size(); i++) {
             boolean contains = true;
             Set<String> keys = selectedDatas.keySet();
@@ -389,15 +470,17 @@ public class GoodsDetailsActivity extends RequestActivity {
                 selectedProduct = detailsBean.getO().getResult().getList().get(i);
             }
         }
+        if (selectedProduct == null) {
+            ToastUtil.toast("暂时没有这个规格");
+            return false;//找不到就返回false
+        }
         tv_goodsdetail_ppw_price_txt.setText(ConstantString.RMB_SYMBOL + selectedProduct.getPrice());
+        return true;//找到了就返回ture
     }
 
 
     //跳转购物车
     public void gotoCarts(View view) {
-//        EventAction.Action action = new EventAction.Action(GOTO_CARTS);
-//        EventBus.getDefault().post(action);
-//        finish();
         MarketActivity.start(getContext(), MarketActivity.class);
     }
 
@@ -421,7 +504,11 @@ public class GoodsDetailsActivity extends RequestActivity {
 
     //弹出窗体
     public void showBuyPop(View view) {
-        showPop(view);
+        if (pw != null) {
+            adustPop();
+        } else {
+            showPop(view);
+        }
     }
 
     //判断是不是有规格的商品
@@ -446,7 +533,7 @@ public class GoodsDetailsActivity extends RequestActivity {
 
     //分享
     public void shareGoods(View view) {
-        ShareLikeEngine shareLikeEngine = new ShareLikeEngine();
+        shareLikeEngine = new ShareLikeEngine();
         shareLikeEngine.releaseShareData(this, ConstantUrl.SHARE_IMAGE_URL, ConstantString.PRODUCT_SHARECONTENT, ConstantUrl.SHARE_CLICK_GO_URL, null);
         shareLikeEngine.setShareTitle(detailsBean.getO().getProduct().getStore_name());
     }
@@ -455,5 +542,51 @@ public class GoodsDetailsActivity extends RequestActivity {
     protected void onStart() {
         super.onStart();
         loadDetails();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (JZVideoPlayer.backPress()) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        JZVideoPlayer.releaseAllVideos();
+    }
+
+    @Override
+    public void onNavigationBarStatusChanged(int navigationBarIsMin) {
+        super.onNavigationBarStatusChanged(navigationBarIsMin);
+        if (pw != null) {
+            if (pw.isShowing()) {
+                pw.dismiss();
+                adustPop();
+            }
+        }
+        if (shareLikeEngine != null) {
+            shareLikeEngine.refreshPop(getActivity());
+        }
+    }
+
+    private void adustPop() {
+        int[] location = new int[2];
+        contentView.getLocationOnScreen(location);
+        int x = location[0];
+        int y = location[1];
+        if (navigationBarIsUp && NavagationUtils.hasNavBar(getContext())) {
+            pw.showAtLocation(contentView, Gravity.BOTTOM, 0, NavagationUtils.getNavigationBarHeight(getContext()));
+        } else {
+            pw.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+        }
+    }
+
+    @Override
+    public void showProgress() {
+//        super.showProgress();
     }
 }

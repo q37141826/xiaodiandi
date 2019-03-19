@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -36,6 +37,8 @@ public class CurrentConsultingActivity extends RequestActivity implements OnRecy
     XRecyclerView xrecyclerView;
     @BindView(R.id.swip_refreshlayout)
     VerticalSwipeRefreshLayout swipRefreshlayout;
+    @BindView(R.id.relativeNothing)
+    RelativeLayout relativeNothing;
     private WritePop writePop;
     int pageNo = 1, pageSize = 10;
     private String type;//最新资讯还是公司动态的判断
@@ -83,6 +86,11 @@ public class CurrentConsultingActivity extends RequestActivity implements OnRecy
         }
         swipRefreshlayout.setRefreshing(false);
         xrecyclerView.loadMoreComplete();
+        if (adapter.getDatas().size() == 0) {
+            relativeNothing.setVisibility(View.VISIBLE);
+        } else {
+            relativeNothing.setVisibility(View.GONE);
+        }
     }
 
     @Override

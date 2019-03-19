@@ -4,11 +4,8 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/white">
-    <View
-        android:id="@+id/belowme"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/margin12dp"></View>
     <RelativeLayout
+        android:paddingTop="@dimen/margin12dp"
         android:layout_below="@+id/belowme"
         android:id="@+id/vg_title"
         android:layout_width="match_parent"
@@ -36,7 +33,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin40dp">
+                    android:layout_height="@dimen/margin30dp">
 
                     <TextView
                         android:id="@+id/tv_shopcar_totalnum"
@@ -58,7 +55,7 @@
                             android:layout_marginLeft="@dimen/margin15dp"
                             android:layout_marginRight="@dimen/margin15dp"
                             android:drawablePadding="@dimen/margin10dp"
-                            android:text="删除" />
+                            android:text="清空购物车" />
                     </RelativeLayout>
 
 
@@ -161,5 +158,21 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/relativeNothing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView_order"
+            style="@style/text_normal"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/screenwith_half"
+            android:gravity="center"
+            android:text="暂无数据"
+            android:textColor="@color/hint_color"
+            android:textSize="15sp" />
+    </RelativeLayout>
 
 </RelativeLayout>

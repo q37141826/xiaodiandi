@@ -103,24 +103,16 @@ public class TypesProductListBean extends BaseBean<TypesProductListBean.OBean> {
             private int id;
             private String cate_name;
             private List<ProductBean> product;
-            private boolean isLast=false;
-            private String bannerFoot;
+                private BannerBean bannerBean;
 
-            public String getBannerFoot() {
-                return bannerFoot;
+            public BannerBean getBannerBean() {
+                return bannerBean;
             }
 
-            public void setBannerFoot(String bannerFoot) {
-                this.bannerFoot = bannerFoot;
+            public void setBannerBean(BannerBean bannerBean) {
+                this.bannerBean = bannerBean;
             }
 
-            public boolean isLast() {
-                return isLast;
-            }
-
-            public void setLast(boolean last) {
-                isLast = last;
-            }
             public int getId() {
                 return id;
             }

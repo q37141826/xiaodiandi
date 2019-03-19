@@ -114,7 +114,7 @@ public class BindWebActivity extends BaseWebActivity implements OKHttpUIUpdataLi
                 });
             }
         }
-        if (!(data instanceof QrUserMessageBean)) {
+        if (ConstantUrl.bindfriendsUrl.equals(data.getUrl())) {
             ToastUtil.toast(data.getM());
         }
     }

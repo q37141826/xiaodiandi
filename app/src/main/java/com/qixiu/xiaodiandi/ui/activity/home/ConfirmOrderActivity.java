@@ -117,9 +117,9 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
             totoalFinalMoney = NumUtils.getDouble(gotoAddCartsData.getMoney());
 
         }
-        getData();
         getPointsData();
     }
+
 
     @Override
     protected int getLayoutResource() {
@@ -148,7 +148,7 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
                 if (selectedPoints != null && isUsePoints) {
                     orderPayData.setIntegral(interger + "");
                 }
-                orderPayData.setMoney(textView_totalprice.getText().toString());
+                orderPayData.setMoney(textView_totalprice.getText().toString().replace(ConstantString.RMB_SYMBOL, ""));
                 if (orderBean == null && gotoAddCartsData != null) {//快速支付和购物车支付的判断
                     FastPayNewBean fastPayNewBean = new FastPayNewBean();
                     fastPayNewBean.setGotoAddCartsData(gotoAddCartsData);
@@ -210,6 +210,7 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
     @Override
     protected void onStart() {
         super.onStart();
+        getData();
     }
 
     @Override
@@ -260,7 +261,7 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
                     selectedAddress = addressBean.getO().get(i);
                 }
             }
-            if (selectedAddress == null) {
+            if (selectedAddress == null || addressBean.getO().size() == 0) {
                 AddressListActivity.start(getContext(), AddressListActivity.class);
                 ToastUtil.toast("请创建并且选择一个默认地址");
             }

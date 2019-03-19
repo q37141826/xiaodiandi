@@ -21,6 +21,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.net.Uri;
@@ -37,6 +38,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -48,6 +50,9 @@ import com.google.zxing.Result;
 import com.google.zxing.ResultMetadataType;
 import com.google.zxing.ResultPoint;
 import com.qixiu.qixiu.R;
+import com.qixiu.qixiu.activity.PhotoCorpActivity;
+import com.qixiu.qixiu.google.zxing.client.DecodeCallback;
+import com.qixiu.qixiu.google.zxing.client.QrCodeUtils;
 import com.qixiu.qixiu.google.zxing.client.android.camera.CameraManager;
 import com.qixiu.qixiu.google.zxing.client.android.history.HistoryItem;
 import com.qixiu.qixiu.google.zxing.client.android.history.HistoryManager;
@@ -60,10 +65,15 @@ import com.qixiu.wigit.zprogress.ZProgressHUD;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import me.iwf.photopicker.PhotoPicker;
+import me.iwf.photopicker.PhotoPreview;
 
 /**
  * This activity opens the camera and does the actual scanning on a background thread. It draws a
@@ -122,6 +132,14 @@ public final class CaptureActivity extends Activity
     private int type;
     private TextView tv_scan_hint;
     private ZProgressHUD zProgressHUD;
+    private Button btnSelectAlbum;
+    ArrayList<String> selectPhotos = new ArrayList<>();
+
+    static DecodeCallback callback;
+
+    public static void setCallback(DecodeCallback callback) {
+        CaptureActivity.callback = callback;
+    }
 
     ViewfinderView getViewfinderView() {
         return viewfinderView;
@@ -160,6 +178,14 @@ public final class CaptureActivity extends Activity
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        btnSelectAlbum = findViewById(R.id.btnSelectAlbum);
+        btnSelectAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PhotoPicker.builder().setPhotoCount(1).setShowCamera(true).setSelected(
+                        selectPhotos).start(CaptureActivity.this);
             }
         });
     }
@@ -351,7 +377,6 @@ public final class CaptureActivity extends Activity
         if (resultCode == RESULT_OK) {
             String result = intent.getExtras().getString("result");
 
-
             if (requestCode == HISTORY_REQUEST_CODE) {
                 int itemNumber = intent.getIntExtra(Intents.History.ITEM_NUMBER, -1);
                 if (itemNumber >= 0) {
@@ -359,7 +384,48 @@ public final class CaptureActivity extends Activity
                     decodeOrStoreSavedBitmap(historyItem.getResult());
                 }
             }
+
+            if (requestCode == PhotoPicker.REQUEST_CODE || requestCode == PhotoPreview.REQUEST_CODE) {
+                //获取图片选择器的图片路径们
+                if (intent != null) {
+                    selectPhotos.clear();
+                    List<String> photos =
+                            intent.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+                    selectPhotos.addAll(photos);
+                    if (selectPhotos.size() < 1) {
+                    } else {
+//                        Intent intentCorp = new Intent(CaptureActivity.this, PhotoCorpActivity.class);
+//                        intentCorp.putExtra(PhotoCorpActivity.PATH, selectPhotos.get(0));
+//                        startActivityForResult(intentCorp, PhotoCorpActivity.CORP_DATA);
+                        parseImage(selectPhotos.get(0));
+                    }
+                }
+            }
+
         }
+        if (resultCode == PhotoCorpActivity.CORP_DATA) {
+            String path = intent.getStringExtra(PhotoCorpActivity.PATH);
+            parseImage(path);
+        }
+    }
+
+    private void parseImage(String path) {
+        new Thread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        Result result = QrCodeUtils.scanQrCode(BitmapFactory.decodeFile(path));
+                        if(result!=null){
+                            inactivityTimer.onActivity();
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra("result", result.getText());
+                            CaptureActivity.this.setResult(RESULT_OK, resultIntent);
+                            CaptureActivity. this.finish();
+                        }
+                    }
+                }
+        ).start();
+
     }
 
     /**
@@ -794,12 +860,14 @@ public final class CaptureActivity extends Activity
 
 
     public void setFinish(String data) {
-        Intent intent =new Intent();
-        intent.putExtra(ZXING_VALUE,data);
+        Intent intent = new Intent();
+        intent.putExtra(ZXING_VALUE, data);
 //        intent.putExtra(ZXING_VALUE,"50BB2ACD-7694-436F-8BE7-08D64C5BA3EC");//测试数据
-        setResult(ZXING_INTENT,intent);
+        setResult(ZXING_INTENT, intent);
         finish();
     }
+
+
 }
 
 

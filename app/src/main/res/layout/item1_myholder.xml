@@ -8,8 +8,16 @@
     <RelativeLayout
         android:id="@+id/relative_belowme"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin45dp"
+        android:layout_height="@dimen/margin40dp"
         android:orientation="horizontal">
+
+        <View
+            style="@style/line_style"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/margin15dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="@dimen/margin15dp"
+            android:background="@color/lineColor"></View>
 
         <TextView
             android:id="@+id/textView_orderCode"
@@ -24,7 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_margin="@dimen/margin10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/margin15dp"
             android:text="交易完成"
             android:textColor="@color/theme_color"
             android:textSize="12sp" />
@@ -40,9 +49,19 @@
     <RelativeLayout
         android:id="@+id/linearlayout_belowme"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin50dp"
+        android:layout_height="@dimen/margin31dp"
         android:layout_below="@+id/recycleView_myoreder_inner"
         android:orientation="horizontal">
+
+        <View
+            style="@style/line_style"
+            android:layout_marginTop="0dp"
+            android:background="@color/lineColor"></View>
+
+        <View
+            style="@style/line_style"
+            android:layout_alignParentBottom="true"
+            android:background="@color/lineColor"></View>
 
         <TextView
             android:id="@+id/textView_order_goods_num"
@@ -97,9 +116,9 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/margin30dp"
             android:layout_margin="3dp"
+            android:textColor="@color/white"
             android:background="@drawable/btn_theme_solid"
             android:text="删除订单"
-            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <Button
@@ -107,9 +126,9 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/margin30dp"
             android:layout_margin="@dimen/margin3dp"
-            android:background="@drawable/btn_theme_solid"
+            android:background="@drawable/btn_theme_stroke"
             android:text="申请换货"
-            android:textColor="@color/white"
+            android:textColor="@color/theme_color"
             android:textSize="12sp" />
 
         <Button

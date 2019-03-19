@@ -30,11 +30,6 @@ import java.util.Date;
 
 public class AliOssEngine {
 
-//    public static String endpoint = "oss-cn-shanghai.aliyuncs.com";
-//    public static String key = "LTAI0j4WxFlrrgC3";
-//    public static String keySec = "Lhg3UoXXwtnRsTXD0SgpjJWxmlzj7u";
-//    public static String bcname = "tz1";
-
     public static String endpoint = "oss-cn-beijing.aliyuncs.com";
     public static String key = "LTAIbWAgmllX93oq";
     public static String keySec = "W8Nesj7VzLZudJ6oJoeQWJGkd8oXJ1";
@@ -120,7 +115,6 @@ public class AliOssEngine {
         });
 //        //验证签名
         ObjectMetadata metadata = new ObjectMetadata();
-////        metadata.setContentType("application/video/mp4"); // 设置content-type。
         metadata.setContentType("application/video/mpeg4"); // 设置content-type。
 //        try {
 //            finnalUrl = finnalUrl + BinaryUtil.calculateBase64Md5(uploadFilePath);

@@ -19,7 +19,9 @@ import com.qixiu.qixiu.request.OKHttpUIUpdataListener;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.request.parameter.StringConstants;
+import com.qixiu.qixiu.utils.MyTimer;
 import com.qixiu.qixiu.utils.Preference;
+import com.qixiu.qixiu.utils.TimeDataUtil;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.wigit.GotoView;
 import com.qixiu.wigit.show_dialog.ArshowDialog;
@@ -42,6 +44,7 @@ import com.wxpay.WeixinPayModel;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +77,11 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
 
     LinearLayout linearLayoutTimeDown;
     private GotoView gotoViewPoints, gotoViewTikets;
+    private MyTimer timer;
+
+    private TextView textViewTimeCountDown;//请于   内付款，超时订单将自动关闭
+    private TextView textViewPhone;
+    private TextView textViewAddress;
 
     @Override
     protected void onInitData() {
@@ -281,6 +289,11 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
         gotoViewPoints = findViewById(R.id.gotoViewPoints);
         gotoViewTikets = findViewById(R.id.gotoViewTikets);
         textView_goodstotolprice_detail = findViewById(R.id.textView_goodstotolprice_detail);
+        textViewTimeCountDown = findViewById(R.id.textViewTimeCountDown);
+
+        textViewPhone = findViewById(R.id.textViewPhone);
+        textViewAddress = findViewById(R.id.textViewAddress);
+
     }
 
     @Override
@@ -296,6 +309,8 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
             textView_goodsNum.setText(orderDetailsBean.getO().getTotal_num() + "");
             textViewName.setText(orderDetailsBean.getO().getReal_name());
             gotoAddress.setFirstText(orderDetailsBean.getO().getUser_address());
+            textViewPhone.setText(orderDetailsBean.getO().getUser_phone());
+            textViewAddress.setText(orderDetailsBean.getO().getUser_address());
             if (NumUtils.getDouble(orderDetailsBean.getO().getCoupon_price()) == 0) {
                 gotoViewTikets.setSecondText("未使用优惠券");
             } else {
@@ -303,10 +318,12 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
             }
             if (NumUtils.getDouble(orderDetailsBean.getO().getUse_integral()) == 0) {
                 gotoViewPoints.setSecondDrawable(getContext(), R.mipmap.order_switch);
+                gotoViewPoints.setSecondText("未使用积分");
             } else {
                 gotoViewPoints.setSecondDrawable(getContext(), R.mipmap.order_switch_on);
                 gotoViewPoints.setSecondText("使用积分" + orderDetailsBean.getO().getUse_integral());
             }
+            setCountDownTime();
             setVisble();
         }
         if (ConstantUrl.getGoodsUrl.equals(data.getUrl())) {
@@ -314,7 +331,7 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
             getData();
         }
         if (ConstantUrl.orderDeleteUrl.equals(data.getUrl())) {
-            ToastUtil.toast(data.getM());
+            ToastUtil.toast("订单已取消");
             EventBus.getDefault().post(new RefreshListBean());
             finish();
         }
@@ -330,6 +347,31 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
             AliBean aliBean = (AliBean) data;
             startAlipay(aliBean);
         }
+    }
+
+    private void setCountDownTime() {
+        Date date = TimeDataUtil.strToDate(orderDetailsBean.getO().getAdd_time(), TimeDataUtil.DEFULT_TIME_FORMAT);
+        int secondes = (int) (new Date().getTime() - date.getTime());
+        if (secondes - 30 * 60 * 1000 > 0) {
+            textViewTimeCountDown.setVisibility(View.GONE);
+            if(orderDetailsBean.getO().getPaid()==0){
+                startDeleteOrder();
+            }
+            return;
+        }
+        timer = new MyTimer(30 * 60 * 1000 - secondes, 1000);
+        timer.setListenner(new MyTimer.TimeStateListenner() {
+            @Override
+            public void onRunning(long lastTime) {
+                textViewTimeCountDown.setText("请于" + lastTime / 60 / 1000 + "分" + lastTime % (60 * 1000) / 1000 + "秒" + "内付款，超时订单将自动关闭");
+            }
+
+            @Override
+            public void onFinished() {
+                finish();
+            }
+        });
+        timer.startTimeCountDown(textViewTimeCountDown);
     }
 
     private void startAlipay(AliBean bean) {
@@ -376,5 +418,13 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
     @Override
     public void onFailure(PayResult payResult) {
         ToastUtil.toast(payResult.getResult());
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (timer != null) {
+            timer.cancleTimer();
+        }
     }
 }

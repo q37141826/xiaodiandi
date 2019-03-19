@@ -16,7 +16,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#1fe5d8">
+        android:background="@color/ticket_bg">
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"

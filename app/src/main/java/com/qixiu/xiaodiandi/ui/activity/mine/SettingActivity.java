@@ -6,7 +6,10 @@ import android.view.View;
 import com.qixiu.qixiu.application.AppManager;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.qixiu.service.FileDownloadService;
 import com.qixiu.qixiu.utils.CleanDataUtils;
+import com.qixiu.qixiu.utils.DownLoadFileUtils;
+import com.qixiu.qixiu.utils.PictureCut;
 import com.qixiu.qixiu.utils.Preference;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.wigit.GotoView;
@@ -82,6 +85,9 @@ public class SettingActivity extends RequestActivity {
             CleanDataUtils.clearAllCache(getContext());
             String size = CleanDataUtils.getTotalCacheSize(getContext());
             gotoviewClean.setSecondText(size);
+            PictureCut.deleteAllImage();
+            PictureCut.deleteAllFile(FileDownloadService.downloadPath);
+            PictureCut.deleteAllFile(DownLoadFileUtils.path);
         } catch (Exception e) {
             e.printStackTrace();
         }

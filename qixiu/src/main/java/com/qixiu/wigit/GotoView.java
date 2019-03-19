@@ -3,6 +3,7 @@ package com.qixiu.wigit;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,11 +31,11 @@ public class GotoView extends RelativeLayout {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.GotoView);
 
         int firsttextcolor = array.getColor(R.styleable.GotoView_first_text_color, getResources().getColor(R.color.font_grey));
-        float firstsize = array.getDimensionPixelSize(R.styleable.GotoView_first_size, 15);
+        float firstsize = array.getDimension(R.styleable.GotoView_first_size, 15);
         textViewTitle.setTextColor(firsttextcolor);
-        textViewTitle.setTextSize(firstsize);
+        textViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, firstsize);
         int firstres = array.getResourceId(R.styleable.GotoView_first_drawable, 0);
-        setFirsDrawable(context,firstres);
+        setFirsDrawable(context, firstres);
         String firstText = array.getString(R.styleable.GotoView_first_text);
         setFirstText(firstText);
         float firstdrawblepadding = array.getDimensionPixelSize(R.styleable.GotoView_first_drawble_padding, 15);
@@ -42,11 +43,11 @@ public class GotoView extends RelativeLayout {
 
 
         int secondtextcolor = array.getColor(R.styleable.GotoView_second_text_color, getResources().getColor(R.color.font_grey));
-        float secondsize = array.getDimensionPixelSize(R.styleable.GotoView_second_size, 15);
+        float secondsize = array.getDimension(R.styleable.GotoView_second_size, 15);
         int secondres = array.getResourceId(R.styleable.GotoView_second_drawable, 0);
-        setSecondDrawable(context,secondres);
+        setSecondDrawable(context, secondres);
 
-        textViewName.setTextSize(secondsize);
+        textViewName.setTextSize(TypedValue.COMPLEX_UNIT_SP, secondsize);
         textViewName.setTextColor(secondtextcolor);
         String secondText = array.getString(R.styleable.GotoView_second_text);
         setSecondText(secondText);
@@ -65,7 +66,7 @@ public class GotoView extends RelativeLayout {
         }
     }
 
-    private void setFirsDrawable(Context context,int second) {
+    private void setFirsDrawable(Context context, int second) {
         if (second != 0) {
             DrawableUtils.setLeftDrawableResouce(textViewTitle, context, second);
         }
@@ -85,10 +86,12 @@ public class GotoView extends RelativeLayout {
     public void setFirstText(String firstText) {
         textViewTitle.setText(firstText);
     }
-    public TextView getFirstView(){
+
+    public TextView getFirstView() {
         return textViewTitle;
     }
-    public TextView getSecondView(){
+
+    public TextView getSecondView() {
         return textViewName;
     }
 }

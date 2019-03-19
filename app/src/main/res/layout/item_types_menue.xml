@@ -10,7 +10,7 @@
         android:id="@+id/viewLine"
         android:layout_width="@dimen/margin3dp"
         android:layout_height="@dimen/margin18dp"
-        android:background="@color/type_green"></View>
+        android:background="@color/theme_color"></View>
 
     <TextView
         android:id="@+id/textView"

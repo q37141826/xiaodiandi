@@ -21,10 +21,10 @@
         <com.jude.rollviewpager.RollPagerView
             android:id="@+id/rollpager"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin170dp"
+            android:layout_height="@dimen/margin225dp"
             android:layout_centerInParent="true"
             android:clipChildren="false"
-            app:rollviewpager_play_delay="3000"></com.jude.rollviewpager.RollPagerView>
+            app:rollviewpager_play_delay="5000"></com.jude.rollviewpager.RollPagerView>
     </FrameLayout>
 
     <com.qixiu.wigit.hviewpager.HackyViewPager
@@ -119,7 +119,7 @@
         <com.jude.rollviewpager.RollPagerView
             android:id="@+id/rollpagerProduct"
             android:layout_width="match_parent"
-            android:layout_height="270dp"
+            android:layout_height="@dimen/margin270dp"
             android:layout_centerInParent="true"
             android:layout_marginTop="@dimen/margin79dp"
             android:clipChildren="false"

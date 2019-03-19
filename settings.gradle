@@ -1,1 +1,1 @@
-include ':app',':qixiu'
+include ':app',':qixiu',':qsvideoplayer'

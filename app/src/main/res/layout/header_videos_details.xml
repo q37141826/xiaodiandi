@@ -1,17 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearlayout_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/linearlayout_parent"
     android:orientation="vertical">
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <cn.jzvd.JZVideoPlayerStandard
             android:id="@+id/jcplayer"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin200dp"/>
+            android:layout_height="@dimen/margin200dp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin200dp">
+
+
+            <ImageView
+                android:id="@+id/imageViewThumb"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin200dp"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/imageViewPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/play_icon" />
+
+            <ImageView
+                android:id="@+id/imageViewBack"
+                android:layout_marginTop="@dimen/margin10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/margin10dp"
+                android:paddingRight="@dimen/margin10dp"
+                android:src="@mipmap/titile_back3x" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
     </LinearLayout>
 
     <TextView
@@ -24,10 +61,12 @@
         android:text=""
         android:textColor="@color/black"
         android:textSize="17sp" />
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <TextView
             android:id="@+id/textViewPlayTimes"
             style="@style/text_normal"
@@ -41,11 +80,11 @@
             android:layout_marginTop="@dimen/margin5dp">
 
             <ImageView
-                android:onClick="shareVideo"
                 android:id="@+id/imageViewShare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin10dp"
+                android:onClick="shareVideo"
                 android:src="@mipmap/entertainment_trance" />
 
             <TextView
@@ -65,11 +104,13 @@
             android:id="@+id/recyclerviewSuggistion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin1dp"
             android:layout_marginTop="@dimen/margin10dp"
             android:background="@color/line_color"></View>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin45dp">
@@ -82,13 +123,13 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:onClick="giveComments"
                 android:id="@+id/textViewGiveComments"
                 style="@style/text_normal"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:gravity="center"
+                android:onClick="giveComments"
                 android:paddingRight="@dimen/margin15dp"
                 android:text="留言"
                 android:textSize="14sp" />
@@ -100,7 +141,6 @@
             android:background="@color/line_color"></View>
 
     </LinearLayout>
-
 
 
 </LinearLayout>

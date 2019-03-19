@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.qixiu.utils.DrawableUtils;
 import com.qixiu.wigit.GotoView;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
@@ -15,6 +16,7 @@ import com.qixiu.xiaodiandi.model.mine.points.PointsBean;
 import com.qixiu.xiaodiandi.model.mine.vip.VipBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.mypoints.MyPointsActivity;
+import com.qixiu.xiaodiandi.utils.GlideUtils;
 import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
 import java.util.HashMap;
@@ -55,6 +57,9 @@ public class VipActivity extends RequestActivity {
     @Override
     protected void onInitData() {
         mTitleView.setTitle("个人中心");
+        mTitleView.getTitleView().setTextColor(getResources().getColor(R.color.white));
+        mTitleView.getLeftView().setTextColor(getResources().getColor(R.color.white));
+        DrawableUtils.setLeftDrawableResouce(mTitleView.getLeftView(), getContext(), R.mipmap.titile_back3x);
         getPointsData();
         getVipData();
     }
@@ -97,12 +102,15 @@ public class VipActivity extends RequestActivity {
         if (data instanceof VipBean) {
             VipBean bean = (VipBean) data;
             Glide.with(getContext()).load(ImageUrlUtils.getFinnalImageUrl(bean.getO().getAvatar())).into(circularhead);
-            textViewPhone.setText(bean.getO().getPhone());
+            GlideUtils.loadImage(ImageUrlUtils.getFinnalImageUrl(bean.getO().getAvatar()), circularhead, getContext());
+            textViewPhone.setText("ID: " + bean.getO().getPhone());
             textViewAccount.setText(bean.getO().getAccount());
             textViewVipName.setText(bean.getO().getGroup_name());
             gotoMyFriends.setSecondText(bean.getO().getFriend() + "");
             gotoFriendNumGroup.setSecondText(bean.getO().getFriendsum() + "");
+
         }
+
     }
 
     @Override

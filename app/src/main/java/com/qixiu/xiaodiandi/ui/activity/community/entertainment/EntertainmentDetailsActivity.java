@@ -1,6 +1,7 @@
 package com.qixiu.xiaodiandi.ui.activity.community.entertainment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +19,7 @@ import com.jude.rollviewpager.hintview.ColorPointHintView;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.qixiu.utils.DownLoadFileUtils;
 import com.qixiu.qixiu.utils.DrawableUtils;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.qixiu.utils.XrecyclerViewUtil;
@@ -31,6 +34,7 @@ import com.qixiu.xiaodiandi.model.IdInterfer;
 import com.qixiu.xiaodiandi.model.comminity.entertainment.EntertaimentDetailsBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
 import com.qixiu.xiaodiandi.ui.activity.community.upload.EntertainmentPhotoUploadActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.PlayActivity;
 import com.qixiu.xiaodiandi.ui.fragment.home.ImageUrlAdapter;
 import com.qixiu.xiaodiandi.ui.wigit.WritePop;
 import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
@@ -47,12 +51,10 @@ import cn.jzvd.JZVideoPlayerStandard;
 
 public class EntertainmentDetailsActivity extends RequestActivity implements XRecyclerView.LoadingListener {
 
-
     private int replyWho = 0;
     private final int REPLY_COMMENTS = 1;
     private final int COMMENTS = 0;
     String permissions[] = {Manifest.permission.RECORD_AUDIO};
-
 
     @BindView(R.id.xrecyclerView)
     XRecyclerView xrecyclerView;
@@ -72,6 +74,10 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
 
     JZVideoPlayerStandard jcplayer;
     private View headerView;
+
+
+    RelativeLayout relativeLayoutVideo;
+    ImageView imageViewVideoThumb;
 
     @Override
     protected void onInitData() {
@@ -152,6 +158,14 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
         textViewContent = view.findViewById(R.id.textViewContent);
         textViewCollectionNum = view.findViewById(R.id.textViewCollectionNum);
         jcplayer = view.findViewById(R.id.jcplayer);
+        relativeLayoutVideo = view.findViewById(R.id.relativeLayoutVideo);
+        imageViewVideoThumb = view.findViewById(R.id.imageViewVideoThumb);
+        imageViewVideoThumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoPlayVideo();
+            }
+        });
     }
 
     @Override
@@ -175,6 +189,7 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
 
             if (detailsBean.getO().getType() == 1) {
                 jcplayer.setVisibility(View.GONE);
+                relativeLayoutVideo.setVisibility(View.GONE);
                 ImageUrlAdapter adapter = new ImageUrlAdapter(rollpager);
                 rollpager.setAdapter(adapter);
                 List<String> images = new ArrayList<>();
@@ -183,9 +198,11 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
                 }
                 adapter.refreshData(images);
             } else {
+                relativeLayoutVideo.setVisibility(View.VISIBLE);
                 rollpager.setVisibility(View.GONE);
-                jcplayer.setVisibility(View.VISIBLE);
-                initJCView(headerView);
+                Glide.with(getContext()).load(detailsBean.getO().getImg().get(0)).into(imageViewVideoThumb);
+                jcplayer.setVisibility(View.GONE);//todo 不考虑屏幕内播放呢
+//                initJCView(headerView);
             }
         }
         if (data.getUrl().equals(ConstantUrl.leaveMessageUrl)) {
@@ -211,6 +228,24 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
 
     @Override
     protected void onInitViewNew() {
+
+    }
+
+    private void gotoPlayVideo() {
+        mZProgressHUD.show();
+        if (detailsBean.getO().getImg().size() == 2) {
+            DownLoadFileUtils.InitFile.callFile(detailsBean.getO().getImg().get(1), new DownLoadFileUtils.FileCallBack() {
+                @Override
+                public void callBack(String path) {
+//                                initVideoView(path);
+                    Intent intent = new Intent(getContext(), PlayActivity.class);
+                    intent.putExtra(IntentDataKeyConstant.DATA, path);
+                    intent.putExtra("thumb", detailsBean.getO().getImg().get(0));
+                    startActivity(intent);
+                    mZProgressHUD.dismiss();
+                }
+            });
+        }
 
     }
 
@@ -243,7 +278,7 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
 
     @Override
     public void onLoadMore() {
-
+        xrecyclerView.loadMoreComplete();
     }
 
 

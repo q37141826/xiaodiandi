@@ -17,7 +17,7 @@ public class TitleView extends BaseView {
         super(context);
     }
 
-    public View getLeftView() {
+    public TextView getLeftView() {
         return backImageView;
     }
 

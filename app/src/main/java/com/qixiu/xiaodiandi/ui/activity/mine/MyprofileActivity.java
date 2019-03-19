@@ -34,6 +34,7 @@ import com.qixiu.xiaodiandi.model.login.LoginBean;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.model.mine.UserBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.TitleActivity;
+import com.qixiu.xiaodiandi.utils.GlideUtils;
 import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
 import java.util.ArrayList;
@@ -258,7 +259,8 @@ public class MyprofileActivity extends TitleActivity implements View.OnClickList
             if (data instanceof UserBean) {
                 userBean = (UserBean) data;
                 gotoviewLevel.setSecondText(userBean.getO().getGroup_name());
-                Glide.with(getContext()).load(ImageUrlUtils.getFinnalImageUrl(userBean.getO().getAvatar())).into(circular_head_edit);
+                GlideUtils.loadImage(ImageUrlUtils.getFinnalImageUrl(userBean.getO().getAvatar()), circular_head_edit, getContext());
+//                Glide.with(getContext()).load(ImageUrlUtils.getFinnalImageUrl(userBean.getO().getAvatar())).into(circular_head_edit);
                 gotoviewPhone.setSecondText(userBean.getO().getPhone());
                 textView_nickname_change.setText(userBean.getO().getAccount());
                 if (userBean.getO().getWechat_user() != 1) {

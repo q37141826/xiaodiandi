@@ -8,16 +8,16 @@
     android:paddingRight="@dimen/margin15dp">
 
     <ImageView
-        android:layout_centerVertical="true"
         android:id="@+id/imageView_defualt_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:src="@mipmap/shopcar_goods_select" />
 
     <LinearLayout
-        android:layout_marginLeft="@dimen/margin40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin40dp"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -37,20 +37,13 @@
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@+id/textView_name_address" />
 
-            <ImageView
-                android:padding="@dimen/margin10dp"
-                android:src="@mipmap/commit"
-                android:id="@+id/imageView_edite_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true" />
 
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/margin10dp">
 
             <TextView
                 android:id="@+id/textView_address_content"
@@ -62,4 +55,12 @@
     </LinearLayout>
 
 
+    <ImageView
+        android:id="@+id/imageView_edite_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="@dimen/margin10dp"
+        android:src="@mipmap/commit" />
 </RelativeLayout>

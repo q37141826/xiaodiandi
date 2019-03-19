@@ -9,7 +9,6 @@ android {
         minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -69,7 +68,6 @@ dependencies {
     api "com.android.support:appcompat-v7:$SUPPORT_VERSION"
     api "com.android.support:recyclerview-v7:$SUPPORT_VERSION"
     api 'com.jcodecraeer:xrecyclerview:1.3.2'
-    implementation files('libs/zxingcore.jar')
     //轮播图
     api 'com.jude:rollviewpager:1.4.6'
     //张弘扬的lunbotu
@@ -77,11 +75,10 @@ dependencies {
     //tablayout
     api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.2@aar'
     api files('libs/ShareSDK-Core-2.8.3.jar')
-
     //旋转进度条
     api 'com.github.rahatarmanahmed:circularprogressview:1.0.0'
-
     //oss存储依赖库
     implementation 'com.squareup.okio:okio:1.9.0'
     implementation 'com.aliyun.dpa:oss-android-sdk:2.4.3'
+    implementation files('libs/zxingcore.jar')
 }

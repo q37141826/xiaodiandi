@@ -38,8 +38,8 @@
                     android:layout_width="@dimen/margin101dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/shape_mine_vip"
-                    android:drawableLeft="@mipmap/mine_vip_head"
+                    android:background="@mipmap/vip_right_btn"
+                    android:drawableLeft="@mipmap/mine_suggest"
                     android:drawablePadding="@dimen/margin5dp"
                     android:gravity="center"
                     android:paddingLeft="@dimen/margin10dp"
@@ -47,7 +47,7 @@
                     android:paddingRight="@dimen/margin10dp"
                     android:paddingBottom="@dimen/margin5dp"
                     android:text="VIP会员"
-                    android:textColor="@color/white"
+                    android:textColor="@color/theme_color"
                     android:textSize="12sp" />
             </RelativeLayout>
 
@@ -79,7 +79,7 @@
                         <TextView
                             android:id="@+id/textViewPhone"
                             style="@style/text_normal"
-                            android:text="13541578457"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="14sp" />
 
@@ -153,7 +153,6 @@
             app:first_text="我的订单"
             app:first_text_color="@color/black"
             app:second_drawable="@mipmap/rightgo"
-            app:second_size="5sp"
             app:second_text="全部订单"
             app:second_text_color="@color/text_grey"></com.qixiu.wigit.GotoView>
 
@@ -161,8 +160,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin60dp"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/margin5dp">
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="0px"
@@ -173,15 +171,16 @@
                     android:id="@+id/textViewWaitPay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin5dp"
                     android:drawableTop="@mipmap/mine_wait_pay"
                     android:gravity="center"
                     android:text="待付款" />
 
 
                 <TextView
-
                     android:id="@+id/textViewNumWaitPay"
-                    style="@style/mine_num" />
+                    style="@style/mine_num"
+                    android:visibility="gone" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -191,15 +190,18 @@
 
                 <TextView
                     android:id="@+id/textViewWaitSend"
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin5dp"
                     android:drawableTop="@mipmap/mine_wait_send"
                     android:gravity="center"
                     android:text="待发货" />
 
                 <TextView
                     android:id="@+id/textViewNumWaitSend"
-                    style="@style/mine_num" />
+                    style="@style/mine_num"
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -212,6 +214,7 @@
                     android:id="@+id/textViewWaitReceive"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin5dp"
                     android:drawableTop="@mipmap/mine_wait_receive"
                     android:gravity="center"
                     android:text="待收货" />
@@ -219,8 +222,7 @@
                 <TextView
                     android:id="@+id/textViewNumWaitReceive"
                     style="@style/mine_num"
-
-                    />
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -233,6 +235,7 @@
                     android:id="@+id/textViewWaitBack"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin5dp"
                     android:drawableTop="@mipmap/mine_sendback"
                     android:gravity="center"
                     android:text="换货" />
@@ -254,7 +257,6 @@
             android:background="@color/white"
             android:paddingLeft="@dimen/margin15dp"
             app:first_drawable="@mipmap/mine_diandi"
-            app:first_size="5sp"
             app:first_text="我的点滴"
             app:first_text_color="@color/black"
             app:second_drawable="@mipmap/rightgo"></com.qixiu.wigit.GotoView>
@@ -264,7 +266,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin8dp"
             android:divider="@drawable/diver_margin"
-            android:dividerPadding="10dp"
             android:orientation="vertical"
             android:showDividers="middle">
 

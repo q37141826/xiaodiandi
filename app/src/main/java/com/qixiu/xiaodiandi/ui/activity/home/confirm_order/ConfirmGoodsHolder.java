@@ -18,7 +18,7 @@ import com.qixiu.xiaodiandi.model.order.CreateOrderBean;
 
 public class ConfirmGoodsHolder extends RecyclerBaseHolder {
     private ImageView imageView_orderIcon;
-    private TextView textView_goodsPrice, textView_goodsCount, textView_goodsContent, textView_goodsName;
+    private TextView textView_goodsPrice, textView_goodsCount, textView_goodsContent, textView_goodsName,textView_goodsChrac;
 
     public ConfirmGoodsHolder(View itemView, Context context, RecyclerView.Adapter adapter) {
         super(itemView, context, adapter);
@@ -27,6 +27,7 @@ public class ConfirmGoodsHolder extends RecyclerBaseHolder {
         textView_goodsCount = (TextView) itemView.findViewById(R.id.textView_goodsCount);
         textView_goodsContent = (TextView) itemView.findViewById(R.id.textView_goodsContent);
         textView_goodsName = (TextView) itemView.findViewById(R.id.textView_goodsName);
+        textView_goodsChrac = (TextView) itemView.findViewById(R.id.textView_goodsChrac);
     }
 
     @Override
@@ -38,6 +39,7 @@ public class ConfirmGoodsHolder extends RecyclerBaseHolder {
             textView_goodsPrice.setTextColor(mContext.getResources().getColor(R.color.red));
             textView_goodsCount.setText("X  " + bean.getNum());
             textView_goodsContent.setText(bean.getName());
+
         }
 
         if (mData instanceof CreateOrderBean.OBean.CartInfoBean) {
@@ -47,6 +49,7 @@ public class ConfirmGoodsHolder extends RecyclerBaseHolder {
             textView_goodsPrice.setTextColor(mContext.getResources().getColor(R.color.red));
             textView_goodsCount.setText("X  " + +bean.getCart_num());
             textView_goodsContent.setText(bean.getProductInfo().getStore_name());
+            textView_goodsChrac.setText(bean.getProductInfo().getAttrInfo().getSuk());
         }
         if(mData instanceof GoodsDetailsBean.OBean.ResultBean.ListBean){
             GoodsDetailsBean.OBean.ResultBean.ListBean bean= (GoodsDetailsBean.OBean.ResultBean.ListBean) mData;
@@ -55,6 +58,8 @@ public class ConfirmGoodsHolder extends RecyclerBaseHolder {
             textView_goodsPrice.setTextColor(mContext.getResources().getColor(R.color.red));
             textView_goodsCount.setText("X  " + +bean.getNum());
             textView_goodsContent.setText(bean.getInfo());
+            textView_goodsChrac.setText(bean.getSuk());
+
         }
     }
 

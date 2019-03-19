@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.xiaodiandi.model.IdInterfer;
+import com.qixiu.xiaodiandi.model.comminity.entertainment.SizeBean;
 
 import java.util.List;
 
@@ -13,12 +14,13 @@ import java.util.List;
 public class EntertainmentCollectionBean extends BaseBean<List<EntertainmentCollectionBean.OBean>> {
 
 
-    public static class OBean implements Parcelable ,IdInterfer {
+
+    public static class OBean implements Parcelable ,IdInterfer{
         /**
-         * id : 9
-         * aid : 9
-         * addtime : 1550477738
-         * release : {"id":9,"uid":118,"content":"哈哈哈哈哈","img":"http://xdd.qixiuu.com/public/uploads/2019-02-18/15504697863291.png","user":{"nickname":"韩韩","avatar":"https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIveS9MIL9ngyAI7vxzQDsicNmoZ6RbSM4sGib1UXfJr1q2On6iaA5H0K0xOdAf4u5zgml7YPuJ2RX8w/132"}}
+         * id : 73
+         * aid : 91
+         * addtime : 1551930640
+         * release : {"id":91,"uid":315,"content":"好好的生活","img":"http://app.ssxdd.cn/public/uploads/2019-03-07/15519246391997.png","user":{"nickname":"Linda","avatar":"http://thirdwx.qlogo.cn/mmopen/vi_32/BUcfMPzbCZSryc3yHaiclBLuFWQejhxtunAOqJUq2UxEq0R0haIjPB2BiafU1duia48ARFakAPRccaKNicp66WaT3w/132"},"size":{"width":1080,"height":1080}}
          */
 
         private String id;
@@ -58,26 +60,28 @@ public class EntertainmentCollectionBean extends BaseBean<List<EntertainmentColl
             this.release = release;
         }
 
-        public static class ReleaseBean implements Parcelable {
+        public static class ReleaseBean implements Parcelable,IdInterfer {
             /**
-             * id : 9
-             * uid : 118
-             * content : 哈哈哈哈哈
-             * img : http://xdd.qixiuu.com/public/uploads/2019-02-18/15504697863291.png
-             * user : {"nickname":"韩韩","avatar":"https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIveS9MIL9ngyAI7vxzQDsicNmoZ6RbSM4sGib1UXfJr1q2On6iaA5H0K0xOdAf4u5zgml7YPuJ2RX8w/132"}
+             * id : 91
+             * uid : 315
+             * content : 好好的生活
+             * img : http://app.ssxdd.cn/public/uploads/2019-03-07/15519246391997.png
+             * user : {"nickname":"Linda","avatar":"http://thirdwx.qlogo.cn/mmopen/vi_32/BUcfMPzbCZSryc3yHaiclBLuFWQejhxtunAOqJUq2UxEq0R0haIjPB2BiafU1duia48ARFakAPRccaKNicp66WaT3w/132"}
+             * size : {"width":1080,"height":1080}
              */
 
-            private int id;
+            private String id;
             private int uid;
             private String content;
             private String img;
             private UserBean user;
+            private SizeBean size;
 
-            public int getId() {
+            public String getId() {
                 return id;
             }
 
-            public void setId(int id) {
+            public void setId(String id) {
                 this.id = id;
             }
 
@@ -113,10 +117,18 @@ public class EntertainmentCollectionBean extends BaseBean<List<EntertainmentColl
                 this.user = user;
             }
 
-            public static class UserBean {
+            public SizeBean getSize() {
+                return size;
+            }
+
+            public void setSize(SizeBean size) {
+                this.size = size;
+            }
+
+            public static class UserBean implements Parcelable {
                 /**
-                 * nickname : 韩韩
-                 * avatar : https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIveS9MIL9ngyAI7vxzQDsicNmoZ6RbSM4sGib1UXfJr1q2On6iaA5H0K0xOdAf4u5zgml7YPuJ2RX8w/132
+                 * nickname : Linda
+                 * avatar : http://thirdwx.qlogo.cn/mmopen/vi_32/BUcfMPzbCZSryc3yHaiclBLuFWQejhxtunAOqJUq2UxEq0R0haIjPB2BiafU1duia48ARFakAPRccaKNicp66WaT3w/132
                  */
 
                 private String nickname;
@@ -137,6 +149,41 @@ public class EntertainmentCollectionBean extends BaseBean<List<EntertainmentColl
                 public void setAvatar(String avatar) {
                     this.avatar = avatar;
                 }
+
+                @Override
+                public int describeContents() {
+                    return 0;
+                }
+
+                @Override
+                public void writeToParcel(Parcel dest, int flags) {
+                    dest.writeString(this.nickname);
+                    dest.writeString(this.avatar);
+                }
+
+                public UserBean() {
+                }
+
+                protected UserBean(Parcel in) {
+                    this.nickname = in.readString();
+                    this.avatar = in.readString();
+                }
+
+                public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
+                    @Override
+                    public UserBean createFromParcel(Parcel source) {
+                        return new UserBean(source);
+                    }
+
+                    @Override
+                    public UserBean[] newArray(int size) {
+                        return new UserBean[size];
+                    }
+                };
+            }
+
+
+            public ReleaseBean() {
             }
 
             @Override
@@ -146,21 +193,21 @@ public class EntertainmentCollectionBean extends BaseBean<List<EntertainmentColl
 
             @Override
             public void writeToParcel(Parcel dest, int flags) {
-                dest.writeInt(this.id);
+                dest.writeString(this.id);
                 dest.writeInt(this.uid);
                 dest.writeString(this.content);
                 dest.writeString(this.img);
-            }
-
-            public ReleaseBean() {
+                dest.writeParcelable(this.user, flags);
+                dest.writeParcelable(this.size, flags);
             }
 
             protected ReleaseBean(Parcel in) {
-                this.id = in.readInt();
+                this.id = in.readString();
                 this.uid = in.readInt();
                 this.content = in.readString();
                 this.img = in.readString();
                 this.user = in.readParcelable(UserBean.class.getClassLoader());
+                this.size = in.readParcelable(SizeBean.class.getClassLoader());
             }
 
             public static final Creator<ReleaseBean> CREATOR = new Creator<ReleaseBean>() {

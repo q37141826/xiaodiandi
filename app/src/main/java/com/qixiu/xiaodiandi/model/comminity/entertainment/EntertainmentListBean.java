@@ -1,6 +1,7 @@
 package com.qixiu.xiaodiandi.model.comminity.entertainment;
 
 import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.xiaodiandi.model.IdInterfer;
@@ -8,18 +9,18 @@ import com.qixiu.xiaodiandi.model.IdInterfer;
 import java.util.List;
 
 //
-public class EntertainmentListBean extends BaseBean< List<EntertainmentListBean.OBean>> {
-
+public class EntertainmentListBean  extends BaseBean< List<EntertainmentListBean.OBean>> {
 
 
     public static class OBean implements IdInterfer {
         /**
-         * id : 13
-         * uid : 181
-         * content : 哈哈哈哈哈
-         * type : 2
-         * img : http://tz1.oss-cn-shanghai.aliyuncs.com/Upload/vedio/2019-02-20recording434113518.mp4
-         * user : {"nickname":"","avatar":"http://xdd.qixiuu.com/public/uploads/2019-02-20/15506262655468.png","phone":"13554540382"}
+         * id : 94
+         * uid : 309
+         * content : 图拉土快乐旅途
+         * type : 1
+         * img : http://xdd.qixiuu.com/public/uploads/2019-03-08/15520404809692.png
+         * user : {"phone":"s191551836158","nickname":"13554540383","avatar":"http://app.ssxdd.cn/public/uploads/2019-03-06/15518361776533.png"}
+         * size : {"width":720,"height":1280}
          */
 
         private String id;
@@ -28,6 +29,7 @@ public class EntertainmentListBean extends BaseBean< List<EntertainmentListBean.
         private int type;
         private String img;
         private UserBean user;
+        private SizeBean size;
 
         public String getId() {
             return id;
@@ -77,16 +79,32 @@ public class EntertainmentListBean extends BaseBean< List<EntertainmentListBean.
             this.user = user;
         }
 
-        public static class UserBean implements android.os.Parcelable {
+        public SizeBean getSize() {
+            return size;
+        }
+
+        public void setSize(SizeBean size) {
+            this.size = size;
+        }
+
+        public static class UserBean implements Parcelable {
             /**
-             * nickname :
-             * avatar : http://xdd.qixiuu.com/public/uploads/2019-02-20/15506262655468.png
-             * phone : 13554540382
+             * phone : s191551836158
+             * nickname : 13554540383
+             * avatar : http://app.ssxdd.cn/public/uploads/2019-03-06/15518361776533.png
              */
 
+            private String phone;
             private String nickname;
             private String avatar;
-            private String phone;
+
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
 
             public String getNickname() {
                 return nickname;
@@ -104,14 +122,6 @@ public class EntertainmentListBean extends BaseBean< List<EntertainmentListBean.
                 this.avatar = avatar;
             }
 
-            public String getPhone() {
-                return phone;
-            }
-
-            public void setPhone(String phone) {
-                this.phone = phone;
-            }
-
             @Override
             public int describeContents() {
                 return 0;
@@ -119,21 +129,21 @@ public class EntertainmentListBean extends BaseBean< List<EntertainmentListBean.
 
             @Override
             public void writeToParcel(Parcel dest, int flags) {
+                dest.writeString(this.phone);
                 dest.writeString(this.nickname);
                 dest.writeString(this.avatar);
-                dest.writeString(this.phone);
             }
 
             public UserBean() {
             }
 
             protected UserBean(Parcel in) {
+                this.phone = in.readString();
                 this.nickname = in.readString();
                 this.avatar = in.readString();
-                this.phone = in.readString();
             }
 
-            public static final Creator<UserBean> CREATOR = new Creator<UserBean>() {
+            public static final Parcelable.Creator<UserBean> CREATOR = new Parcelable.Creator<UserBean>() {
                 @Override
                 public UserBean createFromParcel(Parcel source) {
                     return new UserBean(source);
@@ -145,6 +155,7 @@ public class EntertainmentListBean extends BaseBean< List<EntertainmentListBean.
                 }
             };
         }
+
 
         @Override
         public int describeContents() {
@@ -159,6 +170,7 @@ public class EntertainmentListBean extends BaseBean< List<EntertainmentListBean.
             dest.writeInt(this.type);
             dest.writeString(this.img);
             dest.writeParcelable(this.user, flags);
+            dest.writeParcelable(this.size, flags);
         }
 
         public OBean() {
@@ -171,6 +183,7 @@ public class EntertainmentListBean extends BaseBean< List<EntertainmentListBean.
             this.type = in.readInt();
             this.img = in.readString();
             this.user = in.readParcelable(UserBean.class.getClassLoader());
+            this.size = in.readParcelable(SizeBean.class.getClassLoader());
         }
 
         public static final Creator<OBean> CREATOR = new Creator<OBean>() {

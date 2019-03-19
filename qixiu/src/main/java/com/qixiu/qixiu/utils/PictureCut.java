@@ -291,8 +291,8 @@ public class PictureCut {
     }
 
     /*
-    *
-    * *获取缩略图**/
+     *
+     * *获取缩略图**/
     private static String newPath;
 
     public static String getThubImage(String path) {
@@ -499,8 +499,8 @@ public class PictureCut {
         }
     }
     /*
-    *
-    * *获取缩略图**/
+     *
+     * *获取缩略图**/
 
     /**
      * @param path          路径
@@ -568,7 +568,14 @@ public class PictureCut {
         String tag = url.substring(url.lastIndexOf('.'), url.length());
         url = url.replace(tag, "");
         int posiotion = url.lastIndexOf("/");
-        String code = url.substring(posiotion, url.length() - 1);
+        String code = url.substring(posiotion, url.length());
+        return code.replace("/", "");
+    }
+
+    //获取网络地址的图片或者视频的url标识
+    public static String getCodeAndTag(String url) {
+        int posiotion = url.lastIndexOf("/");
+        String code = url.substring(posiotion, url.length());
         return code.replace("/", "");
     }
 
@@ -588,6 +595,21 @@ public class PictureCut {
         return path;
     }
 
+    //查找其他目录
+    public static String getPath(String code, String path) {
+        File file = new File(path);
+//        Log.e("picpath", Environment.getExternalStorageDirectory().getPath() + "/sdcard/DCIM/");
+        try {
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            Log.e("picpath", file.getPath());
+        } catch (Exception e) {
+            Log.e("picpath", e.toString());
+        }
+        return getFilePath(file, code);
+    }
+
     public static String creatPath() {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "");
         try {
@@ -602,6 +624,7 @@ public class PictureCut {
     }
 
     public static String getFilePath(File file, String code) {
+        String path = null;
         try {
             File files[] = file.listFiles();
             for (File f : files) {
@@ -613,6 +636,26 @@ public class PictureCut {
                     }
                 } else {
                     getFilePath(f, code);
+                }
+            }
+        } catch (Exception e) {
+            return null;
+        }
+        return path;
+    }
+
+    public static String getFilePath(File file, String code, String end) {
+        try {
+            File files[] = file.listFiles();
+            for (File f : files) {
+                if (f.isFile()) {
+                    if (f.getPath().contains(code) && f.getName().equals(end)) {
+                        path = f.getPath();
+                        Log.e("picpath", f.getPath());
+                        return f.getPath();
+                    }
+                } else {
+                    getFilePath(f, code, end);
                 }
             }
         } catch (Exception e) {
@@ -637,10 +680,30 @@ public class PictureCut {
         }
     }
 
+    public static void deleteFileWith(File file) {
+        try {
+            File files[] = file.listFiles();
+            for (File f : files) {
+                if (f.isFile()) {
+                    f.delete();
+                } else {
+                    deleteFileWith(f);
+                }
+            }
+        } catch (Exception e) {
+        }
+    }
+
     //清除缓存的时候调用
     public static void deleteAllImage() {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "");
         deleteFileWith(file, "upload");
+    }
+
+    //清除缓存的时候调用
+    public static void deleteAllFile(String path) {
+        File file = new File(path);
+        deleteFileWith(file, "");
     }
 
     //获取指定尺寸的缩略图
@@ -701,7 +764,7 @@ public class PictureCut {
                     try {
                         Log.e("LOGCAT", "run");
                         //从网络获取缩略图，先看看本地有没有这号文件
-                        String code = PictureCut.getCode(url);
+                        String code = PictureCut.getCodeAndTag(url);
                         String path = PictureCut.getPath(code);
                         if (path != null && new File(path).length() > 200) {
                             //如果有，直接返回本地路径
@@ -877,7 +940,7 @@ public class PictureCut {
     }
 
     public static class CompressLuban {
-        public static void comPress(Context context, List<String> paths,CallBack callBack) {
+        public static void comPress(Context context, List<String> paths, CallBack callBack) {
             //todo 最新款压缩图片
             Flowable.just(paths)
                     .observeOn(Schedulers.io())
@@ -897,16 +960,16 @@ public class PictureCut {
                     });
         }
 
-        public static void toBase64s(List<File> files,CallBack callBack){
+        public static void toBase64s(List<File> files, CallBack callBack) {
             Flowable.just(files)
                     .observeOn(Schedulers.io())
                     .map(new Function<List<File>, List<String>>() {
                         @Override
                         public List<String> apply(List<File> files) throws Exception {
-                            List<String>  list=new ArrayList<>();
+                            List<String> list = new ArrayList<>();
                             for (int i = 0; i < files.size(); i++) {
-                               Bitmap bitmap= BitmapFactory.decodeFile(files.get(i).getPath());
-                               String base64=ImgHelper.bitmap2StrByBase64(bitmap);
+                                Bitmap bitmap = BitmapFactory.decodeFile(files.get(i).getPath());
+                                String base64 = ImgHelper.bitmap2StrByBase64(bitmap);
                                 list.add(base64);
                             }
                             return list;

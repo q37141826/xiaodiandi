@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -66,6 +67,7 @@ public class NewsFragment extends RequestFragment implements XRecyclerView.Loadi
     public void onSuccess(BaseBean data) {
         if (data instanceof NewsHomeBean) {
             NewsHomeBean bean = (NewsHomeBean) data;
+            imageUrlAdapter.setScaleType(ImageView.ScaleType.FIT_XY);
             imageUrlAdapter.refreshData(bean.getO().getBanner());
             for (int i = 0; i < bean.getO().getVideo().size(); i++) {
                 bean.getO().getVideo().get(i).setType(i == 0 ? 0 : 1);

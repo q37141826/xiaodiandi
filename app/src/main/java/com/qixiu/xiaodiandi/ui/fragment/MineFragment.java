@@ -1,12 +1,13 @@
 package com.qixiu.xiaodiandi.ui.fragment;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -14,6 +15,7 @@ import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.wigit.GotoView;
+import com.qixiu.xiaodiandi.BuildConfig;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
@@ -27,8 +29,10 @@ import com.qixiu.xiaodiandi.ui.activity.mine.TicketActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.mycollection.MyCollectionActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.mypoints.MyPointsActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.OrderActivity;
+import com.qixiu.xiaodiandi.ui.activity.mine.vip.InviteActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.vip.VipActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
+import com.qixiu.xiaodiandi.utils.GlideUtils;
 import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
 import java.util.HashMap;
@@ -87,15 +91,30 @@ public class MineFragment extends RequestFragment {
     GotoView gotoAddress;
     @BindView(R.id.gotoMyCollection)
     GotoView gotoMyCollection;
-    private Unbinder unbinder;
+    @BindView(R.id.gotoVip)
+    GotoView gotoVip;
+    @BindView(R.id.gotoPhone)
+    GotoView gotoPhone;
+    @BindView(R.id.gotoViewHelp)
+    GotoView gotoViewHelp;
+    @BindView(R.id.gotoTest)
+    GotoView gotoTest;
+    @BindView(R.id.vg_title)
+    RelativeLayout vgTitle;
+    Unbinder unbinder1;
     private String serivicePhone;
+    private boolean isVip;
+    private UserBean bean;
+    private PopupWindow popupWindow;
+    private View contentView;
 
     @Override
     public void onSuccess(BaseBean data) {
         if (data instanceof UserBean) {
-            UserBean bean = (UserBean) data;
+            bean = (UserBean) data;
             serivicePhone = bean.getO().getServicetelephone();
-            Glide.with(getContext()).load(ImageUrlUtils.getFinnalImageUrl(bean.getO().getAvatar())).into(circularHead);
+            GlideUtils.loadImage(ImageUrlUtils.getFinnalImageUrl(bean.getO().getAvatar()),circularHead,getContext());
+//            Glide.with(getContext()).load().into(circularHead);
             textViewPhone.setText(bean.getO().getPhone());
             textViewVipname.setText(bean.getO().getGroup_name());
             textViewVipId.setText("ID:  " + bean.getO().getAccount());
@@ -110,7 +129,12 @@ public class MineFragment extends RequestFragment {
             textViewNumWaitSend.setVisibility(bean.getE().getNoReply() == 0 ? View.GONE : View.VISIBLE);
             textViewNumWaitReceive.setText(bean.getE().getNoTake() + "");
             textViewNumWaitReceive.setVisibility(bean.getE().getNoTake() == 0 ? View.GONE : View.VISIBLE);
-
+            isVip = !bean.getO().getGroup_name().contains("普通");
+            if (isVip) {
+                gotoVip.setFirstText("我要推荐");
+            } else {
+                gotoVip.setFirstText("我要成为会员");
+            }
             if (bean.getO().getSigned() == 1) {
                 textViewSign.setEnabled(false);
                 textViewSign.setText("已签到");
@@ -138,7 +162,7 @@ public class MineFragment extends RequestFragment {
     @Override
     protected void onInitData() {
         mTitleView.getView().setVisibility(View.GONE);
-
+        gotoAllOrder.getSecondView().setTextSize(12);
     }
 
     @Override
@@ -156,20 +180,6 @@ public class MineFragment extends RequestFragment {
     @Override
     protected int getLayoutResource() {
         return R.layout.fragment_mine;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
 
@@ -222,7 +232,11 @@ public class MineFragment extends RequestFragment {
                 break;
 
             case R.id.gotoVip:
-                BindWebActivity.start(getContext(), BindWebActivity.class);
+                if (isVip) {
+                    InviteActivity.start(getContext(), InviteActivity.class);
+                } else {
+                    BindWebActivity.start(getContext(), BindWebActivity.class);
+                }
                 break;
 
             case R.id.gotoViewHelp:
@@ -232,11 +246,40 @@ public class MineFragment extends RequestFragment {
 
                 break;
             case R.id.gotoPhone:
-                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + serivicePhone));//跳转到拨号界面，同时传递电话号码
-                startActivity(dialIntent);
+                if (popupWindow != null) {
+                    showPop();
+                } else {
+                    createPop();
+                }
+//                Intent dialIntent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + serivicePhone));//跳转到拨号界面，同时传递电话号码
+//                startActivity(dialIntent);
                 break;
         }
     }
+
+    private void createPop() {
+        contentView = View.inflate(getContext(), R.layout.pop_qrcode, null);
+        popupWindow = new PopupWindow(contentView);
+        popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,
+                true);
+//这句话让popuwindow沉浸状态栏
+        popupWindow.setClippingEnabled(false);
+        ImageView imageView = contentView.findViewById(R.id.imageViewQrcode);
+        Glide.with(getContext()).load(BuildConfig.BASE_URL + bean.getO().getCode().replace(BuildConfig.BASE_URL, "")).into(imageView);
+        RelativeLayout relativeLayout = contentView.findViewById(R.id.relativeLayout_back_for_dismiss);
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupWindow.dismiss();
+            }
+        });
+        showPop();
+    }
+
+    private void showPop() {
+        popupWindow.showAtLocation(contentView, Gravity.CENTER, 0, 0);
+    }
+
 
     private void gotoSign() {
         post(ConstantUrl.sign, null, new BaseBean());
@@ -246,5 +289,19 @@ public class MineFragment extends RequestFragment {
     @Override
     public void moveToPosition(int position) {
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder1 = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder1.unbind();
     }
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -21,8 +22,6 @@ import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.types.ClassifyBean;
 import com.qixiu.xiaodiandi.model.types.TypesProductListBean;
-import com.qixiu.xiaodiandi.ui.activity.baseactivity.GotoWebActivity;
-import com.qixiu.xiaodiandi.ui.activity.home.GoodsDetailsActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.SearchActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.RequestFragment;
 import com.qixiu.xiaodiandi.ui.fragment.types.TypesMenueAdapter;
@@ -51,6 +50,9 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
     EditText edittext;
     @BindView(R.id.imageViewGotoSearch)
     ImageView imageViewGotoSearch;
+    RelativeLayout relativeNothing;
+
+
     private TypesVipAdapter adapterTypes;
     private TypesMenueAdapter menueAdapter;
     //被选择的分类id
@@ -58,6 +60,16 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
     private ImageView imageViewHead;
     private ClassifyBean classifyBean;
     private ClassifyBean.OBean selectedBean;
+    private String vipId;
+    private boolean isVip = true;
+    private TypesProductListBean.OBean.CategoryBean topBean;
+
+    public void setVipPriceId(String vipPriceId) {
+        this.vipPriceId = vipPriceId;
+    }
+
+    private String vipPriceId;//这个决定哪一个价钱的商品出现在最上面
+
 
     public String getSelectedId() {
         return selectedId;
@@ -71,6 +83,9 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
     public void onSuccess(BaseBean data) {
         if (data instanceof ClassifyBean) {
             classifyBean = (ClassifyBean) data;
+            if (classifyBean.getO().size() != 0) {
+                vipId = classifyBean.getO().get(0).getId() + "";
+            }
             if (!TextUtils.isEmpty(selectedId)) {
                 for (int i = 0; i < classifyBean.getO().size(); i++) {
                     if ((classifyBean.getO().get(i).getId() + "").equals(selectedId)) {
@@ -96,36 +111,43 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
                 imageViewHead.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (bean.getO().getBanner().get(0).getType().equals("1")) {
-                            GoodsDetailsActivity.start(getContext(), GoodsDetailsActivity.class, bean.getO().getBanner().get(0).getUrl());
-                        } else {
-                            GotoWebActivity.start(getContext(), GotoWebActivity.class, bean.getO().getBanner().get(0).getUrl());
-                        }
+//                        if (bean.getO().getBanner().get(0).getType().equals("1")) {
+//                            GoodsDetailsActivity.start(getContext(), GoodsDetailsActivity.class, bean.getO().getBanner().get(0).getUrl());
+//                        } else {
+//                            GotoWebActivity.start(getContext(), GotoWebActivity.class, bean.getO().getBanner().get(0).getUrl());
+//                        }
                     }
                 });
                 Glide.with(getContext()).load(bean.getO().getBanner().get(0).getPic()).into(imageViewHead);
             }
-            //是否为第一个vip
-            if (classifyBean != null) {
-                if (classifyBean.getO().get(0).isSelected()) {//如果选中了会员专区，那么所有的item刷为vip
-                    adapterTypes.setIs_vip(true);
-                } else {
-                    adapterTypes.setIs_vip(false);
+            //设置第二个banner的位置
+            if (isVip) {
+                for (int i = 0; i < bean.getO().getCategory().size(); i++) {
+                    if ((bean.getO().getCategory().get(i).getCate_name()).contains("39900") && (bean.getO().getBanner().size() > 1)) {
+                        bean.getO().getCategory().get(i).setBannerBean(bean.getO().getBanner().get(1));
+                    }
+                }
+                //把点击的vip对应价格的单元放到最高处
+                if (!TextUtils.isEmpty(vipPriceId)) {
+                    topBean = null;
+                    for (int i = 0; i < bean.getO().getCategory().size(); i++) {
+                        if ((bean.getO().getCategory().get(i).getId() + "").equals(vipPriceId)) {
+                            topBean = bean.getO().getCategory().get(i);
+                            break;
+                        }
+                    }
+                    if (topBean != null) {
+                        bean.getO().getCategory().remove(topBean);
+                        bean.getO().getCategory().add(0, topBean);
+                    }
                 }
             }
             adapterTypes.refreshData(bean.getO().getCategory());
-            if (!adapterTypes.isIs_vip()) {
-                //脚底下的foot
-                if (bean.getO().getBanner().size() > 2) {
-                    bean.getO().getCategory().get(bean.getO().getCategory().size() - 1).setBannerFoot(bean.getO().getBanner().get(1).getPic());
-                }
-            } else {
-                TypesProductListBean.OBean.CategoryBean lastBean = new TypesProductListBean.OBean.CategoryBean();
-                lastBean.setLast(true);
-                bean.getO().getCategory().add(lastBean);//添加这一个
-            }
-
-
+        }
+        if (adapterTypes.getDatas().size() == 0) {
+            relativeNothing.setVisibility(View.VISIBLE);
+        } else {
+            relativeNothing.setVisibility(View.GONE);
         }
     }
 
@@ -145,6 +167,7 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
         View headerView = View.inflate(getContext(), R.layout.header_types, null);
         xrecyclerView.addHeaderView(headerView);
         imageViewHead = headerView.findViewById(R.id.imageViewHead);
+        relativeNothing = view.findViewById(R.id.relativeNothing);
         imageViewGotoSearch.setOnClickListener(this);
     }
 
@@ -220,6 +243,8 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
             selectedId = bean.getId() + "";
             bean.setSelected(true);
             menueAdapter.notifyDataSetChanged();
+            isVip = vipId.equals(selectedId);
+            vipPriceId = null;//选择的价钱id打空，还原排序
         }
 
     }

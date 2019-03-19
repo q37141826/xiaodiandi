@@ -10,6 +10,18 @@ public class MyTimer extends CountDownTimer {
     private String originalText;
     private TimeStateListenner listenner;
 
+    public void setTextBefore(String textBefore) {
+        this.textBefore = textBefore;
+    }
+
+    public void setTextAfter(String textAfter) {
+        this.textAfter = textAfter;
+    }
+
+    private String textBefore;
+    private String textAfter;
+
+
     public void setListenner(TimeStateListenner listenner) {
         this.listenner = listenner;
     }
@@ -33,12 +45,17 @@ public class MyTimer extends CountDownTimer {
     public MyTimer() {
         super(60 * 1000, 1000);
     }
-
+    public MyTimer(int totoal,int per) {
+        super(totoal, per);
+    }
     @Override
     public void onTick(long millisUntilFinished) {
         Log.i("test", "??");
         if (textView != null) {
             textView.setText(millisUntilFinished / 1000 + "秒后重发");
+            if(!TextUtils.isEmpty(textBefore)&&!TextUtils.isEmpty(textAfter)){
+                textView.setText(textBefore+millisUntilFinished / 1000 + textAfter);
+            }
             textView.setEnabled(false);
         }
         if (listenner != null) {

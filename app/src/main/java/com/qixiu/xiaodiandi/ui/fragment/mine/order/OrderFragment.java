@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -36,6 +37,8 @@ import butterknife.Unbinder;
  */
 
 public class OrderFragment extends RequestFragment implements XRecyclerView.LoadingListener, OnRecyclerItemListener<OrderBean.OBean>, MyOrderAdapter.MyOrderRefreshListener {
+    @BindView(R.id.relativeNothing)
+    RelativeLayout relativeNothing;
     private String type;
     @BindView(R.id.recycleView_myorederall)
     XRecyclerView recycleViewMyorederall;
@@ -60,6 +63,11 @@ public class OrderFragment extends RequestFragment implements XRecyclerView.Load
             } else {
                 adapter.addDatas(bean.getO());
             }
+        }
+        if (adapter.getDatas().size() == 0) {
+            relativeNothing.setVisibility(View.VISIBLE);
+        } else {
+            relativeNothing.setVisibility(View.GONE);
         }
         swiprefreshOrder.setRefreshing(false);
         recycleViewMyorederall.loadMoreComplete();
@@ -115,7 +123,8 @@ public class OrderFragment extends RequestFragment implements XRecyclerView.Load
 
     @Override
     public void moveToPosition(int position) {
-
+        pageNo=1;
+        getData();
     }
 
     @Override
@@ -166,5 +175,10 @@ public class OrderFragment extends RequestFragment implements XRecyclerView.Load
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void showProgress() {
+//        super.showProgress();
     }
 }

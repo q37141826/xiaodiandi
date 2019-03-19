@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.home.PlayActivity">
+
+    <RelativeLayout
+        android:id="@+id/vg_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></RelativeLayout>
+
+    <com.qixiu.xiaodiandi.ui.wigit.JzplayerMiedeo
+        android:id="@+id/jcplayer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+      ></com.qixiu.xiaodiandi.ui.wigit.JzplayerMiedeo>
+
+    <VideoView
+        android:visibility="gone"
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--<org.song.videoplayer.DemoQSVideoView-->
+        <!--android:id="@+id/qs_videoview"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:visibility="gone"></org.song.videoplayer.DemoQSVideoView>-->
+</android.support.constraint.ConstraintLayout>

@@ -1,5 +1,8 @@
 package com.qixiu.xiaodiandi.model.home;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.qixiu.qixiu.request.bean.BaseBean;
 
 import java.util.List;
@@ -147,7 +150,7 @@ public class HomeBean extends BaseBean<HomeBean.OBean> {
             }
         }
 
-        public static class VipCategoryBean {
+        public static class VipCategoryBean implements Parcelable {
             /**
              * id : 69
              * cate_name : 399元超级大礼包
@@ -181,6 +184,39 @@ public class HomeBean extends BaseBean<HomeBean.OBean> {
             public void setPic(String pic) {
                 this.pic = pic;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(this.id);
+                dest.writeString(this.cate_name);
+                dest.writeString(this.pic);
+            }
+
+            public VipCategoryBean() {
+            }
+
+            protected VipCategoryBean(Parcel in) {
+                this.id = in.readInt();
+                this.cate_name = in.readString();
+                this.pic = in.readString();
+            }
+
+            public static final Parcelable.Creator<VipCategoryBean> CREATOR = new Parcelable.Creator<VipCategoryBean>() {
+                @Override
+                public VipCategoryBean createFromParcel(Parcel source) {
+                    return new VipCategoryBean(source);
+                }
+
+                @Override
+                public VipCategoryBean[] newArray(int size) {
+                    return new VipCategoryBean[size];
+                }
+            };
         }
 
         public static class ProductBestBean {

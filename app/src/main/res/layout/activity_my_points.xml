@@ -45,7 +45,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin60dp"
-            android:background="@color/alpha_20_green"
+            android:background="#f4dec6"
             android:gravity="center"
             android:orientation="horizontal"
 
@@ -63,14 +63,14 @@
                 <TextView
                     style="@style/text_normal"
                     android:text="今日收益"
-                    android:textColor="@color/white"
+                    android:textColor="@color/font_grey"
                     android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/textViewPointsToday"
                     style="@style/text_normal"
                     android:text="0积分"
-                    android:textColor="@color/white"
+                    android:textColor="@color/font_grey"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -91,14 +91,14 @@
                 <TextView
                     style="@style/text_normal"
                     android:text="本月收益"
-                    android:textColor="@color/white"
+                    android:textColor="@color/font_grey"
                     android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/textViewPointsMonth"
                     style="@style/text_normal"
                     android:text="0积分"
-                    android:textColor="@color/white"
+                    android:textColor="@color/font_grey"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -120,14 +120,14 @@
                 <TextView
                     style="@style/text_normal"
                     android:text="累计收益"
-                    android:textColor="@color/white"
+                    android:textColor="@color/font_grey"
                     android:textSize="17sp" />
 
                 <TextView
                     android:id="@+id/textViewPointsGet"
                     style="@style/text_normal"
                     android:text="0积分"
-                    android:textColor="@color/white"
+                    android:textColor="@color/font_grey"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
@@ -152,6 +152,7 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/textViewGotoGetDetails"
                 style="@style/text_normal"
                 android:onClick="getCashDetails"
                 android:text="提现明细>"

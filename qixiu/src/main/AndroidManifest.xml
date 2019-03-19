@@ -33,13 +33,21 @@
             android:name=".utils.audio.PlayMusicService"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name=".service.FileDownloadService"
+            android:enabled="true"
+            android:exported="true"></service>
 
         <activity
             android:name=".google.zxing.client.android.CaptureActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".camera.CircleViedoActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+        <activity
+            android:name=".activity.PhotoCorpActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
     </application>
 

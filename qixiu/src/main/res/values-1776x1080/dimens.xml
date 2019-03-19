@@ -256,6 +256,22 @@
     <dimen name="margin248dp">744px</dimen>
     <dimen name="margin249dp">747px</dimen>
     <dimen name="margin250dp">750px</dimen>
+    <dimen name="margin265dp">792px</dimen>
+    <dimen name="margin266dp">795px</dimen>
+    <dimen name="margin267dp">798px</dimen>
+    <dimen name="margin268dp">801px</dimen>
+    <dimen name="margin269dp">804px</dimen>
+    <dimen name="margin270dp">807px</dimen>
+    <dimen name="margin271dp">810px</dimen>
+    <dimen name="margin272dp">813px</dimen>
+    <dimen name="margin273dp">816px</dimen>
+    <dimen name="margin274dp">819px</dimen>
+    <dimen name="margin275dp">822px</dimen>
+    <dimen name="margin276dp">825px</dimen>
+    <dimen name="margin277dp">828px</dimen>
+    <dimen name="margin278dp">831px</dimen>
+    <dimen name="margin279dp">834px</dimen>
+    <dimen name="margin280dp">837px</dimen>
 
     <dimen name="margin300dp">900px</dimen>
 </resources>

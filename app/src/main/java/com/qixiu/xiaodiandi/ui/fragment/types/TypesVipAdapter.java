@@ -22,17 +22,6 @@ import com.qixiu.xiaodiandi.ui.activity.home.GoodsDetailsActivity;
  */
 
 public class TypesVipAdapter extends RecyclerBaseAdapter {
-
-    boolean is_vip = false;
-
-    public boolean isIs_vip() {
-        return is_vip;
-    }
-
-    public void setIs_vip(boolean is_vip) {
-        this.is_vip = is_vip;
-    }
-
     @Override
     public int getLayoutId() {
         return R.layout.item_types_vip;
@@ -47,45 +36,49 @@ public class TypesVipAdapter extends RecyclerBaseAdapter {
         RecyclerView recyclerView;
         TextView textTitle;
         LinearLayout linearlayoutItem;
-        ImageView imageViewFoot;
+        ImageView imageViewHeader;
 
         public TypesVipHolder(View itemView, Context context, RecyclerView.Adapter adapter) {
             super(itemView, context, adapter);
             recyclerView = itemView.findViewById(R.id.recyclerView);
             textTitle = itemView.findViewById(R.id.textTitle);
             linearlayoutItem = itemView.findViewById(R.id.linearlayoutItem);
-            imageViewFoot = itemView.findViewById(R.id.imageViewFoot);
+            imageViewHeader = itemView.findViewById(R.id.imageViewHeader);
         }
 
         @Override
         public void bindHolder(int position) {
             recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
             RecyclerBaseAdapter adapter;
-            if (is_vip) {
-                adapter = new VipTypeInnerAdapter();
-            } else {
-                adapter = new TypeInnerAdapter();
-            }
+            adapter = new TypeInnerAdapter();
             recyclerView.setAdapter(adapter);
             if (mData instanceof TypesProductListBean.OBean.CategoryBean) {
                 TypesProductListBean.OBean.CategoryBean bean = (TypesProductListBean.OBean.CategoryBean) mData;
-                if(bean.getProduct()!=null){//因为最后一个item数据是自己创建的，并没有这个产品部分
+                textTitle.setText(bean.getCate_name());
+                if (bean.getProduct() != null) {//因为最后一个item数据是自己创建的，并没有这个产品部分
                     adapter.refreshData(bean.getProduct());
-                    textTitle.setText(bean.getCate_name());
                 }
-                if (bean.isLast() && is_vip) {
-                    linearlayoutItem.setVisibility(View.GONE);
-                    imageViewFoot.setVisibility(View.VISIBLE);
-                    Glide.with(mContext).load(bean.getBannerFoot()).into(imageViewFoot);
+                if (bean.getBannerBean() != null) {
+                    imageViewHeader.setVisibility(View.VISIBLE);
+                    Glide.with(mContext).load(bean.getBannerBean().getPic()).into(imageViewHeader);
+                    imageViewHeader.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+//                            if (bean.getBannerBean().getType().equals("1")) {
+//                                GoodsDetailsActivity.start(mContext, GoodsDetailsActivity.class, bean.getBannerBean().getUrl());
+//                            } else {
+//                                GotoWebActivity.start(mContext, GotoWebActivity.class, bean.getBannerBean().getUrl());
+//                            }
+                        }
+                    });
                 } else {
-                    linearlayoutItem.setVisibility(View.VISIBLE);
-                    imageViewFoot.setVisibility(View.GONE);
+                    imageViewHeader.setVisibility(View.GONE);
                 }
             }
             adapter.setOnItemClickListener(new OnRecyclerItemListener() {
                 @Override
                 public void onItemClick(View v, RecyclerView.Adapter adapter, Object data) {
-                    if (data!=null&&data instanceof TypesProductListBean.OBean.CategoryBean.ProductBean) {
+                    if (data != null && data instanceof TypesProductListBean.OBean.CategoryBean.ProductBean) {
                         TypesProductListBean.OBean.CategoryBean.ProductBean bean = (TypesProductListBean.OBean.CategoryBean.ProductBean) data;
                         GoodsDetailsActivity.start(mContext, GoodsDetailsActivity.class, bean.getId() + "");
                     }
@@ -104,25 +97,10 @@ public class TypesVipAdapter extends RecyclerBaseAdapter {
 
         @Override
         public Object createViewHolder(View itemView, Context context, int viewType) {
-
             return new TypeInnerHolder(itemView, context, this);
-
-
         }
     }
 
-    public class VipTypeInnerAdapter extends RecyclerBaseAdapter {
-
-        @Override
-        public int getLayoutId() {
-            return R.layout.item_types_inner;
-        }
-
-        @Override
-        public Object createViewHolder(View itemView, Context context, int viewType) {
-            return new TypeInnerVipHolder(itemView, context, this);
-        }
-    }
 
     public class TypeInnerHolder extends RecyclerBaseHolder {
         ImageView imageView;
@@ -143,36 +121,7 @@ public class TypesVipAdapter extends RecyclerBaseAdapter {
                 TypesProductListBean.OBean.CategoryBean.ProductBean bean = (TypesProductListBean.OBean.CategoryBean.ProductBean) mData;
                 Glide.with(mContext).load(bean.getImage()).into(imageView);
                 textViewName.setText(bean.getStore_name());
-                textViewPrice.setText(ConstantString.RMB_SYMBOL +bean.getPrice());
-
-            }
-        }
-    }
-
-
-    public class TypeInnerVipHolder extends RecyclerBaseHolder {
-        ImageView imageView;
-        TextView textViewName,
-                textViewPrice;
-        TextView textViewBrand;
-
-        public TypeInnerVipHolder(View itemView, Context context, RecyclerView.Adapter adapter) {
-            super(itemView, context, adapter);
-            imageView = itemView.findViewById(R.id.imageView);
-            textViewBrand = itemView.findViewById(R.id.textViewBrand);
-            textViewName = itemView.findViewById(R.id.textViewName);
-            textViewPrice = itemView.findViewById(R.id.textViewPrice);
-
-        }
-
-        @Override
-        public void bindHolder(int position) {
-            if (mData instanceof TypesProductListBean.OBean.CategoryBean.ProductBean) {
-                TypesProductListBean.OBean.CategoryBean.ProductBean bean = (TypesProductListBean.OBean.CategoryBean.ProductBean) mData;
-                Glide.with(mContext).load(bean.getImage()).into(imageView);
-                textViewName.setText(bean.getStore_name());
-                textViewBrand.setText(bean.getStore_info());
-                textViewPrice.setText(ConstantString.RMB_SYMBOL +bean.getPrice());
+                textViewPrice.setText(ConstantString.RMB_SYMBOL + bean.getPrice());
             }
         }
     }

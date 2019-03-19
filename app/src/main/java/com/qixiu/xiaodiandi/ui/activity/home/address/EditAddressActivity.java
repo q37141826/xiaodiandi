@@ -41,9 +41,11 @@ public class EditAddressActivity extends TitleActivity implements OKHttpUIUpdata
     private String province;
     private String city;
     private String count;
+    boolean isDefault = false;
 
     @Override
     protected void onInitViewNew() {
+        isDefault=getIntent().getBooleanExtra(IntentDataKeyConstant.ADDRESS_IS_DEFAULT,false);
         okmodel = new OKHttpRequestModel(this);
         btn_address_edite = (Button) findViewById(R.id.btn_address_edite);
         textViewAddress = findViewById(R.id.textViewAddress);
@@ -101,7 +103,7 @@ public class EditAddressActivity extends TitleActivity implements OKHttpUIUpdata
         map.put("real_name", name);
         map.put("detail", address);
         map.put("phone", phone);
-        map.put("is_default", addressoBean!=null?addressoBean.getIs_default():0 + "");
+        map.put("is_default", addressoBean != null ? addressoBean.getIs_default() :(isDefault?"1":"0"));
         map.put("province", province + "");
         map.put("city", city + "");
         map.put("district", count + "");

@@ -72,7 +72,7 @@ public class GoodsDetailsBean extends BaseBean<GoodsDetailsBean.OBean> {
             private String description;
             private int collect;
             private int cartnum;
-            private String intergral;
+            private String integral;
 
             public String getKeyword() {
                 return keyword;
@@ -83,11 +83,11 @@ public class GoodsDetailsBean extends BaseBean<GoodsDetailsBean.OBean> {
             }
 
             public String getIntergral() {
-                return intergral;
+                return integral;
             }
 
             public void setIntergral(String intergral) {
-                this.intergral = intergral;
+                this.integral = intergral;
             }
 
             private List<String> slider_image;

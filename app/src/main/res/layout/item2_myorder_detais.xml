@@ -15,12 +15,12 @@
         android:layout_below="@id/textView_goodsName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_marginLeft="@dimen/margin15dp"
-        android:layout_marginRight="@dimen/margin15dp"
-        android:background="@color/lineColor"></View>
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="1px"-->
+        <!--android:layout_marginLeft="@dimen/margin15dp"-->
+        <!--android:layout_marginRight="@dimen/margin15dp"-->
+        <!--android:background="@color/lineColor"></View>-->
 
 
         <ImageView
@@ -46,7 +46,13 @@
             android:layout_margin="5px"
             android:text="订单商品简介"
             android:textColor="@color/txt_737373" />
-
+        <TextView
+            android:id="@+id/textView_goodsChrac"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5px"
+            android:text=""
+            android:textColor="@color/text_grey" />
         <TextView
             android:id="@+id/textView_goodsPrice"
             android:layout_width="wrap_content"

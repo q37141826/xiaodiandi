@@ -74,6 +74,8 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
     Unbinder unbinder;
     @BindView(R.id.tv_deleteAll)
     TextView tvDeleteAll;
+    @BindView(R.id.relativeNothing)
+    RelativeLayout relativeNothing;
     private ShopCarAdapter adapter;
 
     private boolean isAllSelected = false;//是否全部选中
@@ -97,7 +99,6 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
             adapter.refreshData(bean.getO().getValid());
             selected(null);//刷新一下外部统计的view
         }
-        srlShopcar.setRefreshing(false);
         if (data.getUrl().equals(ConstantUrl.addShopCarURl)) {
             requestData();
         }
@@ -109,6 +110,12 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
         if (data instanceof CreateOrderBean) {
             CreateOrderBean bean = (CreateOrderBean) data;
             ConfirmOrderActivity.start(getContext(), ConfirmOrderActivity.class, bean.getO());
+        }
+        srlShopcar.setRefreshing(false);
+        if (adapter.getDatas().size() == 0) {
+            relativeNothing.setVisibility(View.VISIBLE);
+        } else {
+            relativeNothing.setVisibility(View.GONE);
         }
     }
 
@@ -245,7 +252,8 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
             }
         }
         tvShopcarTotalnum.setText("共计" + num + "件商品");
-        tvTotalprice.setText("¥   " + money);
+        String str = NumUtils.formatDouble3(money);
+        tvTotalprice.setText("¥   " + str);
 
         DrawableUtils.setLeftDrawableResouce(tvAllSelected, getContext(), isAllSelected ? R.mipmap.shopcar_goods_select : R.mipmap.shopcar_goods_notselect);
     }
@@ -259,7 +267,10 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_deleteAll:
-                ArshowDialogUtils.showDialog(getContext(), "确定删除吗？", this);
+                if (adapter.getDatas().size() == 0) {
+                    return;
+                }
+                ArshowDialogUtils.showDialog(getContext(), "确定清空购物车吗？", this);
                 break;
             case R.id.tv_all_selected:
                 isAllSelected = !isAllSelected;
@@ -282,11 +293,20 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
 
     @Override
     public void onClickPositive(DialogInterface dialogInterface, int which) {
-        if (selectedId == null || TextUtils.isEmpty(selectedId.toString())) {
-            return;
+//        if (selectedId == null || TextUtils.isEmpty(selectedId.toString())) {
+//            return;
+//        }
+        StringBuffer ids = new StringBuffer("");
+        for (int i = 0; i < adapter.getDatas().size(); i++) {
+            if (i == getDatas().size()) {
+                ids.append(getDatas().get(i).getId());
+            } else {
+                ids.append(getDatas().get(i).getId() + ",");
+            }
         }
+
         Map<String, String> map = new HashMap<>();
-        map.put(IntentDataKeyConstant.ID, selectedId.toString());
+        map.put(IntentDataKeyConstant.ID, ids.toString());
         requestDelete(map);
     }
 

@@ -5,7 +5,9 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
+import com.qixiu.qixiu.utils.Preference;
 import com.qixiu.xiaodiandi.R;
+import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.ui.activity.Loginactivity;
 import com.qixiu.xiaodiandi.ui.activity.MainActivity;
@@ -21,7 +23,19 @@ public class StartPageActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide_page);
+//        textMethoed();//todo 测试的时候需要跳过登录加上这个， 正式版记得去掉
         onInitData();
+    }
+
+    private void textMethoed() {
+        String str = "{\n" +
+                "    \"c\": 1, \n" +
+                "    \"m\": \"登录成功\", \n" +
+                "    \"o\": \"347\", \n" +
+                "    \"url\": \"http://xdd.qixiuu.com//api/home/login\"\n" +
+                "}";
+        Preference.put(ConstantString.USERBEAN, str);
+        Preference.put(ConstantString.USERID, 347 + "");
     }
 
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -31,6 +32,8 @@ public class GetCashRecordActivity extends RequestActivity implements XRecyclerV
     XRecyclerView xrecyclerView;
     @BindView(R.id.swip_refreshlayout)
     SwipeRefreshLayout swipRefreshlayout;
+    @BindView(R.id.relativeNothing)
+    RelativeLayout relativeNothing;
     private GetCashRecordAdapter adapter;
 
     @Override
@@ -73,6 +76,13 @@ public class GetCashRecordActivity extends RequestActivity implements XRecyclerV
         }
         xrecyclerView.loadMoreComplete();
         swipRefreshlayout.setRefreshing(false);
+
+        if (adapter.getDatas().size() == 0) {
+            relativeNothing.setVisibility(View.VISIBLE);
+        } else {
+            relativeNothing.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -145,7 +155,7 @@ public class GetCashRecordActivity extends RequestActivity implements XRecyclerV
             public void bindHolder(int position) {
                 if (mData instanceof GetCatshRecordBean.OBean) {
                     GetCatshRecordBean.OBean bean = (GetCatshRecordBean.OBean) mData;
-                    textViewContent.setText("提现至"+bean.getExtract_type()+"账户");
+                    textViewContent.setText("提现至" + bean.getExtract_type() + "账户");
                     textViewTime.setText(bean.getAdd_time());
                     textViewMoney.setText(ConstantString.RMB_SYMBOL + bean.getBalance());
                     if (bean.getStatus() == -1) {

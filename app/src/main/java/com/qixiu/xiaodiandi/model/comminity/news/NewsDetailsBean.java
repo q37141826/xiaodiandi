@@ -33,11 +33,20 @@ public class NewsDetailsBean  extends BaseBean<NewsDetailsBean.OBean> {
 
         private int id;
         private String title;
+        private String visit;
         private String image_input;
         private String video;
         private int forward;
         private String content;
         private List<MessageBean> message;
+
+        public String getVisit() {
+            return visit;
+        }
+
+        public void setVisit(String visit) {
+            this.visit = visit;
+        }
 
         public int getId() {
             return id;

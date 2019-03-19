@@ -42,7 +42,7 @@ public class TypesMenueAdapter extends RecyclerBaseAdapter {
                 textView.setText(bean.getCate_name());
                 if(bean.isSelected()){
                     viewLine.setVisibility(View.VISIBLE);
-                    textView.setTextColor(mContext.getResources().getColor(R.color.theme_color02));
+                    textView.setTextColor(mContext.getResources().getColor(R.color.theme_color));
                 }else {
                     viewLine.setVisibility(View.INVISIBLE);
                     textView.setTextColor(mContext.getResources().getColor(R.color.font_grey));

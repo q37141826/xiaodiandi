@@ -40,6 +40,11 @@ public class InviteActivity extends RequestActivity {
     }
 
     @Override
+    public void adustTitle() {
+//        super.adustTitle();
+    }
+
+    @Override
     protected int getLayoutResource() {
         return R.layout.activity_invite;
     }

@@ -33,6 +33,14 @@
                     android:layout_height="@dimen/screenwith"></com.jude.rollviewpager.RollPagerView>
 
                 <ImageView
+                    android:id="@+id/imageViewHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/margin53dp"
+                    android:onClick="shareGoods"
+                    android:src="@mipmap/goods_home2" />
+                <ImageView
                     android:id="@+id/imageViewShare"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -40,6 +48,13 @@
                     android:layout_marginRight="@dimen/margin18dp"
                     android:onClick="shareGoods"
                     android:src="@mipmap/goods_share" />
+
+                <cn.jzvd.JZVideoPlayerStandard
+                    android:id="@+id/jcplayer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/screenwith"
+                    android:visibility="gone"></cn.jzvd.JZVideoPlayerStandard>
+
             </RelativeLayout>
 
 
@@ -50,6 +65,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:layout_marginTop="@dimen/margin10dp"
                     android:id="@+id/textViewProductname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -129,13 +145,13 @@
                     android:background="@color/line_color"></View>
 
                 <LinearLayout
-                    android:paddingBottom="@dimen/margin10dp"
-                    android:paddingTop="@dimen/margin10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/margin15dp">
+                    android:paddingLeft="@dimen/margin15dp"
+                    android:paddingTop="@dimen/margin10dp"
+                    android:paddingBottom="@dimen/margin10dp">
 
                     <TextView
                         style="@style/text_normal"
@@ -255,6 +271,8 @@
                 android:layout_height="wrap_content"></WebView>
 
             <TextView
+                android:paddingBottom="@dimen/margin50dp"
+                android:paddingTop="@dimen/margin20dp"
                 android:id="@+id/textViewPText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -265,6 +283,7 @@
 
 
     <LinearLayout
+        android:id="@+id/fatherView"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin50dp"
         android:layout_alignParentBottom="true"
@@ -277,27 +296,31 @@
             android:orientation="horizontal">
 
             <TextView
+                android:layout_centerVertical="true"
                 android:id="@+id/textViewCollect"
                 android:layout_width="@dimen/margin61dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:drawableTop="@mipmap/goods_favorites"
-                android:drawablePadding="0px"
+                android:drawablePadding="@dimen/margin3dp"
                 android:gravity="center"
                 android:onClick="addToCollect"
                 android:text="收藏夹"
-                android:textColor="@color/font_grey" />
+                android:textColor="@color/font_grey"
+                android:textSize="12sp" />
 
             <TextView
+                android:layout_centerVertical="true"
                 android:id="@+id/textViewCart"
                 android:layout_width="@dimen/margin61dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:drawableTop="@mipmap/goods_shopping"
-                android:drawablePadding="0px"
+                android:drawablePadding="@dimen/margin3dp"
                 android:gravity="center"
                 android:onClick="gotoCarts"
                 android:text="购物车"
-                android:textColor="@color/font_grey" />
+                android:textColor="@color/font_grey"
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/textViewCartsNum"
@@ -322,9 +345,8 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/btn_green_high"
+                android:background="@color/theme_color"
                 android:gravity="center"
-                android:onClick="showPop"
                 android:text="加入购物车"
                 android:textColor="@color/white" />
 
@@ -333,9 +355,8 @@
                 android:layout_width="0px"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/btn_green_low"
+                android:background="@color/theme_color02"
                 android:gravity="center"
-                android:onClick="showPop"
                 android:text="立即购买"
                 android:textColor="@color/white" />
         </LinearLayout>

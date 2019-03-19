@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:layout_marginLeft="@dimen/margin5dp"
         android:scaleType="centerCrop"
         android:id="@+id/imageViewHead"
         android:layout_width="@dimen/margin248dp"

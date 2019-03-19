@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -36,6 +37,8 @@ public class MessageActivity extends RequestActivity implements XRecyclerView.Lo
     XRecyclerView xrecyclerView;
     @BindView(R.id.swiprefresh)
     SwipeRefreshLayout swiprefresh;
+    @BindView(R.id.relativeNothing)
+    RelativeLayout relativeNothing;
     private MessageAdapter adapter;
     private String selectedId;
 
@@ -90,6 +93,13 @@ public class MessageActivity extends RequestActivity implements XRecyclerView.Lo
                 }
             }
             adapter.notifyDataSetChanged();
+        }
+
+
+        if (adapter.getDatas().size() == 0) {
+            relativeNothing.setVisibility(View.VISIBLE);
+        } else {
+            relativeNothing.setVisibility(View.GONE);
         }
     }
 
@@ -147,6 +157,7 @@ public class MessageActivity extends RequestActivity implements XRecyclerView.Lo
                 selectedId = bean.getId() + "";
                 post(ConstantUrl.readMsgUrl, map, new BaseBean());
             }
+            TextHtmlActivity.start(getContext(), TextHtmlActivity.class, bean.getContent());
         }
     }
 

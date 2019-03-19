@@ -33,7 +33,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.qixiu.qixiu.application.AppManager;
 import com.qixiu.qixiu.application.NetStatusCheck;
+import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
+import com.qixiu.xiaodiandi.utils.DimenUtils;
 
 import java.util.ArrayList;
 
@@ -48,7 +50,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public String verify_id = "";
     private FragmentTransaction mFragmentTransaction;
     protected FragmentManager mSupportFragmentManager;
-    protected String[] photoPermission = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
+    protected String[] photoPermission = {Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
 
     public int windowHeight, windowWith;
     private Toolbar toolbar;
@@ -256,6 +259,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         } catch (Exception e) {
         }
         setStatebar(Color.TRANSPARENT);
+        DimenUtils.setWindowWith(windowWith);
     }
 
     @Override
@@ -389,6 +393,28 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (hasPermission(photoPermission)) {
             getdevice();
+        }else {
+            ToastUtil.toast("拒绝授权无法正常使用本产品");
+            finish();
         }
     }
+
+    /**
+     * 隐藏虚拟按键，并且全屏
+     */
+    protected void hideBottomUIMenu() {
+        //隐藏虚拟按键，并且全屏
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            View v = this.getWindow().getDecorView();
+            v.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            View decorView = getWindow().getDecorView();
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+    }
+
+
 }

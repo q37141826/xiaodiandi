@@ -45,7 +45,9 @@
 
         </LinearLayout>
 
-        <View style="@style/style_horizontal_line"></View>
+        <View
+            android:background="@color/lineColor"
+            style="@style/style_horizontal_line"></View>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,7 +76,9 @@
 
         </LinearLayout>
 
-        <View style="@style/style_horizontal_line"></View>
+        <View
+            android:background="@color/lineColor"
+            style="@style/style_horizontal_line"></View>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,6 +95,7 @@
                 android:textSize="13sp" />
 
             <TextView
+                android:paddingLeft="@dimen/margin5dp"
                 android:gravity="center_vertical"
                 android:id="@+id/textViewAddress"
                 android:onClick="selectAddress"
@@ -101,7 +106,9 @@
         </LinearLayout>
 
 
-        <View style="@style/style_horizontal_line"></View>
+        <View
+            android:background="@color/lineColor"
+            style="@style/style_horizontal_line"></View>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -128,7 +135,9 @@
 
         </LinearLayout>
 
-        <View style="@style/style_horizontal_line"></View>
+        <View
+            android:background="@color/lineColor"
+            style="@style/style_horizontal_line"></View>
 
 
     </LinearLayout>

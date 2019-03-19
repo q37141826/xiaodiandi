@@ -92,7 +92,7 @@ public class CommunityFragment extends MenueFragment {
 
             @Override
             public void onPageSelected(int position) {
-               mTitleView.getRightText().setVisibility(position==0?View.VISIBLE:View.GONE);
+                mTitleView.getRightText().setVisibility(position == 0 ? View.VISIBLE : View.GONE);
             }
 
             @Override

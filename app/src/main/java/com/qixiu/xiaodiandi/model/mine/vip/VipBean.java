@@ -6,6 +6,20 @@ public class VipBean extends BaseBean<VipBean.OBean> {
 
 
     /**
+     * e : {"charge":"3","chargemsg":"111111111111111"}
+     */
+
+    private EBean e;
+
+    public EBean getE() {
+        return e;
+    }
+
+    public void setE(EBean e) {
+        this.e = e;
+    }
+
+    /**
      * c : 1
      * m : 查询成功
      * o : {"uid":118,"avatar":"/public/uploads/2019-01-22/15481256887980.png","phone":"1515999999","account":"wx1181543580809","level":1,"integral":5,"group_name":"普通会员","rmd":"0.50","today":0,"month":0,"all":2,"friend":0,"friendsum":0}
@@ -146,6 +160,33 @@ public class VipBean extends BaseBean<VipBean.OBean> {
 
         public void setFriendsum(int friendsum) {
             this.friendsum = friendsum;
+        }
+    }
+
+
+    public static class EBean {
+        /**
+         * charge : 3
+         * chargemsg : 111111111111111
+         */
+
+        private String charge;
+        private String chargemsg;
+
+        public String getCharge() {
+            return charge;
+        }
+
+        public void setCharge(String charge) {
+            this.charge = charge;
+        }
+
+        public String getChargemsg() {
+            return chargemsg;
+        }
+
+        public void setChargemsg(String chargemsg) {
+            this.chargemsg = chargemsg;
         }
     }
 }

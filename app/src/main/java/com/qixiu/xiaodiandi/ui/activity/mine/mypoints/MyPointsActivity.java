@@ -1,6 +1,7 @@
 package com.qixiu.xiaodiandi.ui.activity.mine.mypoints;
 
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,6 +32,8 @@ public class MyPointsActivity extends RequestActivity {
     TextView textViewPointsMonth;
     @BindView(R.id.textViewPointsGet)
     TextView textViewPointsGet;
+    @BindView(R.id.textViewGotoGetDetails)
+    TextView textViewGotoGetDetails;
 
     @Override
     protected void onInitData() {
@@ -81,6 +84,8 @@ public class MyPointsActivity extends RequestActivity {
 
     @Override
     protected void onInitViewNew() {
+        TextPaint paint = textViewGotoGetDetails.getPaint();
+        paint.setUnderlineText(true);
 
     }
 
@@ -109,7 +114,7 @@ public class MyPointsActivity extends RequestActivity {
 
     //提现明细
     public void getCashDetails(View view) {
-        GetCashRecordActivity.start(getContext(),GetCashRecordActivity.class);
+        GetCashRecordActivity.start(getContext(), GetCashRecordActivity.class);
     }
 
     @Override

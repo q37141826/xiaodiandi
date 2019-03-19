@@ -10,6 +10,13 @@
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <!-- 安装位置来源apk的权限 -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <!-- 下载管理权限 -->
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+    <!-- VISIBILITY_HIDDEN表示不显示任何通知栏提示的权限 -->
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+
     <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!-- 用于访问GPS定位 -->
@@ -27,15 +34,18 @@
     <!-- 用于写入缓存数据到扩展存储卡 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+    <!-- 开启硬件加速hardwareAccelerated -->
     <application
         android:name="com.qixiu.qixiu.application.BaseApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/app_icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".ui.activity.guidepage.StartPageActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,6 +70,7 @@
         <activity android:name=".ui.activity.mine.DtestActivity" />
         <activity
             android:name=".ui.activity.home.GoodsDetailsActivity"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
         <activity android:name=".ui.activity.home.ConfirmOrderActivity" />
         <activity
@@ -154,7 +165,15 @@
         <activity android:name=".ui.activity.home.MarketActivity" />
         <activity android:name=".ui.activity.home.MessageActivity" />
         <activity android:name=".ui.activity.home.BindWebActivity" />
-        <activity android:name=".ui.activity.mine.TestActivity"></activity>
+        <activity android:name=".ui.activity.mine.TestActivity" />
+
+        <service android:name=".services.version.DownloadService" />
+
+        <activity android:name=".ui.activity.home.PlayActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.activity.home.TextHtmlActivity"></activity>
     </application>
 
 </manifest>

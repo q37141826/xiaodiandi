@@ -16,6 +16,7 @@
         android:padding="@dimen/margin15dp">
 
         <EditText
+            android:textColorHint="#FF333333"
             android:id="@+id/edittext"
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin34dp"

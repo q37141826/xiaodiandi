@@ -22,7 +22,7 @@
         <TextView
             style="@style/text_normal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin35dp"
+            android:layout_height="@dimen/margin40dp"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/margin15dp"
             android:text="请验证新的手机号"
@@ -40,7 +40,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin36dp"
+                android:layout_height="@dimen/margin45dp"
                 android:paddingLeft="@dimen/margin15dp">
 
                 <TextView
@@ -66,7 +66,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin36dp"
+                android:layout_height="@dimen/margin45dp"
                 android:paddingLeft="@dimen/margin15dp">
 
                 <TextView
@@ -104,11 +104,11 @@
         <Button
             android:id="@+id/btnConfirm"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin32dp"
+            android:layout_height="@dimen/margin40dp"
             android:layout_marginLeft="@dimen/margin15dp"
             android:layout_marginTop="@dimen/margin24dp"
             android:layout_marginRight="@dimen/margin15dp"
-            android:background="@color/theme_color"
+            android:background="@drawable/btn_theme_bg"
             android:onClick="confirmChangePhone"
             android:text="确认修改"
             android:textColor="@color/white" />

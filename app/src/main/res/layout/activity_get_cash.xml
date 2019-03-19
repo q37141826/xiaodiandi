@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.qixiu.xiaodiandi.ui.activity.mine.mypoints.GetCashActivity">
 
@@ -13,195 +14,216 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></RelativeLayout>
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/back_grey"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/margin100dp"
-            android:background="@color/white"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/text_normal"
-                android:layout_marginTop="@dimen/margin24dp"
-                android:text="可提现金额"
-                android:textColor="@color/text_grey" />
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin13dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/text_normal"
-                    android:text="¥"
-                    android:textColor="@color/red"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/textViewTotalMoney"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/red"
-                    android:textSize="20sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <com.qixiu.wigit.GotoView
-            android:id="@+id/gotoSelectMethoth"
-            style="@style/mine_gotoview"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin10dp"
-            android:onClick="selectGetMethoed"
-            app:first_text="银行卡提现"
-            app:second_drawable="@mipmap/mine_xiala">
-
-            <!--<TextView-->
-            <!--android:id="@+id/textViewTotalMoney"-->
-            <!--style="@style/text_normal"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:layout_marginStart="71dp"-->
-            <!--android:layout_marginTop="181dp"-->
-            <!--android:text="5000"-->
-            <!--android:textColor="@color/red" />-->
-        </com.qixiu.wigit.GotoView>
+        android:layout_below="@+id/vg_title">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/margin10dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/margin10dp"
-            android:paddingRight="@dimen/margin10dp">
-
-            <com.qixiu.wigit.myedittext.MyEditTextView
-                android:id="@+id/myedittextName"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin30dp"
-                app:my_edittext_hint="请输入持卡人姓名">
-
-            </com.qixiu.wigit.myedittext.MyEditTextView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin1dp"
-                android:background="@color/line_color"></View>
-
-            <com.qixiu.wigit.myedittext.MyEditTextView
-                android:id="@+id/myedittextNum"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin30dp"
-                app:my_edittext_hint="请输入银行卡号">
-
-            </com.qixiu.wigit.myedittext.MyEditTextView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin1dp"
-                android:background="@color/line_color"></View>
-
-            <com.qixiu.wigit.GotoView
-                android:id="@+id/gotoSelectBank"
-                style="@style/mine_gotoview"
-                android:onClick="selectBank"
-                android:paddingLeft="@dimen/margin5dp"
-                app:first_text="请选择银行"></com.qixiu.wigit.GotoView>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/margin1dp"
-                android:background="@color/line_color"></View>
-
-
-            <TextView
-                style="@style/text_normal"
-                android:layout_marginLeft="@dimen/margin5dp"
-                android:layout_marginTop="@dimen/margin20dp"
-                android:text="提现金额" />
+            android:background="@color/back_grey"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/margin5dp">
+                android:layout_height="@dimen/margin100dp"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
                 <TextView
                     style="@style/text_normal"
-                    android:text="¥"
-                    android:textColor="@color/red"
-                    android:textSize="20sp" />
+                    android:layout_marginTop="@dimen/margin24dp"
+                    android:text="可提现金额"
+                    android:textColor="@color/text_grey" />
 
-                <EditText
-                    android:id="@+id/edittextMoney"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:hint="输入提现金额"
-                    android:inputType="numberDecimal"
-                    android:textSize="12sp" />
+                    android:layout_marginTop="@dimen/margin13dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="¥"
+                        android:textColor="@color/red"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/textViewTotalMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/red"
+                        android:textSize="20sp" />
+                </LinearLayout>
+
             </LinearLayout>
+
+            <com.qixiu.wigit.GotoView
+                android:id="@+id/gotoSelectMethoth"
+                style="@style/mine_gotoview"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin10dp"
+                android:onClick="selectGetMethoed"
+                app:first_text="银行卡提现"
+                app:second_drawable="@mipmap/mine_xiala">
+
+                <!--<TextView-->
+                <!--android:id="@+id/textViewTotalMoney"-->
+                <!--style="@style/text_normal"-->
+                <!--android:layout_alignParentStart="true"-->
+                <!--android:layout_alignParentTop="true"-->
+                <!--android:layout_marginStart="71dp"-->
+                <!--android:layout_marginTop="181dp"-->
+                <!--android:text="5000"-->
+                <!--android:textColor="@color/red" />-->
+            </com.qixiu.wigit.GotoView>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin5dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="@dimen/margin5dp">
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin10dp"
+                android:paddingRight="@dimen/margin10dp">
+
+                <com.qixiu.wigit.myedittext.MyEditTextView
+                    android:id="@+id/myedittextName"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin30dp"
+                    app:my_edittext_hint="请输入持卡人姓名">
+
+                </com.qixiu.wigit.myedittext.MyEditTextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin1dp"
+                    android:background="@color/line_color"></View>
+
+                <com.qixiu.wigit.myedittext.MyEditTextView
+                    android:id="@+id/myedittextNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin30dp"
+                    app:input_type="number"
+                    app:my_edittext_hint="请输入银行卡号">
+
+                </com.qixiu.wigit.myedittext.MyEditTextView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin1dp"
+                    android:background="@color/line_color"></View>
+
+                <com.qixiu.wigit.GotoView
+                    android:id="@+id/gotoSelectBank"
+                    style="@style/mine_gotoview"
+                    android:onClick="selectBank"
+                    android:paddingLeft="@dimen/margin5dp"
+                    app:first_text="输入卡号自动识别银行"
+                    app:show_goto="false"></com.qixiu.wigit.GotoView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/margin1dp"
+                    android:background="@color/line_color"></View>
+
 
                 <TextView
                     style="@style/text_normal"
-                    android:text="当前总可提现"
+                    android:layout_marginLeft="@dimen/margin5dp"
+                    android:layout_marginTop="@dimen/margin20dp"
+                    android:text="提现金额" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin5dp">
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="¥"
+                        android:textColor="@color/red"
+                        android:textSize="20sp" />
+
+                    <EditText
+                        android:id="@+id/edittextMoney"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="输入提现金额"
+                        android:inputType="numberDecimal"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin5dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin5dp">
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="当前总可提现"
+                        android:textColor="@color/text_grey" />
+
+                    <TextView
+                        android:id="@+id/textViewTotalMoney02"
+                        style="@style/text_normal"
+                        android:text=""
+                        android:textColor="@color/red" />
+
+                    <TextView
+                        style="@style/text_normal"
+                        android:text="元。     "
+                        android:textColor="@color/text_grey" />
+
+                    <TextView
+                        android:id="@+id/textViewGetAll"
+                        style="@style/text_normal"
+                        android:onClick="getAll"
+                        android:text="全部提现"
+                        android:textColor="@color/red" />
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btnCommit"
+                    style="@style/btn_normal"
+                    android:layout_height="@dimen/margin32dp"
+                    android:layout_marginTop="@dimen/margin20dp"
+                    android:onClick="getCashRequest"
+                    android:text="提交申请" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/textViewPerCost"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin17dp"
+                    android:gravity="center"
+                    android:text="3%的手续费系统会自己扣除，请知悉"
                     android:textColor="@color/text_grey" />
 
                 <TextView
-                    android:id="@+id/textViewTotalMoney02"
-                    style="@style/text_normal"
-                    android:text=""
-                    android:textColor="@color/red" />
-
-                <TextView
-                    style="@style/text_normal"
-                    android:text="元。     "
+                    android:layout_marginTop="@dimen/margin17dp"
+                    android:id="@+id/textViewPerMsg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/margin10dp"
+                    android:paddingRight="@dimen/margin10dp"
+                    android:text="正常提现周期48小时内到账，如遇周日或节假日顺延"
                     android:textColor="@color/text_grey" />
-
-                <TextView
-                    android:id="@+id/textViewGetAll"
-                    style="@style/text_normal"
-                    android:onClick="getAll"
-                    android:text="全部提现"
-                    android:textColor="@color/red" />
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btnCommit"
-                style="@style/btn_normal"
-                android:layout_height="@dimen/margin32dp"
-                android:layout_marginTop="@dimen/margin20dp"
-                android:onClick="getCashRequest"
-                android:text="提交申请" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin17dp"
-                android:gravity="center"
-                android:text="1%的手续费系统会自己扣除，请知悉"
-                android:textColor="@color/text_grey" />
-
-
         </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</RelativeLayout>

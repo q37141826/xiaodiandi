@@ -32,7 +32,7 @@
                 android:onClick="gotoChangePhone"
                 style="@style/mine_gotoview"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin36dp"
+                android:layout_height="@dimen/margin45dp"
                 android:paddingLeft="@dimen/margin15dp"
                 android:paddingRight="@dimen/margin15dp"
                 app:first_text="修改手机号码"></com.qixiu.wigit.GotoView>
@@ -41,6 +41,7 @@
                 android:onClick="clean"
                 android:id="@+id/gotoview_clean"
                 style="@style/mine_gotoview"
+                android:layout_height="@dimen/margin45dp"
                 android:paddingLeft="@dimen/margin15dp"
                 android:paddingRight="@dimen/margin15dp"
                 app:first_text="清空缓存"
@@ -49,7 +50,7 @@
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin32dp"
+            android:layout_height="@dimen/margin40dp"
             android:layout_marginLeft="@dimen/margin15dp"
             android:layout_marginRight="@dimen/margin15dp"
             android:layout_marginTop="@dimen/margin24dp"

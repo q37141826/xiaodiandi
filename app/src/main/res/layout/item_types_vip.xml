@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
@@ -27,14 +27,21 @@
                 style="@style/text_normal"
                 android:layout_marginLeft="@dimen/margin10dp"
                 android:layout_marginRight="@dimen/margin10dp"
-                android:text="大礼包" />
+                android:text="" />
 
             <View
                 android:layout_width="@dimen/margin40dp"
                 android:layout_height="@dimen/margin1dp"
                 android:background="@color/line_color"></View>
         </LinearLayout>
-
+        <ImageView
+            android:id="@+id/imageViewHeader"
+            android:layout_width="@dimen/margin248dp"
+            android:layout_height="@dimen/margin112dp"
+            android:layout_marginTop="@dimen/margin10dp"
+            android:layout_marginLeft="@dimen/margin5dp"
+            android:layout_marginRight="@dimen/margin5dp"
+            android:scaleType="centerCrop" />
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
@@ -42,11 +49,5 @@
     </LinearLayout>
 
 
-    <ImageView
-        android:id="@+id/imageViewFoot"
-        android:layout_width="@dimen/margin248dp"
-        android:layout_height="@dimen/margin113dp"
-        android:layout_marginTop="@dimen/margin10dp"
-        android:scaleType="centerCrop" />
 
-</LinearLayout>
+</RelativeLayout>

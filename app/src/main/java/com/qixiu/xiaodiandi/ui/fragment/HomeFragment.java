@@ -64,6 +64,7 @@ import butterknife.Unbinder;
 
 import static com.qixiu.qixiu.google.zxing.client.android.CaptureActivity.ZXING_VALUE;
 
+
 /**
  * Created by my on 2019/1/2.
  */
@@ -125,6 +126,7 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
                         if (data instanceof HomeBean.OBean.VipCategoryBean) {
                             HomeBean.OBean.VipCategoryBean bean = (HomeBean.OBean.VipCategoryBean) data;
                             EventAction.Action action = new EventAction.Action(EventAction.GOTO_TYPE);
+                            action.setData(bean);
                             EventBus.getDefault().post(action);
                         }
                     }
@@ -183,7 +185,7 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
             });
 
         }
-        //便利一下页面数，添加radiobutton
+        //遍历一下页面数，添加radiobutton
         for (int i = 0; i < viewpagerFragments.size(); i++) {
             RadioButton radioButton = new RadioButton(view.getContext());
             radioButton.setBackgroundResource(R.drawable.selector_home);
@@ -229,6 +231,11 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
     }
 
     @Override
+    public void showProgress() {
+//        super.showProgress();
+    }
+
+    @Override
     protected void onInitViewNew(View view) {
         super.onInitViewNew(view);
         recyclerView = view.findViewById(R.id.recyclerView);
@@ -264,12 +271,12 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         //设置轮播图
         rollpager = view.findViewById(R.id.rollpager);
         imageViewSearch.setOnClickListener(this);
-        rollpager.getViewPager().setPageMargin(20);//设置page间间距，自行根据需求设置
+        rollpager.getViewPager().setPageMargin(10);//设置page间间距，自行根据需求设置
 
         imageUrlAdapter = new ImageUrlAdapter(rollpager);
         rollpager.setAdapter(imageUrlAdapter);
         rollpager.setHintView(new ColorPointHintView(getActivity(), getResources().getColor(R.color.theme_color), getResources().getColor(R.color.alpha_black_50)));
-
+        imageUrlAdapter.setScaleType(ImageView.ScaleType.FIT_CENTER);
         imageUrlAdapter.setItemClickListenner(this);
 //        adapter.refreshData(banners);
         //设置轮播商品

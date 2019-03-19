@@ -21,13 +21,23 @@
 
     </com.qixiu.wigit.VerticalSwipeRefreshLayout>
 
-    <TextView
-        android:id="@+id/textView_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:background="@mipmap/kongbaiye2x"
-        android:gravity="center"
-        android:visibility="gone" />
+
+    <RelativeLayout
+        android:visibility="gone"
+        android:id="@+id/relativeNothing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView_order"
+            style="@style/text_normal"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/screenwith_half"
+            android:gravity="center"
+            android:text="暂无数据"
+            android:textColor="@color/hint_color"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
 
 </RelativeLayout>

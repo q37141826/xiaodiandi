@@ -11,6 +11,7 @@ import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.wigit.zprogress.ZProgressHUD;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,8 +39,7 @@ public abstract class RequestFragment extends TitleFragment implements OKHttpUIU
             map.put("uid", LoginStatus.getId());
         }
         okHttpRequestModel.okhHttpPost(url, map, bean);
-        zProgressHUD.show();
-
+//        showProgress();
     }
 
     @Override
@@ -53,10 +53,9 @@ public abstract class RequestFragment extends TitleFragment implements OKHttpUIU
         zProgressHUD.show();
     }
 
-    public void showProgress(){
+    public void showProgress() {
         zProgressHUD.show();
     }
-
 
 
     @Override
@@ -79,6 +78,9 @@ public abstract class RequestFragment extends TitleFragment implements OKHttpUIU
 
     @Override
     public void onError(Call call, Exception e, int i) {
+        if (call.isCanceled()) {
+            return;
+        }
         onError(e);
         zProgressHUD.dismiss();
     }
@@ -88,5 +90,11 @@ public abstract class RequestFragment extends TitleFragment implements OKHttpUIU
         onFailure(c_codeBean, c_codeBean.getM());
         zProgressHUD.dismiss();
         ToastUtil.toast(c_codeBean.getM());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        OkHttpUtils.getInstance().cancelTag(this.getClass().getSimpleName());
     }
 }

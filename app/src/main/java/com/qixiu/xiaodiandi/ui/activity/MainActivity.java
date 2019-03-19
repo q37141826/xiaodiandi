@@ -1,5 +1,9 @@
 package com.qixiu.xiaodiandi.ui.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +18,10 @@ import com.qixiu.qixiu.utils.DrawableUtils;
 import com.qixiu.qixiu.utils.StatusBarUtils;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.EventAction;
+import com.qixiu.xiaodiandi.model.home.HomeBean;
+import com.qixiu.xiaodiandi.services.version.ApkDownloadBean;
+import com.qixiu.xiaodiandi.services.version.DownloadService;
+import com.qixiu.xiaodiandi.services.version.VersionCheckUtil;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.BindWebActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.mycollection.MyCollectionActivity;
@@ -23,6 +31,7 @@ import com.qixiu.xiaodiandi.ui.fragment.MarketFragment;
 import com.qixiu.xiaodiandi.ui.fragment.MineFragment;
 import com.qixiu.xiaodiandi.ui.fragment.TypesFragment;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.BaseFragment;
+import com.qixiu.xiaodiandi.ui.wigit.ApkDownloadProgressPop;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -59,6 +68,10 @@ public class MainActivity extends RequestActivity {
     private MineFragment mineFragment;
     private EventAction.Action eventAction;
 
+    private BroadcastReceiver downLoadReceiver;
+    private ApkDownloadProgressPop apkPop;
+
+
     @Override
     protected void onInitData() {
         EventBus.getDefault().register(this);
@@ -87,6 +100,33 @@ public class MainActivity extends RequestActivity {
             AppManager.getAppManager().finishActivity(Loginactivity.class);
         } catch (Exception e) {
         }
+        VersionCheckUtil.checkVersion(getContext(), getActivity(), new VersionCheckUtil.IsNewVerSion() {
+            @Override
+            public void call(boolean isNew) {
+
+            }
+        });
+        downLoadReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                showDownloadProgress(intent);
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter(DownloadService.APK_DOWLOAD_ACTION);
+        registerReceiver(downLoadReceiver, intentFilter);
+    }
+
+    private void showDownloadProgress(Intent intent) {
+        if (apkPop != null) {
+            apkPop.show();
+        } else {
+            apkPop = new ApkDownloadProgressPop(getContext());
+            apkPop.show();
+        }
+        ApkDownloadBean bean = intent.getParcelableExtra(DownloadService.APK_DOWNLOAD_DATA);
+        apkPop.show();
+        apkPop.setProgress(bean.getDownloadSize(), bean.getTotalSize());
+        apkPop.setTextProgress(bean.getDownloadSize(), bean.getTotalSize());
     }
 
     private void setClick() {
@@ -128,6 +168,9 @@ public class MainActivity extends RequestActivity {
 //        StatusBarUtils.setWindowStatusBarColor(this, Color.TRANSPARENT);
         StatusBarUtils.adustStateBar(this, true);
         restDrawble();
+        if (v.getId() != R.id.textViewTypes) {
+            typesFragment.setVipPriceId("");//如果切换到别的页面，价钱排序也打空
+        }
         switch (v.getId()) {
             case R.id.textViewHome:
                 switchFragment(homeFragment, framlayoutForFragment.getId());
@@ -204,6 +247,7 @@ public class MainActivity extends RequestActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(downLoadReceiver);
         EventBus.getDefault().unregister(this);
     }
 
@@ -220,6 +264,10 @@ public class MainActivity extends RequestActivity {
                 onClick(textViewMarket);
             }
             if (eventAction.getAction() == EventAction.GOTO_TYPE) {
+                if (eventAction.getData() != null && eventAction.getData() instanceof HomeBean.OBean.VipCategoryBean) {
+                    HomeBean.OBean.VipCategoryBean bean = (HomeBean.OBean.VipCategoryBean) eventAction.getData();
+                    typesFragment.setVipPriceId(bean.getId() + "");
+                }
                 typesFragment.setSelectedId(eventAction.getId());
                 onClick(textViewTypes);
             }

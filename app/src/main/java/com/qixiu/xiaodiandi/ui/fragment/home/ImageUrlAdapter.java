@@ -17,6 +17,11 @@ import java.util.List;
 
 public class ImageUrlAdapter extends LoopPagerAdapter {
     List<Object> datas = new ArrayList<>();
+    ImageView.ScaleType scaleType;
+
+    public void setScaleType(ImageView.ScaleType scaleType) {
+        this.scaleType = scaleType;
+    }
 
     public ImageUrlAdapter(RollPagerView viewPager) {
         super(viewPager);
@@ -45,8 +50,14 @@ public class ImageUrlAdapter extends LoopPagerAdapter {
     @Override
     public View getView(ViewGroup container, int position) {
         ImageView view = new ImageView(container.getContext());
-        view.setScaleType(ImageView.ScaleType.FIT_XY);
-        view.setLayoutParams(new ViewGroup.LayoutParams(ArshowContextUtil.getWidthPixels() - 16, (ArshowContextUtil.getWidthPixels() - 16) * 3 / 4));
+        if (scaleType != null) {
+            view.setScaleType(scaleType);
+        } else {
+            view.setScaleType(ImageView.ScaleType.CENTER_CROP);
+        }
+//        view.setLayoutParams(new ViewGroup.LayoutParams(ArshowContextUtil.getWidthPixels() - 16, (ArshowContextUtil.getWidthPixels() - 16) * 3 / 4));
+        view.setLayoutParams(new ViewGroup.LayoutParams(ArshowContextUtil.getWidthPixels() , ViewGroup.LayoutParams.MATCH_PARENT));
+//        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
         if (datas.get(position) instanceof Integer) {
             Glide.with(container.getContext()).load((int) datas.get(position)).error(R.mipmap.ic_launcher).skipMemoryCache(false).into(view);
         } else if (datas.get(position) instanceof HomeBean.OBean.BannerBean) {
@@ -79,4 +90,6 @@ public class ImageUrlAdapter extends LoopPagerAdapter {
     public void setItemClickListenner(ItemClickListenner itemClickListenner) {
         this.itemClickListenner = itemClickListenner;
     }
+
+
 }

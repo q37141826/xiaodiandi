@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#77dcd6"
+    android:background="@color/theme_color"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.qixiu.xiaodiandi.ui.activity.mine.vip.VipActivity">
@@ -22,15 +22,16 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin241dp"
+            android:layout_height="@dimen/margin280dp"
+            android:layout_marginTop="-60dp"
             android:background="@mipmap/vip_bg"
-            android:orientation="vertical"
-            android:paddingTop="@dimen/margin12dp">
+            android:orientation="vertical">
 
             <RelativeLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin45dp"
-                android:layout_marginTop="@dimen/margin11dp">
+                android:layout_marginTop="@dimen/margin70dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/circularhead"
@@ -40,9 +41,10 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/margin45dp"
                     android:layout_marginLeft="@dimen/margin7dp"
                     android:layout_toRightOf="@+id/circularhead"
+                    android:gravity="center_vertical"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -54,42 +56,48 @@
                             android:id="@+id/textViewAccount"
                             style="@style/text_normal"
                             android:text="13545454151"
+                            android:textColor="@color/white"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/textViewVipName"
                             style="@style/text_normal"
-                            android:text="普通会员" />
+                            android:layout_marginLeft="@dimen/margin2dp"
+                            android:text="普通会员"
+                            android:textColor="@color/white"
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <TextView
                         android:id="@+id/textViewPhone"
                         style="@style/text_normal"
-                        android:text="1556216154" />
+                        android:layout_marginTop="@dimen/margin2dp"
+                        android:text="1556216154"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="@dimen/margin96dp"
                     android:layout_height="@dimen/margin34dp"
                     android:layout_alignParentRight="true"
-                    android:background="@drawable/shape_mine_vip"
-                    android:drawableLeft="@mipmap/mine_vip"
+                    android:background="@mipmap/vip_right_btn"
+                    android:drawableLeft="@mipmap/mine_suggest"
                     android:gravity="center"
                     android:onClick="gotoSugestion"
                     android:paddingLeft="@dimen/margin10dp"
                     android:text="我要推荐"
-                    android:textColor="@color/white"></TextView>
+                    android:textColor="@color/theme_color"></TextView>
             </RelativeLayout>
 
             <com.qixiu.wigit.GotoView
                 style="@style/mine_gotoview"
-                android:layout_height="@dimen/margin28dp"
+                android:layout_height="@dimen/margin25dp"
                 android:layout_marginTop="@dimen/margin5dp"
                 android:background="@color/transparent"
                 android:onClick="myPoints"
                 android:paddingLeft="@dimen/margin25dp"
                 android:paddingRight="@dimen/margin26dp"
-                app:first_size="6sp"
                 app:first_text="我的点滴"></com.qixiu.wigit.GotoView>
 
             <TextView
@@ -128,7 +136,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin15dp"
                 android:paddingLeft="@dimen/margin25dp"
                 android:paddingTop="@dimen/margin5dp"
                 android:paddingRight="@dimen/margin25dp">
@@ -191,7 +198,6 @@
         <com.qixiu.wigit.GotoView
             style="@style/mine_gotoview"
             android:layout_height="@dimen/margin39dp"
-            app:first_size="6sp"
             app:first_text="好友"
             app:show_goto="false"></com.qixiu.wigit.GotoView>
 

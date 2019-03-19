@@ -4,9 +4,11 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 import com.qixiu.qixiu.R;
+import com.qixiu.qixiu.utils.NavagationUtils;
 
 public class WechatTakeCameraSelectPop {
     Context context;
@@ -62,18 +64,31 @@ public class WechatTakeCameraSelectPop {
     }
 
     private void setAndShowPop(View contentView) {
-        popwindow = new PopupWindow(contentView);
-        popwindow.setFocusable(true);
-        popwindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        popwindow.setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
-//        popwindow.setInputMethodMode(InputMethod.SHOW_FORCED);
-//        popwindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        popwindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,
+                true);
+        popwindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        popwindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
         popwindow.setClippingEnabled(false);
-        show();
     }
 
     public void show() {
         popwindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+    }
+
+    public void showContainsBar(Context context, boolean navigationBarIsUp) {
+        int[] location = new int[2];
+        contentView.getLocationOnScreen(location);
+        int x = location[0];
+        int y = location[1];
+        if (navigationBarIsUp && NavagationUtils.hasNavBar(context)) {
+            popwindow.showAtLocation(contentView, Gravity.BOTTOM, 0, NavagationUtils.getNavigationBarHeight(context));
+        } else {
+            popwindow.showAtLocation(contentView, Gravity.BOTTOM, 0, 0);
+        }
+    }
+
+    public boolean isShowing() {
+        return popwindow.isShowing();
     }
 
     public void dismiss() {

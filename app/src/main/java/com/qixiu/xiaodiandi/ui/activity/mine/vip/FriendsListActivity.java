@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +35,8 @@ public class FriendsListActivity extends RequestActivity implements XRecyclerVie
     XRecyclerView xrecyclerView;
     @BindView(R.id.swiprefresh)
     VerticalSwipeRefreshLayout swiprefresh;
+    @BindView(R.id.relativeNothing)
+    RelativeLayout relativeNothing;
     private String type;
     private FriendsAdapter adapter;
 
@@ -73,6 +76,12 @@ public class FriendsListActivity extends RequestActivity implements XRecyclerVie
             adapter.refreshData(friendsListBean.getO());
         }
         swiprefresh.setRefreshing(false);
+
+        if (adapter.getDatas().size() == 0) {
+            relativeNothing.setVisibility(View.VISIBLE);
+        } else {
+            relativeNothing.setVisibility(View.GONE);
+        }
     }
 
     @Override

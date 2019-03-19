@@ -6,7 +6,7 @@
     <color name="txt_FF333333">#FF333333</color>
     <color name="txt_8D8D8D">#8D8D8D</color>
     <color name="theme_unselect_font">#f7c276</color>
-    <color name="theme_color">#FF00DAAF</color>
+    <color name="theme_color">@color/ticket_bg</color>
     <color name="mark_start">#fe6602</color>
     <color name="txt_fe9e46">#fe9e46</color>
     <color name="colorPrimary">#3F51B5</color>
@@ -40,6 +40,7 @@
     <color name="alpha_black_70">#BB000000</color>
     <color name="alpha_black_80per">#c8000000</color>
     <color name="text_grey">#FF999999</color>
+    <color name="hint_color">#cccccc</color>
 
     <color name="red">#FF0000</color>
 
@@ -70,12 +71,13 @@
     <color name="txt_6bc8f2">#6bc8f2</color>
     <color name="orange_btn">#FFC9A26C</color>
     <color name="type_green">#FF64BBB3</color>
-    <color name="btn_green_high">#FF00BD98</color>
-    <color name="btn_green_low">@color/theme_color</color>
+    <color name="btn_green_high">#FF76EADC</color>
+    <color name="btn_green_low">#FF64BBB3</color>
     <color name="alpha_20_green">#64cdc6</color>
     <color name="edittext_bg_grey">#FFE6E6E6</color>
-    <color name="home_product_bg">#b2fff6</color>
+    <color name="home_product_bg">#fbd3d4</color>
     <color name="white_alpha">#E0ffffff</color>
-    <color name="ticket_bg">#77dcd6</color>
+    <color name="ticket_bg">#e65655</color>
+    <color name="mine_theme_alpha">#FF3EC4BC</color>
 
 </resources>

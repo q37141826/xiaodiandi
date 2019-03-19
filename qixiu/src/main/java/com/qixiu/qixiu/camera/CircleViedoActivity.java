@@ -29,6 +29,7 @@ import com.qixiu.qixiu.utils.PictureCut;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -402,17 +403,18 @@ public class CircleViedoActivity extends Activity implements View.OnClickListene
     }
 
     private void createRecordDir() {
-        File sampleDir = new File(Environment.getExternalStorageDirectory() + File.separator + "ATOMImg/video/");
+        File sampleDir = new File(Environment.getExternalStorageDirectory() + File.separator + "atomimg/video/");
         PictureCut.deleteFileWith(sampleDir, "recording");
         if (!sampleDir.exists()) {
             sampleDir.mkdirs();
         }
         File vecordDir = sampleDir;
         // 创建文件
-        try {
-            mVecordFile = File.createTempFile("recording", ".mp4", vecordDir);//mp4格式
-        } catch (IOException e) {
-        }
+//        try {
+//            mVecordFile = File.createTempFile("recording", ".mp4", vecordDir);//mp4格式
+//        } catch (IOException e) {
+//        }
+        mVecordFile = new File(sampleDir.getAbsolutePath(),new Date().getTime()+".mp4");//mp4格式
     }
 
     /**

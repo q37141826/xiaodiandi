@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.qixiu.qixiu.application.AppManager;
 import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
 import com.qixiu.qixiu.request.OKHttpRequestModel;
 import com.qixiu.qixiu.request.OKHttpUIUpdataListener;
@@ -23,6 +24,7 @@ import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.TitleActivity;
+import com.qixiu.xiaodiandi.ui.activity.home.ConfirmOrderActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.confirm_order.AddressBean;
 
 import org.greenrobot.eventbus.EventBus;
@@ -52,6 +54,13 @@ public class AddressListActivity extends TitleActivity implements OKHttpUIUpdata
         ConstantRequest.getAddressList(okHttpRequestModel);
     }
 
+    @Override
+    public void backClick() {
+        if (adapter.getDatas().size() == 0) {
+            AppManager.getAppManager().finishActivity(ConfirmOrderActivity.class);
+        }
+        AddressListActivity.this. finish();
+    }
 
     @Override
     public void onSuccess(BaseBean data, int i) {
@@ -136,12 +145,6 @@ public class AddressListActivity extends TitleActivity implements OKHttpUIUpdata
     @Override
     protected void onInitData() {
         mTitleView.setTitle("地址管理");
-        mTitleView.setBackListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         getNetData();
         swiprefresh_xrecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -191,11 +194,18 @@ public class AddressListActivity extends TitleActivity implements OKHttpUIUpdata
     //添加地址
     public void addAddress(View view) {
         Intent intent = new Intent(this, EditAddressActivity.class);
+        intent.putExtra(IntentDataKeyConstant.ADDRESS_IS_DEFAULT, true);
         startActivityForResult(intent, 10000);
     }
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.btn_confirm_addaddress:
+                Intent intent = new Intent(this, EditAddressActivity.class);
+                intent.putExtra(IntentDataKeyConstant.ADDRESS_IS_DEFAULT, false);
+                startActivityForResult(intent, 10000);
+                break;
+        }
     }
 }

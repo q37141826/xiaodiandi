@@ -17,6 +17,9 @@ import com.qixiu.wigit.zprogress.ZProgressHUD;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.log.LoggerInterceptor;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -66,7 +69,7 @@ public class BaseApplication extends MultiDexApplication implements OKHttpUIUpda
                 .build();
         OkHttpUtils.initClient(okHttpClient);
         // CrashHandler.getInstance().init(this);
-
+        closeAndroidPDialog();
     }
 
 
@@ -149,5 +152,24 @@ public class BaseApplication extends MultiDexApplication implements OKHttpUIUpda
         return app;
     }
 
-
+    private void closeAndroidPDialog() {//去掉安卓P的弹窗
+        try {
+            Class aClass = Class.forName("android.content.pm.PackageParser$Package");
+            Constructor declaredConstructor = aClass.getDeclaredConstructor(String.class);
+            declaredConstructor.setAccessible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            Class cls = Class.forName("android.app.ActivityThread");
+            Method declaredMethod = cls.getDeclaredMethod("currentActivityThread");
+            declaredMethod.setAccessible(true);
+            Object activityThread = declaredMethod.invoke(null);
+            Field mHiddenApiWarningShown = cls.getDeclaredField("mHiddenApiWarningShown");
+            mHiddenApiWarningShown.setAccessible(true);
+            mHiddenApiWarningShown.setBoolean(activityThread, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

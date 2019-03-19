@@ -155,16 +155,17 @@
                 </RelativeLayout>
 
                 <View
+
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin0.5dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin5dp"
-                    android:background="@color/lineColor"></View>
+                    android:background="@mipmap/orderdetails_line"></View>
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recyclerview_cofirm_order"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin10dp"
+                    android:layout_marginTop="@dimen/margin7dp"
                     android:background="@color/white"></android.support.v7.widget.RecyclerView>
 
                 <View

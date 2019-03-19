@@ -31,11 +31,12 @@
             <com.qixiu.wigit.GotoView
                 android:id="@+id/gotoViewPhone"
                 style="@style/mine_gotoview"
+                android:layout_height="@dimen/margin45dp"
                 app:first_text="当前手机号"></com.qixiu.wigit.GotoView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin36dp"
+                android:layout_height="@dimen/margin45dp"
                 android:paddingLeft="@dimen/margin15dp">
 
                 <TextView
@@ -45,7 +46,6 @@
 
                 <EditText
                     android:id="@+id/ediitextVercode"
-                    android:maxLength="6"
                     android:layout_width="@dimen/margin70dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -53,17 +53,18 @@
                     android:background="@null"
                     android:hint="短信验证码"
                     android:inputType="number"
+                    android:maxLength="6"
                     android:textSize="12sp" />
 
                 <Button
-                    android:onClick="sendCode"
                     android:id="@+id/btn_sendCode"
                     android:layout_width="@dimen/margin103dp"
-                    android:layout_height="@dimen/margin25dp"
+                    android:layout_height="@dimen/margin30dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/margin15dp"
                     android:background="@drawable/btn_code_bg"
+                    android:onClick="sendCode"
                     android:text="点击获取验证码"
                     android:textColor="@color/font_grey"
                     android:textSize="12sp" />
@@ -71,13 +72,13 @@
         </LinearLayout>
 
         <Button
-            android:onClick="nextStep"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin32dp"
+            android:layout_height="@dimen/margin40dp"
             android:layout_marginLeft="@dimen/margin15dp"
-            android:layout_marginRight="@dimen/margin15dp"
             android:layout_marginTop="@dimen/margin24dp"
-            android:background="@color/theme_color"
+            android:layout_marginRight="@dimen/margin15dp"
+            android:background="@drawable/btn_theme_bg"
+            android:onClick="nextStep"
             android:text="下一步"
             android:textColor="@color/white" />
     </LinearLayout>

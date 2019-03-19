@@ -8,8 +8,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin194dp"
-        android:background="@color/image_back" />
+        android:layout_height="@dimen/margin170dp"
+        android:background="@color/image_back"
+        android:scaleType="centerCrop" />
 
     <TextView
         android:id="@+id/textViewPhone"

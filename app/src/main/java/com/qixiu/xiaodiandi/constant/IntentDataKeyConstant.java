@@ -6,6 +6,7 @@ package com.qixiu.xiaodiandi.constant;
 
 public class IntentDataKeyConstant {
     public static final String DATA="DATA";
+    public static final String PATH="PATH";
     public static final String VIPID="uid";
     public static final String ID="ids";
     public static final String NUM="NUM";
@@ -20,4 +21,5 @@ public class IntentDataKeyConstant {
 
     public static String ORDER_ID="ORDER_ID";
     public static String MONEY="MONEY";
+    public static String ADDRESS_IS_DEFAULT="ADDRESS_IS_DEFAULT";
 }

@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="@dimen/margin69dp"
+        android:layout_width="@dimen/margin111dp"
         android:layout_height="@dimen/margin111dp"
         android:scaleType="fitXY" />
 
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin24dp"
         android:layout_marginLeft="@dimen/margin10dp"
-        android:layout_marginTop="@dimen/margin20dp"
+        android:layout_marginTop="@dimen/margin10dp"
         android:layout_marginRight="@dimen/margin10dp"
         android:background="@drawable/type_item_namebk"
         android:ellipsize="end"
@@ -34,7 +34,7 @@
     <TextView
         android:id="@+id/textViewName"
         style="@style/text_normal"
-        android:layout_height="@dimen/margin30dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/margin10dp"
         android:layout_marginRight="@dimen/margin10dp"
         android:ellipsize="end"

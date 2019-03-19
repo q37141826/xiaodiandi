@@ -43,7 +43,7 @@ import java.util.Map;
 public class SelectPayMethoedActivity extends RequestActivity implements IPay {
     private ImageView imageView_alipay, imageView_weixinpay;
     private RelativeLayout relativeLayout_alipay, relativeLayout_weixinpay;
-    private int type;
+    private int type=1;
     //微信支付成功后的广播
     BroadcastReceiver receiver;
     private TextView textView_howmuch;
@@ -159,7 +159,7 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
         }
         try {
             fastPayNewBean = getIntent().getParcelableExtra(IntentDataKeyConstant.DATA);
-            textView_howmuch.setText(("¥" + fastPayNewBean.getGotoAddCartsData().getMoney()).replace("¥¥", "¥"));
+            textView_howmuch.setText(("¥" + fastPayNewBean.getOrderPayData().getMoney()).replace("¥¥", "¥"));
         } catch (Exception e) {
         }
         IntentFilter intentFilter = new IntentFilter();
@@ -208,6 +208,11 @@ public class SelectPayMethoedActivity extends RequestActivity implements IPay {
 //            payData.setCoupon();  //todo 这两个地方后续要补上
 //            payData.setIntegral();
             startGetPaData();
+        }
+        if (data.getM().equals("支付成功")) {
+            ToastUtil.toast(data.getM());
+            AppManager.getAppManager().finishActivity(ConfirmOrderActivity.class);
+            finish();
         }
     }
 

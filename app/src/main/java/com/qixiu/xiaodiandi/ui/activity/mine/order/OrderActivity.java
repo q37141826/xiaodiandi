@@ -2,6 +2,7 @@ package com.qixiu.xiaodiandi.ui.activity.mine.order;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.RelativeLayout;
 
@@ -95,6 +96,22 @@ public class OrderActivity extends RequestActivity {
         tablayoutMyorder.setupWithViewPager(viewpagerMyoreder);
         index = getIntent().getIntExtra(IntentDataKeyConstant.DATA, 0);
         viewpagerMyoreder.setCurrentItem(index);
+        viewpagerMyoreder.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                fragmentInterfaces.get(position).moveToPosition(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
