@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="5px"
             android:text="订单商品简介"
-            android:textColor="@color/txt_737373" />
+            android:textColor="@color/font_grey" />
         <TextView
             android:id="@+id/textView_goodsChrac"
             android:layout_width="wrap_content"

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/back_grey"
     android:orientation="vertical">
 
@@ -36,6 +37,7 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/textViewShare"
                 style="@style/text_normal"
                 android:layout_alignParentRight="true"
@@ -44,30 +46,45 @@
                 android:onClick="shareEnterTainment"
                 android:text="· · ·"
                 android:textSize="20sp" />
+            <TextView
+                android:visibility="gone"
+                android:drawablePadding="@dimen/margin5dp"
+                android:drawableLeft="@mipmap/shopcar_delect"
+                android:id="@+id/textViewDetele"
+                style="@style/text_normal"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:onClick="shareEnterTainment"
+                android:text="删除"
+                android:textSize="14sp" />
         </RelativeLayout>
 
         <com.jude.rollviewpager.RollPagerView
             android:id="@+id/rollpager"
+            app:rollviewpager_play_delay="5000"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin200dp"></com.jude.rollviewpager.RollPagerView>
+            android:layout_height="@dimen/screenwith"></com.jude.rollviewpager.RollPagerView>
 
         <cn.jzvd.JZVideoPlayerStandard
             android:id="@+id/jcplayer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <RelativeLayout
             android:id="@+id/relativeLayoutVideo"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin200dp">
+            android:layout_height="@dimen/screenwith">
 
             <ImageView
                 android:id="@+id/imageViewVideoThumb"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin200dp"
+                android:layout_height="@dimen/screenwith"
                 android:scaleType="centerCrop" />
 
             <ImageView
+                android:id="@+id/player_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

@@ -18,7 +18,7 @@ import com.qixiu.xiaodiandi.model.order.CreateOrderBean;
 
 public class ConfirmGoodsHolder extends RecyclerBaseHolder {
     private ImageView imageView_orderIcon;
-    private TextView textView_goodsPrice, textView_goodsCount, textView_goodsContent, textView_goodsName,textView_goodsChrac;
+    private TextView textView_goodsPrice, textView_goodsCount, textView_goodsContent, textView_goodsName, textView_goodsChrac;
 
     public ConfirmGoodsHolder(View itemView, Context context, RecyclerView.Adapter adapter) {
         super(itemView, context, adapter);
@@ -45,14 +45,17 @@ public class ConfirmGoodsHolder extends RecyclerBaseHolder {
         if (mData instanceof CreateOrderBean.OBean.CartInfoBean) {
             CreateOrderBean.OBean.CartInfoBean bean = (CreateOrderBean.OBean.CartInfoBean) mData;
             Glide.with(mContext).load(bean.getProductInfo().getImage()).into(imageView_orderIcon);
-            textView_goodsPrice.setText("¥  " +CartPriceParse.getPrice(bean.getProductInfo()));
+            textView_goodsPrice.setText("¥  " + CartPriceParse.getPrice(bean.getProductInfo()));
             textView_goodsPrice.setTextColor(mContext.getResources().getColor(R.color.red));
             textView_goodsCount.setText("X  " + +bean.getCart_num());
             textView_goodsContent.setText(bean.getProductInfo().getStore_name());
-            textView_goodsChrac.setText(bean.getProductInfo().getAttrInfo().getSuk());
+            try {
+                textView_goodsChrac.setText(bean.getProductInfo().getAttrInfo().getSuk());
+            } catch (Exception e) {
+            }
         }
-        if(mData instanceof GoodsDetailsBean.OBean.ResultBean.ListBean){
-            GoodsDetailsBean.OBean.ResultBean.ListBean bean= (GoodsDetailsBean.OBean.ResultBean.ListBean) mData;
+        if (mData instanceof GoodsDetailsBean.OBean.ResultBean.ListBean) {
+            GoodsDetailsBean.OBean.ResultBean.ListBean bean = (GoodsDetailsBean.OBean.ResultBean.ListBean) mData;
             Glide.with(mContext).load(bean.getImage()).into(imageView_orderIcon);
             textView_goodsPrice.setText("¥  " + bean.getPrice());
             textView_goodsPrice.setTextColor(mContext.getResources().getColor(R.color.red));

@@ -1,5 +1,8 @@
 package com.qixiu.xiaodiandi.model.home;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.qixiu.qixiu.request.bean.BaseBean;
 
 import java.util.List;
@@ -34,7 +37,7 @@ public class MessageBean extends BaseBean<MessageBean.OBean> {
             this.list = list;
         }
 
-        public static class ListBean {
+        public static class ListBean implements Parcelable {
             /**
              * id : 43
              * user : 系统管理员
@@ -98,6 +101,45 @@ public class MessageBean extends BaseBean<MessageBean.OBean> {
             public void setIs_see(int is_see) {
                 this.is_see = is_see;
             }
+
+            @Override
+            public int describeContents() {
+                return 0;
+            }
+
+            @Override
+            public void writeToParcel(Parcel dest, int flags) {
+                dest.writeInt(this.id);
+                dest.writeString(this.user);
+                dest.writeString(this.title);
+                dest.writeString(this.content);
+                dest.writeString(this.add_time);
+                dest.writeInt(this.is_see);
+            }
+
+            public ListBean() {
+            }
+
+            protected ListBean(Parcel in) {
+                this.id = in.readInt();
+                this.user = in.readString();
+                this.title = in.readString();
+                this.content = in.readString();
+                this.add_time = in.readString();
+                this.is_see = in.readInt();
+            }
+
+            public static final Parcelable.Creator<ListBean> CREATOR = new Parcelable.Creator<ListBean>() {
+                @Override
+                public ListBean createFromParcel(Parcel source) {
+                    return new ListBean(source);
+                }
+
+                @Override
+                public ListBean[] newArray(int size) {
+                    return new ListBean[size];
+                }
+            };
         }
     }
 }

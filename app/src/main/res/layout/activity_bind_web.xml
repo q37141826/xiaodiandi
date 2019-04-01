@@ -16,36 +16,37 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/ticket_bg">
+        android:background="#feae71">
 
-        <android.support.v4.widget.NestedScrollView
+
+        <LinearLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <RelativeLayout
+            <WebView
+                android:id="@+id/webview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent"></WebView>
 
-                <WebView
-                    android:id="@+id/webview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"></WebView>
+            <Button
+                android:id="@+id/btnGotoVip"
+                style="@style/btn_normal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin50dp"
+                android:layout_below="@+id/webview"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="@dimen/margin25dp"
+                android:layout_marginRight="@dimen/margin25dp"
+                android:background="@mipmap/bind_btn_bg"
+                android:onClick="gotoBeVip"
+                android:paddingBottom="@dimen/margin5dp"
+                android:text="我要成为vip"
+                android:textColor="@color/font_grey"
+                android:visibility="gone"></Button>
 
-                <Button
-                    style="@style/btn_normal"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/margin40dp"
-                    android:layout_below="@+id/webview"
-                    android:layout_marginLeft="@dimen/margin25dp"
-                    android:layout_marginTop="@dimen/margin25dp"
-                    android:layout_marginRight="@dimen/margin25dp"
-                    android:layout_marginBottom="@dimen/margin50dp"
-                    android:background="@drawable/btn_alpa_grey_bg"
-                    android:onClick="gotoBeVip"
-                    android:text="我要成为vip"></Button>
-            </RelativeLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </LinearLayout>
 
     </RelativeLayout>
 

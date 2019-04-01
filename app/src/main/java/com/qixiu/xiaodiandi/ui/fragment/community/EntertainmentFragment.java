@@ -63,10 +63,10 @@ public class EntertainmentFragment extends RequestFragment implements XRecyclerV
         } catch (Exception e) {
         }
 
-        if(adapter.getDatas().size()==0){
-            relativeNothing .setVisibility(View.VISIBLE);
-        }else {
-            relativeNothing .setVisibility(View.GONE);
+        if (adapter.getDatas().size() == 0) {
+            relativeNothing.setVisibility(View.VISIBLE);
+        } else {
+            relativeNothing.setVisibility(View.GONE);
         }
     }
 

@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 public class MessageActivity extends RequestActivity implements XRecyclerView.LoadingListener, OnRecyclerItemListener {
 
 
-    int pageNo = 1, pageSize = 10;
+    int pageNo = 1, pageSize = 20;
     @BindView(R.id.xrecyclerView)
     XRecyclerView xrecyclerView;
     @BindView(R.id.swiprefresh)
@@ -157,7 +157,7 @@ public class MessageActivity extends RequestActivity implements XRecyclerView.Lo
                 selectedId = bean.getId() + "";
                 post(ConstantUrl.readMsgUrl, map, new BaseBean());
             }
-            TextHtmlActivity.start(getContext(), TextHtmlActivity.class, bean.getContent());
+            TextHtmlActivity.start(getContext(), TextHtmlActivity.class, bean);
         }
     }
 

@@ -23,6 +23,7 @@ import com.qixiu.xiaodiandi.model.mine.UserBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.GotoWebActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.BindWebActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.address.AddressListActivity;
+import com.qixiu.xiaodiandi.ui.activity.mine.MyPublishActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.MyprofileActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.SettingActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.TicketActivity;
@@ -187,7 +188,7 @@ public class MineFragment extends RequestFragment {
             R.id.textViewGotoVip, R.id.textViewWaitPay, R.id.textViewWaitSend,
             R.id.textViewWaitReceive, R.id.textViewWaitBack, R.id.gotoAllOrder,
             R.id.gotoMyPoints, R.id.gotoMyCollection, R.id.gotoTicket, R.id.textViewSign,
-            R.id.gotoViewHelp, R.id.gotoVip, R.id.gotoTest, R.id.gotoPhone
+            R.id.gotoViewHelp, R.id.gotoVip, R.id.gotoTest, R.id.gotoPhone, R.id.gotoMyPublish
     })
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -201,7 +202,7 @@ public class MineFragment extends RequestFragment {
                 SettingActivity.start(getContext(), SettingActivity.class);
                 break;
             case R.id.gotoAddress:
-                AddressListActivity.start(getContext(), AddressListActivity.class);
+                AddressListActivity.start(getContext(), AddressListActivity.class,"收货地址");
                 break;
             case R.id.textViewGotoVip:
                 VipActivity.start(getContext(), VipActivity.class);
@@ -242,7 +243,8 @@ public class MineFragment extends RequestFragment {
             case R.id.gotoViewHelp:
                 GotoWebActivity.start(getContext(), GotoWebActivity.class, ConstantUrl.helpUrl);
                 break;
-            case R.id.gotoTest:
+            case R.id.gotoMyPublish:
+                MyPublishActivity.start(getContext(),MyPublishActivity.class);
 
                 break;
             case R.id.gotoPhone:

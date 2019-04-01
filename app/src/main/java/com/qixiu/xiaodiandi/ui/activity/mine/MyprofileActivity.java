@@ -284,6 +284,7 @@ public class MyprofileActivity extends TitleActivity implements View.OnClickList
 
     @Override
     public void onFailure(C_CodeBean c_codeBean) {
+        ToastUtil.toast(c_codeBean.getM());
         zProgressHUD.dismiss();
     }
 

@@ -1,11 +1,17 @@
 package com.qixiu.xiaodiandi.ui.activity.home;
 
 import android.content.DialogInterface;
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.SslErrorHandler;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 
 import com.qixiu.qixiu.request.OKHttpRequestModel;
 import com.qixiu.qixiu.request.OKHttpUIUpdataListener;
@@ -31,6 +37,8 @@ import okhttp3.Call;
 public class BindWebActivity extends BaseWebActivity implements OKHttpUIUpdataListener<BaseBean> {
     @BindView(R.id.webview)
     WebView webview;
+    @BindView(R.id.relativeLayout)
+    LinearLayout relativeLayout;
     private String qrcode;
     OKHttpRequestModel okHttpRequestModel;
 
@@ -39,20 +47,21 @@ public class BindWebActivity extends BaseWebActivity implements OKHttpUIUpdataLi
         return webview;
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
         load(ConstantUrl.scanDetailsUrl);
-        if (!TextUtils.isEmpty(qrcode)) {//1获取二维码用户信息，2扫码执行
-            ConstantRequest.bindFirends(okHttpRequestModel, ConstantUrl.bindfriendsUrl, 1 + "", qrcode, new QrUserMessageBean());
-        }
     }
 
     @Override
     protected void onInitViewNew() {
         okHttpRequestModel = new OKHttpRequestModel(this);
-        setTitle("我要成为会员");
+        setTitle("我要成为VIP");
         qrcode = getIntent().getStringExtra(IntentDataKeyConstant.DATA);
+        if (!TextUtils.isEmpty(qrcode)) {//1获取二维码用户信息，2扫码执行
+            ConstantRequest.bindFirends(okHttpRequestModel, ConstantUrl.bindfriendsUrl, 1 + "", qrcode, new QrUserMessageBean());
+        }
     }
 
     @Override
@@ -99,9 +108,8 @@ public class BindWebActivity extends BaseWebActivity implements OKHttpUIUpdataLi
     public void onSuccess(BaseBean data, int i) {
         if (data instanceof QrUserMessageBean) {
             QrUserMessageBean bean = (QrUserMessageBean) data;
-            ToastUtil.toast(data.getM());
             if (!LoginStatus.getId().equals(bean.getO().getUid() + "")) {
-                ArshowDialogUtils.showDialog(getContext(), "确认推荐人\n" + bean.getO().getPhone() + "\n" + "推荐人电话", new ArshowDialogUtils.ArshowDialogListener() {
+                ArshowDialogUtils.showDialog(getContext(), "确认合伙人\n" + bean.getO().getPhone() + "\n" + "合伙人电话", new ArshowDialogUtils.ArshowDialogListener() {
                     @Override
                     public void onClickPositive(DialogInterface dialogInterface, int which) {
                         ConstantRequest.bindFirends(okHttpRequestModel, ConstantUrl.bindfriendsUrl, 2 + "", qrcode, new QrUserMessageBean());
@@ -112,9 +120,12 @@ public class BindWebActivity extends BaseWebActivity implements OKHttpUIUpdataLi
 
                     }
                 });
+            } else {
+                ToastUtil.toast("不能绑定自己");
             }
+
         }
-        if (ConstantUrl.bindfriendsUrl.equals(data.getUrl())) {
+        if (ConstantUrl.bindfriendsUrl.equals(data.getUrl()) && !(data instanceof QrUserMessageBean)) {
             ToastUtil.toast(data.getM());
         }
     }
@@ -127,5 +138,11 @@ public class BindWebActivity extends BaseWebActivity implements OKHttpUIUpdataLi
     @Override
     public void onFailure(C_CodeBean c_codeBean) {
         ToastUtil.toast(c_codeBean.getM());
+    }
+
+
+    @Override
+    public void webEvent(String methoed,String json) {
+            gotoBeVip(null);
     }
 }

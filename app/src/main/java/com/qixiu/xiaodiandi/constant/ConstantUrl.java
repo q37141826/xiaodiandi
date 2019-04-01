@@ -181,6 +181,10 @@ public class ConstantUrl {
     public static String leaveMessageUrl = BuildConfig.BASE_URL + "/api/home/message";
     //收藏和转发
     public static String forwardCollectionUrl = BuildConfig.BASE_URL + "/api/home/forwardcollection";
+    //我发布的
+    public static String myreleaseUrl = BuildConfig.BASE_URL +    "/api/home/myrelease";
+    //删除我发布的
+    public static String deletePublishUrl = BuildConfig.BASE_URL +   "/api/home/releasedel";
 
 
     //新闻社区
@@ -206,9 +210,10 @@ public class ConstantUrl {
      */
     public static String helpUrl = BuildConfig.BASE_URL + "/api/home/help";
     //扫描后绑定背景h5
-    public static String scanDetailsUrl = BuildConfig.BASE_URL + "api/home/vip";
+    public static String scanDetailsUrl = BuildConfig.BASE_URL + "api/home/vipNew";
 
     //版本检测
     public static String versionUrl = BuildConfig.BASE_URL + "api/home/version";
 
+//    public static String  testUrl= BuildConfig.BASE_URL +"member/index.html";
 }

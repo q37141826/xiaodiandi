@@ -58,6 +58,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.MainActivity"
+            android:noHistory="false"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
             <!-- <intent-filter> -->
@@ -169,11 +170,12 @@
 
         <service android:name=".services.version.DownloadService" />
 
-        <activity android:name=".ui.activity.home.PlayActivity"
+        <activity
+            android:name=".ui.activity.home.PlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".ui.activity.home.TextHtmlActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.home.TextHtmlActivity" />
+        <activity android:name=".ui.activity.mine.MyPublishActivity"></activity>
     </application>
 
 </manifest>

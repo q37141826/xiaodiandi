@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"></RelativeLayout>
         <Button
             android:id="@+id/btnSelectAlbum"
-            android:background="@color/theme_color"
+            android:background="@drawable/shape_activation_button"
             android:text="选择相册照片"
             style="@style/btn_normal"
             android:layout_marginBottom="@dimen/margin50dp"

@@ -55,17 +55,18 @@ public class PhoneLoginActivity extends RequestActivity {
             verify_id = sendCodeBean.getO().getVerify_id();
             startTimeCountDown(btnSendCode);
         }
+
+        if (data.getUrl().equals(ConstantUrl.bindphoneUrl)) {
+            ToastUtil.toast(data.getM());
+//            LoginBean loginBean = new LoginBean();
+//            loginBean.setO(data.getO().toString().replace(".0",""));
+//            LoginStatus.saveState(loginBean);
+//            MainActivity.start(getContext(), MainActivity.class);
+//            finish();
+        }
         if (data instanceof LoginBean) {
             LoginBean loginBean = (LoginBean) data;
             LoginStatus.saveState(loginBean);
-            MainActivity.start(getContext(), MainActivity.class);
-            finish();
-        }
-        if (data.getUrl().equals(ConstantUrl.bindphoneUrl)) {
-            LoginBean loginBean = new LoginBean();
-            loginBean.setO(uid);
-            LoginStatus.saveState(loginBean);
-            ToastUtil.toast(data.getM());
             MainActivity.start(getContext(), MainActivity.class);
             finish();
         }
@@ -121,7 +122,7 @@ public class PhoneLoginActivity extends RequestActivity {
         map.put("verify", code);
         map.put("verify_id", verify_id);
         map.put("uid", uid);
-        post(ConstantUrl.bindphoneUrl, map, new BaseBean());
+        post(ConstantUrl.bindphoneUrl, map, new LoginBean());
     }
 
     private void phoneLogin() {

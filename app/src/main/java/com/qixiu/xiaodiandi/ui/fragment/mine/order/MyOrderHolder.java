@@ -164,6 +164,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
             textState = "换货中";
         } else if (2 == mData.getStatus()) {
             textState = "已完成";
+            btn_deleteOrder.setVisibility(View.VISIBLE);
         }
         textView_order_finish.setText(textState);
     }

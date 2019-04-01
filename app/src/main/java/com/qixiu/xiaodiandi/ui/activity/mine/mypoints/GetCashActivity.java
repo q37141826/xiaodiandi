@@ -200,9 +200,15 @@ public class GetCashActivity extends RequestActivity {
             ToastUtil.toast("请输入姓名");
             return false;
         }
-        if (TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(aliId)) {
             ToastUtil.toast("请输入账号");
             return false;
+        }
+        if (payType.equals("0")) {
+            if (TextUtils.isEmpty(bankName) || bankName.equals("无法识别")) {
+                ToastUtil.toast("账号不正确");
+                return false;
+            }
         }
         return true;
     }

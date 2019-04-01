@@ -1,7 +1,5 @@
 package com.qixiu.xiaodiandi.ui.activity;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
@@ -68,7 +66,6 @@ public class MainActivity extends RequestActivity {
     private MineFragment mineFragment;
     private EventAction.Action eventAction;
 
-    private BroadcastReceiver downLoadReceiver;
     private ApkDownloadProgressPop apkPop;
 
 
@@ -106,14 +103,8 @@ public class MainActivity extends RequestActivity {
 
             }
         });
-        downLoadReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                showDownloadProgress(intent);
-            }
-        };
-        IntentFilter intentFilter = new IntentFilter(DownloadService.APK_DOWLOAD_ACTION);
-        registerReceiver(downLoadReceiver, intentFilter);
+        IntentFilter intentFilter = new IntentFilter();
+
     }
 
     private void showDownloadProgress(Intent intent) {
@@ -247,7 +238,6 @@ public class MainActivity extends RequestActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(downLoadReceiver);
         EventBus.getDefault().unregister(this);
     }
 
@@ -269,6 +259,7 @@ public class MainActivity extends RequestActivity {
                     typesFragment.setVipPriceId(bean.getId() + "");
                 }
                 typesFragment.setSelectedId(eventAction.getId());
+                typesFragment.setVip(false);
                 onClick(textViewTypes);
             }
             eventAction = null;//让这个变量只能使用一次

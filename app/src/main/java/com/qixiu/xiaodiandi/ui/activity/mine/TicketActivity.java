@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,11 +15,14 @@ import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.model.mine.ticket.TicketListBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
+import com.qixiu.xiaodiandi.utils.NumUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -35,6 +39,7 @@ public class TicketActivity extends RequestActivity implements OnRecyclerItemLis
     @BindView(R.id.relativeNothing)
     RelativeLayout relativeNothing;
     private TicketAdapter adapter;
+    private String money;
 
     @Override
     public void onSuccess(BaseBean data) {
@@ -72,6 +77,7 @@ public class TicketActivity extends RequestActivity implements OnRecyclerItemLis
 
     @Override
     protected void onInitData() {
+        money = getIntent().getStringExtra(IntentDataKeyConstant.DATA);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         adapter = new TicketAdapter();
         recyclerview.setAdapter(adapter);
@@ -105,6 +111,17 @@ public class TicketActivity extends RequestActivity implements OnRecyclerItemLis
 
     @Override
     public void onItemClick(View v, RecyclerView.Adapter adapter, Object data) {
+        if(TextUtils.isEmpty(money)){
+            return;
+        }
+        double mon = NumUtils.getDouble(money);
+        if (data instanceof TicketListBean.OBean) {
+            TicketListBean.OBean bean = (TicketListBean.OBean) data;
+            if (mon < bean.getUse_min_price()) {
+                ToastUtil.toast("未满足使用条件");
+                return;
+            }
+        }
         EventBus.getDefault().post(data);
     }
 
@@ -140,7 +157,7 @@ public class TicketActivity extends RequestActivity implements OnRecyclerItemLis
                     TicketListBean.OBean bean = (TicketListBean.OBean) mData;
                     textViewHighFloor.setText(bean.getCoupon_title());
                     textViewMoney.setText(ConstantString.RMB_SYMBOL + ((int) (bean.getCoupon_price())) + "");
-                    textViewLimit.setText("使用期限：领取后" + bean.getUse_time() / 3600 / 24 / 1000 + "天内有效");
+                    textViewLimit.setText("使用期限：" + bean.get_add_time() +"-"+bean.get_end_time());
                     textViewUserRule.setText("使用条件：满" + ((int) bean.getUse_min_price()) + "元使用");
                 }
             }

@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fl_out_click"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/fl_out_click"
-    android:theme="@style/AppTheme.NoActionBar"
     android:background="@color/alpha_black_80"
-  >
+    android:orientation="vertical"
+    android:theme="@style/AppTheme.NoActionBar">
 
     <!--<RelativeLayout-->
-        <!--android:layout_weight="1"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0px"-->
-      <!--&gt;</RelativeLayout>-->
+    <!--android:layout_weight="1"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0px"-->
+    <!--&gt;</RelativeLayout>-->
 
     <RelativeLayout
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:background="@color/transparent">
 
         <RelativeLayout
@@ -67,10 +66,10 @@
                         >
 
                         <TextView
-                            android:layout_height="match_parent"
                             android:id="@+id/tv_shopcar_minus"
                             style="@style/text_normal"
                             android:layout_width="@dimen/margin43dp"
+                            android:layout_height="match_parent"
                             android:background="@drawable/shape_jian_left"
                             android:gravity="center"
                             android:text="-"
@@ -78,20 +77,20 @@
 
 
                         <TextView
-                            android:layout_height="match_parent"
                             android:id="@+id/tv_repertory"
                             style="@style/text_normal"
                             android:layout_width="@dimen/margin54dp"
+                            android:layout_height="match_parent"
                             android:background="@drawable/num_stroke_grey"
                             android:gravity="center"
                             android:text="1"
                             android:textSize="15sp" />
 
                         <TextView
-                            android:layout_height="match_parent"
                             android:id="@+id/tv_add"
                             style="@style/text_normal"
                             android:layout_width="@dimen/margin43dp"
+                            android:layout_height="match_parent"
                             android:background="@drawable/shape_jia_right"
                             android:gravity="center"
                             android:text="+"
@@ -129,11 +128,7 @@
                     android:gravity="center"
                     android:text="立即购买"
                     android:textColor="@color/white" />
-
-
             </LinearLayout>
-
-
         </RelativeLayout>
 
         <ImageView

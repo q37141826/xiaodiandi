@@ -42,10 +42,13 @@ public class EditAddressActivity extends TitleActivity implements OKHttpUIUpdata
     private String city;
     private String count;
     boolean isDefault = false;
+    private AddressBean.OBean deteleAddressBean;
 
     @Override
     protected void onInitViewNew() {
-        isDefault=getIntent().getBooleanExtra(IntentDataKeyConstant.ADDRESS_IS_DEFAULT,false);
+
+
+        isDefault = getIntent().getBooleanExtra(IntentDataKeyConstant.ADDRESS_IS_DEFAULT, false);
         okmodel = new OKHttpRequestModel(this);
         btn_address_edite = (Button) findViewById(R.id.btn_address_edite);
         textViewAddress = findViewById(R.id.textViewAddress);
@@ -103,10 +106,14 @@ public class EditAddressActivity extends TitleActivity implements OKHttpUIUpdata
         map.put("real_name", name);
         map.put("detail", address);
         map.put("phone", phone);
-        map.put("is_default", addressoBean != null ? addressoBean.getIs_default() :(isDefault?"1":"0"));
+        map.put("is_default", addressoBean != null ? addressoBean.getIs_default() : (isDefault ? "1" : "0"));
         map.put("province", province + "");
         map.put("city", city + "");
         map.put("district", count + "");
+        if (!CommonUtils.isMobileNO(phone)) {
+            ToastUtil.toast(R.string.edittext_login_input_id_input_rule_input_illegal);
+            return;
+        }
         if (TextUtils.isEmpty(province) || TextUtils.isEmpty(city) || TextUtils.isEmpty(count) ||
                 TextUtils.isEmpty(name) || TextUtils.isEmpty(address) || TextUtils.isEmpty(phone)) {
             ToastUtil.toast("请把信息填完整");
@@ -124,11 +131,12 @@ public class EditAddressActivity extends TitleActivity implements OKHttpUIUpdata
     @Override
     protected void onInitData() {
         if (name == null) {
-            btn_address_edite.setText("确定新增");
+            mTitleView.setTitle("新增地址");
+            btn_address_edite.setText("保存");
         } else {
-            btn_address_edite.setText("确定保存");
+            mTitleView.setTitle("修改地址");
+            btn_address_edite.setText("保存");
         }
-        mTitleView.setTitle("地址管理");
         mTitleView.setBackListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,6 +195,8 @@ public class EditAddressActivity extends TitleActivity implements OKHttpUIUpdata
     public void onSuccess(Object data, int i) {
         BaseBean bean = (BaseBean) data;
         setResult(10000, new Intent(EditAddressActivity.this, AddressListActivity.class));
+
+
         finish();
         ToastUtil.toast(bean.getM());
     }

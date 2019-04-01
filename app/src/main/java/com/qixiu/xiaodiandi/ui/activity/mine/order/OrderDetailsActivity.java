@@ -148,6 +148,7 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
             textState = "换货中";
         } else if (2 == orderDetailsBean.getO().getStatus()) {
             textState = "已完成";
+            btn_deleteOrder_detail.setVisibility(View.VISIBLE);
         }
         textView_order_state.setText(textState);
     }
@@ -354,7 +355,7 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
         int secondes = (int) (new Date().getTime() - date.getTime());
         if (secondes - 30 * 60 * 1000 > 0) {
             textViewTimeCountDown.setVisibility(View.GONE);
-            if(orderDetailsBean.getO().getPaid()==0){
+            if (orderDetailsBean.getO().getPaid() == 0) {
                 startDeleteOrder();
             }
             return;

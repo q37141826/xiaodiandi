@@ -59,7 +59,11 @@ public class TypesVipAdapter extends RecyclerBaseAdapter {
                     adapter.refreshData(bean.getProduct());
                 }
                 if (bean.getBannerBean() != null) {
-                    imageViewHeader.setVisibility(View.VISIBLE);
+                    if ("399元超级大礼包".equals(bean.getBannerBean().getTitle())) {
+                        imageViewHeader.setVisibility(View.GONE);
+                    } else {
+                        imageViewHeader.setVisibility(View.VISIBLE);
+                    }
                     Glide.with(mContext).load(bean.getBannerBean().getPic()).into(imageViewHeader);
                     imageViewHeader.setOnClickListener(new View.OnClickListener() {
                         @Override

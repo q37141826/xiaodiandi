@@ -37,11 +37,10 @@
 
             <ImageView
                 android:id="@+id/imageViewBack"
-                android:layout_marginTop="@dimen/margin10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/margin10dp"
-                android:paddingRight="@dimen/margin10dp"
+                android:layout_width="@dimen/margin50dp"
+                android:layout_height="@dimen/margin50dp"
+                android:paddingLeft="@dimen/margin15dp"
+                android:paddingRight="@dimen/margin15dp"
                 android:src="@mipmap/titile_back3x" />
 
         </RelativeLayout>

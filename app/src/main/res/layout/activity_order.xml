@@ -26,10 +26,12 @@
             app:tabIndicatorColor="@color/theme_color"
             app:tabSelectedTextColor="@color/theme_color"
             app:tabTextColor="@color/font_grey"></android.support.design.widget.TabLayout>
+
         <View
-            android:background="@color/lineColor"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin1dp"></View>
+            android:layout_height="@dimen/margin1dp"
+            android:background="@color/lineColor"></View>
+
         <com.qixiu.wigit.hviewpager.HackyViewPager
             android:id="@+id/viewpager_myoreder"
             android:layout_width="match_parent"

@@ -61,7 +61,14 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
     private ClassifyBean classifyBean;
     private ClassifyBean.OBean selectedBean;
     private String vipId;
+
+
     private boolean isVip = true;
+    public void setVip(boolean vip) {
+        isVip = vip;
+    }
+
+
     private TypesProductListBean.OBean.CategoryBean topBean;
 
     public void setVipPriceId(String vipPriceId) {
@@ -118,16 +125,21 @@ public class TypesFragment extends RequestFragment implements XRecyclerView.Load
 //                        }
                     }
                 });
-                Glide.with(getContext()).load(bean.getO().getBanner().get(0).getPic()).into(imageViewHead);
             }
+            Glide.with(getContext()).load(bean.getO().getBanner().get(0).getPic()).into(imageViewHead);
             //设置第二个banner的位置
             if (isVip) {
-                for (int i = 0; i < bean.getO().getCategory().size(); i++) {
-                    if ((bean.getO().getCategory().get(i).getCate_name()).contains("39900") && (bean.getO().getBanner().size() > 1)) {
-                        bean.getO().getCategory().get(i).setBannerBean(bean.getO().getBanner().get(1));
+                for (int i = 0; i < bean.getO().getBanner().size(); i++) {
+                    for (int j = 0; j < bean.getO().getCategory().size(); j++) {
+                        if(bean.getO().getBanner().get(i).getTitle().equals(bean.getO().getCategory().get(j).getCate_name())){
+                            bean.getO().getCategory().get(j).setBannerBean(bean.getO().getBanner().get(i));
+                        }
+                    }
+                    if(bean.getO().getBanner().get(i).getTitle().equals("399元超级大礼包")){
+                        Glide.with(getContext()).load(bean.getO().getBanner().get(i).getPic()).into(imageViewHead);
                     }
                 }
-                //把点击的vip对应价格的单元放到最高处
+                //把点击的vip对应价格的单元放到最高处,也就是首页过来了之后要重新排序
                 if (!TextUtils.isEmpty(vipPriceId)) {
                     topBean = null;
                     for (int i = 0; i < bean.getO().getCategory().size(); i++) {

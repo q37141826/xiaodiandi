@@ -16,6 +16,7 @@ import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.model.comminity.entertainment.EntertainmentListBean;
 import com.qixiu.xiaodiandi.model.comminity.entertainment.SizeBean;
 import com.qixiu.xiaodiandi.model.mine.collection.EntertainmentCollectionBean;
+import com.qixiu.xiaodiandi.utils.GlideUtils;
 import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -56,7 +57,7 @@ public class CollectionCommunityAdapter extends RecyclerBaseAdapter {
                 EntertainmentCollectionBean.OBean bean = (EntertainmentCollectionBean.OBean) mData;
                 setImageSize(imageView, bean.getRelease().getSize());
                 Glide.with(mContext).load(bean.getRelease().getImg()).into(imageView);
-                Glide.with(mContext).load(ImageUrlUtils.getFinnalImageUrl(bean.getRelease().getUser().getAvatar())).into(circularHead);
+                GlideUtils.loadImage(ImageUrlUtils.getFinnalImageUrl(bean.getRelease().getUser().getAvatar()), circularHead, mContext);
                 textViewInfo.setText(bean.getRelease().getContent());
                 textViewName.setText(bean.getRelease().getUser().getNickname());
             }
@@ -64,7 +65,8 @@ public class CollectionCommunityAdapter extends RecyclerBaseAdapter {
                 EntertainmentListBean.OBean bean = (EntertainmentListBean.OBean) mData;
                 setImageSize(imageView, bean.getSize());
                 Glide.with(mContext).load(bean.getImg()).into(imageView);
-                Glide.with(mContext).load(ImageUrlUtils.getFinnalImageUrl(bean.getUser().getAvatar())).into(circularHead);
+//                Glide.with(mContext).load(ImageUrlUtils.getFinnalImageUrl(bean.getUser().getAvatar())).into(circularHead);
+                GlideUtils.loadImage(ImageUrlUtils.getFinnalImageUrl(bean.getUser().getAvatar()), circularHead, mContext);
                 textViewInfo.setText(bean.getContent());
                 textViewName.setText(TextUtils.isEmpty(bean.getUser().getNickname()) ? bean.getUser().getNickname() : bean.getUser().getPhone());
             }

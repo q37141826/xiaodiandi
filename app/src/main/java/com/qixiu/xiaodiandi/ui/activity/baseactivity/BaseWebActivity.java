@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.webkit.JavascriptInterface;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -42,7 +43,7 @@ public abstract class BaseWebActivity extends TitleActivity {
     }
 
 
-    @SuppressLint("SetJavaScriptEnabled")
+    @SuppressLint({"SetJavaScriptEnabled", "JavascriptInterface"})
     protected void setupWebView() {
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -52,7 +53,8 @@ public abstract class BaseWebActivity extends TitleActivity {
         webSettings.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSettings.setSupportZoom(false);
         webSettings.setDisplayZoomControls(false);
-
+        //JsBridge
+        webView.addJavascriptInterface(new JsBridge(), "JsInterface");
         webView.setWebChromeClient(chromeClient);
         webView.setWebViewClient(webViewClient);
 
@@ -219,4 +221,13 @@ public abstract class BaseWebActivity extends TitleActivity {
             webView.loadUrl(currentUrl);
         }
     }
+
+    private class JsBridge {
+        @JavascriptInterface
+        public void pushCommonPage(String json) {
+            webEvent(Thread.currentThread().getStackTrace()[1].getMethodName(),json);
+        }
+    }
+
+    public abstract void webEvent(String methoed,String json);
 }

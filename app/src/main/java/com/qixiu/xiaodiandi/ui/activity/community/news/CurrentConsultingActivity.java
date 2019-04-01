@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,6 +17,7 @@ import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.qixiu.utils.XrecyclerViewUtil;
 import com.qixiu.wigit.VerticalSwipeRefreshLayout;
 import com.qixiu.xiaodiandi.R;
@@ -42,12 +44,23 @@ public class CurrentConsultingActivity extends RequestActivity implements OnRecy
     private WritePop writePop;
     int pageNo = 1, pageSize = 10;
     private String type;//最新资讯还是公司动态的判断
+    // 类型1视频专题，2公司动态，3最新资讯，4点滴联盟
     private CurrentConsultingAdapter adapter;
 
     @Override
     protected void onInitData() {
         type = getIntent().getStringExtra(IntentDataKeyConstant.DATA);
-        setTitle("最新咨询");
+        if(TextUtils.isEmpty(type)){
+            ToastUtil.toast("非法操作");
+            return;
+        }
+        if (type.equals("2")) {
+            setTitle("公司动态");
+        } else if (type.equals("3")) {
+            setTitle("最新资讯");
+        }else if(type.equals("4")){
+            setTitle("点滴联盟");
+        }
         XrecyclerViewUtil.setXrecyclerView(xrecyclerView, this, this, false, 1, null);
         adapter = new CurrentConsultingAdapter();
         xrecyclerView.setAdapter(adapter);

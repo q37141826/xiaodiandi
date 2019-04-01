@@ -27,21 +27,20 @@
             android:orientation="vertical">
 
             <com.qixiu.wigit.GotoView
-                android:onClick="gotoSelectProduct"
                 android:id="@+id/gotoViewSelectProduct"
                 style="@style/mine_gotoview"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/margin38dp"
+                android:onClick="gotoSelectProduct"
                 app:first_text="请选择所购产品"
-                app:first_text_color="@color/text_grey">
-            </com.qixiu.wigit.GotoView>
+                app:first_text_color="@color/text_grey"></com.qixiu.wigit.GotoView>
 
             <RelativeLayout
-                android:visibility="gone"
-                android:onClick="gotoSelectProduct"
                 android:id="@+id/relativeSelectProduct"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/margin80dp">
+                android:layout_height="@dimen/margin80dp"
+                android:onClick="gotoSelectProduct"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/imageViewProductIcon"
@@ -49,13 +48,13 @@
                     android:layout_height="@dimen/margin76dp" />
 
                 <TextView
-                    android:paddingLeft="@dimen/margin5dp"
-                    android:paddingRight="@dimen/margin30dp"
                     android:id="@+id/textViewProductName"
                     style="@style/text_normal"
                     android:layout_marginLeft="@dimen/margin12dp"
                     android:layout_marginTop="@dimen/margin11dp"
-                    android:layout_toRightOf="@id/imageViewProductIcon" />
+                    android:layout_toRightOf="@id/imageViewProductIcon"
+                    android:paddingLeft="@dimen/margin5dp"
+                    android:paddingRight="@dimen/margin30dp" />
 
                 <ImageView
                     android:layout_width="@dimen/margin10dp"
@@ -82,10 +81,10 @@
                 android:textSize="12sp" />
 
             <RelativeLayout
-                android:visibility="gone"
                 android:id="@+id/relativeLayoutImage"
                 android:layout_width="@dimen/margin120dp"
-                android:layout_height="@dimen/margin150dp">
+                android:layout_height="@dimen/margin150dp"
+                android:visibility="gone">
 
 
                 <ImageView
@@ -97,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:src="@mipmap/player" />
+                    android:src="@mipmap/play_icon" />
             </RelativeLayout>
 
             <android.support.v7.widget.RecyclerView
@@ -107,9 +106,9 @@
         </LinearLayout>
 
         <Button
-            android:onClick="publishEntertainment"
             style="@style/btn_normal"
             android:layout_marginTop="@dimen/margin74dp"
+            android:onClick="publishEntertainment"
             android:text="发表" />
 
     </LinearLayout>

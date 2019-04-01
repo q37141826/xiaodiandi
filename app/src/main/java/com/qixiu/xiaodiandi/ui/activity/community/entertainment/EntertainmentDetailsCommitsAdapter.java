@@ -3,15 +3,14 @@ package com.qixiu.xiaodiandi.ui.activity.community.entertainment;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.model.comminity.entertainment.EntertaimentDetailsBean;
+import com.qixiu.xiaodiandi.utils.GlideUtils;
 import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -66,9 +65,9 @@ public class EntertainmentDetailsCommitsAdapter extends RecyclerBaseAdapter {
                     }
                 });
                 textViewContent.setText(bean.getContent());
-                textViewPhone.setText(TextUtils.isEmpty(bean.getUser().getNickname()) ? bean.getUser().getPhone() : bean.getUser().getNickname());
+                textViewPhone.setText(bean.getUser().getPhone());
                 textViewTime.setText(bean.getAddtime());
-                Glide.with(mContext).load(ImageUrlUtils.getFinnalImageUrl(bean.getUser().getAvatar())).into(circularHead);
+                GlideUtils.loadImage(ImageUrlUtils.getFinnalImageUrl(bean.getUser().getAvatar()), circularHead, mContext);
             }
         }
     }

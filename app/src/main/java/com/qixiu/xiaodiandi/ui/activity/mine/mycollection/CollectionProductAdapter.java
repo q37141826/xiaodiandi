@@ -56,7 +56,7 @@ public class CollectionProductAdapter extends RecyclerBaseAdapter {
                 Glide.with(mContext).load(bean.getImage()).into(imageViewIcon);
                 textViewName.setText(bean.getStore_name());
                 textViewInfo.setText(bean.getStore_info());
-                textViewPrice.setText(ConstantString.RMB_SYMBOL+bean.getPrice());
+                textViewPrice.setText(ConstantString.RMB_SYMBOL + bean.getPrice());
             }
 
             btnFindSame.setOnClickListener(new View.OnClickListener() {

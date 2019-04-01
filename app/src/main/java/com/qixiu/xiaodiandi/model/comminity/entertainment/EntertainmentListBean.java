@@ -30,6 +30,15 @@ public class EntertainmentListBean  extends BaseBean< List<EntertainmentListBean
         private String img;
         private UserBean user;
         private SizeBean size;
+        private boolean canDelete=false;
+
+        public boolean isCanDelete() {
+            return canDelete;
+        }
+
+        public void setCanDelete(boolean canDelete) {
+            this.canDelete = canDelete;
+        }
 
         public String getId() {
             return id;
@@ -157,6 +166,9 @@ public class EntertainmentListBean  extends BaseBean< List<EntertainmentListBean
         }
 
 
+        public OBean() {
+        }
+
         @Override
         public int describeContents() {
             return 0;
@@ -171,9 +183,7 @@ public class EntertainmentListBean  extends BaseBean< List<EntertainmentListBean
             dest.writeString(this.img);
             dest.writeParcelable(this.user, flags);
             dest.writeParcelable(this.size, flags);
-        }
-
-        public OBean() {
+            dest.writeByte(this.canDelete ? (byte) 1 : (byte) 0);
         }
 
         protected OBean(Parcel in) {
@@ -184,6 +194,7 @@ public class EntertainmentListBean  extends BaseBean< List<EntertainmentListBean
             this.img = in.readString();
             this.user = in.readParcelable(UserBean.class.getClassLoader());
             this.size = in.readParcelable(SizeBean.class.getClassLoader());
+            this.canDelete = in.readByte() != 0;
         }
 
         public static final Creator<OBean> CREATOR = new Creator<OBean>() {

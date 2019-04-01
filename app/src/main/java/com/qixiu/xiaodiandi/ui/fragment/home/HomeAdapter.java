@@ -64,7 +64,7 @@ public class HomeAdapter extends RecyclerBaseAdapter {
                 SimilarBean.OBean bean = (SimilarBean.OBean) mData;
                 Glide.with(mContext).load(bean.getImage()).into(imageView);
                 textViewName.setText(bean.getStore_name());
-                textViewPrice.setText(bean.getPrice());
+                textViewPrice.setText(ConstantString.RMB_SYMBOL + bean.getPrice());
             }
         }
     }

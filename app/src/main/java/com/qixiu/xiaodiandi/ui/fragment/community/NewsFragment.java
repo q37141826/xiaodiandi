@@ -121,6 +121,7 @@ public class NewsFragment extends RequestFragment implements XRecyclerView.Loadi
         rollpager = view.findViewById(R.id.rollpager);
         recyclerView_compantyAffairs = view.findViewById(R.id.recyclerView_compantyAffairs);
         TextView textViewVideo = view.findViewById(R.id.textViewVideo);
+        TextView textViewLegion = view.findViewById(R.id.textViewLegion);
         dynamicAdapter = new CompanyDynamicAdapter();
         recyclerView_compantyAffairs.setAdapter(dynamicAdapter);
         recyclerView_compantyAffairs.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -165,6 +166,12 @@ public class NewsFragment extends RequestFragment implements XRecyclerView.Loadi
                     bean.setType(2 + "");
                     ConsultingDetailsActivity.start(getContext(), ConsultingDetailsActivity.class, bean);
                 }
+            }
+        });
+        textViewLegion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CurrentConsultingActivity.start(getContext(), CurrentConsultingActivity.class, 4 + "");//	类型1视频专题，2公司动态，3最新资讯，4点滴学院
             }
         });
     }

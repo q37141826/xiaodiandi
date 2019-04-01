@@ -35,7 +35,7 @@ public class InviteActivity extends RequestActivity {
 
     @Override
     protected void onInitData() {
-        setTitle("邀请二维码");
+        setTitle("邀请好友");
         post(ConstantUrl.inviteQrcodeUrl, null, new QrCodeBean());
     }
 

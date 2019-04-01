@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,6 +39,7 @@ public abstract class BaseFragment extends Fragment implements AccessDataFragmen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(mSavedInstanceState = savedInstanceState);
         mContext = (BaseActivity) this.getActivity();
+        Log.e("fragment",this.getClass().getSimpleName());
     }
 
     @Override

@@ -5,10 +5,7 @@ import android.view.View;
 import android.webkit.WebView;
 
 import com.qixiu.xiaodiandi.R;
-import com.qixiu.xiaodiandi.constant.EventAction;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
-
-import org.greenrobot.eventbus.EventBus;
 
 public class GotoWebActivity extends BaseWebActivity {
     WebView webView;
@@ -36,6 +33,8 @@ public class GotoWebActivity extends BaseWebActivity {
         return webView;
     }
 
+
+
     @Override
     protected void onInitViewNew() {
         webView = findViewById(R.id.webview);
@@ -55,6 +54,9 @@ public class GotoWebActivity extends BaseWebActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void webEvent(String methoed,String json) {
 
+    }
 
 }

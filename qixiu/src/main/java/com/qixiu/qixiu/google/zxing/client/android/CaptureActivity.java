@@ -59,6 +59,9 @@ import com.qixiu.qixiu.google.zxing.client.android.history.HistoryManager;
 import com.qixiu.qixiu.google.zxing.client.android.result.ResultHandler;
 import com.qixiu.qixiu.google.zxing.client.android.result.ResultHandlerFactory;
 import com.qixiu.qixiu.titleview.TitleView;
+import com.qixiu.qixiu.utils.DrawableUtils;
+import com.qixiu.qixiu.utils.StatusBarUtils;
+import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.wigit.show_dialog.ArshowContextUtil;
 import com.qixiu.wigit.zprogress.ZProgressHUD;
 
@@ -160,6 +163,9 @@ public final class CaptureActivity extends Activity
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_zxing_capture);
+        StatusBarUtils.setWindowStatusBarColor(this,getResources().getColor(R.color.theme_color));
+
+
 
         hasSurface = false;
         historyManager = new HistoryManager(this);
@@ -174,12 +180,15 @@ public final class CaptureActivity extends Activity
         RelativeLayout vg_title = (RelativeLayout) findViewById(R.id.vg_title);
         vg_title.addView(titleView.getView());
         titleView.setTitle(R.string.scan_title);
+        titleView.getTitleView().setTextColor(getResources().getColor(R.color.white));
+        titleView.getLeftView().setTextColor(getResources().getColor(R.color.white));
         titleView.setBackListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        DrawableUtils.setLeftDrawableResouce(titleView.getLeftView(), this, R.mipmap.titile_back3x);
         btnSelectAlbum = findViewById(R.id.btnSelectAlbum);
         btnSelectAlbum.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -415,12 +424,19 @@ public final class CaptureActivity extends Activity
                     @Override
                     public void run() {
                         Result result = QrCodeUtils.scanQrCode(BitmapFactory.decodeFile(path));
-                        if(result!=null){
+                        if (result != null) {
                             inactivityTimer.onActivity();
                             Intent resultIntent = new Intent();
                             resultIntent.putExtra("result", result.getText());
                             CaptureActivity.this.setResult(RESULT_OK, resultIntent);
-                            CaptureActivity. this.finish();
+                            CaptureActivity.this.finish();
+                        }else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ToastUtil.toast("没有识别出二维码信息");
+                                }
+                            });
                         }
                     }
                 }

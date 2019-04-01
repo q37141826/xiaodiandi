@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/white"
-    android:orientation="vertical"
-    tools:context="com.qixiu.xiaodiandi.ui.activity.mine.vip.FriendsListActivity">
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.mine.MyPublishActivity">
 
     <RelativeLayout
         android:id="@+id/vg_title"
@@ -14,22 +13,27 @@
         android:layout_height="wrap_content"></RelativeLayout>
 
     <LinearLayout
-        android:layout_below="@+id/vg_title"
+        android:background="@color/back_grey"
+        android:paddingTop="@dimen/margin5dp"
+        android:paddingRight="@dimen/margin5dp"
+        android:paddingLeft="@dimen/margin5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:layout_below="@+id/vg_title">
 
         <com.qixiu.wigit.VerticalSwipeRefreshLayout
             android:id="@+id/swiprefresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
             <com.jcodecraeer.xrecyclerview.XRecyclerView
                 android:id="@+id/xrecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"></com.jcodecraeer.xrecyclerview.XRecyclerView>
+
         </com.qixiu.wigit.VerticalSwipeRefreshLayout>
+
     </LinearLayout>
+
     <RelativeLayout
         android:visibility="gone"
         android:id="@+id/relativeNothing"
@@ -45,6 +49,4 @@
             android:textColor="@color/hint_color"
             android:textSize="15sp" />
     </RelativeLayout>
-
-
 </RelativeLayout>

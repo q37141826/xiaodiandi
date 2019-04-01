@@ -214,6 +214,15 @@ public class NewsDetailsBean  extends BaseBean<NewsDetailsBean.OBean> {
 
             private String nickname;
             private String avatar;
+            private String phone;
+
+            public String getPhone() {
+                return phone;
+            }
+
+            public void setPhone(String phone) {
+                this.phone = phone;
+            }
 
             public String getNickname() {
                 return nickname;

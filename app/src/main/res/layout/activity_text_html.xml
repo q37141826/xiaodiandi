@@ -4,16 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ui.activity.home.TextHtmlActivity">
 
     <RelativeLayout
         android:id="@+id/vg_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></RelativeLayout>
+    <LinearLayout
+        android:layout_below="@+id/vg_title"
+        android:padding="@dimen/margin15dp"
+        android:id="@+id/belowme"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+
+            android:textStyle="bold"
+            android:gravity="center"
+            android:id="@+id/textViewTiltle"
+            style="@style/text_normal"
+            android:textColor="@color/font_grey"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:id="@+id/textViewTime"
+            style="@style/text_normal"
+
+            android:textColor="@color/text_grey"
+            android:textSize="12sp" />
+    </LinearLayout>
 
     <TextView
-        android:layout_below="@+id/vg_title"
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/belowme"
+        android:layout_marginLeft="@dimen/margin15dp"
+        android:layout_marginRight="@dimen/margin15dp"
+        android:textColor="@color/txt_4D4D4D" />
 </RelativeLayout>

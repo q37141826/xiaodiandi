@@ -10,6 +10,7 @@
         android:visibility="gone"></RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
+        android:layout_marginTop="@dimen/margin5dp"
         android:id="@+id/swip_refreshlayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

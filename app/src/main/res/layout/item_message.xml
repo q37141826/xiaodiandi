@@ -22,7 +22,10 @@
             android:src="@drawable/shape_circle_theme" />
 
         <TextView
-            android:text="12873612371236127"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:layout_marginRight="@dimen/margin90dp"
+            android:text="128736123712361271111111111111111111111111111111"
             android:id="@+id/textViewTitle"
             style="@style/text_normal"
             android:layout_centerVertical="true"
@@ -30,7 +33,7 @@
             android:layout_toRightOf="@+id/imageView" />
 
         <TextView
-            android:text="1824378123"
+            android:text="2019-03-01"
             android:id="@+id/textViewTime"
             style="@style/text_normal"
             android:layout_alignParentRight="true"

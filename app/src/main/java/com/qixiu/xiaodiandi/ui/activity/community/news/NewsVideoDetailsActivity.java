@@ -105,6 +105,7 @@ public class NewsVideoDetailsActivity extends RequestActivity implements XRecycl
         if (data.getUrl().equals(ConstantUrl.forwardCollectionUrl)) {
             getData();
         }
+        xrecyclerview.scrollToPosition(0);
     }
 
     @Override
@@ -224,8 +225,22 @@ public class NewsVideoDetailsActivity extends RequestActivity implements XRecycl
     public void shareVideo(View view) {
         ShareLikeEngine shareLikeEngine = new ShareLikeEngine();
         shareLikeEngine.releaseShareData(this, ConstantUrl.SHARE_IMAGE_URL, "视频分享", ConstantUrl.SHARE_CLICK_GO_URL, "");
-        ConstantRequest.collectionOrTrans(getOkHttpRequestModel(), ConstantUrl.forwardCollectionUrl, detailsBean.getO().getId() + "", 2 + "", "");
+        shareLikeEngine.setShareResultListenner(new ShareLikeEngine.ShareResultListenner() {
+            @Override
+            public void shareSuccess() {
+                ConstantRequest.collectionOrTrans(getOkHttpRequestModel(), ConstantUrl.forwardCollectionUrl, detailsBean.getO().getId() + "", 2 + "", "");
+            }
 
+            @Override
+            public void shareFailure() {
+
+            }
+
+            @Override
+            public void shareCancle() {
+
+            }
+        });
     }
 
     @Override

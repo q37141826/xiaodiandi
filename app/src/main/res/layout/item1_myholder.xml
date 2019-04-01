@@ -53,10 +53,10 @@
         android:layout_below="@+id/recycleView_myoreder_inner"
         android:orientation="horizontal">
 
-        <View
-            style="@style/line_style"
-            android:layout_marginTop="0dp"
-            android:background="@color/lineColor"></View>
+        <!--<View-->
+            <!--style="@style/line_style"-->
+            <!--android:layout_marginTop="0dp"-->
+            <!--android:background="@color/lineColor"></View>-->
 
         <View
             style="@style/line_style"
@@ -68,7 +68,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/margin15dp"
+            android:layout_marginLeft="@dimen/margin20dp"
             android:textColor="@color/font_grey" />
 
         <TextView
@@ -96,9 +96,10 @@
         android:layout_below="@+id/linearlayout_belowme"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="@dimen/margin20dp"
-        android:layout_marginTop="@dimen/margin5dp"
+        android:layout_marginTop="@dimen/margin10dp"
         android:layout_marginRight="@dimen/margin10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="@dimen/margin15dp">
 
         <Button
             android:id="@+id/btn_cancleOrder"
@@ -116,9 +117,9 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/margin30dp"
             android:layout_margin="3dp"
-            android:textColor="@color/white"
             android:background="@drawable/btn_theme_solid"
             android:text="删除订单"
+            android:textColor="@color/white"
             android:textSize="12sp" />
 
         <Button
@@ -176,9 +177,15 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="@dimen/margin10dp"
         android:layout_below="@+id/layout_belowme2"
-        android:layout_marginTop="@dimen/margin5dp"
-        android:layout_marginBottom="@dimen/margin5dp"
-        android:background="@color/lineColor"></View>
+        android:background="@color/back_grey"></View>
+
+    <!--<View-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/margin1dp"-->
+        <!--android:layout_below="@+id/layout_belowme2"-->
+        <!--android:layout_marginBottom="@dimen/margin5dp"-->
+        <!--android:background="@color/lineColor"></View>-->
+
 </RelativeLayout>

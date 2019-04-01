@@ -1,12 +1,12 @@
 package com.qixiu.xiaodiandi.ui.activity.community.entertainment;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -19,8 +19,8 @@ import com.jude.rollviewpager.hintview.ColorPointHintView;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.qixiu.utils.ArshowDialogUtils;
 import com.qixiu.qixiu.utils.DownLoadFileUtils;
-import com.qixiu.qixiu.utils.DrawableUtils;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.qixiu.utils.XrecyclerViewUtil;
 import com.qixiu.wigit.VerticalSwipeRefreshLayout;
@@ -32,6 +32,7 @@ import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.engine.ShareLikeEngine;
 import com.qixiu.xiaodiandi.model.IdInterfer;
 import com.qixiu.xiaodiandi.model.comminity.entertainment.EntertaimentDetailsBean;
+import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
 import com.qixiu.xiaodiandi.ui.activity.community.upload.EntertainmentPhotoUploadActivity;
 import com.qixiu.xiaodiandi.ui.activity.home.PlayActivity;
@@ -67,7 +68,7 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
     private RollPagerView rollpager;
     private ImageView imageViewHead;
     private TextView textViewName, textViewContent;
-    private TextView textViewShare;
+    private TextView textViewShare, textViewDetele;
     private TextView textViewTranceNum, textViewCollectionNum;
     private EntertainmentDetailsCommitsAdapter adapter;
     private EntertaimentDetailsBean.EBean clickCommentsBean;//点击了哪一条评论的回复
@@ -78,18 +79,18 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
 
     RelativeLayout relativeLayoutVideo;
     ImageView imageViewVideoThumb;
+    private ImageView player_icon;
 
     @Override
     protected void onInitData() {
         setTitle("娱乐社区");
-        DrawableUtils.setLeftDrawableResouce(mTitleView.getRightText(), getContext(), R.mipmap.start_commit);
+//        DrawableUtils.setLeftDrawableResouce(mTitleView.getRightText(), getContext(), R.mipmap.start_commit);
         mTitleView.setRightText("我要发布");
         mTitleView.getRightText().setBackgroundResource(R.drawable.shape_blue_btn_bg);
         mTitleView.getRightText().getLayoutParams().height = ArshowContextUtil.dp2px(25);
         mTitleView.getRightText().setTextSize(12);
+        mTitleView.getRightText().setCompoundDrawablePadding(ArshowContextUtil.dp2px(3));
         mTitleView.getRightText().setTextColor(Color.WHITE);
-        mTitleView.getRightText().setCompoundDrawablePadding(10);
-        mTitleView.getRightText().setGravity(Gravity.CENTER);
         mTitleView.setRightListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,6 +104,7 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
         adapter = new EntertainmentDetailsCommitsAdapter();
         xrecyclerView.setAdapter(adapter);
         entertainmentBean = getIntent().getParcelableExtra(IntentDataKeyConstant.DATA);
+
         getData();
         adapter.setClickListenner(new RecyclerBaseAdapter.ClickListenner() {
             @Override
@@ -156,9 +158,11 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
         textViewTranceNum = view.findViewById(R.id.textViewTranceNum);
         imageViewCollect = view.findViewById(R.id.imageViewCollect);
         textViewContent = view.findViewById(R.id.textViewContent);
+        textViewDetele = view.findViewById(R.id.textViewDetele);
         textViewCollectionNum = view.findViewById(R.id.textViewCollectionNum);
         jcplayer = view.findViewById(R.id.jcplayer);
         relativeLayoutVideo = view.findViewById(R.id.relativeLayoutVideo);
+        player_icon = view.findViewById(R.id.player_icon);
         imageViewVideoThumb = view.findViewById(R.id.imageViewVideoThumb);
         imageViewVideoThumb.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,6 +170,29 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
                 gotoPlayVideo();
             }
         });
+        textViewDetele.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteThis();
+            }
+        });
+    }
+
+    private void deleteThis() {
+        ArshowDialogUtils.showDialog(getContext(), "是否确认删除", new ArshowDialogUtils.ArshowDialogListener() {
+            @Override
+            public void onClickPositive(DialogInterface dialogInterface, int which) {
+                Map<String, String> map = new HashMap<>();
+                map.put("rid", detailsBean.getO().getId() + "");
+                post(ConstantUrl.deletePublishUrl, map, new BaseBean());
+            }
+
+            @Override
+            public void onClickNegative(DialogInterface dialogInterface, int which) {
+
+            }
+        });
+
     }
 
     @Override
@@ -178,7 +205,7 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
         swipRefreshlayout.setRefreshing(false);
         if (data instanceof EntertaimentDetailsBean) {
             detailsBean = (EntertaimentDetailsBean) data;
-            Glide.with(getContext()).load(ImageUrlUtils.getFinnalImageUrl(detailsBean.getO().getUser().getAvatar())).into(imageViewHead);
+            Glide.with(getContext()).load(ImageUrlUtils.getFinnalImageUrl(detailsBean.getO().getUser().getAvatar())).error(R.mipmap.mine_head).into(imageViewHead);
             textViewName.setText(detailsBean.getO().getUser().getNickname());
             textViewTranceNum.setText(detailsBean.getO().getForward() + "");
             textViewContent.setText(detailsBean.getO().getContent());
@@ -186,9 +213,25 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
             adapter.refreshData(detailsBean.getE());
             //如果已经收藏，把图标变更一下
             imageViewCollect.setImageResource(detailsBean.getO().getCollectionor() == 0 ? R.mipmap.entertainment_collection : R.mipmap.aready_collect);
+            if ((detailsBean.getO().getUid() + "").equals(LoginStatus.getId())) {//用ID判断是否显示删除
+                textViewShare.setVisibility(View.GONE);
+                textViewDetele.setVisibility(View.VISIBLE);
+            } else {
+                textViewShare.setVisibility(View.GONE);
+                textViewDetele.setVisibility(View.GONE);
+            }
 
             if (detailsBean.getO().getType() == 1) {
                 jcplayer.setVisibility(View.GONE);
+                //如果只有一张图，那么就不用轮播了，直接定死
+                if (detailsBean.getO().getImg().size() == 1) {
+                    relativeLayoutVideo.setVisibility(View.VISIBLE);
+                    rollpager.setVisibility(View.GONE);
+                    Glide.with(getContext()).load(detailsBean.getO().getImg().get(0)).into(imageViewVideoThumb);
+                    player_icon.setVisibility(View.GONE);
+                    imageViewVideoThumb.setEnabled(false);//不允许点击
+                    return;
+                }
                 relativeLayoutVideo.setVisibility(View.GONE);
                 ImageUrlAdapter adapter = new ImageUrlAdapter(rollpager);
                 rollpager.setAdapter(adapter);
@@ -213,6 +256,10 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
         if (data.getUrl().equals(ConstantUrl.forwardCollectionUrl)) {
             getData();
         }
+        if (data.getUrl().equals(ConstantUrl.deletePublishUrl)) {
+            ToastUtil.toast(data.getM());
+            finish();
+        }
     }
 
 
@@ -224,6 +271,9 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
     @Override
     public void onFailure(C_CodeBean c_codeBean, String m) {
         swipRefreshlayout.setRefreshing(false);
+        if (c_codeBean.getM().contains("不存在")) {
+            finish();
+        }
     }
 
     @Override
@@ -315,7 +365,22 @@ public class EntertainmentDetailsActivity extends RequestActivity implements XRe
     public void shareEnterTainment(View view) {
         ShareLikeEngine shareLikeEngine = new ShareLikeEngine();
         shareLikeEngine.releaseShareData(this, ConstantUrl.SHARE_IMAGE_URL, "测试一下", ConstantUrl.SHARE_CLICK_GO_URL, "");
-        ConstantRequest.collectionOrTrans(getOkHttpRequestModel(), ConstantUrl.forwardCollectionUrl, detailsBean.getO().getId() + "", 2 + "", "");
+        shareLikeEngine.setShareResultListenner(new ShareLikeEngine.ShareResultListenner() {
+            @Override
+            public void shareSuccess() {
+                ConstantRequest.collectionOrTrans(getOkHttpRequestModel(), ConstantUrl.forwardCollectionUrl, detailsBean.getO().getId() + "", 2 + "", "");
+            }
+
+            @Override
+            public void shareFailure() {
+
+            }
+
+            @Override
+            public void shareCancle() {
+
+            }
+        });
     }
 
     //添加收藏

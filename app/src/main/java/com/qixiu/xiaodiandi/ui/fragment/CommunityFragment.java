@@ -16,7 +16,6 @@ import com.qixiu.qixiu.request.bean.C_CodeBean;
 import com.qixiu.wigit.hviewpager.HackyViewPager;
 import com.qixiu.wigit.show_dialog.ArshowContextUtil;
 import com.qixiu.xiaodiandi.R;
-import com.qixiu.xiaodiandi.ui.activity.community.game.GameFragment;
 import com.qixiu.xiaodiandi.ui.activity.community.upload.EntertainmentPhotoUploadActivity;
 import com.qixiu.xiaodiandi.ui.activity.community.upload.EntertainmentVideoUploadActivity;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.BaseFragment;
@@ -67,7 +66,7 @@ public class CommunityFragment extends MenueFragment {
 
         titles.add("娱乐社区");
         titles.add("新闻社区");
-        titles.add("研发中");
+//        titles.add("研发中");//todo 以后再添加这个
 
         setTitleStyle();
 
@@ -81,8 +80,8 @@ public class CommunityFragment extends MenueFragment {
         fragments.add(entertainmentFragment);
         NewsFragment newsFragment = new NewsFragment();
         fragments.add(newsFragment);
-        GameFragment gameFragment = new GameFragment();
-        fragments.add(gameFragment);
+//        GameFragment gameFragment = new GameFragment();
+//        fragments.add(gameFragment);
         initFragment(fragments, titles, tablelayout, viewpager);
         viewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

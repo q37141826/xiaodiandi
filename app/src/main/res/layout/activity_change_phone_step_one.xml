@@ -29,10 +29,12 @@
             android:showDividers="middle">
 
             <com.qixiu.wigit.GotoView
+                android:paddingRight="@dimen/margin15dp"
                 android:id="@+id/gotoViewPhone"
                 style="@style/mine_gotoview"
                 android:layout_height="@dimen/margin45dp"
-                app:first_text="当前手机号"></com.qixiu.wigit.GotoView>
+                app:first_text="当前手机号"
+                app:show_goto="false"></com.qixiu.wigit.GotoView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -42,7 +44,8 @@
                 <TextView
                     style="@style/text_normal"
                     android:layout_centerVertical="true"
-                    android:text="验证码" />
+                    android:text="验证码"
+                    android:textSize="14sp" />
 
                 <EditText
                     android:id="@+id/ediitextVercode"

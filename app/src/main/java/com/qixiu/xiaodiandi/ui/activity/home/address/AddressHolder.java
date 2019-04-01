@@ -15,10 +15,10 @@ import com.qixiu.xiaodiandi.ui.activity.home.confirm_order.AddressBean;
 public class AddressHolder extends RecyclerBaseHolder<AddressBean.OBean> {
     private TextView textView_name_address, textView_phone_address, textView_address_content;
     private ImageView imageView_edite_right, imageView_defualt_address;
-    private AddressListAdapter.DataListenner  listenner;
+    private AddressListAdapter.DataListenner listenner;
 
-    public void setListenner(AddressListAdapter.DataListenner  listenner){
-                this.listenner=listenner;
+    public void setListenner(AddressListAdapter.DataListenner listenner) {
+        this.listenner = listenner;
     }
 
     public AddressHolder(View itemView, Context context, RecyclerView.Adapter adapter) {
@@ -33,28 +33,28 @@ public class AddressHolder extends RecyclerBaseHolder<AddressBean.OBean> {
     @Override
     public void bindHolder(int position) {
 
-            textView_name_address.setText("姓名：" + mData.getReal_name());
-            textView_phone_address.setText("电话：" + mData.getPhone());
-            textView_address_content.setText("地址：" + mData.getDetail());
-            imageView_edite_right.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listenner.sendData(mData, ConstantString.GOTO_EDIT_ADDRESS);
-                }
-            });
-            if (mData.getIs_default().equals("1")) {
-                imageView_defualt_address.setImageResource(R.mipmap.shopcar_goods_select);
-                imageView_defualt_address.setEnabled(false);
-            } else {
-                imageView_defualt_address.setImageResource(R.mipmap.shopcar_goods_notselect);
-                imageView_defualt_address.setEnabled(true);
+        textView_name_address.setText("姓名：" + mData.getReal_name());
+        textView_phone_address.setText("电话：" + mData.getPhone());
+        textView_address_content.setText("地址：" + mData.getDetail());
+        imageView_edite_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listenner.sendData(mData, ConstantString.GOTO_EDIT_ADDRESS);
             }
-            imageView_defualt_address.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listenner.sendData(mData,ConstantString.ACTION_REFRSH);
-                }
-            });
+        });
+        if (mData.getIs_default().equals("1")) {
+            imageView_defualt_address.setImageResource(R.mipmap.shopcar_goods_select);
+            imageView_defualt_address.setEnabled(false);
+        } else {
+            imageView_defualt_address.setImageResource(R.mipmap.shopcar_goods_notselect);
+            imageView_defualt_address.setEnabled(true);
+        }
+        imageView_defualt_address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listenner.sendData(mData, ConstantString.ACTION_REFRSH);
+            }
+        });
 
     }
 }

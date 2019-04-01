@@ -109,7 +109,8 @@ public class GoodsDetailsActivity extends RequestActivity {
 
     @Override
     protected void onInitData() {
-
+        mZProgressHUD.show();
+        id = getIntent().getStringExtra(IntentDataKeyConstant.DATA);
         mTitleView.setTitle("商品详情");
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);//设置黑色
         StatusBarUtils.setWindowStatusBarColor(this, Color.WHITE);
@@ -220,6 +221,9 @@ public class GoodsDetailsActivity extends RequestActivity {
         }
         if (!(data instanceof GetPointsTimeBean) && data.getUrl().equals(ConstantUrl.scanPointsUrl)) {
             ToastUtil.toast(data.getM());
+        }
+        if (mZProgressHUD != null) {
+            mZProgressHUD.dismiss();
         }
     }
 
@@ -388,6 +392,7 @@ public class GoodsDetailsActivity extends RequestActivity {
                 gotoAddCartsData.setListBean(selectedProduct);
                 selectedProduct.setNum(selectNum);
                 selectedProduct.setInfo(detailsBean.getO().getProduct().getStore_name());
+                selectedProduct.setCate_id(detailsBean.getO().getProduct().getCate_id() + "");
                 ConfirmOrderActivity.start(getContext(), ConfirmOrderActivity.class, gotoAddCartsData);
             }
         });
@@ -481,6 +486,7 @@ public class GoodsDetailsActivity extends RequestActivity {
 
     //跳转购物车
     public void gotoCarts(View view) {
+        AppManager.getAppManager().finishActivity(MarketActivity.class);
         MarketActivity.start(getContext(), MarketActivity.class);
     }
 

@@ -64,9 +64,20 @@ public abstract class RequestFragment extends TitleFragment implements OKHttpUIU
     }
 
     @Override
-    public void onSuccess(BaseBean data, int i) {
+    public void onSuccess(BaseBean data, int i) throws NullPointerException {
+        if(!isVisible()){
+            return;
+        }
         onSuccess(data);
         zProgressHUD.dismiss();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        // 如果还没有加载过数据 && 用户切换到了这个fragment
+        // 那就开始加载数据
+
     }
 
     public abstract void onSuccess(BaseBean data);
@@ -77,8 +88,11 @@ public abstract class RequestFragment extends TitleFragment implements OKHttpUIU
 
 
     @Override
-    public void onError(Call call, Exception e, int i) {
-        if (call.isCanceled()) {
+    public void onError(Call call, Exception e, int i) throws NullPointerException {
+        if(!isVisible()){
+            return;
+        }
+        if (call != null && call.isCanceled()) {
             return;
         }
         onError(e);
@@ -87,14 +101,17 @@ public abstract class RequestFragment extends TitleFragment implements OKHttpUIU
 
     @Override
     public void onFailure(C_CodeBean c_codeBean) {
+        if(!isVisible()){
+            return;
+        }
         onFailure(c_codeBean, c_codeBean.getM());
         zProgressHUD.dismiss();
         ToastUtil.toast(c_codeBean.getM());
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onPause() {
+        super.onPause();
         OkHttpUtils.getInstance().cancelTag(this.getClass().getSimpleName());
     }
 }

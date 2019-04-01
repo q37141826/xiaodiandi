@@ -70,9 +70,28 @@ public class GoodsDetailsBean extends BaseBean<GoodsDetailsBean.OBean> {
             private String ot_price;
             private String keyword;
             private String description;
+            private String cate_id;
+
             private int collect;
             private int cartnum;
             private String integral;
+
+
+            public String getCate_id() {
+                return cate_id;
+            }
+
+            public void setCate_id(String cate_id) {
+                this.cate_id = cate_id;
+            }
+
+            public String getIntegral() {
+                return integral;
+            }
+
+            public void setIntegral(String integral) {
+                this.integral = integral;
+            }
 
             public String getKeyword() {
                 return keyword;
@@ -280,7 +299,15 @@ public class GoodsDetailsBean extends BaseBean<GoodsDetailsBean.OBean> {
                 //下面是自定义的几个属性
                 private int num;
                 private String info;
+                private String cate_id;
 
+                public String getCate_id() {
+                    return cate_id;
+                }
+
+                public void setCate_id(String cate_id) {
+                    this.cate_id = cate_id;
+                }
 
                 public int getNum() {
                     return num;
@@ -382,6 +409,7 @@ public class GoodsDetailsBean extends BaseBean<GoodsDetailsBean.OBean> {
                     dest.writeString(this.cost);
                     dest.writeInt(this.num);
                     dest.writeString(this.info);
+                    dest.writeString(this.cate_id);
                 }
 
                 protected ListBean(Parcel in) {
@@ -395,6 +423,7 @@ public class GoodsDetailsBean extends BaseBean<GoodsDetailsBean.OBean> {
                     this.cost = in.readString();
                     this.num = in.readInt();
                     this.info = in.readString();
+                    this.cate_id = in.readString();
                 }
 
                 public static final Creator<ListBean> CREATOR = new Creator<ListBean>() {

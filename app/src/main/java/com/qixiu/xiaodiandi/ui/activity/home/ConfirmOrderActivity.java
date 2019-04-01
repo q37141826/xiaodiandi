@@ -23,6 +23,7 @@ import com.qixiu.xiaodiandi.constant.ConstantRequest;
 import com.qixiu.xiaodiandi.constant.ConstantString;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
+import com.qixiu.xiaodiandi.model.home.goodsdetails.GoodsDetailsBean;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.model.mine.points.PointsBean;
 import com.qixiu.xiaodiandi.model.mine.ticket.TicketListBean;
@@ -81,6 +82,9 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
     boolean isUsePoints = false;
     private PointsBean selectedPoints;//个人积分信息
     private double interger;//使用的积分数量
+    //是否能够使用积分和才优惠券
+    boolean canUseTicketPoints = true;
+    private boolean isSelectAddress = false;
 
     @Override
     protected void onInitData() {
@@ -104,6 +108,13 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
             textView_totalprice.setText("¥" + orderBean.getPriceGroup().getTotalPrice() + "");
             textView_totalNum.setText(num + "");
             totoalFinalMoney = NumUtils.getDouble(orderBean.getPriceGroup().getTotalPrice());
+            //判断是否能够使用积分优惠券
+            for (int i = 0; i < orderBean.getCartInfo().size(); i++) {
+                String id = orderBean.getCartInfo().get(i).getProductInfo().getCate_id();
+                if (id.equals("69") || id.equals("70") || id.equals("71")) {
+                    canUseTicketPoints = false;
+                }
+            }
         } catch (Exception e) {
 
         }
@@ -111,13 +122,21 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
             gotoAddCartsData = getIntent().getParcelableExtra(IntentDataKeyConstant.DATA);
             textView_totalprice.setText("¥" + gotoAddCartsData.getMoney() + "");
             textView_totalNum.setText(gotoAddCartsData.getBuyNum() + "");
-            List datas = new ArrayList();
+            List<GoodsDetailsBean.OBean.ResultBean.ListBean> datas = new ArrayList();
             datas.add(gotoAddCartsData.getListBean());
             adapter.refreshData(datas);
             totoalFinalMoney = NumUtils.getDouble(gotoAddCartsData.getMoney());
-
+            //判断是否能够使用积分优惠券
+            for (int i = 0; i < datas.size(); i++) {
+                String id = datas.get(i).getCate_id();
+                if (id.equals("69") || id.equals("70") || id.equals("71")) {
+                    canUseTicketPoints = false;
+                }
+            }
         }
         getPointsData();
+        //判断是否有默认地址
+        getDefaultAddress();
     }
 
 
@@ -139,6 +158,10 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
                 break;
 
             case R.id.textView_gotoPay:
+                if (selectedAddress == null) {
+                    ToastUtil.toast("请选择收货地址");
+                    return;
+                }
                 getMessage();
                 //快速支付确认 ---- 购物车确认
                 OrderPayData orderPayData = new OrderPayData();
@@ -216,8 +239,6 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
     @Override
     protected void onRestart() {
         super.onRestart();
-        //判断是否有默认地址
-        getDefaultAddress();
     }
 
     @Override
@@ -248,24 +269,42 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
     public void getData() {
         Map<String, String> map = new HashMap<>();
         BaseBean bean;
-        ConstantRequest.getAddressList(okHttpRequestModel);//获取地址
+        ConstantRequest.getAddressList(okHttpRequestModel);//获取地址    AddressBean
     }
 
     @Override
     public void onSuccess(BaseBean data) {
         if (data instanceof AddressBean) {
             AddressBean addressBean = (AddressBean) data;
-            for (int i = 0; i < addressBean.getO().size(); i++) {
-                if (addressBean.getO().get(i).getIs_default().equals("1")) {
-                    setAddress(addressBean.getO().get(i));
-                    selectedAddress = addressBean.getO().get(i);
+            if (isSelectAddress) {
+            } else {
+                String selectedAddressId = "";
+                if (selectedAddress != null) {
+                    selectedAddressId = selectedAddress.getId();
                 }
+                selectedAddress = null;
+                if (!TextUtils.isEmpty(selectedAddressId)) {
+                    for (int i = 0; i < addressBean.getO().size(); i++) {
+                        if (addressBean.getO().get(i).getId().equals(selectedAddressId)) {
+                            setAddress(addressBean.getO().get(i));
+                            selectedAddress = addressBean.getO().get(i);
+                        }
+                    }
+                }
+                if (selectedAddress == null) {
+                    for (int i = 0; i < addressBean.getO().size(); i++) {
+                        if (addressBean.getO().get(i).getIs_default().equals("1")) {
+                            setAddress(addressBean.getO().get(i));
+                            selectedAddress = addressBean.getO().get(i);
+                        }
+                    }
+                }
+                if (selectedAddress == null || addressBean.getO().size() == 0) {
+//                AddressListActivity.start(getContext(), AddressListActivity.class);
+                    ToastUtil.toast("请创建并且选择一个默认地址");
+                }
+                refreshAddressState();
             }
-            if (selectedAddress == null || addressBean.getO().size() == 0) {
-                AddressListActivity.start(getContext(), AddressListActivity.class);
-                ToastUtil.toast("请创建并且选择一个默认地址");
-            }
-            refreshAddressState();
         }
         if (data instanceof CartsPayBean) {
             CartsPayBean bean = (CartsPayBean) data;
@@ -308,7 +347,7 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
 
     private void refreshAddressState() {
         //刷新地址选择的状态
-        if (TextUtils.isEmpty(textView_address_comforOrder.getText().toString())) {
+        if (selectedAddress == null) {
             relativelayout_goto_address_list.setVisibility(View.GONE);
             gotoViewAddress.setVisibility(View.VISIBLE);
         } else {
@@ -318,6 +357,9 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
     }
 
     private void setAddress(AddressBean.OBean oBean) {
+        if (oBean == null) {
+            return;
+        }
         textView_address_comforOrder.setText(oBean.getProvince() + oBean.getCity() + oBean.getDistrict() + oBean.getDetail());
         textView_phone_comforOrder.setText(oBean.getPhone());
         textView_name_comforOrder.setText(oBean.getReal_name());
@@ -335,21 +377,34 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
 
     //选择地址
     public void gotoSelectAddress(View view) {
+        isSelectAddress = false;
         AddressListActivity.start(getContext(), AddressListActivity.class);
     }
 
     //选择优惠券
     public void gotoTicket(View view) {
-        TicketActivity.start(getContext(), TicketActivity.class);
+        if (!canUseTicketPoints) {
+            ToastUtil.toast("会员商品无法使用优惠券");
+            return;
+        }
+        TicketActivity.start(getContext(), TicketActivity.class, totoalFinalMoney + "");
     }
 
 
     //获取地址
     @Subscribe
     public void getAddressEvent(AddressBean.OBean data) {
-//        setAddress(data);
-//        refreshAddressState();//GoodsDetailsActivity刷新地址选择的状态
+        selectedAddress = data;
+        isSelectAddress = true;
         AppManager.getAppManager().finishActivity(AddressListActivity.class);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setAddress(selectedAddress);
+        refreshAddressState();//GoodsDetailsActivity刷新地址选择的状态
     }
 
     //获取优惠券
@@ -395,6 +450,9 @@ public class ConfirmOrderActivity extends RequestActivity implements View.OnClic
 
     //使用积分的切换
     public void usePoints(View view) {
+        if (!canUseTicketPoints) {
+            return;
+        }
         isUsePoints = !isUsePoints;
         getFinnalMoney();
         if (isUsePoints) {

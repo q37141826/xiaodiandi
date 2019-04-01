@@ -12,9 +12,10 @@
         android:visibility="gone"></RelativeLayout>
 
     <RelativeLayout
+        android:paddingBottom="@dimen/margin10dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin60dp"
-        android:layout_marginTop="@dimen/margin12dp"
+        android:layout_height="@dimen/margin50dp"
+        android:layout_marginTop="@dimen/margin24dp"
         android:background="@color/white">
 
         <TextView
@@ -22,14 +23,13 @@
             style="@style/text_normal"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin15dp"
-            android:drawableTop="@mipmap/home_scan"
-            android:text="扫一扫"
+            android:background="@mipmap/home_scan"
             android:textColor="@color/font_grey02" />
 
         <TextView
             android:id="@+id/edittext_search"
             android:layout_width="@dimen/margin216dp"
-            android:layout_height="@dimen/margin33dp"
+            android:layout_height="@dimen/margin31dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/margin82dp"
             android:background="@drawable/home_search"

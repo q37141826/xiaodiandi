@@ -16,14 +16,15 @@ import com.qixiu.xiaodiandi.R;
 
 public class OrderDetailsHolder extends RecyclerBaseHolder<OrderDetailsBean.OBean.CartInfoBean> {
     ImageView imageView_orderdetails_icon;
-    TextView textView_goodsContent_orderdetails, textView_price_orderdetails, textView_count_orderdetails;
+    TextView textView_goodsContent_orderdetails, textView_price_orderdetails, textView_count_orderdetails, textViewCharc;
 
     public OrderDetailsHolder(View itemView, Context context, RecyclerView.Adapter adapter) {
         super(itemView, context, adapter);
-        imageView_orderdetails_icon= (ImageView) itemView.findViewById(R.id.imageView_orderdetails_icon);
-        textView_goodsContent_orderdetails= (TextView) itemView.findViewById(R.id.textView_goodsContent_orderdetails);
-        textView_price_orderdetails= (TextView) itemView.findViewById(R.id.textView_price_orderdetails);
-        textView_count_orderdetails= (TextView) itemView.findViewById(R.id.textView_count_orderdetails);
+        imageView_orderdetails_icon = (ImageView) itemView.findViewById(R.id.imageView_orderdetails_icon);
+        textView_goodsContent_orderdetails = (TextView) itemView.findViewById(R.id.textView_goodsContent_orderdetails);
+        textView_price_orderdetails = (TextView) itemView.findViewById(R.id.textView_price_orderdetails);
+        textView_count_orderdetails = (TextView) itemView.findViewById(R.id.textView_count_orderdetails);
+        textViewCharc = (TextView) itemView.findViewById(R.id.textViewCharc);
 
     }
 
@@ -31,9 +32,11 @@ public class OrderDetailsHolder extends RecyclerBaseHolder<OrderDetailsBean.OBea
     public void bindHolder(int position) {
         Glide.with(mContext).load(mData.getProductInfo().getImage()).into(imageView_orderdetails_icon);
         textView_goodsContent_orderdetails.setText(mData.getProductInfo().getStore_name());
-        textView_price_orderdetails.setText("¥ "+mData.getTruePrice());
-        textView_count_orderdetails.setText("x "+mData.getCart_num());
-
-
+        textView_price_orderdetails.setText("¥ " + mData.getTruePrice());
+        textView_count_orderdetails.setText("x " + mData.getCart_num());
+        try {
+            textViewCharc.setText(mData.getProductInfo().getAttrInfo().getSuk());
+        } catch (Exception e) {
+        }
     }
 }

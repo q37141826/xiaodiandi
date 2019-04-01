@@ -9,9 +9,11 @@ import android.provider.Settings;
 
 import com.google.gson.Gson;
 import com.qixiu.qixiu.application.AppManager;
+import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.wigit.show_dialog.ArshowContextUtil;
 import com.qixiu.wigit.show_dialog.ArshowDialog;
 import com.qixiu.xiaodiandi.constant.ConstantUrl;
+import com.qixiu.xiaodiandi.utils.NumUtils;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -39,7 +41,13 @@ public class VersionCheckUtil {
             public void onResponse(String s, int i) {
                 try {
                     VersionBean bean = new Gson().fromJson(s, VersionBean.class);
-                    if (!bean.getO().getName().equals(ArshowContextUtil.getVersionName(activity))) {
+                    double versionName = NumUtils.getDouble(ArshowContextUtil.getVersionName(activity));
+                    double versionNameNew = NumUtils.getDouble(bean.getO().getName());
+                    if (versionName == 0 || versionNameNew == 0) {
+                        ToastUtil.toast("请不要设置非法版本名");
+                        return;
+                    }
+                    if (versionName < versionNameNew) {
                         setDialog("检测到新版本", bean.getO(), activity, bean.getO().getType());
                         listenner.call(false);
                     } else {

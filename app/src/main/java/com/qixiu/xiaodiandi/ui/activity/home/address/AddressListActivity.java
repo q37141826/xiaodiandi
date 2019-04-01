@@ -49,6 +49,7 @@ public class AddressListActivity extends TitleActivity implements OKHttpUIUpdata
     private AddressListAdapter adapter;
     private int pageNo = 1, pageSize = 10;
     private AddressBean.OBean selectedBean;
+    private AddressBean addressBean;
 
     public void getNetData() {
         ConstantRequest.getAddressList(okHttpRequestModel);
@@ -59,19 +60,16 @@ public class AddressListActivity extends TitleActivity implements OKHttpUIUpdata
         if (adapter.getDatas().size() == 0) {
             AppManager.getAppManager().finishActivity(ConfirmOrderActivity.class);
         }
-        AddressListActivity.this. finish();
+        AddressListActivity.this.finish();
     }
 
     @Override
     public void onSuccess(BaseBean data, int i) {
         if (data instanceof AddressBean) {
-            AddressBean bean = (AddressBean) data;
-            adapter.refreshData(bean.getO());
+            addressBean = (AddressBean) data;
+            adapter.refreshData(addressBean.getO());
             setBackVisblity();
             refreshLoadStop();
-            if (selectedBean != null) {
-                EventBus.getDefault().post(selectedBean);
-            }
         }
         if (ConstantUrl.addAddressUrl.equals(data.getUrl())) {
             getNetData();
@@ -144,7 +142,15 @@ public class AddressListActivity extends TitleActivity implements OKHttpUIUpdata
 
     @Override
     protected void onInitData() {
-        mTitleView.setTitle("地址管理");
+        mTitleView.setTitle("收货地址");
+        String title = getIntent().getStringExtra(IntentDataKeyConstant.DATA);
+        mTitleView.setRightText("新增");
+        mTitleView.setRightListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                gotoAddress(false);
+            }
+        });
         getNetData();
         swiprefresh_xrecyclerView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -187,25 +193,36 @@ public class AddressListActivity extends TitleActivity implements OKHttpUIUpdata
 
     @Override
     public void onItemClick(View v, RecyclerView.Adapter adapter, AddressBean.OBean data) {
-        setDefultAddress(data);
+//        setDefultAddress(data);
         selectedBean = data;
+        EventBus.getDefault().post(data);
     }
 
     //添加地址
     public void addAddress(View view) {
-        Intent intent = new Intent(this, EditAddressActivity.class);
-        intent.putExtra(IntentDataKeyConstant.ADDRESS_IS_DEFAULT, true);
-        startActivityForResult(intent, 10000);
+        gotoAddress(true);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_confirm_addaddress:
-                Intent intent = new Intent(this, EditAddressActivity.class);
-                intent.putExtra(IntentDataKeyConstant.ADDRESS_IS_DEFAULT, false);
-                startActivityForResult(intent, 10000);
+                gotoAddress(false);
                 break;
         }
+    }
+
+    public void gotoAddress(boolean isDefault) {
+        boolean isDefualt = false;
+        if (addressBean != null) {
+            for (int i = 0; i < addressBean.getO().size(); i++) {
+                if (addressBean.getO().get(i).getIs_default().equals("1")) {
+                    isDefualt = true;
+                }
+            }
+        }
+        Intent intent = new Intent(this, EditAddressActivity.class);
+        intent.putExtra(IntentDataKeyConstant.ADDRESS_IS_DEFAULT, !isDefualt);
+        startActivityForResult(intent, 10000);
     }
 }

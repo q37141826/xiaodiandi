@@ -42,7 +42,8 @@
     <color name="text_grey">#FF999999</color>
     <color name="hint_color">#cccccc</color>
 
-    <color name="red">#FF0000</color>
+    <!--<color name="red">#FF0000</color>-->
+    <color name="red">@color/theme_color</color>
 
 
     <!--zxing用到的颜色-->

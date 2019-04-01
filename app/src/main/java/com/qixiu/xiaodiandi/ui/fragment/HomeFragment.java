@@ -189,8 +189,8 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         for (int i = 0; i < viewpagerFragments.size(); i++) {
             RadioButton radioButton = new RadioButton(view.getContext());
             radioButton.setBackgroundResource(R.drawable.selector_home);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ArshowContextUtil.dp2px(20), ArshowContextUtil.dp2px(5));
-            params.setMargins(ArshowContextUtil.dp2px(5), 0, 0, 0);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ArshowContextUtil.dp2px(8), ArshowContextUtil.dp2px(8));
+            params.setMargins(ArshowContextUtil.dp2px(5), 0, ArshowContextUtil.dp2px(5), 0);
             radioButton.setLayoutParams(params);
             Bitmap a = null;
             radioButton.setButtonDrawable(new BitmapDrawable(a));
@@ -205,6 +205,7 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         } else {
             radiogroup.setVisibility(View.GONE);
         }
+
     }
 
     @Override
@@ -271,12 +272,14 @@ public class HomeFragment extends RequestFragment implements XRecyclerView.Loadi
         //设置轮播图
         rollpager = view.findViewById(R.id.rollpager);
         imageViewSearch.setOnClickListener(this);
-        rollpager.getViewPager().setPageMargin(10);//设置page间间距，自行根据需求设置
+        rollpager.getViewPager().setPageMargin(5);//设置page间间距，自行根据需求设置
 
         imageUrlAdapter = new ImageUrlAdapter(rollpager);
         rollpager.setAdapter(imageUrlAdapter);
-        rollpager.setHintView(new ColorPointHintView(getActivity(), getResources().getColor(R.color.theme_color), getResources().getColor(R.color.alpha_black_50)));
-        imageUrlAdapter.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        ColorPointHintView colorPointHintViewBanner = new ColorPointHintView(getActivity(), getResources().getColor(R.color.theme_color), getResources().getColor(R.color.alpha_black_50));
+        rollpager.setHintView(colorPointHintViewBanner);
+        rollpager.setHintPadding(0, 0, 0, ArshowContextUtil.dp2px(10));
+        imageUrlAdapter.setScaleType(ImageView.ScaleType.FIT_XY);
         imageUrlAdapter.setItemClickListenner(this);
 //        adapter.refreshData(banners);
         //设置轮播商品

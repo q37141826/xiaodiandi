@@ -3,6 +3,7 @@ package com.qixiu.xiaodiandi.ui.activity.community.news;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -66,6 +67,7 @@ public class ConsultingDetailsActivity extends RequestActivity implements XRecyc
     CommentAdapter adapter;
     private WritePop writePop;
     private ConsultingDetailsBean detailsBean;
+    private RelativeLayout relativeComments;
 
     @Override
     protected void onInitData() {
@@ -74,6 +76,9 @@ public class ConsultingDetailsActivity extends RequestActivity implements XRecyc
         adapter = new CommentAdapter();
         xrecyclerView.setAdapter(adapter);
         listBean = getIntent().getParcelableExtra(IntentDataKeyConstant.DATA);
+        if (listBean.getType().equals("4")) {
+            relativeComments.setVisibility(View.GONE);
+        }
         getData();
         swipRefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -136,7 +141,7 @@ public class ConsultingDetailsActivity extends RequestActivity implements XRecyc
 
     private void initHead(View view) {
         textViewHtml = view.findViewById(R.id.textViewHtml);
-
+        relativeComments = view.findViewById(R.id.relativeComments);
     }
 
     @Override

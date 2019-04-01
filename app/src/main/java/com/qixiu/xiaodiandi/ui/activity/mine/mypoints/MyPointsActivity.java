@@ -12,6 +12,7 @@ import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.model.mine.points.PointsBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
+import com.qixiu.xiaodiandi.utils.NumUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,11 +65,11 @@ public class MyPointsActivity extends RequestActivity {
     public void onSuccess(BaseBean data) {
         if (data instanceof PointsBean) {
             PointsBean bean = (PointsBean) data;
-            textViewPointsAll.setText(bean.getO().getIntegral() + "积分");
+            textViewPointsAll.setText(NumUtils.formatDouble3((double)bean.getO().getIntegral(),true) + "积分");
             textViewPointsCanGet.setText("可提现" + bean.getO().getRmd() + "元");
-            textViewPointsToday.setText(bean.getO().getToday() + "积分");
-            textViewPointsMonth.setText(bean.getO().getMonth() + "积分");
-            textViewPointsGet.setText(bean.getO().getAll() + "积分");
+            textViewPointsToday.setText(NumUtils.formatDouble3((double)bean.getO().getToday(),true) + "积分");
+            textViewPointsMonth.setText(NumUtils.formatDouble3((double)bean.getO().getMonth() ,true)+ "积分");
+            textViewPointsGet.setText(NumUtils.formatDouble3((double)bean.getO().getAll(),true) + "积分");
         }
     }
 

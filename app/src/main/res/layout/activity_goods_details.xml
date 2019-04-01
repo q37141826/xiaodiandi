@@ -30,6 +30,7 @@
                 <com.jude.rollviewpager.RollPagerView
                     android:id="@+id/rollpager"
                     android:layout_width="match_parent"
+                    app:rollviewpager_play_delay="5000"
                     android:layout_height="@dimen/screenwith"></com.jude.rollviewpager.RollPagerView>
 
                 <ImageView
@@ -198,7 +199,7 @@
                     <TextView
                         style="@style/goods_confirm"
                         android:drawableLeft="@mipmap/goods_zhengpin"
-                        android:text="正品签证" />
+                        android:text="正品保障" />
 
                     <TextView
                         style="@style/goods_confirm"

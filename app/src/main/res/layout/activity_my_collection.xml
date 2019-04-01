@@ -19,37 +19,54 @@
         android:background="@color/back_grey"
         android:orientation="vertical">
 
-        <RadioGroup
+        <RelativeLayout
+            android:background="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/margin40dp"
-            android:orientation="horizontal">
+            android:layout_height="@dimen/margin41dp">
 
-            <RadioButton
-                android:id="@+id/radioProduct"
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/radio_selector"
-                android:button="@null"
-                android:gravity="center"
-                android:text="商品"
-                android:textColor="@color/radio_text" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin1dp"
+                android:layout_alignParentBottom="true"
+                android:background="@color/lineColor"></View>
 
-            <RadioButton
-                android:id="@+id/radioCommunity"
-                android:layout_width="0px"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@drawable/radio_selector"
-                android:button="@null"
-                android:gravity="center"
-                android:text="社区"
-                android:textColor="@color/radio_text" />
-        </RadioGroup>
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin40dp"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioProduct"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="商品"
+                    android:textColor="@color/radio_text" />
+
+                <RadioButton
+                    android:id="@+id/radioCommunity"
+                    android:layout_width="0px"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/radio_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="社区"
+                    android:textColor="@color/radio_text" />
+            </RadioGroup>
+
+
+        </RelativeLayout>
+
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swip_refreshlayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

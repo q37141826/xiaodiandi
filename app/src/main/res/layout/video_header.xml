@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin174dp"
         android:layout_marginTop="@dimen/margin10dp"
-        android:background="@color/white" />
+        android:background="@color/white"
+        app:rollviewpager_play_delay="5000" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -29,8 +31,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawableLeft="@mipmap/commnuty_video"
-            android:gravity="center"
-            android:paddingLeft="@dimen/margin50dp"
+            android:gravity="right|center_vertical"
+            android:paddingRight="@dimen/margin40dp"
+            android:paddingLeft="@dimen/margin40dp"
             android:text="视频"
             android:textColor="@color/txt_FF333333"
             android:textSize="14sp" />
@@ -46,8 +49,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:drawableLeft="@mipmap/commnuty_alian"
-            android:gravity="center"
-            android:paddingLeft="@dimen/margin50dp"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="@dimen/margin30dp"
+            android:drawablePadding="@dimen/margin10dp"
             android:text="点滴联盟"
             android:textColor="@color/txt_FF333333"
             android:textSize="14sp" />

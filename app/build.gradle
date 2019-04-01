@@ -6,8 +6,8 @@ android {
         applicationId "com.qixiu.xiaodiandi"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 11
-        versionName "1.2"
+        versionCode 113
+        versionName "1.13"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", "\"${BASE_URL}\"")
         multiDexEnabled true
@@ -32,6 +32,12 @@ android {
     }
     signingConfigs {
         debug {
+            storeFile file('qixiu.jks')
+            storePassword "qixiu888"
+            keyAlias "qixiu"
+            keyPassword "qixiu888"
+        }
+        release {
             storeFile file('qixiu.jks')
             storePassword "qixiu888"
             keyAlias "qixiu"

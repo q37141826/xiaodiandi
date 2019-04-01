@@ -184,8 +184,8 @@ public class MyCollectionActivity extends RequestActivity implements XRecyclerVi
         }
         if (data instanceof EntertainmentCollectionBean.OBean) {
             EntertainmentCollectionBean.OBean bean = (EntertainmentCollectionBean.OBean) data;
-            IdInterfer idInterfer=new EntertainmentCollectionBean.OBean();
-            idInterfer.setId(bean.getAid()+"");
+            IdInterfer idInterfer = new EntertainmentCollectionBean.OBean();
+            idInterfer.setId(bean.getAid() + "");
             EntertainmentDetailsActivity.start(getContext(), EntertainmentDetailsActivity.class, idInterfer);
         }
     }

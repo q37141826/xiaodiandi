@@ -5,12 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.model.comminity.news.ConsultingDetailsBean;
 import com.qixiu.xiaodiandi.model.comminity.news.NewsDetailsBean;
+import com.qixiu.xiaodiandi.utils.GlideUtils;
 import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -44,17 +44,17 @@ public class CommentAdapter extends RecyclerBaseAdapter {
         public void bindHolder(int position) {
             if (mData instanceof NewsDetailsBean.EBean) {
                 NewsDetailsBean.EBean bean = (NewsDetailsBean.EBean) mData;
-                Glide.with(mContext).load(ImageUrlUtils.getFinnalImageUrl(bean.getUser().getAvatar())).into(circularHead);
+                GlideUtils.loadImage(ImageUrlUtils.getFinnalImageUrl(bean.getUser().getAvatar()), circularHead, mContext);
                 textViewContent.setText(bean.getContent());
                 textViewTime.setText(bean.getAddtime());
-                textViewPhone.setText(bean.getUser().getNickname());
+                textViewPhone.setText(bean.getUser().getPhone());
             }
             if (mData instanceof ConsultingDetailsBean.EBean) {
                 ConsultingDetailsBean.EBean bean = (ConsultingDetailsBean.EBean) mData;
-                Glide.with(mContext).load(ImageUrlUtils.getFinnalImageUrl(bean.getUser().getAvatar())).into(circularHead);
+                GlideUtils.loadImage(ImageUrlUtils.getFinnalImageUrl(bean.getUser().getAvatar()), circularHead, mContext);
                 textViewContent.setText(bean.getContent());
                 textViewTime.setText(bean.getAddtime());
-                textViewPhone.setText(bean.getUser().getNickname());
+                textViewPhone.setText(bean.getUser().getPhone());
             }
         }
     }

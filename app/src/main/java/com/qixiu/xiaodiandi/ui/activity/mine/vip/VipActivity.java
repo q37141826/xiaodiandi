@@ -18,6 +18,7 @@ import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.mypoints.MyPointsActivity;
 import com.qixiu.xiaodiandi.utils.GlideUtils;
 import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
+import com.qixiu.xiaodiandi.utils.NumUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -93,18 +94,18 @@ public class VipActivity extends RequestActivity {
     public void onSuccess(BaseBean data) {
         if (data instanceof PointsBean) {
             PointsBean bean = (PointsBean) data;
-            textViewPointsAll.setText(bean.getO().getIntegral() + "积分");
+            textViewPointsAll.setText(NumUtils.formatDouble3(bean.getO().getIntegral(),true) + "积分");
             textViewPointsCanGet.setText("" + bean.getO().getRmd() + "");
-            textViewPointsToday.setText(bean.getO().getToday() + "积分");
-            textViewPointsMonth.setText(bean.getO().getMonth() + "积分");
-            textViewPointsGet.setText(bean.getO().getAll() + "积分");
+            textViewPointsToday.setText(NumUtils.formatDouble3(bean.getO().getToday(),true)+ "积分");
+            textViewPointsMonth.setText(NumUtils.formatDouble3(bean.getO().getMonth(),true) + "积分");
+            textViewPointsGet.setText(NumUtils.formatDouble3(bean.getO().getAll(),true)+ "积分");
         }
         if (data instanceof VipBean) {
             VipBean bean = (VipBean) data;
             Glide.with(getContext()).load(ImageUrlUtils.getFinnalImageUrl(bean.getO().getAvatar())).into(circularhead);
             GlideUtils.loadImage(ImageUrlUtils.getFinnalImageUrl(bean.getO().getAvatar()), circularhead, getContext());
-            textViewPhone.setText("ID: " + bean.getO().getPhone());
-            textViewAccount.setText(bean.getO().getAccount());
+            textViewPhone.setText("ID: " + bean.getO().getAccount());
+            textViewAccount.setText(bean.getO().getPhone());
             textViewVipName.setText(bean.getO().getGroup_name());
             gotoMyFriends.setSecondText(bean.getO().getFriend() + "");
             gotoFriendNumGroup.setSecondText(bean.getO().getFriendsum() + "");

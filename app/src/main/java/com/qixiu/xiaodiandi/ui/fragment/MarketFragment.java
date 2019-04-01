@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.qixiu.qixiu.application.AppManager;
 import com.qixiu.qixiu.recyclerview_lib.OnRecyclerItemListener;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
@@ -317,6 +318,7 @@ public class MarketFragment extends RequestFragment implements MarketPresenter.R
 
     @Override
     public void onItemClick(View v, RecyclerView.Adapter adapter, ShopCartBean.OBean.ValidBean data) {
+        AppManager.getAppManager().finishActivity(GoodsDetailsActivity.class);
         GoodsDetailsActivity.start(getContext(), GoodsDetailsActivity.class, data.getProduct_id() + "");
     }
 }

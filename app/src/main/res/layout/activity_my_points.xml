@@ -58,7 +58,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingRight="@dimen/margin38dp">
+           >
 
                 <TextView
                     style="@style/text_normal"
@@ -67,6 +67,8 @@
                     android:textSize="17sp" />
 
                 <TextView
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
                     android:id="@+id/textViewPointsToday"
                     style="@style/text_normal"
                     android:text="0积分"
@@ -74,10 +76,10 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <View
-                android:layout_width="@dimen/margin1dp"
-                android:layout_height="@dimen/margin29dp"
-                android:background="@color/line_color"></View>
+            <!--<View-->
+                <!--android:layout_width="@dimen/margin1dp"-->
+                <!--android:layout_height="@dimen/margin29dp"-->
+                <!--android:background="@color/line_color"></View>-->
 
             <LinearLayout
                 android:layout_width="0px"
@@ -95,6 +97,8 @@
                     android:textSize="17sp" />
 
                 <TextView
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
                     android:id="@+id/textViewPointsMonth"
                     style="@style/text_normal"
                     android:text="0积分"
@@ -102,10 +106,10 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <View
-                android:layout_width="@dimen/margin1dp"
-                android:layout_height="@dimen/margin29dp"
-                android:background="@color/line_color"></View>
+            <!--<View-->
+                <!--android:layout_width="@dimen/margin1dp"-->
+                <!--android:layout_height="@dimen/margin29dp"-->
+                <!--android:background="@color/line_color"></View>-->
 
             <LinearLayout
                 android:layout_width="0px"
@@ -115,7 +119,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/margin38dp">
+           >
 
                 <TextView
                     style="@style/text_normal"
@@ -124,6 +128,8 @@
                     android:textSize="17sp" />
 
                 <TextView
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
                     android:id="@+id/textViewPointsGet"
                     style="@style/text_normal"
                     android:text="0积分"
@@ -156,7 +162,7 @@
                 style="@style/text_normal"
                 android:onClick="getCashDetails"
                 android:text="提现明细>"
-                android:textColor="@color/theme_color"
+                android:textColor="@color/theme_color02"
                 android:textSize="14sp" />
 
         </LinearLayout>

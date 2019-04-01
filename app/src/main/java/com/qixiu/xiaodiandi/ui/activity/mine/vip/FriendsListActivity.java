@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
@@ -21,6 +20,8 @@ import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.model.mine.vip.FriendsListBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.RequestActivity;
+import com.qixiu.xiaodiandi.utils.GlideUtils;
+import com.qixiu.xiaodiandi.utils.ImageUrlUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -138,23 +139,29 @@ public class FriendsListActivity extends RequestActivity implements XRecyclerVie
         public class FriendsListHolder extends RecyclerBaseHolder {
             CircleImageView circularHead;
             TextView textViewPhone, textViewName, textViewId;
-
+            View viewLine;
             public FriendsListHolder(View itemView, Context context, RecyclerView.Adapter adapter) {
                 super(itemView, context, adapter);
                 circularHead = itemView.findViewById(R.id.circularHead);
                 textViewPhone = itemView.findViewById(R.id.textViewPhone);
                 textViewName = itemView.findViewById(R.id.textViewName);
                 textViewId = itemView.findViewById(R.id.textViewId);
+                viewLine = itemView.findViewById(R.id.viewLine);
             }
 
             @Override
             public void bindHolder(int position) {
                 if (mData instanceof FriendsListBean.OBean) {
                     FriendsListBean.OBean bean = (FriendsListBean.OBean) mData;
-                    Glide.with(mContext).load(bean.getAvatar()).into(circularHead);
+                    GlideUtils.loadImage(ImageUrlUtils.getFinnalImageUrl(bean.getAvatar()), circularHead, mContext);
                     textViewPhone.setText(bean.getPhone());
                     textViewName.setText(bean.getGroup_name());
                     textViewId.setText(bean.getAccount());
+                    if(position==0){
+                        viewLine.setVisibility(View.INVISIBLE);
+                    }else {
+                        viewLine.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         }

@@ -1,9 +1,6 @@
 package com.qixiu.xiaodiandi.ui.activity.home;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.media.MediaPlayer;
@@ -43,7 +40,6 @@ public class PlayActivity extends TitleActivity {
     ZProgressHUD zProgressHUD;
     private SensorManager sensorManager;
     private JZVideoPlayer.JZAutoFullscreenListener sensorEventListener;
-    private BroadcastReceiver receiver;
 
     @Override
     protected void onInitData() {
@@ -123,16 +119,6 @@ public class PlayActivity extends TitleActivity {
         */
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorEventListener = new JZVideoPlayer.JZAutoFullscreenListener();
-        IntentFilter intentFilter = new IntentFilter(JzplayerMiedeo.JZBACK);
-        receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                PlayActivity.this.finish();
-                JZVideoPlayer.backPress();
-                JZVideoPlayer.releaseAllVideos();//注意停止和释放
-            }
-        };
-        registerReceiver(receiver, intentFilter);
         if (jcplayer == null) {
             return;
         }
@@ -145,8 +131,8 @@ public class PlayActivity extends TitleActivity {
         jcplayer.battery_level.setVisibility(View.GONE);
         jcplayer.startVideo();
         jcplayer.startWindowFullscreen();
-        jcplayer.backButton.setOnClickListener(finishClick);
-        jcplayer.tinyBackImageView.setOnClickListener(finishClick);
+//        jcplayer.backButton.setOnClickListener(finishClick);
+//        jcplayer.tinyBackImageView.setOnClickListener(finishClick);
 
     }
 
@@ -166,10 +152,12 @@ public class PlayActivity extends TitleActivity {
 
     @Override
     public void onBackPressed() {
-        if (JZVideoPlayer.backPress()) {
-            return;
-        }
-        super.onBackPressed();
+//        if (JZVideoPlayer.backPress()) {
+//            return;
+//        }
+//        super.onBackPressed();
+        finish();
+        JZVideoPlayer.releaseAllVideos();
     }
 
     @Override
@@ -215,7 +203,6 @@ public class PlayActivity extends TitleActivity {
     protected void onDestroy() {
         super.onDestroy();
         stopPlaybackVideo();
-        unregisterReceiver(receiver);
     }
 
     private void stopPlaybackVideo() {

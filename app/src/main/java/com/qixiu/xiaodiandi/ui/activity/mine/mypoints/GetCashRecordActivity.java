@@ -13,6 +13,7 @@ import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseAdapter;
 import com.qixiu.qixiu.recyclerview_lib.RecyclerBaseHolder;
 import com.qixiu.qixiu.request.bean.BaseBean;
 import com.qixiu.qixiu.request.bean.C_CodeBean;
+import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.qixiu.utils.XrecyclerViewUtil;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantString;
@@ -38,7 +39,7 @@ public class GetCashRecordActivity extends RequestActivity implements XRecyclerV
 
     @Override
     protected void onInitData() {
-        setTitle("积分明细");
+        setTitle("提现明细");
         swipRefreshlayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -141,30 +142,39 @@ public class GetCashRecordActivity extends RequestActivity implements XRecyclerV
             TextView textViewContent,
                     textViewMoney,
                     textViewState,
-                    textViewTime;
-
+                    textViewTime,textViewReason;
             public GetCashRecordHolder(View itemView, Context context, RecyclerView.Adapter adapter) {
                 super(itemView, context, adapter);
                 textViewContent = itemView.findViewById(R.id.textViewContent);
                 textViewMoney = itemView.findViewById(R.id.textViewMoney);
                 textViewState = itemView.findViewById(R.id.textViewState);
                 textViewTime = itemView.findViewById(R.id.textViewTime);
+                textViewReason = itemView.findViewById(R.id.textViewReason);
             }
 
             @Override
             public void bindHolder(int position) {
                 if (mData instanceof GetCatshRecordBean.OBean) {
                     GetCatshRecordBean.OBean bean = (GetCatshRecordBean.OBean) mData;
-                    textViewContent.setText("提现至" + bean.getExtract_type() + "账户");
+                    textViewContent.setText("转至" + bean.getExtract_type() + "账户");
                     textViewTime.setText(bean.getAdd_time());
                     textViewMoney.setText(ConstantString.RMB_SYMBOL + bean.getBalance());
                     if (bean.getStatus() == -1) {
                         textViewState.setText("提现失败");
+                        textViewReason.setVisibility(View.VISIBLE);
                     } else if (bean.getStatus() == 0) {
+                        textViewReason.setVisibility(View.GONE);
                         textViewState.setText("提现中");
                     } else {
+                        textViewReason.setVisibility(View.GONE);
                         textViewState.setText("已到账");
                     }
+                    textViewReason.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            ToastUtil.toast(bean.getFail_msg());
+                        }
+                    });
                 }
             }
         }

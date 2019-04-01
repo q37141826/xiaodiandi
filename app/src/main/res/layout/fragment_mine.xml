@@ -288,6 +288,12 @@
                 app:first_text="我的收藏"></com.qixiu.wigit.GotoView>
 
             <com.qixiu.wigit.GotoView
+                android:id="@+id/gotoMyPublish"
+                style="@style/mine_gotoview"
+                app:first_drawable="@mipmap/mine_publish"
+                app:first_text="我的发布"></com.qixiu.wigit.GotoView>
+
+            <com.qixiu.wigit.GotoView
                 android:id="@+id/gotoVip"
                 style="@style/mine_gotoview"
                 app:first_drawable="@mipmap/mine_vip"
