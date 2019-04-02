@@ -59,15 +59,15 @@ public class ImageUrlAdapter extends LoopPagerAdapter {
         view.setLayoutParams(new ViewGroup.LayoutParams(ArshowContextUtil.getWidthPixels() , ViewGroup.LayoutParams.MATCH_PARENT));
 //        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT));
         if (datas.get(position) instanceof Integer) {
-            Glide.with(container.getContext()).load((int) datas.get(position)).error(R.mipmap.ic_launcher).skipMemoryCache(false).into(view);
+            Glide.with(container.getContext()).load((int) datas.get(position)).skipMemoryCache(false).into(view);
         } else if (datas.get(position) instanceof HomeBean.OBean.BannerBean) {
             Glide.with(container.getContext()).load(((HomeBean.OBean.BannerBean) datas.get(position)).getPic()).error(R.mipmap.ic_launcher).skipMemoryCache(false).into(view);
 
         } else if (datas.get(position) instanceof String) {
-            Glide.with(container.getContext()).load(datas.get(position)).error(R.mipmap.ic_launcher).skipMemoryCache(false).into(view);
+            Glide.with(container.getContext()).load(datas.get(position)).skipMemoryCache(false).into(view);
         } else if (datas.get(position) instanceof NewsHomeBean.OBean.BannerBean) {
             NewsHomeBean.OBean.BannerBean bannerBean = (NewsHomeBean.OBean.BannerBean) datas.get(position);
-            Glide.with(container.getContext()).load(bannerBean.getPic()).error(R.mipmap.ic_launcher).skipMemoryCache(false).into(view);
+            Glide.with(container.getContext()).load(bannerBean.getPic()).skipMemoryCache(false).into(view);
         }
         view.setOnClickListener(new View.OnClickListener() {
             @Override

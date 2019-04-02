@@ -2,9 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/margin52dp"
-    android:layout_marginLeft="@dimen/margin14dp"
     android:layout_marginTop="@dimen/margin14dp"
-    android:layout_marginRight="@dimen/margin14dp"
     android:orientation="vertical">
 
     <ImageView
