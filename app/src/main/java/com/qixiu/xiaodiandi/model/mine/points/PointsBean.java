@@ -16,17 +16,17 @@ public class PointsBean extends BaseBean<PointsBean.OBean> {
          * all : 0
          */
 
-        private int integral;
+        private double integral;
         private String rmd;
-        private int today;
-        private int month;
-        private int all;
+        private double today;
+        private double month;
+        private double all;
 
-        public int getIntegral() {
+        public double getIntegral() {
             return integral;
         }
 
-        public void setIntegral(int integral) {
+        public void setIntegral(double integral) {
             this.integral = integral;
         }
 
@@ -38,7 +38,7 @@ public class PointsBean extends BaseBean<PointsBean.OBean> {
             this.rmd = rmd;
         }
 
-        public int getToday() {
+        public double getToday() {
             return today;
         }
 
@@ -46,15 +46,15 @@ public class PointsBean extends BaseBean<PointsBean.OBean> {
             this.today = today;
         }
 
-        public int getMonth() {
+        public double getMonth() {
             return month;
         }
 
-        public void setMonth(int month) {
+        public void setMonth(double month) {
             this.month = month;
         }
 
-        public int getAll() {
+        public double getAll() {
             return all;
         }
 

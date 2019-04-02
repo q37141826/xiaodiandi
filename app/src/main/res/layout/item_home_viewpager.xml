@@ -13,6 +13,7 @@
         android:scaleType="fitCenter" />
 
     <TextView
+        android:maxLines="1"
         android:id="@+id/textView"
         style="@style/text_normal"
         android:layout_alignParentBottom="true"

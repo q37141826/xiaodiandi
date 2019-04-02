@@ -19,7 +19,6 @@ import com.qixiu.xiaodiandi.constant.IntentDataKeyConstant;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.TitleActivity;
 import com.qixiu.xiaodiandi.ui.wigit.JzplayerMiedeo;
 
-import org.song.videoplayer.media.BaseMedia;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +35,6 @@ public class PlayActivity extends TitleActivity {
 //    DemoQSVideoView qsVideoview;
     private String path;
     private String thumb;
-    Class<? extends BaseMedia> decodeMedia;
     ZProgressHUD zProgressHUD;
     private SensorManager sensorManager;
     private JZVideoPlayer.JZAutoFullscreenListener sensorEventListener;

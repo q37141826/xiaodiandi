@@ -6,8 +6,8 @@ android {
         applicationId "com.qixiu.xiaodiandi"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 113
-        versionName "1.13"
+        versionCode 114
+        versionName "1.14"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "BASE_URL", "\"${BASE_URL}\"")
         multiDexEnabled true
@@ -91,5 +91,5 @@ dependencies {
     implementation 'cn.jzvd:jiaozivideoplayer:6.0.0'
     implementation files('libs/ShareSDK-QZone-2.8.3.jar')
     //    implementation project(':vitamio')
-    implementation project(':qsvideoplayer')
+//    implementation project(':qsvideoplayer')
 }

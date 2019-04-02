@@ -1,6 +1,7 @@
 package com.qixiu.xiaodiandi.ui.adapter.home;
 
 import android.content.Context;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -45,9 +46,10 @@ public class GoodsDetailsCharactorAdapter extends RecyclerBaseAdapter {
 
                 InnerAdapter adapter = new InnerAdapter();
                 recyclerView.setAdapter(adapter);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-                linearLayoutManager.setOrientation(LinearLayout.HORIZONTAL);
-                recyclerView.setLayoutManager(linearLayoutManager);
+//                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+//                linearLayoutManager.setOrientation(LinearLayout.HORIZONTAL);
+                RecyclerView.LayoutManager layoutManager=new GridLayoutManager(mContext,4);
+                recyclerView.setLayoutManager(layoutManager);
 
                 adapter.refreshData(bean.getInners());
                 adapter.setOnItemClickListener(new OnRecyclerItemListener() {
@@ -95,8 +97,10 @@ public class GoodsDetailsCharactorAdapter extends RecyclerBaseAdapter {
                     CharctorInnerBean bean = (CharctorInnerBean) mData;
                     if (bean.isSelected()) {
                         textView.setBackgroundResource(R.drawable.btn_theme_solid);
+                        textView.setTextColor(mContext.getResources().getColor(R.color.white));
                     } else {
                         textView.setBackgroundResource(R.drawable.btn_grey_stroke_3dp);
+                        textView.setTextColor(mContext.getResources().getColor(R.color.font_grey));
                     }
                     textView.setText(bean.getText());
                 }
