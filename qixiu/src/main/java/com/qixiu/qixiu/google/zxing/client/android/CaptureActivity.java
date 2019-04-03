@@ -427,7 +427,7 @@ public final class CaptureActivity extends Activity
                         if (result != null) {
                             inactivityTimer.onActivity();
                             Intent resultIntent = new Intent();
-                            resultIntent.putExtra("result", result.getText());
+                            resultIntent.putExtra(ZXING_VALUE, result.getText());
                             CaptureActivity.this.setResult(RESULT_OK, resultIntent);
                             CaptureActivity.this.finish();
                         }else {

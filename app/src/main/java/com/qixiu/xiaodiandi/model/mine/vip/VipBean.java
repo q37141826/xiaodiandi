@@ -48,13 +48,13 @@ public class VipBean extends BaseBean<VipBean.OBean> {
         private String avatar;
         private String phone;
         private String account;
-        private int level;
-        private int integral;
+        private double level;
+        private double integral;
         private String group_name;
         private String rmd;
-        private int today;
-        private int month;
-        private int all;
+        private double today;
+        private double month;
+        private double all;
         private int friend;
         private int friendsum;
 
@@ -90,19 +90,19 @@ public class VipBean extends BaseBean<VipBean.OBean> {
             this.account = account;
         }
 
-        public int getLevel() {
+        public double getLevel() {
             return level;
         }
 
-        public void setLevel(int level) {
+        public void setLevel(double level) {
             this.level = level;
         }
 
-        public int getIntegral() {
+        public double getIntegral() {
             return integral;
         }
 
-        public void setIntegral(int integral) {
+        public void setIntegral(double integral) {
             this.integral = integral;
         }
 
@@ -122,7 +122,7 @@ public class VipBean extends BaseBean<VipBean.OBean> {
             this.rmd = rmd;
         }
 
-        public int getToday() {
+        public double getToday() {
             return today;
         }
 
@@ -130,15 +130,15 @@ public class VipBean extends BaseBean<VipBean.OBean> {
             this.today = today;
         }
 
-        public int getMonth() {
+        public double getMonth() {
             return month;
         }
 
-        public void setMonth(int month) {
+        public void setMonth(double month) {
             this.month = month;
         }
 
-        public int getAll() {
+        public double getAll() {
             return all;
         }
 
