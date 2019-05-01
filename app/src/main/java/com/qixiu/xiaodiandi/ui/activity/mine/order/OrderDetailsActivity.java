@@ -34,6 +34,7 @@ import com.qixiu.xiaodiandi.model.order.RefreshListBean;
 import com.qixiu.xiaodiandi.ui.activity.baseactivity.TitleActivity;
 import com.qixiu.xiaodiandi.ui.fragment.mine.order.OrderDetailsAdapter;
 import com.qixiu.xiaodiandi.ui.fragment.mine.order.OrderDetailsBean;
+import com.qixiu.xiaodiandi.ui.wigit.TransportPop;
 import com.qixiu.xiaodiandi.utils.NumUtils;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -137,7 +138,7 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
             linearLayoutTimeDown.setVisibility(View.VISIBLE);
             textState = "待付款";
         } else if (1 == orderDetailsBean.getO().getStatus()) {
-//            btn_checkwhere_detail.setVisibility(View.VISIBLE);// TODO: 2019/2/14  以后有了检查物流的功能再打开
+            btn_checkwhere_detail.setVisibility(View.VISIBLE);// TODO: 2019/2/14  以后有了检查物流的功能再打开
             btn_getConform_detail.setVisibility(View.VISIBLE);
             btn_change.setVisibility(View.VISIBLE);
             textState = "待收货";
@@ -186,9 +187,10 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
                 startNotice();
                 break;
             case R.id.btn_checkwhere_detail:
-                Intent intent = new Intent(this, CheckWhereActivity.class);
-                intent.putExtra("order_id", orderDetailsBean.getO().getId());
-                startActivity(intent);
+//                Intent intent = new Intent(this, CheckWhereActivity.class);
+//                intent.putExtra("order_id", orderDetailsBean.getO().getId());
+//                startActivity(intent);
+                showTranportPop();
                 break;
             case R.id.btn_getConform_detail:
                 IS_DELETE = false;
@@ -197,7 +199,11 @@ public class OrderDetailsActivity extends TitleActivity implements View.OnClickL
         }
     }
 
-
+    private void showTranportPop() {
+        TransportPop transportPop=new TransportPop(mContext);
+        transportPop.show();
+        transportPop.setData(orderDetailsBean.getO().getDelivery_name(),orderDetailsBean.getO().getDelivery_id());
+    }
     //    private void startpay() {
 //        Intent intent = new Intent(mContext, SelectPayMethoedActivity.class);
 //        //// TODO: 2017/9/18 放入订单id

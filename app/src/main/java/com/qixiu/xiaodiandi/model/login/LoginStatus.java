@@ -45,6 +45,7 @@ public class LoginStatus {
         LoginBean userBean = getUserBean();
         if(userBean!=null){
             return userBean.getO();
+//            return "662";
         }else {
             return null;
         }

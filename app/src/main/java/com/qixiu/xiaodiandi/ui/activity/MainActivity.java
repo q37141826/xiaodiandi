@@ -30,6 +30,7 @@ import com.qixiu.xiaodiandi.ui.fragment.MineFragment;
 import com.qixiu.xiaodiandi.ui.fragment.TypesFragment;
 import com.qixiu.xiaodiandi.ui.fragment.basefragment.base.BaseFragment;
 import com.qixiu.xiaodiandi.ui.wigit.ApkDownloadProgressPop;
+import com.zhy.http.okhttp.OkHttpUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -104,7 +105,6 @@ public class MainActivity extends RequestActivity {
             }
         });
         IntentFilter intentFilter = new IntentFilter();
-
     }
 
     private void showDownloadProgress(Intent intent) {

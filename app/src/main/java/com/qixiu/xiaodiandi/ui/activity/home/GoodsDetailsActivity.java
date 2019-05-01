@@ -32,6 +32,7 @@ import com.qixiu.qixiu.utils.NavagationUtils;
 import com.qixiu.qixiu.utils.StatusBarUtils;
 import com.qixiu.qixiu.utils.ToastUtil;
 import com.qixiu.qixiu.utils.html_utils.HtmlUtils;
+import com.qixiu.qixiu.utils.html_utils.HtmlWeakRefrence;
 import com.qixiu.xiaodiandi.R;
 import com.qixiu.xiaodiandi.constant.ConstantRequest;
 import com.qixiu.xiaodiandi.constant.ConstantString;
@@ -58,7 +59,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.jzvd.JZVideoPlayer;
 
-public class GoodsDetailsActivity extends RequestActivity {
+public class GoodsDetailsActivity extends RequestActivity implements HtmlWeakRefrence {
 
 //    @BindView(R.id.jcplayer)
 //    JZVideoPlayerStandard jcplayer;
@@ -232,7 +233,20 @@ public class GoodsDetailsActivity extends RequestActivity {
         runOnlyOne++;
         if (runOnlyOne <= 1) {
             HtmlUtils.getInstance().setWindowWith(windowWith);
-            HtmlUtils.getInstance().setHtml(textViewPText, detailsBean.getO().getProduct().getDescription(), this);
+            mZProgressHUD.show();
+            HtmlUtils.getInstance().setHtml( detailsBean.getO().getProduct().getDescription());
+            HtmlUtils.getInstance().setCallBack(new HtmlUtils.CallBack() {
+                @Override
+                public void finish() {
+                    mZProgressHUD.dismiss();
+                }
+
+                @Override
+                public void finish(CharSequence message) {
+                    mZProgressHUD.dismiss();
+                    setHtmlText(message);
+                }
+            });
         }
     }
 
@@ -594,5 +608,15 @@ public class GoodsDetailsActivity extends RequestActivity {
     @Override
     public void showProgress() {
 //        super.showProgress();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        HtmlUtils.getInstance().outSetting();
+    }
+
+    public void setHtmlText(CharSequence charSequence) {
+        textViewPText.setText(charSequence);
     }
 }

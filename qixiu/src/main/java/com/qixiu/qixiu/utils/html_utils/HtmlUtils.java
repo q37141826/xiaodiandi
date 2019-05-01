@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.text.Html;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,17 +18,27 @@ import com.qixiu.qixiu.utils.PictureCut;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class HtmlUtils {
+    final String KEY = "str";
     public int windowWith;
+    CallBack callBack;
+
+
     private static HtmlUtils htmlUtils;
 
     public static HtmlUtils getInstance() {
         if (htmlUtils == null) {
-            htmlUtils = new HtmlUtils();
+            synchronized (HtmlUtils.class) {
+                if (htmlUtils == null) {
+                    htmlUtils = new HtmlUtils();
+                }
+            }
         }
         return htmlUtils;
     }
@@ -57,7 +71,10 @@ public class HtmlUtils {
         return drawable;
     }
 
-    Drawable getImageFromNetWork01(String imageUrl) {
+
+     Bitmap bitmap;
+
+    synchronized Drawable getImageFromNetWork01(String imageUrl) {
 //        Bitmap bitmap = PictureCut.returnNetBitmap(imageUrl);
         String code = PictureCut.getCode(imageUrl);
         String path = PictureCut.getPath(code, DownLoadFileUtils.path);
@@ -74,7 +91,7 @@ public class HtmlUtils {
 //        Drawable src = Drawable.createFromResourceStream(BaseApplication.getContext().getResources(), null, fis, "src", null);
 ////        drawable = Drawable.createFromPath(newPath);
         //用低配bimap转换为drawble
-        Bitmap bitmap = ImageFactory.getBitmap(path);
+        bitmap = ImageFactory.getBitmap(path);
         Drawable drawable = new BitmapDrawable(bitmap);
         return drawable;
     }
@@ -91,12 +108,24 @@ public class HtmlUtils {
 //    }
 
 
-    //    Handler handler;
-    public void setHtml(TextView text, String html, Activity activity) {
+    Thread thread;
+
+
+    public void setHtml(String html) {
+        Looper mainLooper = Looper.getMainLooper();
+        Handler handler = new Handler(mainLooper) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                if (callBack != null) {
+                    callBack.finish(msg.getData().getCharSequence(KEY));
+                }
+            }
+        };
         if (TextUtils.isEmpty(html)) {
             return;
         }
-        new Thread(new Runnable() {
+        thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Html.ImageGetter imageGetter = new Html.ImageGetter() {
@@ -113,23 +142,127 @@ public class HtmlUtils {
                 };
                 try {
                     CharSequence charSequence = Html.fromHtml(html, imageGetter, null);
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            text.setText(charSequence);
-                        }
-                    });
+                    Message message = handler.obtainMessage();
+                    Bundle bundle = new Bundle();
+                    bundle.putCharSequence(KEY, charSequence);
+                    message.setData(bundle);
+                    handler.sendMessage(message);
                 } catch (Exception e) {
                     Log.e("exception", "后台标签出现了问题");
                 }
 
             }
-        }).start();
+        });
+        thread.start();
     }
+
+
+    public void setHtml(TextView text, String html, Activity activity) {
+        Looper mainLooper = Looper.getMainLooper();
+        Handler handler = new Handler(mainLooper) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                text.setText(msg.getData().getCharSequence(KEY));
+                if (callBack != null) {
+                    callBack.finish();
+                }
+            }
+        };
+        if (TextUtils.isEmpty(html)) {
+            return;
+        }
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Html.ImageGetter imageGetter = new Html.ImageGetter() {
+                    @Override
+                    public Drawable getDrawable(String source) {
+                        Drawable drawable = DrawbleCacheUtils.getInstance().getCache(source);
+                        if (drawable == null) {
+//                            drawable = getImageFromNetwork(source);//两种办法都试一下
+                            drawable = getImageFromNetWork01(source);
+                        }
+                        setDrwableSize(drawable, windowWith);
+                        return drawable;
+                    }
+                };
+                try {
+                    CharSequence charSequence = Html.fromHtml(html, imageGetter, null);
+                    Message message = handler.obtainMessage();
+                    Bundle bundle = new Bundle();
+                    bundle.putCharSequence(KEY, charSequence);
+                    message.setData(bundle);
+                    handler.sendMessage(message);
+                } catch (Exception e) {
+                    Log.e("exception", "后台标签出现了问题");
+                }
+            }
+        });
+        thread.start();
+    }
+
+    public void setHtml2(TextView text, String html, HtmlWeakRefrence activity) {
+        WeakReference<HtmlWeakRefrence> weakReference = new WeakReference<HtmlWeakRefrence>(activity);
+        if (TextUtils.isEmpty(html)) {
+            return;
+        }
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Html.ImageGetter imageGetter = new Html.ImageGetter() {
+                    @Override
+                    public Drawable getDrawable(String source) {
+                        Drawable drawable = DrawbleCacheUtils.getInstance().getCache(source);
+                        if (drawable == null) {
+//                            drawable = getImageFromNetwork(source);//两种办法都试一下
+                            drawable = getImageFromNetWork01(source);
+                        }
+                        setDrwableSize(drawable, windowWith);
+                        return drawable;
+                    }
+                };
+                try {
+                    CharSequence charSequence = Html.fromHtml(html, imageGetter, null);
+                    HtmlWeakRefrence htmlWeakRefrence = weakReference.get();
+                    htmlWeakRefrence.setHtmlText(charSequence);
+                    if (callBack != null) {
+                        callBack.finish();
+                    }
+                } catch (Exception e) {
+                    Log.e("exception", "后台标签出现了问题");
+                }
+            }
+        });
+        thread.start();
+    }
+
 
     private void setDrwableSize(Drawable drawable, int windowWith) {
         float w = windowWith - 30;
         float h = w / ((float) drawable.getIntrinsicWidth() / (float) drawable.getIntrinsicHeight());
         drawable.setBounds(0, 0, (int) w, (int) h);
     }
+
+    public void outSetting() {
+        if (thread != null) {
+            try {
+                thread.stop();
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    public interface CallBack {
+        void finish();
+
+        void finish(CharSequence message);
+    }
+
+    public void setCallBack(CallBack callBack) {
+        this.callBack = callBack;
+    }
+
+
+
 }

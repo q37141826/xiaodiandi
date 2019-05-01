@@ -1,6 +1,8 @@
 package com.qixiu.xiaodiandi.ui.activity.mine.vip;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -72,7 +74,12 @@ public class InviteActivity extends RequestActivity {
 
     @Override
     protected void onInitViewNew() {
-
+        Handler handler=new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+            }
+        };
     }
 
     @Override

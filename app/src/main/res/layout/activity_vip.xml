@@ -56,7 +56,7 @@
                             <TextView
                                 android:id="@+id/textViewAccount"
                                 style="@style/text_normal"
-                                android:text="13545454151"
+                                android:text=""
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
 
@@ -64,7 +64,7 @@
                                 android:id="@+id/textViewVipName"
                                 style="@style/text_normal"
                                 android:layout_marginLeft="@dimen/margin2dp"
-                                android:text="普通会员"
+                                android:text=""
                                 android:textColor="@color/white"
                                 android:textSize="12sp" />
                         </LinearLayout>
@@ -73,7 +73,7 @@
                             android:id="@+id/textViewPhone"
                             style="@style/text_normal"
                             android:layout_marginTop="@dimen/margin2dp"
-                            android:text="1556216154"
+                            android:text=""
                             android:textColor="@color/white"
                             android:textSize="12sp" />
                     </LinearLayout>

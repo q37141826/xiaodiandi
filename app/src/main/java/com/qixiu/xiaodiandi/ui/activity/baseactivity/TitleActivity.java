@@ -93,6 +93,15 @@ public abstract class TitleActivity extends BaseActivity implements View.OnClick
         }
     }
 
+
+    private void unRegisterNavigationBarObserver() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            getContentResolver().unregisterContentObserver(mNavigationBarObserver);
+        } else {
+            getContentResolver().unregisterContentObserver(mNavigationBarObserver);
+        }
+    }
+
     private ContentObserver mNavigationBarObserver = new ContentObserver(new Handler()) {
         @Override
         public void onChange(boolean selfChange) {
@@ -142,9 +151,8 @@ public abstract class TitleActivity extends BaseActivity implements View.OnClick
     @Override
     protected void onResume() {
         super.onResume();
-//        if (fatherView != null) {
-//            fatherView.getViewTreeObserver().addOnGlobalLayoutListener(this);
-//        }
+
+
         mNavigationBarObserver.onChange(true);//注意界面启动后要刷新一下bar的状态，否则界面不变，监听不会主动走
     }
 
@@ -205,6 +213,7 @@ public abstract class TitleActivity extends BaseActivity implements View.OnClick
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unRegisterNavigationBarObserver();
         try {
             fatherView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
         } catch (Exception e) {

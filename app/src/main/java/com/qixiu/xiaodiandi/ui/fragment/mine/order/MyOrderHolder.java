@@ -34,6 +34,7 @@ import com.qixiu.xiaodiandi.constant.ConstantUrl;
 import com.qixiu.xiaodiandi.model.login.LoginStatus;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.CheckWhereActivity;
 import com.qixiu.xiaodiandi.ui.activity.mine.order.OrderDetailsActivity;
+import com.qixiu.xiaodiandi.ui.wigit.TransportPop;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -153,7 +154,7 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
             btn_payThisOrder.setVisibility(View.VISIBLE);
             textState = "待付款";
         } else if (1 == mData.getStatus()) {
-//            btn_checkwhere_list.setVisibility(View.VISIBLE);//todo 以后有了检查物流的功能再打开
+            btn_checkwhere_list.setVisibility(View.VISIBLE);//todo 以后有了检查物流的功能再打开
             btn_getConform_list.setVisibility(View.VISIBLE);
             btn_change.setVisibility(View.VISIBLE);
             textState = "待收货";
@@ -191,9 +192,10 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
                 startNotice();
                 break;
             case R.id.btn_checkwhere_list:
-                Intent intentCheckWhere = new Intent(mContext, CheckWhereActivity.class);
-                intentCheckWhere.putExtra("order_id", mData.getId());
-                mContext.startActivity(intentCheckWhere);
+//                Intent intentCheckWhere = new Intent(mContext, CheckWhereActivity.class);
+//                intentCheckWhere.putExtra("order_id", mData.getId());
+//                mContext.startActivity(intentCheckWhere);
+                showTranportPop();//显示弹窗
                 break;
             case R.id.btn_getConform_list:
                 IS_DELETE = false;
@@ -203,6 +205,14 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
                 startChange();
                 break;
         }
+    }
+
+    private void showTranportPop() {
+        Map<String, String> map = new HashMap<>();
+        map.put("oid", mData.getId()+"");
+        map.put("uid", LoginStatus.getId());
+        OrderDetailsBean bean = new OrderDetailsBean();
+        okHttpRequestModel.okhHttpPost(ConstantUrl.orderDetailUrl, map, bean);
     }
 
     private void startChange() {
@@ -322,6 +332,12 @@ public class MyOrderHolder extends RecyclerBaseHolder<OrderBean.OBean> implement
         if (data instanceof AliBean) {
             AliBean aliBean = (AliBean) data;
             new Alipay(activity, this).startPay(aliBean.getO());
+        }
+        if(data instanceof OrderDetailsBean){
+            OrderDetailsBean orderDetailsBean= (OrderDetailsBean) data;
+            TransportPop transportPop=new TransportPop(mContext);
+            transportPop.show();
+            transportPop.setData(orderDetailsBean.getO().getDelivery_name(),orderDetailsBean.getO().getDelivery_id());
         }
 
     }

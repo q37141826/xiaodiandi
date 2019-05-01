@@ -113,6 +113,7 @@ public class OrderDetailsBean extends BaseBean<OrderDetailsBean.OBean> {
         private List<Integer> cart_id;
         private List<CartInfoBean> cartInfo;
 
+
         public int getId() {
             return id;
         }
